@@ -31,6 +31,7 @@ const createPrestation = async (req, res) => {
 };
 
 const getAllPrestations = async (req, res) => {
+    console.log("📥 Requête GET reçue sur /api/prestations");
     try {
         const prestations = await Prestation.find().populate('sousPrestations');
         res.status(200).json({
