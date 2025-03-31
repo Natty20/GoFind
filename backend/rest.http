@@ -1,0 +1,16 @@
+GET http://localhost:3000/users
+
+### create a new user
+POST http://localhost:3000/users
+
+### getting user by id
+GET http://localhost:3000/users/id
+
+### delete a user by id
+DELETE  http://localhost:3000/users/id
+
+### update a user by id
+PATCH  http://localhost:3000/users/id
+
+### unknown route
+GET http://localhost:3000/
