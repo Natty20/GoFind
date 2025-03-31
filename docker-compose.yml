@@ -1,0 +1,28 @@
+# version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "2000:2000"
+    environment:
+      MONGO_URI: mongodb://mongo:27018/GF
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo
+    command: mongod --port 27018
+    ports:
+      - "27018:27018"  # Utiliser 27018 au lieu de 27017
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
