@@ -1,0 +1,62 @@
+name: CI/CD avec Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le repo
+        uses: actions/checkout@v2
+
+      - name:  Configurer Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: 🔨 Construire les images avec Docker Compose
+        run: docker-compose build
+
+      - name: Lancer les tests du backend
+        run: docker-compose run backend npm test
+
+      - name: Lancer les tests du frontend
+        run: docker-compose run frontend npm test -- --watchAll=false
+
+  push_images:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le repo
+        uses: actions/checkout@v2
+
+      - name: Se connecter à Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Tagger et Pousser les images Docker
+        run: |
+          docker-compose build
+          docker tag gofind_frontend mydockerhubuser/gofind_frontend:latest
+          docker tag gofind_backend mydockerhubuser/gofind_backend:latest
+          docker push mydockerhubuser/gofind_frontend:latest
+          docker push mydockerhubuser/gofind_backend:latest
+
+  deploy:
+    needs: push_images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Déployer sur le serveur distant via SSH
+        run: |
+          ssh user@your-server-ip << 'EOF'
+            cd /chemin/vers/ton/projet
+            git pull origin main
+            docker-compose pull
+            docker-compose up -d --force-recreate
+          EOF
