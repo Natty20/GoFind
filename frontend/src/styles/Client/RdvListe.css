@@ -1,0 +1,161 @@
+.liste-rdv {
+  margin: 4.5rem 0;
+}
+
+.liste-rdv h2 {
+  text-align: center;
+  background-color: #ba3e40;
+  padding: 1rem;
+  color: white;
+  margin: 0;
+}
+
+.upcoming h3,
+.termines h3 {
+  background-color: #f3dbdd;
+  padding: 1rem;
+  color: #ba3e40;
+  text-align: start;
+  margin: 0;
+}
+
+.upcoming-appointment,
+.appointment-termines {
+  border: 1px solid black;
+  padding: 1.5rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.etat {
+  background-color: #f3dbdd;
+  width: 20%;
+}
+
+.upcoming-appointment img,
+.appointment-termines-up img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.presta-info,
+.prix {
+  margin: 3rem;
+}
+
+.presta-info h4 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.prix {
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.upcoming-appointment-up,
+.upcoming-appointment-down,
+.appointment-termines-up {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upcoming-appointment-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.upcoming-appointment-buttons button,
+.appointment-termines-down button {
+  background-color: #d32f2f;
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 80%;
+  margin: 2rem 8rem 0;
+  color: white;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.upcoming-appointment-buttons .reporter,
+.upcoming-appointment-buttons .supprimer {
+  background-color: white;
+  border: 1px solid #ba3e40;
+  color: #ba3e40;
+}
+
+.appointment-termines-down p {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ba3e40;
+}
+
+/* Responsivr */
+
+@media (max-width: 768px) {
+  .liste-rdv {
+    margin: 5.5rem 0;
+  }
+
+  .upcoming-appointment img,
+  .appointment-termines-up img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .presta-info,
+  .prix {
+    margin: 2rem 0;
+  }
+
+  .presta-info h4 {
+    font-size: 1rem;
+  }
+
+  .prix {
+    font-size: 1rem;
+  }
+
+  .upcoming-appointment-buttons button,
+  .appointment-termines-down button {
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 1rem;
+    text-transform: none;
+  }
+
+  .appointment-termines-down p {
+    font-size: 1rem;
+  }
+
+  .rdv-terminer-contacter {
+    margin: 0 4rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .liste-rdv {
+    margin: 3.9rem 0;
+  }
+
+  .upcoming-appointment-up,
+  .appointment-termines-up {
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .upcoming-appointment-buttons button {
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    font-size: 0.6rem;
+  }
+
+  .rdv-terminer-contacter {
+    margin: 0 2rem !important;
+  }
+}

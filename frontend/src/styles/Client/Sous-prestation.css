@@ -1,0 +1,249 @@
+.SousPrestation {
+  margin: 50px 0;
+  padding: 20px;
+}
+
+.main-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.image-container {
+  flex: 1;
+  padding-right: 50px;
+}
+
+.main-image {
+  width: 90%;
+}
+
+.text-container {
+  flex: 1;
+  text-align: center;
+  margin-top: -10rem;
+}
+
+.text-container h2 {
+  font-size: 1.5rem;
+  color: #ba3e40;
+}
+
+.text-container p {
+  font-size: 16px;
+}
+
+/* Prestataires section */
+.prestataires-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.prestataires-section h3 {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.prestataires-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.prestataire-card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px #f3dbdd;
+  cursor: pointer;
+}
+
+.prestataire-card:hover {
+  max-width: 590px;
+  background-color: #f9f9f9;
+}
+
+.prestataire-image {
+  object-fit: contain;
+}
+
+.prestataire-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.prestataire-info h4 {
+  font-size: 18px;
+  margin: 0 0 5px;
+  color: #ba3e40;
+}
+
+.prestataire-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 2px 0;
+}
+
+/* Other categories */
+.other-categories {
+  text-align: center;
+}
+
+.other-categories h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.categories-list {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.category-card {
+  text-align: center;
+  width: 200px;
+}
+
+.category-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.category-card p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ba3e40;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  /* Main section */
+
+  .main-section {
+    flex-direction: row;
+    align-items: center;
+
+    /* padding: 1rem; */
+  }
+
+  .image-container {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .text-container {
+    margin-top: 0;
+  }
+
+  .text-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .text-container p {
+    font-size: 14px;
+  }
+
+  /* Prestataires section */
+  .prestataires-list {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .prestataire-card {
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 10px;
+  }
+
+  .prestataire-info h4 {
+    font-size: 16px;
+  }
+
+  .prestataire-info p {
+    font-size: 12px;
+  }
+
+  /* Other categories */
+  .categories-list {
+    flex-direction: row;
+    gap: 1.2rem;
+  }
+
+  .category-card {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .category-image {
+    width: 100%;
+  }
+
+  .category-card p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Main section */
+  .main-section {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .image-container {
+    margin-bottom: 20px;
+  }
+
+  .text-container h2 {
+    font-size: 1.1rem;
+  }
+
+  .text-container p {
+    font-size: 12px;
+  }
+
+  /* Prestataires section */
+  .prestataire-card {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .prestataire-info h4 {
+    font-size: 14px;
+  }
+
+  .prestataire-info p {
+    font-size: 10px;
+  }
+
+  /* Other categories */
+  .other-categories h3 {
+    font-size: 0.9rem;
+  }
+
+  .categories-list {
+    flex-direction: row;
+  }
+
+  .category-card p {
+    font-size: 12px;
+  }
+}

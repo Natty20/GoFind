@@ -1,0 +1,301 @@
+.profile-page {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+/* Section Détails du Prestataire */
+.provider-details,
+.provider-description,
+.review,
+.realisation-section {
+  background: #f5f5f7;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgb(101, 99, 99);
+}
+
+.details {
+  display: flex;
+
+  /* gap: 5rem; */
+}
+
+.provider-image {
+  width: 45%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.provider-info {
+  flex: 1;
+  align-content: center;
+  text-align: center;
+}
+
+.provider-info h1 {
+  font-size: 30px;
+  margin: 0;
+}
+
+.provider-info p {
+  margin: 5px 0;
+}
+
+.provider-info a {
+  color: #ba3e40;
+  text-decoration: none;
+}
+
+.provider-calendar {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.provider-calendar h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.provider-calendar .calendar {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.provider-calendar button {
+  margin-top: 20px;
+  width: 20%;
+  padding: 15px;
+  font-size: 15px;
+  background-color: #ba3e40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.provider-calendar button:hover {
+  background-color: #f3dbdd;
+  color: #ba3e40;
+  border: 1px solid #f3dbdd;
+}
+
+/* Section Description */
+.provider-description h2,
+.provider-reviews h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ba3e40;
+}
+
+/* Section Réalisations */
+.realisation-section {
+  max-width: 50%;
+  margin: 0 0 0 250px;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tabs button.active {
+  color: #ba3e40;
+  border-bottom: 3px solid #ba3e40;
+}
+
+.tabs button:hover {
+  color: #f3dbdd;
+}
+
+/* Grille des images */
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.images-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Grille des vidéos */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.videos-grid video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Section Avis des Clients */
+.review {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.client-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.review-info {
+  display: flex;
+  gap: 20px;
+}
+
+.review-info h3 {
+  align-content: center;
+  font-size: 18px;
+  margin: 0;
+}
+
+span {
+  color: #ba3e40;
+  font-weight: bold;
+}
+
+.review p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.provider-reviews a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #ba3e40;
+  text-decoration: none;
+}
+
+/* Responsive  */
+@media (max-width: 768px) {
+  /* Provider Details */
+  .provider-info h1 {
+    font-size: 24px;
+  }
+
+  .provider-info p {
+    font-size: 14px;
+  }
+
+  .provider-calendar button {
+    width: 50%;
+  }
+
+  /* Realisation Section */
+  .realisation-section {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* Images Grid */
+  .images-grid,
+  .videos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Reviews */
+  .review-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .review-info h3 {
+    font-size: 16px;
+  }
+
+  .client-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Provider Details */
+  .provider-info {
+    margin: 2rem 0;
+    padding: 0.2rem;
+  }
+
+  .provider-info h1 {
+    font-size: 1rem;
+  }
+
+  .provider-info p {
+    font-size: 12px;
+  }
+
+  .provider-image {
+    width: 40%;
+    height: 10%;
+  }
+
+  .provider-calendar h2 {
+    font-size: 1rem;
+  }
+
+  .provider-calendar button {
+    width: 70%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Realisation Section */
+  .realisation-section {
+    margin: 0;
+    padding: 15px;
+  }
+
+  .tabs button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* Reviews */
+  .review-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .review-info h3 {
+    font-size: 14px;
+  }
+
+  .client-image {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -1,0 +1,115 @@
+.demande-envoye {
+  margin: 3rem 0;
+}
+
+.demande-envoyee-container {
+  background: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+.circle {
+  background-color: #d32f2f;
+  border-radius: 50%;
+  width: 25%;
+  height: 10rem;
+}
+
+.circle span {
+  color: white !important;
+  font-size: 6rem;
+}
+
+.icon {
+  margin: 2rem 37rem;
+  width: 50%;
+  margin-bottom: 0;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message h2 {
+  font-size: 1.6rem;
+}
+
+.message p {
+  font-size: 3rem;
+  color: #d32f2f;
+  font-weight: bolder;
+  margin: 0;
+}
+
+.paiment-details {
+  display: flex;
+  justify-content: space-evenly;
+
+  /* justify-content: center; */
+}
+
+.paiement-method,
+.paiement-date {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+.actions button {
+  background-color: #d32f2f;
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 80%;
+  margin: 2rem 8rem 0;
+  color: white;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.actions .rendez-vous {
+  background-color: #f2d4d6;
+  color: #d32f2f;
+  border: 1px solid #f2d4d6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .circle {
+    width: 50%;
+    height: 10rem;
+    margin-left: 5rem;
+  }
+
+  .circle span {
+    font-size: 6rem;
+  }
+
+  .icon {
+    margin: 2rem 10rem;
+    margin-bottom: 0;
+  }
+
+  .actions button {
+    margin: 2rem 3rem 0;
+  }
+}
+@media (max-width: 480px) {
+  .circle {
+    width: 90%;
+    height: 10rem;
+    margin-left: -4rem;
+  }
+
+  .circle span {
+    font-size: 6rem;
+  }
+
+  .actions button {
+    margin: 1rem 0;
+  }
+}

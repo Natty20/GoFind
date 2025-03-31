@@ -1,0 +1,341 @@
+.homepage {
+  font-family: 'Roboto Serif', serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Xanh Mono', monospace;
+}
+
+/* Section 1: Gofind Presentation */
+.gofind-presentation {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+
+  /* padding: 2rem; */
+  margin-top: 3rem;
+}
+
+.gofind-presentation img {
+  width: 22.6%;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 3rem;
+}
+
+.gofind-presentation h2 {
+  font-size: 1.5rem;
+  color: #d9534f;
+  margin: 0;
+}
+
+.gofind-presentation p {
+  margin: 1rem 15rem;
+}
+
+.gofind-presentation .cta-button {
+  background-color: black;
+  color: white;
+  border: 1px solid #d9534f;
+  border-radius: 30px;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  margin: 1rem;
+}
+
+.cta-button:hover {
+  background-color: #f3dbdd;
+  color: #d9534f;
+  border: none;
+}
+
+.category {
+  margin: 10px;
+  padding: 2rem;
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+.category h2,
+.artisanat-left h2,
+.photographie-right h2 {
+  font-size: 2rem;
+  color: #000;
+}
+
+.category .buttons button,
+.exeption-container .exeption button {
+  margin: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #d9534f;
+  background-color: #fff;
+  color: #d9534f;
+  cursor: pointer;
+  border-radius: 3rem;
+  width: 20%;
+}
+
+.exeption-container .exeption button {
+  width: 50%;
+}
+
+.category img {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+/* Artisanat and Photographie Exception Sections */
+.artisanat,
+.Photographie {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.artisanat-left.reverse {
+  flex-direction: row-reverse;
+}
+
+.exeption-container {
+  display: flex;
+}
+
+.artisanat-left,
+.photographie-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 20px;
+}
+
+.artisanat-left p,
+.photographie-right p,
+.category p {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.exeption {
+  display: flex;
+  gap: 1rem;
+}
+
+.exeption-1,
+.exeption-2 {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+#exeption-1 {
+  background-color: white;
+  color: #c65353;
+  border: 2px solid #c65353;
+}
+
+#exeption-2 {
+  background-color: #c65353;
+  color: white;
+}
+
+.artisanat-image,
+.photographie-image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+/* Right Background Image with Overlay */
+.artisanat-photographie-right {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  max-width: 80%;
+}
+
+/* Section 6: How It Works */
+.how-it-works {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.steps-header h2 {
+  font-size: 25px;
+  font-weight: bold;
+  color: #000;
+  text-decoration: underline;
+}
+
+.steps-header p {
+  font-size: 15px;
+  width: 50%;
+  color: #333;
+  margin: 0 auto;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.step-number {
+  font-size: 24px;
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.step-image-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #c65353;
+}
+
+.step-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.step-description {
+  font-size: 15px;
+  color: #000;
+  background-color: white;
+  margin-top: -35px;
+  padding: 10px;
+  border: 2px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-color: #f3dbdd;
+  cursor: pointer;
+}
+
+.step-description:hover {
+  background-color: #f3dbdd;
+  color: #d9534f;
+  border: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .gofind-presentation img {
+    width: 53%;
+  }
+
+  .gofind-presentation p {
+    margin: 2rem 3rem;
+  }
+
+  .gofind-presentation h2 {
+    font-size: 1.3rem;
+  }
+
+  .category .buttons button {
+    width: 40%;
+  }
+
+  .category img {
+    max-width: 100%;
+  }
+
+  .artisanat-left,
+  .photographie-right {
+    flex: 1 1 100%;
+    padding: 10px;
+  }
+
+  .exeption-container {
+    flex-direction: column;
+  }
+
+  .artisanat-left h2,
+  .photographie-right h2,
+  .category h2 {
+    font-size: 20px;
+  }
+
+  .artisanat-left p,
+  .photographie-right p {
+    font-size: 1rem;
+  }
+
+  .steps-container {
+    flex-direction: column;
+  }
+
+  .step-number {
+    font-size: 20px;
+  }
+
+  .step-image-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .step-description {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gofind-presentation img {
+    width: 55%;
+  }
+
+  .gofind-presentation p {
+    font-size: 0.9rem;
+  }
+
+  .gofind-presentation h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .artisanat-left,
+  .photographie-right {
+    padding: 5px;
+  }
+
+  .steps-container {
+    flex-direction: column;
+  }
+
+  .step-number {
+    font-size: 18px;
+  }
+
+  .step-image-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .step-description {
+    font-size: 13px;
+  }
+}

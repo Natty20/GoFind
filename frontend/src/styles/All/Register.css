@@ -1,0 +1,224 @@
+.register-form {
+  margin: 4rem 2rem;
+  display: flex;
+
+  /* height: 93vh; */
+  border-radius: 2rem;
+  border: 1px solid #ba3e40;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.left-panel,
+.right-panel {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel {
+  background-color: #fff;
+}
+
+.right-panel {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.text-center h4 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+#input {
+  /* width: 70% !important; */
+  padding: 5px;
+  border-radius: 30px;
+  border: 2px solid #f3dbdd;
+  margin: 5px;
+}
+
+.inputlable {
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+}
+
+.input-container .inputlable {
+  /* margin-bottom: 1rem; */
+  font-size: 15px;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.input-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Section de sélection des prestations */
+.prestations-container {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.prestations-container label {
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Style du select pour les prestations */
+.prestations-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.prestations-select:hover {
+  border-color: #888;
+}
+
+.prestations-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Conteneur des sous-prestations */
+.sous-prestations-container {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.sous-prestations-container label {
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Style des sous-prestations */
+.sous-prestations-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f5f5f5;
+  outline: none;
+  cursor: pointer;
+}
+
+.sous-prestations-select:hover {
+  border-color: #888;
+}
+
+.sous-prestations-select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Espacement entre chaque sous-prestation */
+.sous-prestations-container select {
+  margin-top: 5px;
+}
+
+/* Effet pour chaque option */
+.prestations-select option,
+.sous-prestations-select option {
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* Effet au survol */
+.prestations-select option:hover,
+.sous-prestations-select option:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* Ajustement pour les écrans mobiles */
+@media screen and (max-width: 768px) {
+  .prestations-container,
+  .sous-prestations-container {
+    padding: 10px;
+  }
+
+  .prestations-select,
+  .sous-prestations-select {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+.register-btn {
+  background-color: #ba3e40;
+  color: #fff;
+  border: 1px solid #ba3e40;
+  width: 186px;
+  padding: 10px;
+  border-radius: 30px;
+  font-size: 15px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background-color: #f3dbdd;
+  color: #ba3e40;
+  border: 1px solid #ba3e40;
+}
+
+.register-right-panel {
+  width: 70%;
+  background: #f3dbdd;
+  color: #ba3e40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+
+.register-right-panel,
+.devenirPro h4 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.register-right-panel p {
+  font-size: 16px;
+  line-height: 1.6;
+
+  /* max-width: 80%; */
+  /* text-align: center; */
+}
+
+.devenirPro {
+  margin: 2rem;
+}

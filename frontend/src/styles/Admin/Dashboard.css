@@ -1,0 +1,151 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ba3e40;
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background-color: #9c2e32;
+}
+
+/* --- Contenu principal --- */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* --- Carte contenant les données (remplace le tableau) --- */
+.data-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* --- Style de chaque carte --- */
+.data-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Informations des cartes --- */
+.data-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #333;
+}
+
+/* --- Boutons Modifier / Supprimer alignés à droite --- */
+.data-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button,
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.edit-button {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.delete-button {
+  background-color: #d9534f;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #ec971f;
+}
+
+.delete-button:hover {
+  background-color: #c9302c;
+}
+
+/* --- Message de chargement et gestion du texte --- */
+.loading-message,
+.no-data {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .menu-item {
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .data-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .data-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

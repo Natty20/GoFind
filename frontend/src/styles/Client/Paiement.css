@@ -1,0 +1,89 @@
+.note {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem 6rem;
+  margin: 4.6rem 0;
+  margin-bottom: 3rem !important;
+}
+
+.note p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Main Payment Section */
+.payment-container {
+  text-align: center;
+}
+
+.payment-container h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.payment-options label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: black;
+  text-align: justify;
+}
+
+.amount-section {
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.total-amount {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.confirm-button {
+  background-color: #c0392b;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.confirm-button:hover {
+  background-color: #a93226;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .note {
+    margin: 5.6rem 0rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .note {
+    margin: 4rem 0;
+    padding: 1rem 0;
+  }
+
+  .note p {
+    font-size: 0.75rem !important;
+    margin: 0;
+  }
+
+  .payment-container h2 {
+    font-size: 1rem;
+  }
+}
