@@ -9,16 +9,22 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_ENDPOINT = 'http://localhost:2000/api/prestations';
+  const apiUrl = 'http://localhost:2000/api/prestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
       try {
-        const response = await axios.get(API_ENDPOINT);
-        const data = Array.isArray(response.data)
-          ? response.data
-          : response.data.prestations || [];
-        setPrestations(data);
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          mode: 'cors', // Facultatif si ton backend gère déjà CORS
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setPrestations(Array.isArray(data) ? data : data.prestations || []);
       } catch (err) {
         console.error('❌ Erreur chargement prestations :', err);
         setError('Erreur lors du chargement des prestations.');
