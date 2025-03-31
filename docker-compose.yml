@@ -8,6 +8,9 @@ services:
       MONGO_URI: mongodb://mongo:27018/GF
     depends_on:
       - mongo
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
   frontend:
     build: ./frontend
