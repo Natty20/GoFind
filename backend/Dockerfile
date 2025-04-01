@@ -13,10 +13,6 @@ RUN npm install
 # Copier le reste du code source
 COPY . .
 
-# Corriger le problème de volumes qui écrase node_modules
-RUN mkdir -p /app/node_modules && chown -R node:node /app/node_modules
-USER node
-
 # Exposer le port du backend
 EXPOSE 2000
 

@@ -5,12 +5,11 @@ services:
     ports:
       - "2000:2000"
     environment:
-      MONGO_URI: mongodb://mongo:27018/GF
+      MONGO_URI: mongodb://mongo:27018/GoFind
     depends_on:
       - mongo
     volumes:
       - ./backend:/app
-      - /app/node_modules
 
   frontend:
     build: ./frontend

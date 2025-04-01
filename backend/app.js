@@ -17,15 +17,16 @@ const app = express();
 
 // Middleware CORS
 app.use(cors({
-    origin: 'http://localhost:3000', // Autorise les requêtes du frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
-    allowedHeaders: ['Content-Type', 'Authorization'], // Headers autorisés
+    origin: 'https://gofind.cloud', // Autorise les requêtes du frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 // Middlewares JSON & Logging
 app.use(express.json());
 app.use((req, res, next) => {
-    console.log(`📥 ${req.method} ${req.url}`);
+    // console.log(`📥 ${req.method} ${req.url}`);
     next();
 });
 
@@ -33,14 +34,13 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/prestataires", prestataireRoutes);
-console.log("✅ Routes prestations chargées");
 app.use('/api/prestations', categorieRoutes);
 app.use('/api/sousprestations', sousPrestationRoutes);
 app.use("/api/reservations", reservationRoutes);
 
 // Test route
 app.get('/', (req, res) => {
-    res.send('✅ API is running...');
+    res.send('✅ API pour le site en ligne is running...');
 });
 
 // Middleware de gestion des erreurs
@@ -49,7 +49,10 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: "Erreur interne du serveur" });
 });
 
+// Gestion des routes frontend pour les applications React (si nécessaire)
 app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
+// Redirige toutes les autres requêtes vers le fichier index.html pour un SPA
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
 });

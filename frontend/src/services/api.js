@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:2000/api'; 
+const API_URL = 'https://gofind.cloud/api'; 
+
 
 export const getPrestations = async () => {
   try {

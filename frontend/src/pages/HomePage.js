@@ -9,22 +9,17 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = 'http://localhost:2000/api/prestations';
+  // Utilisation de l'URL de production pour l'API
+  const apiUrl = 'https://gofind.cloud/api/prestations';
+  // const apiUrl = 'http://localhost:2000/api/prestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
       try {
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          mode: 'cors', // Facultatif si ton backend gère déjà CORS
-        });
-
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setPrestations(Array.isArray(data) ? data : data.prestations || []);
+        // Utilisation d'Axios pour les requêtes API
+        const response = await axios.get(apiUrl);
+        console.log(response.data);
+        setPrestations(response.data.prestations || []); // Assurez-vous que la réponse contient bien les données
       } catch (err) {
         console.error('❌ Erreur chargement prestations :', err);
         setError('Erreur lors du chargement des prestations.');
@@ -79,8 +74,7 @@ const HomePage = () => {
           en toute simplicité.
         </p>
         <Link to={'/prestation'}>
-          {' '}
-          <button className="cta-button">DÉCOUVRIR NOS PRESTATIONS</button>{' '}
+          <button className="cta-button">DÉCOUVRIR NOS PRESTATIONS</button>
         </Link>
       </section>
 
@@ -94,7 +88,6 @@ const HomePage = () => {
           <p>{presta.shortDescription}</p>
           <Link to={'/prestation'}>
             <div className="buttons">
-              <Link></Link>
               <button>SAVOIR +</button>
               <button id="exeption-2">RÉSERVER</button>
             </div>
@@ -196,7 +189,6 @@ const HomePage = () => {
               />
             </div>
             <Link to={'/prestation'}>
-              {' '}
               <p className="step-description">Choisissez votre prestation</p>
             </Link>
           </div>
@@ -212,7 +204,6 @@ const HomePage = () => {
               />
             </div>
             <Link to={'/profil'}>
-              {' '}
               <p className="step-description">Contactez votre prestataire</p>
             </Link>
           </div>
@@ -228,7 +219,6 @@ const HomePage = () => {
               />
             </div>
             <Link to={'/message'}>
-              {' '}
               <p className="step-description">Discuter dans le GoFind chat</p>
             </Link>
           </div>
