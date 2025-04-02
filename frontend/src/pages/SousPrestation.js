@@ -23,7 +23,7 @@ const SousPrestation = () => {
     const fetchSousPrestation = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/sousprestations/${id}`
+          `http://149.202.53.181:2000/api/sousprestations/${id}` // `http://localhost:2000/api/sousprestations/${id}`
         );
         const sousPrestationData = response.data.sousPrestation;
         setSousPrestation(sousPrestationData);
@@ -60,7 +60,7 @@ const SousPrestation = () => {
 
       try {
         const response = await axios.post(
-          'http://localhost:2000/api/prestataires/multiple',
+          'http://149.202.53.181:2000/api/prestataires/multiple', // 'http://localhost:2000/api/prestataires/multiple',
           {
             ids: prestataireIds,
           }
@@ -76,7 +76,7 @@ const SousPrestation = () => {
       if (!prestationId) return;
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/sousprestations/prestation/${prestationId}`
+          `http://149.202.53.181:2000/api/sousprestations/prestation/${prestationId}` // `http://localhost:2000/api/sousprestations/prestation/${prestationId}`
         );
 
         // enlever la sous-prestation actuelle
@@ -130,7 +130,7 @@ const SousPrestation = () => {
       <section className="main-section">
         <div className="image-container">
           <img
-            src={sousPrestation.profileImage || '/images/beza.jpg'}
+            src={sousPrestation.backgroundImage}
             alt={sousPrestation.shortDescription}
             className="main-image"
           />
@@ -149,10 +149,7 @@ const SousPrestation = () => {
             prestataires.map((prestataire) => (
               <div key={prestataire._id} className="prestataire-card">
                 <div className="prestataire-image">
-                  <img
-                    src={prestataire.image || '/images/beza.jpg'}
-                    alt={prestataire.nom}
-                  />
+                  <img src={prestataire.profilePicture} alt={prestataire.nom} />
                 </div>
                 <Link to={`/profil/${prestataire._id}`}>
                   <div className="prestataire-info">
@@ -178,7 +175,7 @@ const SousPrestation = () => {
               <div key={sousP._id} className="category-card">
                 <Link to={`/sous-prestation/${sousP._id}`}>
                   <img
-                    src={sousP.profileImage || '/images/beza.jpg'}
+                    src={sousP.profileImage}
                     alt={sousP.shortDescription}
                     className="category-image"
                   />

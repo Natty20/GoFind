@@ -19,7 +19,7 @@ const HomePage = () => {
         // Utilisation d'Axios pour les requêtes API
         const response = await axios.get(apiUrl);
         console.log(response.data);
-        setPrestations(response.data.prestations || []); // Assurez-vous que la réponse contient bien les données
+        setPrestations(response.data.prestations || []); // s'aasuer que la réponse contient bien les données
       } catch (err) {
         console.error('❌ Erreur chargement prestations :', err);
         setError('Erreur lors du chargement des prestations.');

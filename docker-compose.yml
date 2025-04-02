@@ -22,7 +22,7 @@ services:
     image: mongo
     command: mongod --port 27018
     ports:
-      - "27018:27018"  # Utiliser 27018 au lieu de 27017
+      - "27018:27018" # Utiliser 27018 au lieu de 27017
     volumes:
       - mongo-data:/data/db
 

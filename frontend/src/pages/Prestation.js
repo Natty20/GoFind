@@ -11,8 +11,8 @@ const Prestation = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_ENDPOINT = 'http://localhost:2000/api/prestations';
-  const SOUS_ENDPOINT = 'http://localhost:2000/api/sousprestations';
+  const API_ENDPOINT = 'http://149.202.53.181:2000/api/prestations';
+  const SOUS_ENDPOINT = 'http://149.202.53.181:2000/api/sousprestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
@@ -101,7 +101,7 @@ const Prestation = () => {
             <>
               <div className="hero">
                 <img
-                  src={prestationActive.profileImage || 'default.jpg'}
+                  src={prestationActive.backgroundImage}
                   alt={prestationActive.shortDescription}
                   className="hero-image"
                 />
@@ -126,8 +126,8 @@ const Prestation = () => {
                         className={`service-row ${index % 2 !== 0 ? 'reverse' : ''}`}
                       >
                         <img
-                          src={sous.profileImage || 'default.jpg'}
-                          alt={sous.shortDescription || 'Nom'}
+                          src={sous.profileImage}
+                          alt={sous.shortDescription}
                           className="service-image"
                         />
                         <div className="service-text">
