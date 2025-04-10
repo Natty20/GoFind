@@ -133,7 +133,6 @@ const getClientById = async (req, res) => {
   }
 };
 
-// update user by id
 const updateClient = async (req, res) => {
   try {
     const { id } = req.params; // ID from URL parameter
@@ -166,7 +165,6 @@ const updateClient = async (req, res) => {
   }
 };
 
-// delete a user
 const deleteClient = async (req, res) => {
   try {
     const { id } = req.params;

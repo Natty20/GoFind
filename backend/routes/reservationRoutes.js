@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {
+  authenticateUser,
+  authorizeAdmin,
+} = require("../middlewares/authMiddleware");
+const {
   getReservationsByClient,
   createReservation,
   getReservationsByPrestataire,
@@ -8,6 +12,7 @@ const {
   acceptReservation,
   declineReservation,
   getAllReservations,
+  getReservationById,
 } = require("../controllers/reservationController");
 
 //Créer une réservation
@@ -20,7 +25,8 @@ router.put("/:reservationId/accept", acceptReservation);
 router.put("/:reservationId/decline", declineReservation);
 
 // pour les admins
-router.get("/all", getAllReservations);
-router.delete("/:reservationId", deleteReservation);
+router.get("/all", getAllReservations, authenticateUser, authorizeAdmin);
+router.delete("/:id", deleteReservation, authorizeAdmin, authenticateUser);
+router.get("/:id", getReservationById, authorizeAdmin, authenticateUser);
 
 module.exports = router;

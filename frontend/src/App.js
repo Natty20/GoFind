@@ -23,6 +23,9 @@ import RdvListe from './pages/RdvListe';
 import ProfilClient from './pages/ProfilClient';
 import CancelPage from './pages/CancelPage';
 import SuccessPage from './pages/SuccessPage';
+import AdminAddPage from './pages/AdminAddPage';
+import AdminEditPage from './pages/AdminEditPage';
+import AdminDetailsPage from './pages/AdminDetailsPage';
 
 function App() {
   return (
@@ -45,11 +48,21 @@ function App() {
             <Route path="/message" element={<Message />} />
             <Route path="/confirmation" element={<Confirmation />} />
             <Route path="/paiement" element={<Paiement />} />
+            <Route path="/success" element={<SuccessPage />} />
+            <Route path="/admin/:entity/ajouter" element={<AdminAddPage />} />
+            <Route
+              path="/admin/:entity/modifier/:id"
+              element={<AdminEditPage />}
+            />
+            <Route
+              path="/admin/:entity/details/:id"
+              element={<AdminDetailsPage />}
+            />
+
             <Route path="/demande_envoye" element={<Demande />} />
             <Route path="/liste_de_rdv/:id" element={<RdvListe />} />
             <Route path="/mon-profil" element={<ProfilClient />} />
             <Route path="/cancel" element={<CancelPage />} />
-            <Route path="/success" element={<SuccessPage />} />
           </Routes>
           <Footer />
         </Router>

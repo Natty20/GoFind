@@ -17,10 +17,10 @@ const Confirmation = () => {
   const [description, setDescription] = useState('');
   const [selectedPrestations, setSelectedPrestations] = useState([]);
 
-  // 🔍 Vérification des données reçues
-  // console.log('📌 Données reçues :', location.state);
+  // Vérification des données reçues
+  // console.log('Données reçues :', location.state);
 
-  // Met à jour `selectedPrestations` avec les données du prestataire sélectionné
+  // Mis à jour `selectedPrestations` avec les données du prestataire sélectionné
   useEffect(() => {
     if (prestataire?.selectedPrestations) {
       const formattedPrestations = prestataire.selectedPrestations.map(
@@ -40,7 +40,7 @@ const Confirmation = () => {
       );
 
       setSelectedPrestations(formattedPrestations);
-      // console.log('📦 Prestations sélectionnées :', formattedPrestations);
+      // console.log('Prestations sélectionnées :', formattedPrestations);
     } else {
       console.warn(
         'Aucune prestation sélectionnée ou prestataire inexistant !'
@@ -56,7 +56,7 @@ const Confirmation = () => {
         client,
         selectedDate,
         selectedHour,
-        prestations: selectedPrestations, // ✅ Envoi des prestations sélectionnées
+        prestations: selectedPrestations,
         description,
         montant: 30,
       },

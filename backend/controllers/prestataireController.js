@@ -174,7 +174,6 @@ const getPrestataireById = async (req, res) => {
   }
 };
 
-// update
 const updatePrestataire = async (req, res) => {
   try {
     const { id } = req.params;

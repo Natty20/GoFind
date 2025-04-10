@@ -18,13 +18,13 @@ function AdminLogin() {
 
     try {
       const response = await axios.post(
-        'http://localhost:2000/api/admin/login',
+        'http://149.202.53.181:2000/api/admin/login',
         { email, password }
       );
       const { token, admin } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('admin', JSON.stringify(admin));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('admin', JSON.stringify(admin));
       setAdmin(admin);
 
       navigate('/dashboard');

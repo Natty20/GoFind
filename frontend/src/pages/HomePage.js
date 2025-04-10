@@ -9,19 +9,16 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Utilisation de l'URL de production pour l'API
-  const apiUrl = 'https://gofind.cloud/api/prestations';
+  const apiUrl = 'http://149.202.53.181:2000/api/prestations';
   // const apiUrl = 'http://localhost:2000/api/prestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
       try {
-        // Utilisation d'Axios pour les requêtes API
         const response = await axios.get(apiUrl);
-        console.log(response.data);
         setPrestations(response.data.prestations || []); // s'aasuer que la réponse contient bien les données
       } catch (err) {
-        console.error('❌ Erreur chargement prestations :', err);
+        console.error('Erreur chargement prestations :', err);
         setError('Erreur lors du chargement des prestations.');
       } finally {
         setLoading(false);

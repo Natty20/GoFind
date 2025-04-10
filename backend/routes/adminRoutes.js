@@ -4,6 +4,7 @@ const {
   login,
   deleteAdmin,
   getAllAdmins,
+  getAdminById,
 } = require("../controllers/adminController");
 const {
   authenticateUser,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
+router.get("/:id", getAdminById, authorizeAdmin, authenticateUser);
 router.get("/", authenticateUser, authorizeAdmin, getAllAdmins);
 router.delete("/:id", authenticateUser, authorizeAdmin, deleteAdmin);
 

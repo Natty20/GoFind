@@ -44,7 +44,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        'http://localhost:2000/api/auth/register',
+        'http://149.202.53.181:2000/api/auth/register',
         {
           nom: formData.nom,
           prenom: formData.prenom,
@@ -58,9 +58,8 @@ function Register() {
 
       const { token, client } = response.data;
 
-      // 🔐 Stockage des informations utilisateur
-      localStorage.setItem('token', token);
-      localStorage.setItem('client', JSON.stringify(client));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('client', JSON.stringify(client));
       setClient(client);
 
       setSuccess('Inscription réussie ! Redirection...');
@@ -84,13 +83,11 @@ function Register() {
 
         <p>Créez votre compte pour accéder à nos services</p>
 
-        {/* ✅ Affichage des erreurs ou succès */}
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
         )}
 
-        {/* ✅ Ajout du formulaire */}
         <form onSubmit={handleRegister} className="input-container">
           <p className="inputlable">Nom: </p>
           <MDBInput

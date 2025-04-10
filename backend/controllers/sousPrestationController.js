@@ -1,7 +1,6 @@
 const SousPrestation = require("../models/SousPrestation");
 const Prestation = require("../models/Prestation");
 
-// get all
 const getAllSousPrestations = async (req, res) => {
   try {
     const sousprestations = await SousPrestation.find();
@@ -18,7 +17,6 @@ const getAllSousPrestations = async (req, res) => {
   }
 };
 
-// get by id
 const getSousPrestationById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,7 +40,6 @@ const getSousPrestationById = async (req, res) => {
   }
 };
 
-// add new
 const addSousPrestation = async (req, res) => {
   try {
     const { prestationId } = req.params;
@@ -86,7 +83,6 @@ const addSousPrestation = async (req, res) => {
   }
 };
 
-// update
 const updateSousPrestation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -129,7 +125,6 @@ const updateSousPrestation = async (req, res) => {
   }
 };
 
-// delete
 const deleteSousPrestation = async (req, res) => {
   try {
     const { id } = req.params;

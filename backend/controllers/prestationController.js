@@ -63,7 +63,25 @@ const getAllPrestations = async (req, res) => {
   }
 };
 
-// update user by id
+const getPrestationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const prestation = await Prestation.findById(id);
+
+    if (!prestation) {
+      return res.status(404).json({ message: "Prestation non trouvée" });
+    }
+
+    res.status(200).json({
+      message: "Prestation récupérée avec succès!",
+      prestation,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération du prestation :", error);
+    res.status(500).json({ message: "Erreur serveur! c est impossible" });
+  }
+};
+
 const updatePrestation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -104,7 +122,6 @@ const updatePrestation = async (req, res) => {
   }
 };
 
-// delete a prestation
 const deletePrestation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -126,5 +143,6 @@ module.exports = {
   createPrestation,
   updatePrestation,
   getAllPrestations,
+  getPrestationById,
   deletePrestation,
 };

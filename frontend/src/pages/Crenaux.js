@@ -25,7 +25,7 @@ function Crenaux() {
   const [client, setClient] = useState(null);
 
   useEffect(() => {
-    const storedClient = JSON.parse(localStorage.getItem('client'));
+    const storedClient = JSON.parse(sessionStorage.getItem('client'));
     if (storedClient) {
       setClient(storedClient);
     }
@@ -36,7 +36,7 @@ function Crenaux() {
       const fetchPrestataire = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:2000/api/prestataires/${id}`
+            `http://149.202.53.181:2000/api/prestataires/${id}`
           );
           setPrestataire(response.data.prestataire);
         } catch (error) {

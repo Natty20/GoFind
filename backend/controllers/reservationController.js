@@ -89,6 +89,25 @@ const getAllReservations = async (req, res) => {
   }
 };
 
+const getReservationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const reservation = await Reservation.findById(id);
+
+    if (!reservation) {
+      return res.status(404).json({ message: "Réservation non trouvée" });
+    }
+
+    res.status(200).json({
+      message: "Réservation récupérée avec succès!",
+      reservation,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération de la réservation :", error);
+    res.status(500).json({ message: "Erreur serveur! c est impossible" });
+  }
+};
+
 const getReservationsByClient = async (req, res) => {
   try {
     const { clientId } = req.params;
@@ -193,6 +212,7 @@ const declineReservation = async (req, res) => {
 module.exports = {
   createReservation,
   getAllReservations,
+  getReservationById,
   getReservationsByClient,
   getReservationsByPrestataire,
   deleteReservation,

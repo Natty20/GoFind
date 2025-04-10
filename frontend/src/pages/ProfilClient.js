@@ -8,7 +8,7 @@ const ClientProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const clientId = localStorage.getItem('clientId'); // ✅ Récupérer l'ID du client stocké
+  const clientId = sessionStorage.getItem('clientId'); // ✅ Récupérer l'ID du client stocké
   console.log('Client ID récupéré :', clientId);
 
   useEffect(() => {
@@ -21,9 +21,9 @@ const ClientProfile = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/auth/clients/${clientId}`
+          `http://149.202.53.181:2000/api/auth/clients/${clientId}`
         );
-        setClient(response.data.client); // ✅ `client` est bien dans `response.data.client`
+        setClient(response.data.client);
         console.log('Données du client récupérées :', response.data.client);
       } catch (err) {
         setError('Erreur lors du chargement des informations.');

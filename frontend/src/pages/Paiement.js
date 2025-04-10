@@ -28,7 +28,7 @@ const PaymentPage = () => {
       const stripe = await stripePromise;
 
       const { data } = await axios.post(
-        'http://localhost:2000/api/create-checkout-session',
+        'http://149.202.53.181:2000/api/stripe/create-checkout-session',
         {
           montant,
           client,
@@ -55,7 +55,7 @@ const PaymentPage = () => {
 
   // const [selectedPayment, setSelectedPayment] = useState('');
 
-  // console.log('📌 Données reçues :', location.state);
+  // console.log('Données reçues :', location.state);
 
   // const handlePaymentChange = (e) => {
   //   setSelectedPayment(e.target.value);
@@ -70,7 +70,7 @@ const PaymentPage = () => {
   //   try {
   //     if (!Array.isArray(prestations)) {
   //       console.error(
-  //         "❌ 'prestations' doit être un tableau valide",
+  //         "'prestations' doit être un tableau valide",
   //         prestations
   //       );
   //       alert(
@@ -122,7 +122,7 @@ const PaymentPage = () => {
   //       alert('Problème avec la réservation. Vérifiez les informations.');
   //     }
   //   } catch (error) {
-  //     console.error('❌ Erreur lors du paiement :', error);
+  //     console.error('Erreur lors du paiement :', error);
   //     alert('Une erreur est survenue. Veuillez réessayer.');
   //   }
   // };
@@ -165,7 +165,7 @@ const PaymentPage = () => {
         </div>
 
         <button className="confirm-button" onClick={handleStripePayment}>
-          {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
+          {loading ? 'Paiement en cours...' : 'Confirmer et Payer'}
         </button>
       </main>
     </div>

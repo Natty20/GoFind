@@ -18,13 +18,13 @@ function PrestaLogin() {
 
     try {
       const response = await axios.post(
-        'http://localhost:2000/api/prestataires/login',
+        'http://149.202.53.181:2000/api/prestataires/login',
         { email, password }
       );
       const { token, prestataire } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
 
       navigate('/');

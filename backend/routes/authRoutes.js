@@ -16,7 +16,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.get("/clients", authenticateUser, authorizeAdmin, getAllClients);
-router.get("/clients/:id", getClientById);
+router.get("/:id", getClientById);
 router.put(
   "/:id",
   authenticateUser,

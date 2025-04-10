@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Home,
   Users,
@@ -32,9 +33,9 @@ const menuItems = [
     endpoint: '/sousprestations',
   },
   {
-    name: 'Réservations',
+    name: 'reservations',
     icon: <Package size={20} />,
-    endpoint: '/reservations',
+    endpoint: '/reservations/all',
   },
   { name: 'Paiements', icon: <CreditCard size={20} />, endpoint: '/paiements' },
   { name: 'Images', icon: <Image size={20} />, endpoint: '/images' },
@@ -42,7 +43,16 @@ const menuItems = [
   { name: 'Paramètres', icon: <Settings size={20} />, endpoint: '/parametres' },
 ];
 
-export default function Dashboard() {
+const entityToEndpoint = {
+  clients: 'auth',
+  admins: 'admin',
+  prestations: 'prestations',
+  sousprestations: 'sousprestations',
+  prestataires: 'prestataires',
+};
+
+const Dashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(menuItems[0].name);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,11 +68,10 @@ export default function Dashboard() {
         return;
       }
 
-      const apiUrl = `http://localhost:2000/api${activeItem.endpoint}`;
-      // console.log('🔍 Requête envoyée à :', apiUrl);
+      const apiUrl = `http://149.202.53.181:2000/api${activeItem.endpoint}`;
 
       try {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
 
         const response = await fetch(apiUrl, {
           method: 'GET',
@@ -72,21 +81,23 @@ export default function Dashboard() {
           },
         });
 
-        // console.log('📡 API Status:', response.status);
-
         if (!response.ok) {
           throw new Error(`Erreur ${response.status}: ${response.statusText}`);
         }
 
         const result = await response.json();
-        // console.log('✅ Données reçues :', result);
 
-        const dataKey = Object.keys(result).find((key) =>
-          Array.isArray(result[key])
-        );
-        setData(dataKey ? result[dataKey] : []);
+        // Si la réponse est un tableau, on le set direct dans data
+        if (Array.isArray(result)) {
+          setData(result);
+        } else {
+          const dataKey = Object.keys(result).find((key) =>
+            Array.isArray(result[key])
+          );
+          setData(dataKey ? result[dataKey] : []);
+        }
       } catch (error) {
-        console.error('❌ Erreur de récupération :', error);
+        console.error('Erreur de récupération :', error);
         setData([]);
       } finally {
         setLoading(false);
@@ -97,11 +108,11 @@ export default function Dashboard() {
   }, [activeTab, refresh]);
 
   const handleAdd = () => {
-    alert(`Ajouter un nouvel élément dans ${activeTab}`);
+    navigate(`/admin/${activeTab}/ajouter`);
   };
 
   const handleEdit = (id) => {
-    alert(`Modifier l'élément avec l'ID: ${id}`);
+    navigate(`/admin/${activeTab}/modifier/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -109,7 +120,7 @@ export default function Dashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:2000/api/reservation/${activeTab}/${id}`,
+        `http://149.202.53.181:2000/api${entityToEndpoint}/${id}`,
         {
           method: 'DELETE',
         }
@@ -119,9 +130,9 @@ export default function Dashboard() {
         throw new Error(`Erreur ${response.status}: ${response.statusText}`);
       }
 
-      setRefresh(!refresh); // Force le rechargement
+      setRefresh(!refresh);
     } catch (error) {
-      console.error('❌ Erreur lors de la suppression :', error);
+      console.error('Erreur lors de la suppression :', error);
       alert('Erreur lors de la suppression.');
     }
   };
@@ -227,6 +238,45 @@ export default function Dashboard() {
                             <strong>Catégorie:</strong> {item.prestation}
                           </span>
                         </>
+                      ) : activeTab === 'admins' ? (
+                        <>
+                          <span>
+                            <strong>Nom:</strong> {item.nom}
+                          </span>
+                          <span>
+                            <strong>Prenom :</strong> {item.prenom}
+                          </span>
+                          <span>
+                            <strong>Email :</strong> {item.email}
+                          </span>
+                        </>
+                      ) : activeTab === 'admins' ? (
+                        <>
+                          <span>
+                            <strong>Nom:</strong> {item.nom}
+                          </span>
+                          <span>
+                            <strong>Prenom :</strong> {item.prenom}
+                          </span>
+                          <span>
+                            <strong>Email :</strong> {item.email}
+                          </span>
+                        </>
+                      ) : activeTab === 'reservations' ? (
+                        <>
+                          <span>
+                            <strong>Id:</strong> {item._id}
+                          </span>
+                          <span>
+                            <strong>Client:</strong> {item.client}
+                          </span>
+                          <span>
+                            <strong>Prestataire:</strong> {item.prestataire}
+                          </span>
+                          <span>
+                            <strong>Description:</strong> {item.description}
+                          </span>
+                        </>
                       ) : (
                         <span>{JSON.stringify(item, null, 2)}</span>
                       )}
@@ -235,17 +285,25 @@ export default function Dashboard() {
                     <div className="data-actions">
                       <button
                         className="edit-button"
-                        onClick={() => handleEdit(item.id)}
+                        onClick={() => handleEdit(item._id)}
                         aria-label={`Modifier ${item.nom}`}
                       >
                         <Edit size={16} /> Modifier
                       </button>
                       <button
                         className="delete-button"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handleDelete(item._id)}
                         aria-label={`Supprimer ${item.nom}`}
                       >
                         <Trash size={16} /> Supprimer
+                      </button>
+                      <button
+                        className="details-button"
+                        onClick={() =>
+                          navigate(`/admin/${activeTab}/details/${item._id}`)
+                        }
+                      >
+                        Voir
                       </button>
                     </div>
                   </div>
@@ -259,4 +317,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

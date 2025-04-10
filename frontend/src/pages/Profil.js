@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const fetchPrestataire = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/prestataires/${id}`
+          `http://149.202.53.181:2000/api/prestataires/${id}`
         );
         setPrestataire(response.data.prestataire);
       } catch (err) {
@@ -27,10 +27,10 @@ const ProfilePage = () => {
     const fetchPrestationsEtSousPrestations = async () => {
       try {
         const prestationsRes = await axios.get(
-          'http://localhost:2000/api/prestations'
+          'http://149.202.53.181:2000/api/prestations'
         );
         const sousPrestationsRes = await axios.get(
-          'http://localhost:2000/api/sousprestations'
+          'http://149.202.53.181:2000/api/sousprestations'
         );
 
         const prestationsMap = prestationsRes.data.prestations.reduce(

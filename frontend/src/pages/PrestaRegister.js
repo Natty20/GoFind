@@ -11,12 +11,13 @@ const PrestataireRegister = () => {
 
   const [formData, setFormData] = useState({
     nom: '',
+    prenom: '',
+    email: '',
+    password: '',
     phone: '',
     address: '',
     profilePicture: null,
     selectedPrestations: [],
-    email: '',
-    password: '',
     confirmPassword: '',
   });
 
@@ -29,7 +30,7 @@ const PrestataireRegister = () => {
   // Charger les prestations et sous-prestations depuis l'API
   useEffect(() => {
     axios
-      .get('http://localhost:2000/api/prestations')
+      .get('http://149.202.53.181:2000/api/prestations')
       .then((response) => {
         setPrestations(response.data.prestations);
         const sousPrestationsMap = {};
@@ -95,11 +96,10 @@ const PrestataireRegister = () => {
     try {
       const data = new FormData();
       data.append('nom', formData.nom);
+      data.append('prenom', formData.prenom);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
-      if (formData.profilePicture) {
-        data.append('profilePicture', formData.profilePicture);
-      }
+      data.append('profilePicture', formData.profilePicture);
       data.append('email', formData.email);
       data.append('password', formData.password);
 
@@ -112,11 +112,8 @@ const PrestataireRegister = () => {
       );
 
       data.append('selectedPrestations', JSON.stringify(formattedPrestations));
-
-      console.log('📤 Données envoyées :', Object.fromEntries(data.entries())); // Debug
-
       const response = await axios.post(
-        'http://localhost:2000/api/prestataires/register',
+        'http://149.202.53.181:2000/api/prestataires/register',
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -125,8 +122,8 @@ const PrestataireRegister = () => {
 
       const { token, prestataire } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
 
       setSuccess('Inscription réussie ! Redirection...');

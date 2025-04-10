@@ -1,6 +1,6 @@
 describe('Test sur la page Prestation', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('https://gofind.cloud/');
     cy.contains('DÉCOUVRIR NOS PRESTATIONS').click();
     cy.url().should('include', '/prestation');
   });

@@ -18,14 +18,14 @@ function LoginForm() {
 
     try {
       const response = await axios.post(
-        'http://localhost:2000/api/auth/login',
+        'http://149.202.53.181:2000/api/auth/login',
         { email, password }
       );
       const { token, client } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('clientId', client._id);
-      localStorage.setItem('client', JSON.stringify(client));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('clientId', client._id);
+      sessionStorage.setItem('client', JSON.stringify(client));
       setClient(client); // ✅ Met à jour globalement le client
 
       navigate('/');

@@ -61,7 +61,6 @@ const register = async (req, res) => {
   }
 };
 
-// Login
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -92,6 +91,25 @@ const login = async (req, res) => {
     res
       .status(500)
       .json({ message: "Erreur serveur lors de votre connexion", error });
+  }
+};
+
+const getAdminById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admin = await Admin.findById(id);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin non trouvée" });
+    }
+
+    res.status(200).json({
+      message: "Admin récupérée avec succès!",
+      admin,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'admin :", error);
+    res.status(500).json({ message: "Erreur serveur! c est impossible" });
   }
 };
 
@@ -128,5 +146,6 @@ module.exports = {
   login,
   register,
   getAllAdmins,
+  getAdminById,
   deleteAdmin,
 };

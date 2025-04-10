@@ -16,7 +16,7 @@ const ListeRendezVous = () => {
     const fetchRendezVous = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/reservations/client/${user.clientId}`
+          `http://149.202.53.181:2000/api/reservations/client/${user.clientId}`
         );
         setRendezVous(response.data);
         setLoading(false);
@@ -41,7 +41,7 @@ const ListeRendezVous = () => {
     return <div>{error}</div>;
   }
 
-  // Séparer les rendez-vous à venir et terminés
+  // séparer les rendez-vous à venir et terminés
   const upcomingRendezVous = rendezVous.filter(
     (rdv) => new Date(rdv.date) > new Date()
   );

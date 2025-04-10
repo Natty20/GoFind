@@ -1,30 +1,76 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../styles/Client/Demande.css';
 
 const SuccessPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const sessionId = new URLSearchParams(location.search).get('session_id');
+  const navigate = useNavigate();
+  const {
+    client,
+    prestataire,
+    selectedPayment = 'Carte via Stripe',
+    montant,
+    selectedDate,
+  } = location.state || {};
+
+  const handleGoToPrestation = () => {
+    navigate('/prestation');
+  };
+
+  const handleGoToReservations = () => {
+    navigate(`/liste_de_rdv/${client._id}`, {
+      state: {
+        client,
+        prestataire,
+        selectedPayment,
+        montant,
+        selectedDate,
+      },
+    });
+  };
 
   useEffect(() => {
-    if (sessionId) {
-      axios
-        .get(
-          `http://localhost:2000/api/confirm-payment?session_id=${sessionId}`
-        )
-        .catch((error) => {
-          console.error('Erreur de confirmation:', error);
-          navigate('/cancel');
-        });
-    }
-  }, [sessionId, navigate]);
+    setTimeout(() => {
+      navigate('/success');
+    }, 5000);
+  }, [navigate]);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '100px' }}>
-      <h1 style={{ color: 'green' }}>Paiement réussi ✅</h1>
-      <p>Redirection en cours...</p>
-    </div>
+    <main className="demande-envoye">
+      <div className="demande-envoyee-container">
+        <div className="icon">
+          <div className="circle">
+            <span>&#10004;</span>
+          </div>
+        </div>
+        <div className="message">
+          <h2>Paiement réussi !!</h2>
+          <p>Votre rendez-vous a été confirmé!</p>
+        </div>
+        <div className="paiment-details">
+          <div className="paiement-method">
+            <p>Mode De Paiement:</p>
+            <p>
+              <strong>{selectedPayment || 'Non spécifié'}</strong>
+            </p>
+          </div>
+          <div className="paiement-date">
+            <p>Date:</p>
+            <p>
+              <strong>{selectedDate || 'Non définie'}</strong>
+            </p>
+          </div>
+        </div>
+        <div className="actions">
+          <button className="prestations" onClick={handleGoToPrestation}>
+            Voir Nos Prestations
+          </button>
+          <button className="rendez-vous" onClick={handleGoToReservations}>
+            Voir Mes Rendez-Vous
+          </button>
+        </div>
+      </div>
+    </main>
   );
 };
 
