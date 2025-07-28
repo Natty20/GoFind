@@ -39,9 +39,8 @@ function LoginForm() {
       <div className="left-panel">
         <div className="text-center">
           <img
-            src="/images/GF-logo.png"
-            style={{ width: '120px' }}
-            alt="logo"
+            src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
+            alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
           <h4>GoFind ton plaisir près de chez toi</h4>
         </div>
