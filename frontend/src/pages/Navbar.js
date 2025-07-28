@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="navbar-logo">
             <Link to="/">
               <img
-                src="/images/GF-logo.png"
+                <img src={`${process.env.PUBLIC_URL}/images/GF-logo.png`} alt="GoFind Logo - Plateforme de mise en relation entre clients et prestataires" />
                 alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
               />
             </Link>
