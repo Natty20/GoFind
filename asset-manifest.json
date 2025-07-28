@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/GoFind/static/css/main.b9246782.css",
+    "main.js": "/GoFind/static/js/main.dee01d22.js",
+    "static/js/488.e75445ad.chunk.js": "/GoFind/static/js/488.e75445ad.chunk.js",
+    "index.html": "/GoFind/index.html",
+    "main.b9246782.css.map": "/GoFind/static/css/main.b9246782.css.map",
+    "main.dee01d22.js.map": "/GoFind/static/js/main.dee01d22.js.map",
+    "488.e75445ad.chunk.js.map": "/GoFind/static/js/488.e75445ad.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b9246782.css",
+    "static/js/main.dee01d22.js"
+  ]
+}
