@@ -18,7 +18,7 @@ RUN mkdir -p /app/node_modules && chown -R node:node /app/node_modules
 USER node
 
 # Exposer le port du backend
-EXPOSE 2000
+EXPOSE 5000
 
 # Démarrer le backend
 CMD ["npm", "start"]
