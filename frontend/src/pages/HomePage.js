@@ -9,14 +9,15 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = 'http://localhost:5000/api/prestations';
+  const apiUrl = 'https://gofind-backend.onrender.com/api/prestations';
+
 
   useEffect(() => {
     const fetchPrestations = async () => {
       try {
         const response = await fetch(apiUrl, {
           method: 'GET',
-          mode: 'cors', // Facultatif si ton backend gère déjà CORS
+          mode: 'cors',
         });
 
         if (!response.ok) {
