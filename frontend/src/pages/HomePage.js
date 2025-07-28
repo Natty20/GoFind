@@ -9,8 +9,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = 'https://gofind-backend.onrender.com/api/prestations';
-
+  const apiUrl = 'https://gofind-v9ee.onrender.com/api/prestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {

@@ -11,8 +11,8 @@ const Prestation = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_ENDPOINT = 'http://localhost:5000/api/prestations';
-  const SOUS_ENDPOINT = 'http://localhost:5000/api/sousprestations';
+  const API_ENDPOINT = 'https://gofind-v9ee.onrender.com/api/prestations';
+  const SOUS_ENDPOINT = 'https://gofind-v9ee.onrender.com/api/sousprestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
@@ -114,10 +114,10 @@ const Prestation = () => {
               </div>
 
               <section className="services">
-                <h2 className="services-title">
+                <h1 className="services-title">
                   DÉCOUVREZ NOS TYPES DE PRESTATION POUR{' '}
                   {activeCategory.toUpperCase()}
-                </h2>
+                </h1>
 
                 {sousPrestationsActive.length > 0 ? (
                   sousPrestationsActive.map((sous, index) => (
@@ -131,9 +131,9 @@ const Prestation = () => {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <h3>
+                          <h2>
                             {sous.nom ? sous.nom.toUpperCase() : 'Nom inconnu'}
-                          </h3>
+                          </h2>
                           <p>{sous.longDescription || 'Pas de description'}</p>
                         </div>
                       </div>
