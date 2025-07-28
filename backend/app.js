@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: "https://gihozo.github.io",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
