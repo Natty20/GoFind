@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://gihozo.github.io",
+    origin: "https://natty20.github.io/GoFind",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
