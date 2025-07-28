@@ -3,7 +3,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "2000:2000"
+      - "5000:5000"
     environment:
       MONGO_URI: mongodb://mongo:27018/GF
     depends_on:
@@ -15,7 +15,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "3000:80"
+      - "8080:80"
     depends_on:
       - backend
 
@@ -23,7 +23,7 @@ services:
     image: mongo
     command: mongod --port 27018
     ports:
-      - "27018:27018"  # Utiliser 27018 au lieu de 27017
+      - "27018:27018" # Utiliser 27018 au lieu de 27017
     volumes:
       - mongo-data:/data/db
 
