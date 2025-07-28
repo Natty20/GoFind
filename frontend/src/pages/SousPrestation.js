@@ -23,7 +23,7 @@ const SousPrestation = () => {
     const fetchSousPrestation = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/sousprestations/${id}`
+          `http://localhost:5000/api/sousprestations/${id}`
         );
         const sousPrestationData = response.data.sousPrestation;
         setSousPrestation(sousPrestationData);
@@ -60,7 +60,7 @@ const SousPrestation = () => {
 
       try {
         const response = await axios.post(
-          'http://localhost:2000/api/prestataires/multiple',
+          'http://localhost:5000/api/prestataires/multiple',
           {
             ids: prestataireIds,
           }
@@ -76,7 +76,7 @@ const SousPrestation = () => {
       if (!prestationId) return;
       try {
         const response = await axios.get(
-          `http://localhost:2000/api/sousprestations/prestation/${prestationId}`
+          `http://localhost:5000/api/sousprestations/prestation/${prestationId}`
         );
 
         // enlever la sous-prestation actuelle

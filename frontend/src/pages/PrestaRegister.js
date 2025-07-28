@@ -29,7 +29,7 @@ const PrestataireRegister = () => {
   // Charger les prestations et sous-prestations depuis l'API
   useEffect(() => {
     axios
-      .get('http://localhost:2000/api/prestations')
+      .get('http://localhost:5000/api/prestations')
       .then((response) => {
         setPrestations(response.data.prestations);
         const sousPrestationsMap = {};
@@ -116,7 +116,7 @@ const PrestataireRegister = () => {
       console.log('📤 Données envoyées :', Object.fromEntries(data.entries())); // Debug
 
       const response = await axios.post(
-        'http://localhost:2000/api/prestataires/register',
+        'http://localhost:5000/api/prestataires/register',
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -125,8 +125,8 @@ const PrestataireRegister = () => {
 
       const { token, prestataire } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
 
       setSuccess('Inscription réussie ! Redirection...');

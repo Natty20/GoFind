@@ -183,82 +183,40 @@ const AdminAddPage = () => {
     try {
       const config = entityToEndpoint[entity];
       if (!config) throw new Error('Endpoint inconnu!');
-
       const baseUrl = 'http://localhost:5000/api';
       const token = sessionStorage.getItem('token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      // Si c'est 'prestataires' et qu'on doit envoyer un fichier, on prépare un FormData
-      let payload;
-      let isFormData = false;
+      let payload = { ...formData };
 
       if (entity === 'prestataires') {
-        payload = new FormData();
-
-        // Ajoute tous les champs du formData (sauf selectedPrestations) dans FormData
-        for (const key in formData) {
-          if (key !== 'selectedPrestations' && formData[key] !== undefined) {
-            payload.append(key, formData[key]);
-          }
-        }
-
-        // On gère selectedPrestations qui doit être stringify car c'est un tableau d'objets
-        if (formData.selectedPrestations) {
-          const selectedPrestationsArray = (
-            formData.selectedPrestations || []
-          ).map((prestationId) => ({
+        payload.selectedPrestations = (formData.selectedPrestations || []).map(
+          (prestationId) => ({
             prestationId,
             selectedSousPrestations:
               selectedSousPrestations[prestationId] || [],
-          }));
-          payload.append(
-            'selectedPrestations',
-            JSON.stringify(selectedPrestationsArray)
-          );
-        }
+          })
+        );
+      }
 
-        // Si tu gères un fichier uploadé, assure-toi que c'est dans formData sous 'profilePicture' (par ex)
-        if (
-          formData.profilePicture &&
-          formData.profilePicture instanceof File
-        ) {
-          payload.append('profilePicture', formData.profilePicture);
-        }
-
-        isFormData = true;
-      } else if (entity === 'sousprestations') {
-        // Pour sousprestations on extrait prestationId et on retire du corps
+      if (entity === 'sousprestations') {
         const prestationId = formData.prestationId;
         if (!prestationId) throw new Error('prestationId requis');
 
+        // On retire prestationId du corps car il est dans l'URL
         const { prestationId: _, ...sousPrestationData } = formData;
 
-        payload = sousPrestationData;
+        // POST au lieu de PUT, comme tu veux "ajouter" une sous-prestation
+        await axios.post(
+          `${baseUrl}/sousprestations/${prestationId}`,
+          sousPrestationData,
+          { headers }
+        );
       } else {
-        // Cas standard pour les autres entités (json simple)
-        payload = { ...formData };
+        const url = `${baseUrl}/${config.url}`;
+        const method = config.method === 'put' ? axios.put : axios.post;
+        await method(url, payload, { headers });
       }
-
-      // Construction de l'url et méthode
-      let url;
-      let method;
-
-      if (entity === 'sousprestations') {
-        url = `${baseUrl}/sousprestations/${formData.prestationId}`;
-        method = axios.post;
-      } else {
-        url = `${baseUrl}/${config.url}`;
-        method = config.method === 'put' ? axios.put : axios.post;
-      }
-
-      // Headers adaptés au type de payload
-      let finalHeaders = { ...headers };
-      if (!isFormData) {
-        finalHeaders['Content-Type'] = 'application/json';
-      }
-      // Sinon axios gère automatiquement le Content-Type multipart/form-data avec FormData
-
-      await method(url, payload, { headers: finalHeaders });
 
       navigate('/dashboard');
     } catch (err) {

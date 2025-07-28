@@ -11,10 +11,10 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('client');
-    localStorage.removeItem('prestataire');
-    localStorage.removeItem('admin');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('client');
+    sessionStorage.removeItem('prestataire');
+    sessionStorage.removeItem('admin');
     setClient(null);
     setPrestataire(null);
     setAdmin(null);
@@ -55,13 +55,12 @@ const Navbar = () => {
             {role === 'client' && (
               <>
                 <Link to="/messages">Messages</Link>
-                <Link to="/">Recherche</Link>
               </>
             )}
 
             {role === 'prestataire' && (
               <>
-                <Link to="/demandes">Reservations</Link>
+                <Link to="/reservations">Reservations</Link>
               </>
             )}
 
@@ -95,7 +94,7 @@ const Navbar = () => {
               </div>
             ) : (
               /* sinon */
-              <Link to="/login">Compte</Link>
+              <Link to="/choix_compte">Compte</Link>
             )}
           </div>
         </div>

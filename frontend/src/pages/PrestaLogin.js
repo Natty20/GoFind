@@ -18,13 +18,15 @@ function PrestaLogin() {
 
     try {
       const response = await axios.post(
-        'http://localhost:2000/api/prestataires/login',
+        'http://localhost:5000/api/prestataires/login',
         { email, password }
       );
       const { token, prestataire } = response.data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('prestataireId', prestataire._id);
+
       setPrestataire(prestataire);
 
       navigate('/');
@@ -51,16 +53,15 @@ function PrestaLogin() {
         <form onSubmit={handleLogin} className="input-container">
           <p className="inputlable">Email :</p>
           <MDBInput
-            id="input"
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <p className="inputlable">Mot de passe :</p>
           <MDBInput
-            id="input"
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

@@ -1,10 +1,102 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Prestataire/ProfilPresta.css';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import axios from 'axios';
 
 const ProfilPresta = () => {
+  const [prestataire, setPrestataire] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [allPrestations, setAllPrestations] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
+
   const [activeTab, setActiveTab] = useState('images');
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
+
+  const prestataireId = sessionStorage.getItem('prestataireId');
+  const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchPrestataireData = async () => {
+      if (!prestataireId) {
+        setError('Prestataire non connecté...');
+        setLoading(false);
+        return;
+      }
+      if (prestataire) return;
+
+      try {
+        const [prestaRes, prestationsRes] = await Promise.all([
+          axios.get(`http://localhost:5000/api/prestataires/${prestataireId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`http://localhost:5000/api/prestations`),
+        ]);
+        setPrestataire(prestaRes.data.prestataire);
+        setFormData(prestaRes.data.prestataire);
+        setAllPrestations(prestationsRes.data.prestations);
+      } catch (err) {
+        setError('Erreur lors du chargement des informations.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrestataireData();
+  }, [prestataireId, prestataire]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSave = async () => {
+    try {
+      const payload = {
+        nom: formData.nom,
+        prenom: formData.prenom,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        profilePicture: formData.profilePicture,
+      };
+
+      if (formData.password && formData.password.trim() !== '') {
+        payload.password = formData.password;
+      }
+
+      await axios.put(
+        `http://localhost:5000/api/prestataires/${prestataireId}`,
+        payload
+      );
+      setPrestataire({ ...prestataire, ...payload });
+      setIsEditing(false);
+    } catch (err) {
+      console.error('Erreur lors de la mise à jour :', err);
+    }
+  };
+
+  const sousPrestationsChoisies = [];
+  prestataire?.selectedPrestations.forEach((item) => {
+    const prestation = allPrestations.find((p) => p._id === item.prestationId);
+    if (!prestation) return;
+
+    item.selectedSousPrestations.forEach((sousId) => {
+      const sous = prestation.sousPrestations.find((s) => s._id === sousId);
+      if (sous) {
+        sousPrestationsChoisies.push({
+          prestationNom: prestation.nom,
+          sousId: sous._id,
+          sousNom: sous.title,
+          description: sous.longDescription,
+          prix: sous.prix || '',
+        });
+      }
+    });
+  });
 
   const addTask = () => {
     if (inputValue.trim() !== '') {
@@ -19,103 +111,104 @@ const ProfilPresta = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      addTask();
-    }
+    if (e.key === 'Enter') addTask();
   };
+
+  if (loading) return <p>Chargement des informations...</p>;
+  if (error)
+    return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
+
   return (
     <main className="compte-presta">
       <section className="info">
         <div className="info-presta">
-          <img src="/images/gigi.jpg" alt="Profile" />
-          <div className="presta-names">
-            <h1>Ivana-Fiat IYAKAREMYE</h1>
-            <h2>Décoratrice et Organisatrice</h2>
-            <p className="span">32 Réalisations</p>
-            <p>6 rue Françoise d&#39;amboise, 28100 Dreux</p>
-            <p>
-              <strong> ivanafiat@gmail.com</strong>
-            </p>
-          </div>
-          <div className="description">
-            <h1>Ma description</h1>
-            <p>
-              {' '}
-              Morem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum, ac aliquet odio mattis. Morem
-              ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
-              libero et velit interdum, ac aliquet odio mattis. Morem ipsum
-              dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero
-              et velit interdum, ac aliquet odio mattis.
-            </p>
-            <button>Modifier</button>
-          </div>
-        </div>
-      </section>
+          <img
+            src={formData.profilePicture || 'https://via.placeholder.com/80'}
+            alt={`Photo de profil de ${formData.nom} ${formData.prenom}`}
+            className="profile-pic"
+          />
 
-      <section className="presta-services">
-        <div className="services-header">
-          <h1>Mes services</h1>
-          <button> Ajouter une services</button>
-        </div>
-        <div className="service-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom du service</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Décoration pour les marriages</td>
-                <td>
-                  Création d&#39;une ambiance élégante et personnalisée pour
-                  votre grand jour.
-                </td>
-                <td>à voir</td>
-                <td className="actions">
-                  <button className="edit-btn">Modifier</button>
-                  <button className="delete-btn">Supprimer</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Organisatrice de mariage</td>
-                <td>
-                  Création d&#39;une ambiance élégante et personnalisée pour
-                  votre grand jour.
-                </td>
-                <td></td>
-                <td className="actions">
-                  <button className="edit-btn">Modifier</button>
-                  <button className="delete-btn">Supprimer</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Decoration pour les anniversaires</td>
-                <td>
-                  Création d&#39;une ambiance élégante et personnalisée pour
-                  votre grand jour.
-                </td>
-                <td></td>
-                <td className="actions">
-                  <button className="edit-btn">Modifier</button>
-                  <button className="delete-btn">Supprimer</button>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Isaac Newton</td>
-                <td>200£</td>
-                <td className="actions">
-                  <button className="edit-btn">Modifier</button>
-                  <button className="delete-btn">Supprimer</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {!isEditing ? (
+            <div className="presta-names">
+              <h1>
+                {prestataire.nom} {prestataire.prenom}
+              </h1>
+              <h2>
+                Prestation(s){' '}
+                {prestataire.selectedPrestations
+                  .map((item) => {
+                    const prestation = allPrestations.find(
+                      (p) => p._id === item.prestationId
+                    );
+                    return prestation ? prestation.nom : null;
+                  })
+                  .filter(Boolean)
+                  .join(' • ')}
+              </h2>
+              <p className="span">32 Réalisations</p>
+              <p className="location">
+                <FaMapMarkerAlt />{' '}
+                {prestataire.address || 'Adresse non renseignée'}
+              </p>
+              <p>
+                <strong>Email : {prestataire.email}</strong>
+              </p>
+              <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
+              <div className="description">
+                <h1>Ma description</h1>
+                <p>Morem ipsum dolor sit amet...</p>
+                <button onClick={() => setIsEditing(true)}>Modifier</button>
+              </div>
+            </div>
+          ) : (
+            <div className="form-edit">
+              <input
+                name="nom"
+                value={formData.nom}
+                onChange={handleInputChange}
+                placeholder="Nom"
+              />
+              <input
+                name="prenom"
+                value={formData.prenom}
+                onChange={handleInputChange}
+                placeholder="Prénom"
+              />
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+              />
+              <input
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Téléphone"
+              />
+              <input
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Adresse"
+              />
+              <input
+                name="profilePicture"
+                value={formData.profilePicture}
+                onChange={handleInputChange}
+                placeholder="URL de la photo de profil"
+              />
+              <input
+                type="password"
+                name="password"
+                value={formData.password || ''}
+                onChange={handleInputChange}
+                placeholder="Nouveau mot de passe (optionnel)"
+              />
+              <button onClick={handleSave}>Enregistrer</button>
+              <button onClick={() => setIsEditing(false)}>Annuler</button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -271,3 +364,33 @@ const ProfilPresta = () => {
 };
 
 export default ProfilPresta;
+
+// const handleDeleteSousPrestation = async (sousIdToRemove) => {
+//   try {
+//     const updatedSelectedPrestations = prestataire.selectedPrestations.map(
+//       (item) => ({
+//         ...item,
+//         selectedSousPrestations: item.selectedSousPrestations.filter(
+//           (id) => id !== sousIdToRemove
+//         ),
+//       })
+//     );
+
+//     await axios.put(
+//       `http://localhost:5000/api/prestataires/${prestataireId}`,
+//       {
+//         selectedPrestations: updatedSelectedPrestations,
+//       }
+//     );
+
+//     setPrestataire({
+//       ...prestataire,
+//       selectedPrestations: updatedSelectedPrestations,
+//     });
+//   } catch (err) {
+//     console.error(
+//       'Erreur lors de la suppression de la sous-prestation :',
+//       err
+//     );
+//   }
+// };

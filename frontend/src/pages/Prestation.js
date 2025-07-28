@@ -11,8 +11,8 @@ const Prestation = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_ENDPOINT = 'http://localhost:2000/api/prestations';
-  const SOUS_ENDPOINT = 'http://localhost:2000/api/sousprestations';
+  const API_ENDPOINT = 'http://localhost:5000/api/prestations';
+  const SOUS_ENDPOINT = 'http://localhost:5000/api/sousprestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {

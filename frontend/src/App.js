@@ -23,6 +23,10 @@ import RdvListe from './pages/RdvListe';
 import ProfilClient from './pages/ProfilClient';
 import CancelPage from './pages/CancelPage';
 import SuccessPage from './pages/SuccessPage';
+import ChoixCompte from './pages/ChoixCompte';
+import Reservation from './pages/Reservation';
+import MonProfilRouter from './pages/MonProfilRouter';
+import ProfilPresta from './pages/ProfilPresta';
 
 function App() {
   return (
@@ -47,9 +51,14 @@ function App() {
             <Route path="/paiement" element={<Paiement />} />
             <Route path="/demande_envoye" element={<Demande />} />
             <Route path="/liste_de_rdv/:id" element={<RdvListe />} />
-            <Route path="/mon-profil" element={<ProfilClient />} />
+            {/* <Route path="/mon-profil" element={<ProfilClient />} /> */}
             <Route path="/cancel" element={<CancelPage />} />
             <Route path="/success" element={<SuccessPage />} />
+            <Route path="/choix_compte" element={<ChoixCompte />} />
+            <Route path="/reservations" element={<Reservation />} />
+            <Route path="/mon-profil" element={<MonProfilRouter />} />
+            <Route path="/profil-client" element={<ProfilClient />} />
+            <Route path="/profil-prestataire" element={<ProfilPresta />} />
           </Routes>
           <Footer />
         </Router>

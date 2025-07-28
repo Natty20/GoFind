@@ -1,31 +1,71 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 
-const SuccessPage = () => {
+const Success = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const sessionId = new URLSearchParams(location.search).get('session_id');
 
-  useEffect(() => {
-    if (sessionId) {
-      axios
-        .get(
-          `http://localhost:2000/api/confirm-payment?session_id=${sessionId}`
-        )
-        .catch((error) => {
-          console.error('Erreur de confirmation:', error);
-          navigate('/cancel');
-        });
+  // Récupère les infos passées via navigate(..., { state })
+  const reservationInfo = location.state;
+
+  const handleGoToPrestation = () => {
+    navigate('/prestation');
+  };
+
+  const handleGoToReservations = () => {
+    if (reservationInfo?.clientId) {
+      navigate(`/liste_de_rdv/${reservationInfo.clientId}`);
     }
-  }, [sessionId, navigate]);
+  };
+
+  if (!reservationInfo) {
+    return (
+      <main className="demande-envoye">
+        <div className="demande-envoyee-container">
+          <h2>Informations de réservation manquantes.</h2>
+          <p>
+            Vous pouvez revenir à la page d&apos;accueil ou refaire votre
+            demande.
+          </p>
+          <button onClick={() => navigate('/')}>Retour à l&apos;accueil</button>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '100px' }}>
-      <h1 style={{ color: 'green' }}>Paiement réussi ✅</h1>
-      <p>Redirection en cours...</p>
-    </div>
+    <main className="demande-envoye">
+      <div className="demande-envoyee-container">
+        <div className="icon">
+          <div className="circle">
+            <span>&#10004;</span>
+          </div>
+        </div>
+        <div className="message">
+          <h2>Paiement réussi ! 🎉</h2>
+          <p>Votre rendez-vous a été confirmé.</p>
+        </div>
+        <div className="paiment-details">
+          <div className="paiement-method">
+            <p>Mode de paiement :</p>
+            <strong>{reservationInfo.modePaiement || 'Carte'}</strong>
+          </div>
+          <div className="paiement-date">
+            <p>Date :</p>
+            <strong>{reservationInfo.date || 'Non définie'}</strong>
+          </div>
+        </div>
+        <div className="actions">
+          <button className="prestations" onClick={handleGoToPrestation}>
+            Voir Nos Prestations
+          </button>
+          <button className="rendez-vous" onClick={handleGoToReservations}>
+            Voir Mes Rendez-Vous
+          </button>
+        </div>
+      </div>
+    </main>
   );
 };
 
-export default SuccessPage;
+export default Success;

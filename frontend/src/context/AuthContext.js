@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [client, setClient] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('client')) || null;
+      return JSON.parse(sessionStorage.getItem('client')) || null;
     } catch {
       return null;
     }
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const [prestataire, setPrestataire] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('prestataire')) || null;
+      return JSON.parse(sessionStorage.getItem('prestataire')) || null;
     } catch {
       return null;
     }
@@ -23,30 +23,30 @@ export const AuthProvider = ({ children }) => {
 
   const [admin, setAdmin] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('admin')) || null;
+      return JSON.parse(sessionStorage.getItem('admin')) || null;
     } catch {
       return null;
     }
   });
 
   const loginClient = (userData) => {
-    localStorage.removeItem('prestataire');
-    localStorage.removeItem('admin');
-    localStorage.setItem('client', JSON.stringify(userData));
+    sessionStorage.removeItem('prestataire');
+    sessionStorage.removeItem('admin');
+    sessionStorage.setItem('client', JSON.stringify(userData));
     setClient(userData);
   };
 
   const loginPrestataire = (userData) => {
-    localStorage.removeItem('client');
-    localStorage.removeItem('admin');
-    localStorage.setItem('prestataire', JSON.stringify(userData));
+    sessionStorage.removeItem('client');
+    sessionStorage.removeItem('admin');
+    sessionStorage.setItem('prestataire', JSON.stringify(userData));
     setPrestataire(userData);
   };
 
   const loginAdmin = (userData) => {
-    localStorage.removeItem('client');
-    localStorage.removeItem('prestataire');
-    localStorage.setItem('admin', JSON.stringify(userData));
+    sessionStorage.removeItem('client');
+    sessionStorage.removeItem('prestataire');
+    sessionStorage.setItem('admin', JSON.stringify(userData));
     setAdmin(userData);
   };
 
@@ -59,9 +59,9 @@ export const AuthProvider = ({ children }) => {
       setClient(null);
       setPrestataire(null);
       setAdmin(null);
-      localStorage.removeItem('client');
-      localStorage.removeItem('prestataire');
-      localStorage.removeItem('admin');
+      sessionStorage.removeItem('client');
+      sessionStorage.removeItem('prestataire');
+      sessionStorage.removeItem('admin');
       alert('Vous avez été déconnecté pour inactivité.');
       window.location.href = '/login';
     }, INACTIVITY_TIMEOUT);

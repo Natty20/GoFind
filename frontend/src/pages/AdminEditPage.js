@@ -4,22 +4,33 @@ import { useEffect, useState } from 'react';
 export default function AdminEditPage() {
   const { entity, id } = useParams();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
 
   const entityToEndpoint = {
     clients: 'auth',
     prestations: 'prestations',
     sousprestations: 'sousprestations',
     prestataires: 'prestataires',
+    admins: 'admin',
+    reservations: 'reservations',
   };
+
   // 1. Fetch de l'élément à modifier
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
+        const endpoint = entityToEndpoint[entity];
+        if (!endpoint) {
+          alert('Entité non reconnue');
+          return;
+        }
+
         const response = await fetch(
-          `http://localhost:5000/api/${entityToEndpoint[entity]}/${id}`,
+          `http://localhost:5000/api/${endpoint}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -28,12 +39,14 @@ export default function AdminEditPage() {
         );
 
         if (!response.ok) throw new Error('Erreur de récupération');
+
         const data = await response.json();
 
         // Trouver la clé contenant les données
         const dataKey = Object.keys(data).find(
           (key) => typeof data[key] === 'object' && !Array.isArray(data[key])
         );
+
         setFormData(dataKey ? data[dataKey] : data);
       } catch (err) {
         console.error(err);
@@ -48,8 +61,16 @@ export default function AdminEditPage() {
 
   // 2. Gérer les changements dans le formulaire
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    let val = value;
+
+    if (type === 'number') {
+      val = Number(value);
+    } else if (type === 'checkbox') {
+      val = checked;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
   // 3. Envoyer les modifications
@@ -57,29 +78,29 @@ export default function AdminEditPage() {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('token');
-      const cleanedFormData = Object.fromEntries(
-        Object.entries(formData).filter(
-          ([_, value]) => value !== undefined && value !== ''
-        )
-      );
-      console.log('✅ Data envoyée :', cleanedFormData);
+      const endpoint = entityToEndpoint[entity];
+      if (!endpoint) {
+        alert('Entité non reconnue');
+        return;
+      }
 
       const response = await fetch(
-        `http://localhost:5000/api/${entityToEndpoint[entity]}/${id}`,
+        `http://localhost:5000/api/${endpoint}/${id}`,
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(cleanedFormData),
+          body: JSON.stringify(formData),
         }
       );
 
       if (!response.ok) throw new Error('Erreur de mise à jour');
 
+      setSuccess(true);
       alert('✅ Modification réussie !');
-      navigate(`/dashboard`);
+      navigate(`/dashboard/${entity}`);
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour');
@@ -89,7 +110,6 @@ export default function AdminEditPage() {
   // 4. Formulaire dynamique
   const renderFormFields = () => {
     return Object.entries(formData).map(([key, value]) => {
-      // on ne modifie pas les id ou champs système
       if (
         key === 'id' ||
         key === '_id' ||
@@ -97,16 +117,25 @@ export default function AdminEditPage() {
         key === 'updatedAt' ||
         key === 'password' ||
         typeof value === 'object'
-      )
+      ) {
         return null;
+      }
+
+      let inputType = 'text';
+
+      if (typeof value === 'number') inputType = 'number';
+      else if (typeof value === 'boolean') inputType = 'checkbox';
+      else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value))
+        inputType = 'datetime-local';
 
       return (
         <div key={key} style={{ marginBottom: '1rem' }}>
           <label style={{ display: 'block', fontWeight: 'bold' }}>{key}</label>
           <input
-            type="text"
+            type={inputType}
             name={key}
-            value={value ?? ''}
+            value={inputType === 'checkbox' ? undefined : (value ?? '')}
+            checked={inputType === 'checkbox' ? value : undefined}
             onChange={handleChange}
             style={{ padding: '8px', width: '100%' }}
           />
@@ -115,19 +144,35 @@ export default function AdminEditPage() {
     });
   };
 
-  if (loading) return <p>Chargement...</p>;
+  // 5. Affichage du loader
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <p>Chargement en cours...</p>
+        <div className="spinner" />
+      </div>
+    );
+  }
 
+  // 6. Affichage principal
   return (
     <div style={{ maxWidth: '600px', margin: 'auto' }}>
       <h2>Modifier un(e) {entity}</h2>
       <form onSubmit={handleSubmit}>
         {renderFormFields()}
-        <button
-          type="submit"
-          style={{ marginTop: '1rem', padding: '10px 20px' }}
-        >
-          Enregistrer
-        </button>
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          <button type="submit" style={{ padding: '10px 20px' }}>
+            Enregistrer
+          </button>
+          <button type="button" onClick={() => navigate('/dashboard')}>
+            Retour
+          </button>
+        </div>
+        {success && (
+          <p style={{ color: 'green', marginTop: '1rem' }}>
+            ✅ Modification réussie !
+          </p>
+        )}
       </form>
     </div>
   );

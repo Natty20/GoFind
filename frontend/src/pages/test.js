@@ -53,7 +53,7 @@ export default function Dashboard() {
       const activeItem = menuItems.find((item) => item.name === activeTab);
 
       if (activeItem) {
-        const apiUrl = `http://localhost:2000/api${activeItem.endpoint}`;
+        const apiUrl = `http://localhost:5000/api${activeItem.endpoint}`;
         console.log('🔍 Requête envoyée à :', apiUrl);
 
         try {

@@ -28,7 +28,7 @@ const PaymentPage = () => {
       const stripe = await stripePromise;
 
       const { data } = await axios.post(
-        'http://localhost:2000/api/create-checkout-session',
+        'http://localhost:5000/api/create-checkout-session',
         {
           montant,
           client,
@@ -105,7 +105,7 @@ const PaymentPage = () => {
 
   //     // Envoi de la requête POST
   //     await axios.post(
-  //       'http://localhost:2000/api/reservations/new',
+  //       'http://localhost:5000/api/reservations/new',
   //       reservationData
   //     );
   //     if (selectedPayment && montant && selectedDate) {

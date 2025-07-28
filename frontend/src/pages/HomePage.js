@@ -9,7 +9,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = 'http://localhost:2000/api/prestations';
+  const apiUrl = 'http://localhost:5000/api/prestations';
 
   useEffect(() => {
     const fetchPrestations = async () => {
