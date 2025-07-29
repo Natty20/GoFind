@@ -29,7 +29,7 @@ const PrestataireRegister = () => {
   // Charger les prestations et sous-prestations depuis l'API
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/prestations')
+      .get('https://gofind-v9ee.onrender.com/api/prestations')
       .then((response) => {
         setPrestations(response.data.prestations);
         const sousPrestationsMap = {};
@@ -116,7 +116,7 @@ const PrestataireRegister = () => {
       console.log('📤 Données envoyées :', Object.fromEntries(data.entries())); // Debug
 
       const response = await axios.post(
-        'http://localhost:5000/api/prestataires/register',
+        'https://gofind-v9ee.onrender.com/api/prestataires/register',
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },

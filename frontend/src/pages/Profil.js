@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const fetchPrestataire = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/prestataires/${id}`
+          `https://gofind-v9ee.onrender.com/api/prestataires/${id}`
         );
         setPrestataire(response.data.prestataire);
       } catch (err) {
@@ -27,10 +27,10 @@ const ProfilePage = () => {
     const fetchPrestationsEtSousPrestations = async () => {
       try {
         const prestationsRes = await axios.get(
-          'http://localhost:5000/api/prestations'
+          'https://gofind-v9ee.onrender.com/api/prestations'
         );
         const sousPrestationsRes = await axios.get(
-          'http://localhost5000/api/sousprestations'
+          'https://gofind-v9ee.onrender.com/api/sousprestations'
         );
 
         const prestationsMap = prestationsRes.data.prestations.reduce(

@@ -28,7 +28,7 @@ const PaymentPage = () => {
       const stripe = await stripePromise;
 
       const { data } = await axios.post(
-        'http://localhost:5000/api/create-checkout-session',
+        'https://gofind-v9ee.onrender.com/api/create-checkout-session',
         {
           montant,
           client,

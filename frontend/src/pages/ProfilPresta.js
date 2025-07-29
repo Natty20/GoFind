@@ -30,10 +30,10 @@ const ProfilPresta = () => {
 
       try {
         const [prestaRes, prestationsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/prestataires/${prestataireId}`, {
+          axios.get(`https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`http://localhost:5000/api/prestations`),
+          axios.get(`https://gofind-v9ee.onrender.com/api/prestations`),
         ]);
         setPrestataire(prestaRes.data.prestataire);
         setFormData(prestaRes.data.prestataire);
@@ -69,7 +69,7 @@ const ProfilPresta = () => {
       }
 
       await axios.put(
-        `http://localhost:5000/api/prestataires/${prestataireId}`,
+        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
         payload
       );
       setPrestataire({ ...prestataire, ...payload });

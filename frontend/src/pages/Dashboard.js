@@ -67,7 +67,7 @@ const Dashboard = () => {
         return;
       }
 
-      const apiUrl = `http://localhost:5000/api${activeItem.endpoint}`;
+      const apiUrl = `https://gofind-v9ee.onrender.com/api${activeItem.endpoint}`;
       const token = sessionStorage.getItem('token');
 
       if (!token) {
@@ -129,7 +129,7 @@ const Dashboard = () => {
       const token = sessionStorage.getItem('token');
 
       const response = await fetch(
-        `http://localhost:5000/api/${entityToEndpoint[activeTab]}/${id}`,
+        `https://gofind-v9ee.onrender.com/api/${entityToEndpoint[activeTab]}/${id}`,
         {
           method: 'DELETE',
           headers: {

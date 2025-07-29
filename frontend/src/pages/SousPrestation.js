@@ -23,7 +23,7 @@ const SousPrestation = () => {
     const fetchSousPrestation = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/sousprestations/${id}`
+          `https://gofind-v9ee.onrender.com/api/sousprestations/${id}`
         );
         const sousPrestationData = response.data.sousPrestation;
         setSousPrestation(sousPrestationData);
@@ -60,7 +60,7 @@ const SousPrestation = () => {
 
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/prestataires/multiple',
+          'https://gofind-v9ee.onrender.com/api/prestataires/multiple',
           {
             ids: prestataireIds,
           }
@@ -76,7 +76,7 @@ const SousPrestation = () => {
       if (!prestationId) return;
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/sousprestations/prestation/${prestationId}`
+          `https://gofind-v9ee.onrender.com/api/sousprestations/prestation/${prestationId}`
         );
 
         // enlever la sous-prestation actuelle

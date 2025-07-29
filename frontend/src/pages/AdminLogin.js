@@ -18,7 +18,7 @@ function AdminLogin() {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/admin/login',
+        'https://gofind-v9ee.onrender.com/api/admin/login',
         { email, password }
       );
       const { token, admin } = response.data;

@@ -30,7 +30,7 @@ export default function AdminEditPage() {
         }
 
         const response = await fetch(
-          `http://localhost:5000/api/${endpoint}/${id}`,
+          `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -27,7 +27,7 @@ const AdminAddPage = () => {
         try {
           {
             const response = await axios.get(
-              'http://localhost:5000/api/prestations'
+              'https://gofind-v9ee.onrender.com/api/prestations'
             );
             const prestationsData = response.data.prestations || response.data;
 

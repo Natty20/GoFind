@@ -66,7 +66,7 @@ const HomePage = () => {
       </Helmet>
       <section className="gofind-presentation">
         <img
-          src="/images/GF-logo.png"
+          src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
           alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
         />
         <h2 className="section1">Simplifiez votre quotidien grâce à GoFind</h2>

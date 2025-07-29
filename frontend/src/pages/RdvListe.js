@@ -16,7 +16,7 @@ const ListeRendezVous = () => {
     const fetchRendezVous = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/reservations/client/${user.clientId}`
+          `https://gofind-v9ee.onrender.com/api/reservations/client/${user.clientId}`
         );
         setRendezVous(response.data);
         setLoading(false);

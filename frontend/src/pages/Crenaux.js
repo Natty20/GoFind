@@ -36,7 +36,7 @@ function Crenaux() {
       const fetchPrestataire = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/prestataires/${id}`
+            `https://gofind-v9ee.onrender.com/api/prestataires/${id}`
           );
           setPrestataire(response.data.prestataire);
         } catch (error) {

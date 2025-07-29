@@ -22,11 +22,11 @@ const ClientProfile = () => {
 
       try {
         const [clientRes, rdvRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/auth/${clientId}`, {
+          axios.get(`https://gofind-v9ee.onrender.com/api/auth/${clientId}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(
-            `http://localhost:5000/api/reservations/client/${clientId}`,
+            `https://gofind-v9ee.onrender.com/api/reservations/client/${clientId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }

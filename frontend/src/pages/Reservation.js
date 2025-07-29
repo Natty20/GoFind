@@ -25,7 +25,7 @@ const ListeDemandesPrestataire = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/reservations/prestataire/${prestataireId}`
+        `https://gofind-v9ee.onrender.com/api/reservations/prestataire/${prestataireId}`
       );
       setReservations(res.data);
       setError('');
@@ -38,7 +38,7 @@ const ListeDemandesPrestataire = () => {
 
   const updateStatut = async (reservationId, action) => {
     try {
-      const endpoint = `http://localhost:5000/api/reservations/${reservationId}/${action}`;
+      const endpoint = `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/${action}`;
       await axios.put(endpoint);
       fetchReservations(); // Refresh après update
     } catch (error) {
@@ -49,7 +49,7 @@ const ListeDemandesPrestataire = () => {
   const handleStatusChange = async (reservationId, newStatus) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/reservations/${reservationId}/update-etat`,
+        `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/update-etat`,
         { etat: newStatus }
       );
       fetchReservations();
