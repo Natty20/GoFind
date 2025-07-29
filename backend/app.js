@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://natty20.github.io/GoFind",
+    origin: "https://natty20.github.io/GoFind, https://natty20.github.io",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
