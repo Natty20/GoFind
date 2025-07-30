@@ -16,9 +16,20 @@ connectDB();
 
 const app = express();
 
+const allowedOrigins = [
+  "https://natty20.github.io",
+  "https://natty20.github.io/GoFind",
+];
+
 app.use(
   cors({
-    origin: "https://natty20.github.io/GoFind, https://natty20.github.io",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),

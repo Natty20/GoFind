@@ -10,7 +10,9 @@ const mongoose = require("mongoose");
 //   }
 // };
 
-const uri = process.env.MONGO_URI || 'mongodb+srv://gihozo:GoFind2025@gofind.mqur3gf.mongodb.net/GF';
+const uri =
+  process.env.MONGO_URI ||
+  "mongodb+srv://gihozo:GoFind2025@gofind.mqur3gf.mongodb.net/GF";
 
 const connectDB = async () => {
   try {
