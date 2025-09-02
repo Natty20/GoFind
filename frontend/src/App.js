@@ -27,6 +27,9 @@ import ChoixCompte from './pages/ChoixCompte';
 import Reservation from './pages/Reservation';
 import MonProfilRouter from './pages/MonProfilRouter';
 import ProfilPresta from './pages/ProfilPresta';
+import AdminAddPage from './pages/AdminAddPage';
+import AdminEditPage from './pages/AdminEditPage';
+import AdminDetailsPage from './pages/AdminDetailsPage';
 
 function App() {
   return (
@@ -57,13 +60,17 @@ function App() {
             <Route path="/choix_compte" element={<ChoixCompte />} />
             <Route path="/reservations" element={<Reservation />} />
             <Route path="/mon-profil" element={<MonProfilRouter />} />
-            <Route path="/reservations" element={<ReservationRouter />} />
             <Route path="/profil-client" element={<ProfilClient />} />
             <Route path="/profil-prestataire" element={<ProfilPresta />} />
             <Route path="/admin/:entity/ajouter" element={<AdminAddPage />} />
-            <Route path="/admin/:entity/modifier/:id" element={<AdminEditPage />} />
-            <Route path="/admin/:entity/details/:id" element={<AdminDetailsPage />} />
-
+            <Route
+              path="/admin/:entity/modifier/:id"
+              element={<AdminEditPage />}
+            />
+            <Route
+              path="/admin/:entity/details/:id"
+              element={<AdminDetailsPage />}
+            />
           </Routes>
           <Footer />
         </Router>

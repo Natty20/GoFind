@@ -260,24 +260,29 @@ const Dashboard = () => {
                           </span>
                         </>
                       ) : activeTab === 'reservations' ? (
-                                  <>
-                                    <span><strong>Id:</strong> {item._id}</span>
-                                    <span>
-                                      <strong>Client:</strong> {item.client.nom} {item.client.prenom} ({item.client.phone})
-                                    </span>
-                                    <span>
-                                      <strong>Prestataire:</strong> {item.prestataire.nom}
-                                    </span>
-                                    <span>
-                                      <strong>Prestations:</strong>
-                                      {item.prestations.map((p) => (
-                                        <span key={p._id}>
-                                          {p.prestationId.nom} -
-                                          {p.sousPrestations.map((sp) => sp.nom).join(', ')}
-                                        </span>
-                                      ))}
-                                    </span>
-                                  </>
+                        <>
+                          <span>
+                            <strong>Id:</strong> {item._id}
+                          </span>
+                          <span>
+                            <strong>Client:</strong> {item.client.nom}{' '}
+                            {item.client.prenom} ({item.client.phone})
+                          </span>
+                          <span>
+                            <strong>Prestataire:</strong> {item.prestataire.nom}
+                          </span>
+                          <span>
+                            <strong>Prestations:</strong>
+                            {item.prestations.map((p) => (
+                              <span key={p._id}>
+                                {p.prestationId.nom} -
+                                {p.sousPrestations
+                                  .map((sp) => sp.nom)
+                                  .join(', ')}
+                              </span>
+                            ))}
+                          </span>
+                        </>
                       ) : (
                         <span>{JSON.stringify(item, null, 2)}</span>
                       )}

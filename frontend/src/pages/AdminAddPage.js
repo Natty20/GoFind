@@ -123,7 +123,11 @@ const AdminAddPage = () => {
       { name: 'shortDescription', label: 'Short Description', type: 'text' },
       { name: 'longDescription', label: 'Long Description', type: 'text' },
       { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
+      {
+        name: 'backgroundImage',
+        label: 'Background Image (URL)',
+        type: 'text',
+      },
       { name: 'overlayImage', label: 'Overlay Image (URL)', type: 'text' },
       {
         name: 'sousPrestations',
@@ -132,10 +136,18 @@ const AdminAddPage = () => {
         fields: [
           { name: 'nom', label: 'Nom', type: 'text' },
           { name: 'title', label: 'Title', type: 'text' },
-          { name: 'shortDescription', label: 'Short Description', type: 'text' },
+          {
+            name: 'shortDescription',
+            label: 'Short Description',
+            type: 'text',
+          },
           { name: 'longDescription', label: 'Long Description', type: 'text' },
           { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-          { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
+          {
+            name: 'backgroundImage',
+            label: 'Background Image (URL)',
+            type: 'text',
+          },
         ],
       },
     ],
@@ -145,7 +157,11 @@ const AdminAddPage = () => {
       { name: 'shortDescription', label: 'Short Description', type: 'text' },
       { name: 'longDescription', label: 'Long Description', type: 'text' },
       { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
+      {
+        name: 'backgroundImage',
+        label: 'Background Image (URL)',
+        type: 'text',
+      },
       {
         name: 'prestationId',
         label: 'Associer à une prestation',
@@ -173,7 +189,8 @@ const AdminAddPage = () => {
         payload.selectedPrestations = (formData.selectedPrestations || []).map(
           (prestationId) => ({
             prestationId,
-            selectedSousPrestations: selectedSousPrestations[prestationId] || [],
+            selectedSousPrestations:
+              selectedSousPrestations[prestationId] || [],
           })
         );
       }
@@ -246,7 +263,10 @@ const AdminAddPage = () => {
                       }
                     >
                       {sousPrestations[prestationId]?.map((sousPrestation) => (
-                        <option key={sousPrestation._id} value={sousPrestation._id}>
+                        <option
+                          key={sousPrestation._id}
+                          value={sousPrestation._id}
+                        >
                           {sousPrestation.nom}
                         </option>
                       ))}

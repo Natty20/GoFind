@@ -10,14 +10,14 @@ const AdminDetailsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem('token');
         const entityToEndpoint = {
-          clients: "auth",
-          admins: "admin",
-          prestations: "prestations",
-          sousprestations: "sousprestations",
-          prestataires: "prestataires",
-          reservations: "reservations",
+          clients: 'auth',
+          admins: 'admin',
+          prestations: 'prestations',
+          sousprestations: 'sousprestations',
+          prestataires: 'prestataires',
+          reservations: 'reservations',
         };
 
         // const endpoint = entityToEndpoint[entity] || entity;
@@ -30,17 +30,17 @@ const AdminDetailsPage = () => {
           }
         );
 
-        if (!response.ok) throw new Error("Erreur de récupération");
+        if (!response.ok) throw new Error('Erreur de récupération');
         const result = await response.json();
 
         // Trouver l'objet principal
         const dataKey = Object.keys(result).find(
-          (key) => typeof result[key] === "object"
+          (key) => typeof result[key] === 'object'
         );
         setData(dataKey ? result[dataKey] : result);
       } catch (error) {
         console.error(error);
-        alert("Erreur de récupération");
+        alert('Erreur de récupération');
       } finally {
         setLoading(false);
       }
@@ -63,11 +63,17 @@ const AdminDetailsPage = () => {
         </ul>
       );
     }
-    if (typeof value === "object" && value !== null) {
+    if (typeof value === 'object' && value !== null) {
       return (
-        <div style={{ marginLeft: "1rem", padding: "0.5rem", borderLeft: "2px solid #ddd" }}>
+        <div
+          style={{
+            marginLeft: '1rem',
+            padding: '0.5rem',
+            borderLeft: '2px solid #ddd',
+          }}
+        >
           {Object.entries(value).map(([k, v]) => (
-            <div key={k} style={{ marginBottom: "5px" }}>
+            <div key={k} style={{ marginBottom: '5px' }}>
               <strong>{k}:</strong> {renderValue(v)}
             </div>
           ))}
@@ -78,48 +84,48 @@ const AdminDetailsPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "auto" }}>
+    <div style={{ maxWidth: '700px', margin: 'auto' }}>
       <h2>
         Détails - {entity} n°{id}
       </h2>
       <div
         style={{
-          marginTop: "1rem",
-          padding: "1rem",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          background: "#fafafa",
+          marginTop: '1rem',
+          padding: '1rem',
+          border: '1px solid #ccc',
+          borderRadius: '8px',
+          background: '#fafafa',
         }}
       >
         {Object.entries(data).map(([key, value]) => (
-          <div key={key} style={{ marginBottom: "10px" }}>
+          <div key={key} style={{ marginBottom: '10px' }}>
             <strong>{key} :</strong> {renderValue(value)}
           </div>
         ))}
       </div>
 
-      <div style={{ marginTop: "2rem" }}>
+      <div style={{ marginTop: '2rem' }}>
         <button
           onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}
           style={{
-            marginRight: "1rem",
-            padding: "10px 20px",
-            background: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
+            marginRight: '1rem',
+            padding: '10px 20px',
+            background: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
           }}
         >
           Modifier
         </button>
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate('/dashboard')}
           style={{
-            padding: "10px 20px",
-            background: "#6c757d",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
+            padding: '10px 20px',
+            background: '#6c757d',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
           }}
         >
           Retour
