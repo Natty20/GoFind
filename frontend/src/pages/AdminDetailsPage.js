@@ -20,9 +20,9 @@ const AdminDetailsPage = () => {
           reservations: "reservations",
         };
 
-        const endpoint = entityToEndpoint[entity] || entity;
+        // const endpoint = entityToEndpoint[entity] || entity;
         const response = await fetch(
-          `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
+          `https://gofind-v9ee.onrender.com/api/${entityToEndpoint}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

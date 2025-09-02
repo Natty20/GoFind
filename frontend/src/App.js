@@ -57,8 +57,13 @@ function App() {
             <Route path="/choix_compte" element={<ChoixCompte />} />
             <Route path="/reservations" element={<Reservation />} />
             <Route path="/mon-profil" element={<MonProfilRouter />} />
+            <Route path="/reservations" element={<ReservationRouter />} />
             <Route path="/profil-client" element={<ProfilClient />} />
             <Route path="/profil-prestataire" element={<ProfilPresta />} />
+            <Route path="/admin/:entity/ajouter" element={<AdminAddPage />} />
+            <Route path="/admin/:entity/modifier/:id" element={<AdminEditPage />} />
+            <Route path="/admin/:entity/details/:id" element={<AdminDetailsPage />} />
+
           </Routes>
           <Footer />
         </Router>
