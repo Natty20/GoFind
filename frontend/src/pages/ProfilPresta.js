@@ -30,9 +30,12 @@ const ProfilPresta = () => {
 
       try {
         const [prestaRes, prestationsRes] = await Promise.all([
-          axios.get(`https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
+          axios.get(
+            `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          ),
           axios.get(`https://gofind-v9ee.onrender.com/api/prestations`),
         ]);
         setPrestataire(prestaRes.data.prestataire);

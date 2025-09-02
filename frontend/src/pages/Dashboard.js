@@ -38,8 +38,6 @@ const menuItems = [
     endpoint: '/reservations/all',
   },
   { name: 'Paiements', icon: <CreditCard size={20} />, endpoint: '/paiements' },
-  { name: 'Images', icon: <Image size={20} />, endpoint: '/images' },
-  { name: 'Vidéos', icon: <Video size={20} />, endpoint: '/videos' },
   { name: 'Paramètres', icon: <Settings size={20} />, endpoint: '/parametres' },
 ];
 

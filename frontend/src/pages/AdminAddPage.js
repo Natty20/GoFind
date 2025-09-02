@@ -22,32 +22,35 @@ const AdminAddPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPrestationsData = async () => {
-      if (entity === 'prestataires' || entity === 'sousprestations') {
-        try {
-          {
-            const response = await axios.get(
-              'https://gofind-v9ee.onrender.com/api/prestations'
+    const fetchData = async () => {
+      try {
+        if (entity === 'prestataires' || entity === 'sousprestations') {
+          const prestRes = await axios.get(
+            'https://gofind-v9ee.onrender.com/api/prestations'
+          );
+          const prestationsData = prestRes.data.prestations || [];
+          setPrestations(prestationsData);
+
+          const sousRes = await axios.get(
+            'https://gofind-v9ee.onrender.com/api/sousprestations'
+          );
+          const sousPrestationsData = sousRes.data.sousprestations || [];
+
+          const sousPrestationsMap = {};
+          prestationsData.forEach((prestation) => {
+            sousPrestationsMap[prestation._id] = sousPrestationsData.filter(
+              (sp) => sp.prestation === prestation._id
             );
-            const prestationsData = response.data.prestations || response.data;
+          });
 
-            setPrestations(prestationsData);
-
-            const sousPrestationsMap = {};
-            prestationsData.forEach((prestation) => {
-              sousPrestationsMap[prestation._id] =
-                prestation.sousPrestations || [];
-            });
-
-            setSousPrestations(sousPrestationsMap);
-          }
-        } catch (error) {
-          console.error('Erreur lors de la récupération des données :', error);
+          setSousPrestations(sousPrestationsMap);
         }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
       }
     };
 
-    fetchPrestationsData();
+    fetchData();
   }, [entity]);
 
   const handleChange = (e) => {
@@ -81,13 +84,14 @@ const AdminAddPage = () => {
   };
 
   const entityToEndpoint = {
-    clients: { method: 'post', url: 'auth/register', port: 5000 },
-    admins: { method: 'post', url: 'admin/register', port: 5000 },
-    prestataires: { method: 'post', url: 'prestataires/register', port: 5000 },
-    prestations: { method: 'post', url: 'prestations', port: 5000 },
-    sousprestations: { method: 'put', url: 'sousprestations', port: 5000 },
-    reservations: { method: 'post', url: 'reservations/new', port: 5000 },
+    clients: { method: 'post', url: 'auth/register' },
+    admins: { method: 'post', url: 'admin/register' },
+    prestataires: { method: 'post', url: 'prestataires/register' },
+    prestations: { method: 'post', url: 'prestations' },
+    sousprestations: { method: 'post', url: 'sousprestations' },
+    reservations: { method: 'post', url: 'reservations/new' },
   };
+
   const entityConfigs = {
     clients: [
       { name: 'nom', label: 'Nom', type: 'text' },
@@ -119,11 +123,7 @@ const AdminAddPage = () => {
       { name: 'shortDescription', label: 'Short Description', type: 'text' },
       { name: 'longDescription', label: 'Long Description', type: 'text' },
       { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      {
-        name: 'backgroundImage',
-        label: 'Background Image (URL)',
-        type: 'text',
-      },
+      { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
       { name: 'overlayImage', label: 'Overlay Image (URL)', type: 'text' },
       {
         name: 'sousPrestations',
@@ -132,18 +132,10 @@ const AdminAddPage = () => {
         fields: [
           { name: 'nom', label: 'Nom', type: 'text' },
           { name: 'title', label: 'Title', type: 'text' },
-          {
-            name: 'shortDescription',
-            label: 'Short Description',
-            type: 'text',
-          },
+          { name: 'shortDescription', label: 'Short Description', type: 'text' },
           { name: 'longDescription', label: 'Long Description', type: 'text' },
           { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-          {
-            name: 'backgroundImage',
-            label: 'Background Image (URL)',
-            type: 'text',
-          },
+          { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
         ],
       },
     ],
@@ -153,11 +145,7 @@ const AdminAddPage = () => {
       { name: 'shortDescription', label: 'Short Description', type: 'text' },
       { name: 'longDescription', label: 'Long Description', type: 'text' },
       { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      {
-        name: 'backgroundImage',
-        label: 'Background Image (URL)',
-        type: 'text',
-      },
+      { name: 'backgroundImage', label: 'Background Image (URL)', type: 'text' },
       {
         name: 'prestationId',
         label: 'Associer à une prestation',
@@ -167,14 +155,6 @@ const AdminAddPage = () => {
     ],
   };
 
-  // const entityToEndpoint = {
-  //   clients: 'auth/register',
-  //   admins: 'admin/register',
-  //   prestations: 'prestations',
-  //   sousprestations: 'sousprestations',
-  //   prestataires: 'prestataires/register',
-  // };
-
   const currentEntityConfig = entityConfigs[entity] || [];
 
   const handleSubmit = async (e) => {
@@ -183,7 +163,7 @@ const AdminAddPage = () => {
     try {
       const config = entityToEndpoint[entity];
       if (!config) throw new Error('Endpoint inconnu!');
-      const baseUrl = 'http://localhost:5000/api';
+      const baseUrl = 'https://gofind-v9ee.onrender.com/api';
       const token = sessionStorage.getItem('token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
@@ -193,8 +173,7 @@ const AdminAddPage = () => {
         payload.selectedPrestations = (formData.selectedPrestations || []).map(
           (prestationId) => ({
             prestationId,
-            selectedSousPrestations:
-              selectedSousPrestations[prestationId] || [],
+            selectedSousPrestations: selectedSousPrestations[prestationId] || [],
           })
         );
       }
@@ -203,13 +182,9 @@ const AdminAddPage = () => {
         const prestationId = formData.prestationId;
         if (!prestationId) throw new Error('prestationId requis');
 
-        // On retire prestationId du corps car il est dans l'URL
-        const { prestationId: _, ...sousPrestationData } = formData;
-
-        // POST au lieu de PUT, comme tu veux "ajouter" une sous-prestation
         await axios.post(
-          `${baseUrl}/sousprestations/${prestationId}`,
-          sousPrestationData,
+          `${baseUrl}/sousprestations`,
+          { ...formData, prestation: prestationId },
           { headers }
         );
       } else {
@@ -218,6 +193,7 @@ const AdminAddPage = () => {
         await method(url, payload, { headers });
       }
 
+      alert('✅ Ajout réussi !');
       navigate('/dashboard');
     } catch (err) {
       console.error('Erreur ajout :', err);
@@ -270,16 +246,34 @@ const AdminAddPage = () => {
                       }
                     >
                       {sousPrestations[prestationId]?.map((sousPrestation) => (
-                        <option
-                          key={sousPrestation._id}
-                          value={sousPrestation._id}
-                        >
+                        <option key={sousPrestation._id} value={sousPrestation._id}>
                           {sousPrestation.nom}
                         </option>
                       ))}
                     </select>
                   </div>
                 ))}
+              </div>
+            );
+          }
+
+          if (field.type === 'select') {
+            return (
+              <div key={field.name}>
+                <label>{field.label}</label>
+                <select
+                  name={field.name}
+                  value={formData[field.name] || ''}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">-- Sélectionner --</option>
+                  {(field.options || []).map((opt) => (
+                    <option key={opt._id} value={opt._id}>
+                      {opt.nom}
+                    </option>
+                  ))}
+                </select>
               </div>
             );
           }

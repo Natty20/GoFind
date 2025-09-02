@@ -52,8 +52,8 @@ jobs:
     steps:
       - name: Déployer sur le serveur distant via SSH
         run: |
-          ssh root@TON_IP_OVH << 'EOF'
-            cd /chemin/vers/Gofind
+          ssh root@149.202.53.181 << 'EOF'
+            cd Gofind
             git pull origin main
             docker-compose pull
             docker-compose up -d --force-recreate
