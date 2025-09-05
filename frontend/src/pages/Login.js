@@ -35,7 +35,7 @@ function LoginForm() {
   };
 
   return (
-    <MDBContainer className="login-page">
+    <main className="login-page">
       <div className="login-left-panel">
         <div className="welcome-text">
           <img
@@ -78,7 +78,6 @@ function LoginForm() {
         <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
           <button
-            outline
             className="gotoregidter"
             color="danger"
             onClick={() => navigate('/register')}
@@ -89,7 +88,6 @@ function LoginForm() {
       </div>
 
       <div className="login-right-panel">
-        <div>
           <h2>Nous sommes plus qu’une simple entreprise</h2>
           <p>
             Nous construisons des relations durables basées sur la confiance,
@@ -100,7 +98,6 @@ function LoginForm() {
         </div>
 
         <button
-          outline
           className="gotoregidter"
           color="danger"
           onClick={() => navigate('/login_admin')}
@@ -108,7 +105,7 @@ function LoginForm() {
           Admin login
         </button>
       </div>
-    </MDBContainer>
+    </main>
   );
 }
 

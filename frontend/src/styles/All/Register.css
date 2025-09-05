@@ -15,7 +15,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .register-left-panel {
@@ -23,22 +22,30 @@
 }
 
 .register-right-panel {
-  color: #fff;
+  width: 50%;
+  background: #f3dbdd;
+  color: #ba3e40;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 1rem;
 }
 
 .welcome-text img {
   width: 50%;
   border-radius: 50%;
 }
-
-.text-center h4 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 1rem;
+.welcome-text h1 {
+  color: #ba3e40;
+  font-size: 2rem;
+  font-weight: 700;
+  /* margin-bottom: 1rem; */
+  text-align: center;
+  text-transform: uppercase;
+}
+.welcome-text p {
+  text-align: center;
 }
 
 #input {
@@ -47,6 +54,7 @@
   border-radius: 30px;
   border: 2px solid #f3dbdd;
   margin: 5px;
+  width: 100%;
 }
 
 .register-input-container p {
@@ -163,19 +171,30 @@
 }
 
 .register-btn {
-  border: none;
-  border-radius: 3rem;
-  padding: 1.5rem;
-  font-size: 1-rem;
-  background: #ba3e40;
+  background-color: #ba3e40;
+  border: 1px solid #ba3e40;
+  border-radius: 30px;
   color: #fff;
   cursor: pointer;
+  font-size: 15px;
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
 }
 
 .register-btn:hover {
   background: #f3dbdd;
   color: #ba3e40;
   border: 2px solid #ba3e40;
+}
+
+.login-right-panel h2 {
+  color: #ba3e40;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* Ajustement pour les écrans mobiles */
@@ -208,17 +227,6 @@
   background-color: #f3dbdd;
   color: #ba3e40;
   border: 1px solid #ba3e40;
-}
-
-.register-right-panel {
-  width: 70%;
-  background: #f3dbdd;
-  color: #ba3e40;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
 }
 
 .register-right-panel,
