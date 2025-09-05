@@ -49,7 +49,7 @@ function PrestaLogin() {
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
-        <form onSubmit={handleLogin} className="input-container">
+        <form onSubmit={handleLogin} className="login-input-container">
           <p className="label">Email :</p>
           <MDBInput
             id="email"
@@ -68,19 +68,19 @@ function PrestaLogin() {
             required
           />
 
+          <a className="text-muted" href="#!">
+            Mot de passe oublié?
+          </a>
+
           <button type="submit" className="login-btn">
             Se Connecter
           </button>
         </form>
 
-        <a className="text-muted" href="#!">
-          Mot de passe oublié?
-        </a>
-
-        <div>
+        <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
           <button
-            className="gotoregidter"
+            className="gotoregister"
             color="danger"
             onClick={() => navigate('/prestataire_register')}
           >
@@ -91,10 +91,12 @@ function PrestaLogin() {
 
       <div className="login-right-panel">
         <div>
-          <h2>We are more than just a company</h2>
+          <h2>Nous sommes plus qu’une simple entreprise</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Nous construisons des relations durables basées sur la confiance,
+            l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+            service : nous créons de la valeur pour chaque personne que nous
+            accompagnons.
           </p>
         </div>
       </div>

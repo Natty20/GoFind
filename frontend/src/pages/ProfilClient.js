@@ -73,7 +73,7 @@ const ClientProfile = () => {
   };
 
   return (
-    <div className="container">
+    <div className="profilclient-container">
       {/* Profil client */}
       <div className="profile-card">
         <div className="settings-icon">
@@ -88,9 +88,9 @@ const ClientProfile = () => {
             alt="Profil"
             className="profile-pic"
           />
-          <h2>
+          <h1>
             {client?.nom} {client?.prenom}
-          </h2>
+          </h1>
           <p className="location">
             <FaMapMarkerAlt /> {client?.address || 'Adresse non renseignée'}
           </p>

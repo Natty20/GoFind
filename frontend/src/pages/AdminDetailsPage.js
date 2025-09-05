@@ -85,9 +85,9 @@ const AdminDetailsPage = () => {
 
   return (
     <div style={{ maxWidth: '700px', margin: 'auto' }}>
-      <h2>
+      <h1>
         Détails - {entity} n°{id}
-      </h2>
+      </h1>
       <div
         style={{
           marginTop: '1rem',

@@ -19,6 +19,10 @@ const ChoixCompte = () => {
     <main className="choix-compte">
       <div className="choix-left-panel">
         <div className="welcome-text">
+          <img
+            src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
+            alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
+          />
           <h1>GoFind ton plaisir près de chez toi</h1>
           <p>Veuillez choisir pour continuer :</p>
         </div>
@@ -42,10 +46,12 @@ const ChoixCompte = () => {
 
       <div className="choix-right-panel">
         <div>
-          <h4>Nous sommes plus qu’une entreprise</h4>
+          <h2>Nous sommes plus qu’une simple entreprise</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Nous construisons des relations durables basées sur la confiance,
+            l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+            service : nous créons de la valeur pour chaque personne que nous
+            accompagnons.
           </p>
         </div>
       </div>

@@ -151,7 +151,7 @@ const Dashboard = () => {
       {/* --- Sidebar --- */}
       <div className="sidebar">
         <Home size={20} />
-        <h2 className="sidebar-title">Tableau de bord</h2>
+        <h1 className="sidebar-title">Tableau de bord</h1>
         <ul className="menu-list">
           {menuItems.map((item) => (
             <li
@@ -169,7 +169,7 @@ const Dashboard = () => {
       <div className="main-content">
         <div className="content-card">
           <div className="content-header">
-            <h1 className="content-title">{activeTab}</h1>
+            <h2 className="content-title">{activeTab}</h2>
             <button className="add-button" onClick={handleAdd}>
               <Plus size={20} /> Ajouter un {activeTab}
             </button>

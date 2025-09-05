@@ -191,7 +191,7 @@ const AdminEditPage = () => {
   // 6. Affichage principal
   return (
     <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h2>Modifier un(e) {entity}</h2>
+      <h1>Modifier un(e) {entity}</h1>
       <form onSubmit={handleSubmit}>
         {renderFormFields()}
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>

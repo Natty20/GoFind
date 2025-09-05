@@ -171,7 +171,7 @@ const SousPrestation = () => {
 
       {/* Section des autres sous-prestations de la même prestation */}
       <section className="other-categories">
-        <h4>Autres prestations dans {sousPrestation.prestation}</h4>
+        <h3>Autres prestations dans {sousPrestation.prestation}</h3>
         <div className="categories-list">
           {autresSousPrestations.length > 0 ? (
             autresSousPrestations.map((sousP) => (

@@ -158,7 +158,7 @@ const ProfilPresta = () => {
               </p>
               <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
               <div className="description">
-                <h1>Ma description</h1>
+                <h3>Ma description</h3>
                 <p>Morem ipsum dolor sit amet...</p>
                 <button onClick={() => setIsEditing(true)}>Modifier</button>
               </div>
@@ -217,7 +217,7 @@ const ProfilPresta = () => {
 
       <section className="presta-realisation">
         <div className="realisation-header">
-          <h1>Mes Réalisations</h1>
+          <h4>Mes Réalisations</h4>
           <button>Ajouter une Réalisation</button>
         </div>
         <div className="realisation-section">

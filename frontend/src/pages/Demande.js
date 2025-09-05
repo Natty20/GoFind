@@ -33,7 +33,7 @@ const DemandeEnvoyee = () => {
           </div>
         </div>
         <div className="message">
-          <h2>Demande Envoyée</h2>
+          <h1>Demande Envoyée</h1>
           <p>{montant}$</p>
         </div>
         <div className="paiment-details">

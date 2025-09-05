@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import '../styles/All/Login.css';
 
@@ -34,21 +34,21 @@ function AdminLogin() {
   };
 
   return (
-    <MDBContainer className="gradient-form">
-      <div className="left-panel">
-        <div className="text-center">
+    <main className="login-page">
+      <div className="login-left-panel">
+        <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h4>GoFind ton plaisir près de chez toi</h4>
+          <h1>GoFind ton plaisir près de chez toi</h1>
+          <p>Veuillez vous connecter à votre compte</p>
         </div>
-        <p>Veuillez vous connecter à votre compte</p>
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
         <form onSubmit={handleLogin} className="input-container">
-          <p className="inputlable">Email :</p>
+          <p className="label">Email :</p>
           <MDBInput
             id="input"
             type="email"
@@ -57,7 +57,7 @@ function AdminLogin() {
             required
           />
 
-          <p className="inputlable">Mot de passe :</p>
+          <p className="label">Mot de passe :</p>
           <MDBInput
             id="input"
             type="password"
@@ -66,14 +66,10 @@ function AdminLogin() {
             required
           />
 
-          <MDBBtn type="submit" className="signin">
+          <button type="submit" className="login-btn">
             Se Connecter
-          </MDBBtn>
+          </button>
         </form>
-
-        <a className="text-muted" href="#!">
-          Mot de passe oublié?
-        </a>
 
         <div>
           <p>
@@ -92,7 +88,7 @@ function AdminLogin() {
           </p>
         </div>
       </div>
-    </MDBContainer>
+    </main>
   );
 }
 

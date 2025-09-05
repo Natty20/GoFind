@@ -1,10 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .compte-presta {
-  margin: 6rem 0;
+  margin: 6rem 0 0 0;
 }
 
 .info,
@@ -63,9 +58,9 @@ h1 {
   margin-bottom: 0;
 }
 
-.description h1,
+.description h3,
 .services-header h1,
-.realisation-header h1,
+.realisation-header h4,
 .clients-avis h2 {
   text-align: center;
   font-size: 2rem;
@@ -322,9 +317,9 @@ button:hover {
     margin: 0;
   }
 
-  .description h1,
+  .description h3,
   .services-header h1,
-  .realisation-header h1,
+  .realisation-header h4,
   .clients-avis h2 {
     font-size: 1.5rem;
   }

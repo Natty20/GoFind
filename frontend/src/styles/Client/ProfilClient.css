@@ -1,9 +1,8 @@
-/* ClientProfile.css */
-
-.container {
+.profilclient-container {
   width: 100%;
   min-height: 100vh;
   background-color: #f8f8f8;
+  margin: 6rem 0 0 0;
 }
 
 .profile-card {

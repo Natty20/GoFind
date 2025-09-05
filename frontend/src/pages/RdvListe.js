@@ -52,18 +52,18 @@ const ListeRendezVous = () => {
   return (
     <main className="liste-rdv">
       <div className="liste-rendez-vous-container">
-        <h2>Rendez-vous</h2>
+        <h1>Rendez-vous</h1>
 
         {/* Section des rendez-vous à venir */}
         <div className="upcoming">
-          <h3>À venir</h3>
+          <h2>À venir</h2>
           {upcomingRendezVous.length > 0 ? (
             upcomingRendezVous.map((rdv) => (
               <div key={rdv._id} className="upcoming-appointment">
                 <div className="upcoming-appointment-up">
                   <img src="/images/gigi.jpg" alt="Profile" />
                   <div className="presta-info">
-                    <h4>{rdv.prestationNom}</h4>
+                    <h3>{rdv.prestationNom}</h3>
                     <p>{rdv.prestataire.nom}</p>
                   </div>
                   <p className="prix">{rdv.montant}$</p>
@@ -95,14 +95,14 @@ const ListeRendezVous = () => {
 
         {/* Section des rendez-vous terminés */}
         <div className="termines">
-          <h3>Terminés</h3>
+          <h4>Terminés</h4>
           {completedRendezVous.length > 0 ? (
             completedRendezVous.map((rdv) => (
               <div key={rdv._id} className="appointment-termines">
                 <div className="appointment-termines-up">
                   <img src="/images/gigi.jpg" alt="Profile" />
                   <div className="presta-info">
-                    <h4>{rdv.prestationNom}</h4>
+                    <h3>{rdv.prestationNom}</h3>
                     <p>{rdv.prestataire.nom}</p>
                   </div>
                   <p className="prix">{rdv.montant}$</p>

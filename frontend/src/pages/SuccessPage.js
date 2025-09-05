@@ -22,7 +22,7 @@ const Success = () => {
     return (
       <main className="demande-envoye">
         <div className="demande-envoyee-container">
-          <h2>Informations de réservation manquantes.</h2>
+          <h1>Informations de réservation manquantes.</h1>
           <p>
             Vous pouvez revenir à la page d&apos;accueil ou refaire votre
             demande.

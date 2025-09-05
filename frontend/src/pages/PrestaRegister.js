@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import '../styles/All/Register.css';
 
 const PrestataireRegister = () => {
@@ -156,7 +156,7 @@ const PrestataireRegister = () => {
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
         )}
 
-        <form onSubmit={handleRegister} className="input-container">
+        <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom:</p>
           <MDBInput
             id="input"
@@ -253,7 +253,7 @@ const PrestataireRegister = () => {
             </div>
           ))}
 
-          <button className="register-btn" type="register-btn">
+          <button className="register-btn" type="submit">
             Devenir Prestataire
           </button>
         </form>
@@ -263,8 +263,9 @@ const PrestataireRegister = () => {
         <div>
           <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Avec GoFind, accédez à une large gamme de prestations pensées pour
+            répondre à vos besoins. Notre plateforme met en relation clients et
+            prestataires de confiance afin de simplifier votre quotidien.
           </p>
           <p>Vous avez déjà un compte chez GoFind?</p>
           <button

@@ -222,7 +222,7 @@ const AdminAddPage = () => {
 
   return (
     <div className="admin-add-page">
-      <h2>Ajouter un {entity}</h2>
+      <h1>Ajouter un {entity}</h1>
       <form onSubmit={handleSubmit}>
         {currentEntityConfig.map((field) => {
           if (field.type === 'subForm') {

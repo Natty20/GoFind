@@ -151,7 +151,7 @@ const ListeDemandesPrestataire = () => {
 
   return (
     <main className="reservation">
-      <h2>Nouvelles Réservations</h2>
+      <h1>Nouvelles Réservations</h1>
 
       {loading && <p>Chargement...</p>}
       {error && !loading && <p style={{ color: 'red' }}>{error}</p>}

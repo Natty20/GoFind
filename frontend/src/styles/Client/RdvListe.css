@@ -1,8 +1,8 @@
 .liste-rdv {
-  margin: 4.5rem 0;
+  margin: 6rem 0 0 0;
 }
 
-.liste-rdv h2 {
+.liste-rdv h1 {
   text-align: center;
   background-color: #ba3e40;
   padding: 1rem;
@@ -10,8 +10,8 @@
   margin: 0;
 }
 
-.upcoming h3,
-.termines h3 {
+.upcoming h2,
+.termines h4 {
   background-color: #f3dbdd;
   padding: 1rem;
   color: #ba3e40;
@@ -45,7 +45,7 @@
   margin: 3rem;
 }
 
-.presta-info h4 {
+.presta-info h3 {
   font-size: 2rem;
   margin: 0;
 }
@@ -113,7 +113,7 @@
     margin: 2rem 0;
   }
 
-  .presta-info h4 {
+  .presta-info h3 {
     font-size: 1rem;
   }
 

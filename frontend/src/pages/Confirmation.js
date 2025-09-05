@@ -72,7 +72,7 @@ const Confirmation = () => {
             alt={prestataire?.nom || 'Prestataire inconnu'}
             className="profile-picture"
           />
-          <h2>{prestataire?.nom || 'Prestataire inconnu'}</h2>
+          <h1>{prestataire?.nom || 'Prestataire inconnu'}</h1>
         </div>
 
         <div className="note">

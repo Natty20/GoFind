@@ -1,5 +1,6 @@
 .demande-envoye {
   margin: 3rem 0;
+  margin: 6rem 0 0 0;
 }
 
 .demande-envoyee-container {
@@ -32,7 +33,7 @@
   align-items: center;
 }
 
-.message h2 {
+.message h1 {
   font-size: 1.6rem;
 }
 

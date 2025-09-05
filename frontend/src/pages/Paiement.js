@@ -137,9 +137,9 @@ const PaymentPage = () => {
       </div>
 
       <main className="payment-container">
-        <h2>
+        <h1>
           Sélectionnez Votre Moyen De Paiement Pour Confirmer Le Rendez-Vous
-        </h2>
+        </h1>
         {/* <div className="payment-options">
           {['Espèces', 'Chèque', 'PayPal', 'Virement Bancaire'].map(
             (method) => (

@@ -78,7 +78,7 @@ function LoginForm() {
         <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
           <button
-            className="gotoregidter"
+            className="gotoregister"
             color="danger"
             onClick={() => navigate('/register')}
           >
