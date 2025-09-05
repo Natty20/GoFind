@@ -9,6 +9,7 @@ const Navbar = () => {
     useContext(AuthContext);
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');
@@ -21,7 +22,7 @@ const Navbar = () => {
     navigate('/');
   };
 
-  // Déterminer le rôle de l'utilisateur connecté
+  // Déterminer le rôle de l'utilisateur qui sera connecté
   let user = null;
   let role = '';
 
@@ -40,7 +41,7 @@ const Navbar = () => {
     <div className="homepage">
       <nav className="navbar">
         <div className="navbar-container">
-          {/* left side */}
+          {/* left side - logo */}
           <div className="navbar-logo">
             <Link to="/">
               <img
@@ -50,8 +51,18 @@ const Navbar = () => {
             </Link>
           </div>
 
+          {/* Hamburger */}
+          <div
+            className={`hamburger ${menuOpen ? 'active' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
           {/* Section gauche : Menu selon le rôle */}
-          <div className="navbar-left">
+          <div className={`navbar-left ${menuOpen ? 'active' : ''}`}>
             {role === 'client' && (
               <>
                 <Link to="/messages">Messages</Link>
@@ -72,7 +83,7 @@ const Navbar = () => {
           </div>
 
           {/* Section droite : Liens et Profil */}
-          <div className="navbar-right">
+          <div className={`navbar-right ${menuOpen ? 'active' : ''}`}>
             {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
             {role !== 'admin' && <Link to="/about">à propos</Link>}
 

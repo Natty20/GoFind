@@ -1,4 +1,4 @@
-.register-form {
+.register-page {
   margin: 4rem 2rem;
   display: flex;
 
@@ -9,8 +9,8 @@
   overflow: hidden;
 }
 
-.left-panel,
-.right-panel {
+.register-left-panel,
+.register-right-panel {
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -18,19 +18,19 @@
   align-items: center;
 }
 
-.left-panel {
+.register-left-panel {
   background-color: #fff;
 }
 
-.right-panel {
+.register-right-panel {
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.text-center img {
-  width: 100px;
+.welcome-text img {
+  width: 50%;
   border-radius: 50%;
 }
 
@@ -49,14 +49,14 @@
   margin: 5px;
 }
 
-.inputlable {
-  font-size: 14px;
+.register-input-container p {
+  font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
 }
 
-.input-container .inputlable {
+.register-input-container .label {
   /* margin-bottom: 1rem; */
   font-size: 15px;
   color: #333;
@@ -160,6 +160,22 @@
 .sous-prestations-select option:hover {
   background: #007bff;
   color: white;
+}
+
+.register-btn {
+  border: none;
+  border-radius: 3rem;
+  padding: 1.5rem;
+  font-size: 1-rem;
+  background: #ba3e40;
+  color: #fff;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background: #f3dbdd;
+  color: #ba3e40;
+  border: 2px solid #ba3e40;
 }
 
 /* Ajustement pour les écrans mobiles */

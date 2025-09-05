@@ -245,7 +245,7 @@ h3 {
 /* Responsive Styles */
 @media (max-width: 768px) {
   .gofind-presentation img {
-    width: 53%;
+    width: 50%;
   }
 
   .gofind-presentation p {
@@ -305,7 +305,7 @@ h3 {
 
 @media (max-width: 480px) {
   .gofind-presentation img {
-    width: 55%;
+    width: 50%;
   }
 
   .gofind-presentation p {

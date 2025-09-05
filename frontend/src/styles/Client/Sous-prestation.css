@@ -24,7 +24,7 @@
   margin-top: -10rem;
 }
 
-.text-container h2 {
+.text-container h1 {
   font-size: 1.5rem;
   color: #ba3e40;
 }
@@ -39,7 +39,7 @@
   margin-bottom: 40px;
 }
 
-.prestataires-section h3 {
+.prestataires-section h2 {
   margin-bottom: 20px;
   text-transform: uppercase;
   font-weight: bold;
@@ -82,7 +82,7 @@
   margin-right: 15px;
 }
 
-.prestataire-info h4 {
+.prestataire-info h3 {
   font-size: 18px;
   margin: 0 0 5px;
   color: #ba3e40;
@@ -153,7 +153,7 @@ a {
     margin-top: 0;
   }
 
-  .text-container h2 {
+  .text-container h1 {
     font-size: 1.3rem;
   }
 
@@ -173,7 +173,7 @@ a {
     margin: 0 10px;
   }
 
-  .prestataire-info h4 {
+  .prestataire-info h3 {
     font-size: 16px;
   }
 
@@ -212,7 +212,7 @@ a {
     margin-bottom: 20px;
   }
 
-  .text-container h2 {
+  .text-container h1 {
     font-size: 1.1rem;
   }
 
@@ -226,7 +226,7 @@ a {
     padding: 15px;
   }
 
-  .prestataire-info h4 {
+  .prestataire-info h3 {
     font-size: 14px;
   }
 
@@ -235,7 +235,7 @@ a {
   }
 
   /* Other categories */
-  .other-categories h3 {
+  .other-categories h4 {
     font-size: 0.9rem;
   }
 

@@ -1,12 +1,9 @@
 .navbar {
   background-color: whitesmoke;
-
-  /* color: #d9534f; */
   position: fixed;
   top: 0;
   width: 100%;
-
-  /* z-index: 10; */
+  margin-bottom: 2rem;
 }
 
 .navbar-container {
@@ -91,11 +88,63 @@
   display: block;
 }
 
+/* Bouton hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: black;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Quand l’icône est active (croix) */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 /* Responsive Navbar */
 @media (max-width: 768px) {
   .navbar-left,
   .navbar-right {
     display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    display: none;
+    flex-direction: column;
+    background: whitesmoke;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .navbar-left.active,
+  .navbar-right.active {
+    display: flex;
   }
 }
 

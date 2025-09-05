@@ -86,23 +86,25 @@ function Register() {
   };
 
   return (
-    <MDBContainer className="register-form">
-      <div className="left-panel">
-        <div className="text-center">
-          <h4>Rejoignez GoFind</h4>
+    <MDBContainer className="register-page">
+      <div className="register-left-panel">
+        <div className="welcome-text">
+          <img
+            src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
+            alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
+          />
+          <h1>Rejoignez GoFind</h1>
+          <p>Créez votre compte pour accéder à nos services</p>
         </div>
 
-        <p>Créez votre compte pour accéder à nos services</p>
-
-        {/* ✅ Affichage des erreurs ou succès */}
+        {/* Affichage des erreurs ou succès */}
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
         )}
 
-        {/* ✅ Ajout du formulaire */}
-        <form onSubmit={handleRegister} className="input-container">
-          <p className="inputlable">Nom: </p>
+        <form onSubmit={handleRegister} className="register-input-container">
+          <p className="label">Nom: </p>
           <MDBInput
             id="input"
             type="text"
@@ -112,7 +114,7 @@ function Register() {
             required
           />
 
-          <p className="inputlable">Prenon :</p>
+          <p className="label">Prenon :</p>
           <MDBInput
             id="input"
             type="text"
@@ -122,7 +124,7 @@ function Register() {
             required
           />
 
-          <p className="inputlable">Phone :</p>
+          <p className="label">Phone :</p>
           <MDBInput
             id="input"
             type="text"
@@ -132,7 +134,7 @@ function Register() {
             required
           />
 
-          <p className="inputlable">Photo de profil :</p>
+          <p className="label">Photo de profil :</p>
           <input
             type="file"
             name="profilePicture"
@@ -149,7 +151,7 @@ function Register() {
             />
           )}
 
-          <p className="inputlable">Address :</p>
+          <p className="label">Address :</p>
           <MDBInput
             id="input"
             type="text"
@@ -158,7 +160,7 @@ function Register() {
             onChange={handleChange}
           />
 
-          <p className="inputlable">Email :</p>
+          <p className="label">Email :</p>
           <MDBInput
             id="input"
             type="email"
@@ -168,7 +170,7 @@ function Register() {
             required
           />
 
-          <p className="inputlable">Mot de passe :</p>
+          <p className="label">Mot de passe :</p>
           <MDBInput
             id="input"
             type="password"
@@ -178,7 +180,7 @@ function Register() {
             required
           />
 
-          <p className="inputlable">Confirmer :</p>
+          <p className="label">Confirmer :</p>
           <MDBInput
             id="input"
             type="password"
@@ -188,18 +190,19 @@ function Register() {
             required
           />
 
-          <MDBBtn className="register-btn" type="submit">
+          <button className="register-btn" type="submit">
             Devenir Client
-          </MDBBtn>
+          </button>
         </form>
       </div>
 
       <div className="register-right-panel">
         <div>
-          <h4>Découvrez tout ce que GoFind a à offrir</h4>
+          <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Avec GoFind, accédez à une large gamme de prestations pensées pour
+            répondre à vos besoins. Notre plateforme met en relation clients et
+            prestataires de confiance afin de simplifier votre quotidien.
           </p>
         </div>
       </div>

@@ -72,46 +72,46 @@ function Crenaux() {
   };
 
   return (
-    <div className="App">
-      <main>
-        {prestataire && (
-          <div className="profile">
-            <img
-              src={prestataire.profilePicture}
-              alt={prestataire.nom}
-              className="profile-picture"
-            />
-            <h2>{prestataire.nom}</h2>
-            {prestataire.selectedPrestations.length > 0 ? (
-              prestataire.selectedPrestations.map((prestation, index) => (
-                <div key={index} className="prestation-item">
-                  <p>
-                    <strong>
-                      {prestations[prestation.prestationId] ||
-                        'Prestation inconnue'}
-                    </strong>
-                  </p>
-                  {prestation.selectedSousPrestations.length > 0 && (
-                    <ul>
-                      {prestation.selectedSousPrestations.map(
-                        (sousPrestationId, idx) => (
-                          <li key={idx}>
-                            {sousPrestations[sousPrestationId] ||
-                              'Sous-prestation inconnue'}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>Aucune prestation trouvée.</p>
-            )}
-          </div>
-        )}
+    <main>
+      {prestataire && (
+        <div className="profile">
+          <img
+            src={prestataire.profilePicture}
+            alt={prestataire.nom}
+            className="profile-picture"
+          />
+          <h1>{prestataire.nom}</h1>
+          {prestataire.selectedPrestations.length > 0 ? (
+            prestataire.selectedPrestations.map((prestation, index) => (
+              <div key={index} className="prestation-item">
+                <p>
+                  <strong>
+                    {prestations[prestation.prestationId] ||
+                      'Prestation inconnue'}
+                  </strong>
+                </p>
+                {prestation.selectedSousPrestations.length > 0 && (
+                  <ul>
+                    {prestation.selectedSousPrestations.map(
+                      (sousPrestationId, idx) => (
+                        <li key={idx}>
+                          {sousPrestations[sousPrestationId] ||
+                            'Sous-prestation inconnue'}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                )}
+              </div>
+            ))
+          ) : (
+            <p>Aucune prestation trouvée.</p>
+          )}
+        </div>
+      )}
 
-        <h3>Sélectionner Une Date</h3>
+      <div className="date-picker">
+        <h2>Sélectionner Une Date</h2>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
@@ -136,8 +136,8 @@ function Crenaux() {
         <button className="choose-time" onClick={handleConfirmHour}>
           Choisissez l&#39;horaire
         </button>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
 

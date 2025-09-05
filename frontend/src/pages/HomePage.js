@@ -191,7 +191,7 @@ const HomePage = () => {
             <span className="step-number">- 1 -</span>
             <div className="step-image-container">
               <img
-                src="/images/HP/find.jpg"
+                src="https://cdn.pixabay.com/photo/2022/02/20/21/21/tablet-7025355_1280.jpg"
                 alt="Recherchez et trouvez une prestation et un prestataire sur GoFind"
                 className="step-image"
               />
@@ -207,7 +207,7 @@ const HomePage = () => {
             <span className="step-number">- 2 -</span>
             <div className="step-image-container">
               <img
-                src="/images/HP/contacter.jpg"
+                src="https://cdn.pixabay.com/photo/2017/12/02/14/38/contact-us-2993000_1280.jpg"
                 alt="Contactez directement votre prestataire sur GoFind"
                 className="step-image"
               />
@@ -223,7 +223,7 @@ const HomePage = () => {
             <span className="step-number">- 3 -</span>
             <div className="step-image-container">
               <img
-                src="/images/HP/chat.jpg"
+                src="https://cdn.pixabay.com/photo/2014/03/22/22/17/phone-292994_1280.jpg"
                 alt="Discutez avec votre prestataire via le chat GoFind"
                 className="step-image"
               />

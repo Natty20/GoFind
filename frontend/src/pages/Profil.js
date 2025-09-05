@@ -125,7 +125,7 @@ const ProfilePage = () => {
       {/* Section Réalisations */}
 
       <div className="realisation-section">
-        <h2>Réalisations</h2>
+        <h3>Réalisations</h3>
         <div className="tabs">
           <button
             className={activeTab === 'images' ? 'active' : ''}

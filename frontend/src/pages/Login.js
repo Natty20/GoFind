@@ -35,21 +35,21 @@ function LoginForm() {
   };
 
   return (
-    <MDBContainer className="gradient-form">
-      <div className="left-panel">
-        <div className="text-center">
+    <MDBContainer className="login-page">
+      <div className="login-left-panel">
+        <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h4>GoFind ton plaisir près de chez toi</h4>
+          <h1>GoFind ton plaisir près de chez toi</h1>
+          <p>Veuillez vous connecter à votre compte</p>
         </div>
-        <p>Veuillez vous connecter à votre compte</p>
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
-        <form onSubmit={handleLogin} className="input-container">
-          <p className="inputlable">Email :</p>
+        <form onSubmit={handleLogin} className="login-input-container">
+          <p className="label">Email :</p>
           <MDBInput
             id="input"
             type="email"
@@ -58,7 +58,7 @@ function LoginForm() {
             required
           />
 
-          <p className="inputlable">Mot de passe :</p>
+          <p className="label">Mot de passe :</p>
           <MDBInput
             id="input"
             type="password"
@@ -66,46 +66,47 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <a className="text-muted" href="#!">
+            Mot de passe oublié?
+          </a>
 
-          <MDBBtn type="submit" className="signin">
+          <button type="submit" className="login-btn">
             Se Connecter
-          </MDBBtn>
+          </button>
         </form>
 
-        <a className="text-muted" href="#!">
-          Mot de passe oublié?
-        </a>
-
-        <div>
+        <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
-          <MDBBtn
+          <button
             outline
             className="gotoregidter"
             color="danger"
             onClick={() => navigate('/register')}
           >
             S&#39;inscrire
-          </MDBBtn>
+          </button>
         </div>
       </div>
 
-      <div className="right-panel">
+      <div className="login-right-panel">
         <div>
-          <h4>We are more than just a company</h4>
+          <h2>Nous sommes plus qu’une simple entreprise</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Nous construisons des relations durables basées sur la confiance,
+            l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+            service : nous créons de la valeur pour chaque personne que nous
+            accompagnons.
           </p>
         </div>
 
-        <MDBBtn
+        <button
           outline
           className="gotoregidter"
           color="danger"
           onClick={() => navigate('/login_admin')}
         >
           Admin login
-        </MDBBtn>
+        </button>
       </div>
     </MDBContainer>
   );

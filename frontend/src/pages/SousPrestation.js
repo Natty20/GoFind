@@ -136,14 +136,14 @@ const SousPrestation = () => {
           />
         </div>
         <div className="text-container">
-          <h2>{sousPrestation.title}</h2>
+          <h1>{sousPrestation.title}</h1>
           <p>{sousPrestation.longDescription}</p>
         </div>
       </section>
 
       {/* Section des prestataires */}
       <section className="prestataires-section">
-        <h3>Découvrez nos prestataires dans {sousPrestation.nom}</h3>
+        <h2>Découvrez nos prestataires dans {sousPrestation.nom}</h2>
         <div className="prestataires-list">
           {prestataires.length > 0 ? (
             prestataires.map((prestataire) => (
@@ -156,7 +156,7 @@ const SousPrestation = () => {
                 </div>
                 <Link to={`/profil/${prestataire._id}`}>
                   <div className="prestataire-info">
-                    <h4>{prestataire.nom}</h4>
+                    <h3>{prestataire.nom}</h3>
                     <p>{prestataire.phone}</p>
                     <p>{prestataire.realisations}</p>
                   </div>
@@ -171,7 +171,7 @@ const SousPrestation = () => {
 
       {/* Section des autres sous-prestations de la même prestation */}
       <section className="other-categories">
-        <h3>Autres prestations dans {sousPrestation.prestation}</h3>
+        <h4>Autres prestations dans {sousPrestation.prestation}</h4>
         <div className="categories-list">
           {autresSousPrestations.length > 0 ? (
             autresSousPrestations.map((sousP) => (

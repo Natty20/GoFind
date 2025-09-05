@@ -4,7 +4,7 @@
   padding: 20px;
   max-width: 1200px;
   margin: auto;
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 
 /* Section Détails du Prestataire */
@@ -21,15 +21,13 @@
 
 .details {
   display: flex;
-
-  /* gap: 5rem; */
 }
 
 .provider-image {
   width: 45%;
   height: 320px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .provider-info {
@@ -57,19 +55,28 @@
   text-align: center;
 }
 
-.provider-calendar h3 {
+.provider-calendar h2 {
   font-size: 18px;
   margin-bottom: 10px;
 }
 
-.provider-calendar .calendar {
+.prestation-item {
+  list-style: none;
+}
+
+.prestation-item p {
+  color: #ba3e40;
+  text-transform: uppercase;
+}
+
+/* .provider-calendar .calendar {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
   width: 250px;
   text-align: center;
   background-color: #f9f9f9;
-}
+} */
 
 .provider-calendar button {
   margin-top: 20px;
@@ -83,19 +90,8 @@
   cursor: pointer;
 }
 
-.tabs button {
-  flex: 1;
-  padding: 15px;
-  border: none;
-  background: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: #333;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.provider-calendar button:hover {
+.provider-calendar button:hover,
+.tabs button:hover {
   background-color: #f3dbdd;
   color: #ba3e40;
   border: 1px solid #f3dbdd;
@@ -123,13 +119,21 @@
   margin-bottom: 20px;
 }
 
+.tabs button {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
 .tabs button.active {
   color: #ba3e40;
   border-bottom: 3px solid #ba3e40;
-}
-
-.tabs button:hover {
-  color: #f3dbdd;
 }
 
 /* Grille des images */
@@ -158,48 +162,6 @@
   border-radius: 8px;
 }
 
-/* Section Avis des Clients */
-.review {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-}
-
-.client-image {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.review-info {
-  display: flex;
-  gap: 20px;
-}
-
-.review-info h3 {
-  align-content: center;
-  font-size: 18px;
-  margin: 0;
-}
-
-span {
-  color: #ba3e40;
-  font-weight: bold;
-}
-
-.review p {
-  margin: 5px 0;
-  color: #555;
-}
-
-.provider-reviews a {
-  display: inline-block;
-  margin-top: 20px;
-  color: #ba3e40;
-  text-decoration: none;
-}
-
 /* Responsive  */
 @media (max-width: 768px) {
   /* Provider Details */
@@ -225,21 +187,6 @@ span {
   .images-grid,
   .videos-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Reviews */
-  .review-info {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .review-info h3 {
-    font-size: 16px;
-  }
-
-  .client-image {
-    width: 100px;
-    height: 100px;
   }
 }
 
@@ -282,20 +229,5 @@ span {
   .tabs button {
     font-size: 14px;
     padding: 10px;
-  }
-
-  /* Reviews */
-  .review-info {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .review-info h3 {
-    font-size: 14px;
-  }
-
-  .client-image {
-    width: 100px;
-    height: 100px;
   }
 }
