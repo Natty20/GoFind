@@ -86,7 +86,7 @@ function Register() {
   };
 
   return (
-    <MDBContainer className="register-page">
+    <main className="register-page">
       <div className="register-left-panel">
         <div className="welcome-text">
           <img
@@ -206,7 +206,7 @@ function Register() {
           </p>
         </div>
       </div>
-    </MDBContainer>
+    </main>
   );
 }
 

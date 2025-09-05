@@ -16,12 +16,13 @@ const ChoixCompte = () => {
   };
 
   return (
-    <MDBContainer className="gradient-form">
-      <div className="left-panel">
-        <div className="text-center">
+    <main className="choix-compte">
+      <div className="choix-left-panel">
+        <div className="welcome-text">
           <h1>GoFind ton plaisir près de chez toi</h1>
+          <p>Veuillez choisir pour continuer :</p>
         </div>
-        <p>Veuillez choisir pour continuer :</p>
+
         <div className="choix-boutons">
           <button
             onClick={() => handleChoix('client')}
@@ -39,7 +40,7 @@ const ChoixCompte = () => {
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       </div>
 
-      <div className="right-panel">
+      <div className="choix-right-panel">
         <div>
           <h4>Nous sommes plus qu’une entreprise</h4>
           <p>
@@ -48,7 +49,7 @@ const ChoixCompte = () => {
           </p>
         </div>
       </div>
-    </MDBContainer>
+    </main>
   );
 };
 

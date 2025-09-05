@@ -1,7 +1,46 @@
-.left-panel,
-.right-panel {
+.choix-left-panel,
+.choix-right-panel {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
+.choix-left-panel {
+  background-color: #fff;
+  padding: 2rem;
+  /* margin-bottom: 1rem; */
+}
+
+.choix-right-panel {
+  width: 50%;
+  background: #f3dbdd !important;
+  color: #ba3e40 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
+
+.choix-right-panel h2 {
+  font-size: 1.5rem;
+  /* margin: 1rem; */
+  text-transform: uppercase;
+  color: #ba3e40;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.choix-right-panel p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 1rem;
+  text-align: center !important;
+}
+
 .choix-boutons {
   margin-top: 30px;
   display: flex;

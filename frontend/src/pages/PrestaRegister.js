@@ -140,16 +140,16 @@ const PrestataireRegister = () => {
   };
 
   return (
-    <MDBContainer className="register-form">
-      <div className="left-panel">
-        <div className="text-center">
+    <main className="register-form">
+      <div className="register-left-panel">
+        <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h4>Rejoignez GoFind</h4>
+          <h1>Rejoignez GoFind</h1>
+          <p>Créez votre compte pour proposer vos services</p>
         </div>
-        <p>Créez votre compte pour proposer vos services</p>
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
@@ -157,7 +157,7 @@ const PrestataireRegister = () => {
         )}
 
         <form onSubmit={handleRegister} className="input-container">
-          <p className="inputlable">Nom:</p>
+          <p className="label">Nom:</p>
           <MDBInput
             id="input"
             type="text"
@@ -167,7 +167,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Téléphone :</p>
+          <p className="label">Téléphone :</p>
           <MDBInput
             id="input"
             type="text"
@@ -177,7 +177,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Adresse :</p>
+          <p className="label">Adresse :</p>
           <MDBInput
             id="input"
             type="text"
@@ -187,7 +187,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Photo de profil :</p>
+          <p className="label">Photo de profil :</p>
           <MDBInput
             type="file"
             name="profilePicture"
@@ -195,7 +195,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Email :</p>
+          <p className="label">Email :</p>
           <MDBInput
             id="input"
             type="email"
@@ -205,7 +205,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Mot de passe :</p>
+          <p className="label">Mot de passe :</p>
           <MDBInput
             id="input"
             type="password"
@@ -215,7 +215,7 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="inputlable">Confirmer le mot de passe :</p>
+          <p className="label">Confirmer le mot de passe :</p>
           <MDBInput
             id="input"
             type="password"
@@ -253,15 +253,15 @@ const PrestataireRegister = () => {
             </div>
           ))}
 
-          <MDBBtn className="register-btn" type="submit">
+          <button className="register-btn" type="register-btn">
             Devenir Prestataire
-          </MDBBtn>
+          </button>
         </form>
       </div>
 
       <div className="register-right-panel">
         <div>
-          <h4>Découvrez tout ce que GoFind a à offrir</h4>
+          <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -275,7 +275,7 @@ const PrestataireRegister = () => {
           </button>
         </div>
       </div>
-    </MDBContainer>
+    </main>
   );
 };
 

@@ -95,15 +95,15 @@ function LoginForm() {
           service : nous créons de la valeur pour chaque personne que nous
           accompagnons.
         </p>
-      </div>
 
-      <button
-        className="gotoregidter"
-        color="danger"
-        onClick={() => navigate('/login_admin')}
-      >
-        Admin login
-      </button>
+        <button
+          className="gotoregidter"
+          color="danger"
+          onClick={() => navigate('/login_admin')}
+        >
+          Admin login
+        </button>
+      </div>
     </main>
   );
 }

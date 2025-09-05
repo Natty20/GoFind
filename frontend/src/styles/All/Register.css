@@ -31,19 +31,6 @@
   text-align: center;
   padding: 1rem;
 }
-
-.welcome-text img {
-  width: 50%;
-  border-radius: 50%;
-}
-.welcome-text h1 {
-  color: #ba3e40;
-  font-size: 2rem;
-  font-weight: 700;
-  /* margin-bottom: 1rem; */
-  text-align: center;
-  text-transform: uppercase;
-}
 .welcome-text p {
   text-align: center;
 }
@@ -188,7 +175,7 @@
   border: 2px solid #ba3e40;
 }
 
-.login-right-panel h2 {
+.register-right-panel h2 {
   color: #ba3e40;
   font-size: 2rem;
   font-weight: 700;
