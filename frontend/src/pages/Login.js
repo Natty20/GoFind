@@ -88,23 +88,22 @@ function LoginForm() {
       </div>
 
       <div className="login-right-panel">
-          <h2>Nous sommes plus qu’une simple entreprise</h2>
-          <p>
-            Nous construisons des relations durables basées sur la confiance,
-            l’innovation et l’humain. Notre mission va bien au-delà d’un simple
-            service : nous créons de la valeur pour chaque personne que nous
-            accompagnons.
-          </p>
-        </div>
-
-        <button
-          className="gotoregidter"
-          color="danger"
-          onClick={() => navigate('/login_admin')}
-        >
-          Admin login
-        </button>
+        <h2>Nous sommes plus qu’une simple entreprise</h2>
+        <p>
+          Nous construisons des relations durables basées sur la confiance,
+          l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+          service : nous créons de la valeur pour chaque personne que nous
+          accompagnons.
+        </p>
       </div>
+
+      <button
+        className="gotoregidter"
+        color="danger"
+        onClick={() => navigate('/login_admin')}
+      >
+        Admin login
+      </button>
     </main>
   );
 }
