@@ -11,6 +11,7 @@ const PrestataireRegister = () => {
 
   const [formData, setFormData] = useState({
     nom: '',
+    prenom: '',
     phone: '',
     address: '',
     profilePicture: null,
@@ -50,7 +51,10 @@ const PrestataireRegister = () => {
 
   // Gérer le fichier uploadé (photo de profil)
   const handleFileChange = (e) => {
-    setFormData({ ...formData, profilePicture: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, profilePicture: file });
+    }
   };
 
   // Gérer la sélection des prestations
@@ -88,13 +92,14 @@ const PrestataireRegister = () => {
     setSuccess(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas.');
+      setError('Les mots de passe ne correspondent pas!');
       return;
     }
 
     try {
       const data = new FormData();
       data.append('nom', formData.nom);
+      data.append('prenom', formData.prenom);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
       if (formData.profilePicture) {
@@ -140,7 +145,7 @@ const PrestataireRegister = () => {
   };
 
   return (
-    <main className="register-form">
+    <main className="register-page">
       <div className="register-left-panel">
         <div className="welcome-text">
           <img
@@ -167,10 +172,20 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="label">Téléphone :</p>
+          <p className="label">Prénom:</p>
           <MDBInput
             id="input"
             type="text"
+            name="prenom"
+            value={formData.prenom}
+            onChange={handleChange}
+            required
+          />
+
+          <p className="label">Téléphone :</p>
+          <MDBInput
+            id="input"
+            type="number"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
@@ -188,12 +203,20 @@ const PrestataireRegister = () => {
           />
 
           <p className="label">Photo de profil :</p>
-          <MDBInput
+          <input
             type="file"
             name="profilePicture"
             onChange={handleFileChange}
             required
           />
+
+          {formData.profilePicture && (
+            <img
+              src={URL.createObjectURL(formData.profilePicture)}
+              alt="Preview"
+              style={{ width: '50px', marginTop: '10px', borderRadius: '30px' }}
+            />
+          )}
 
           <p className="label">Email :</p>
           <MDBInput

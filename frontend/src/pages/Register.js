@@ -45,7 +45,7 @@ function Register() {
     setSuccess(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas.');
+      setError('Les mots de passe ne correspondent pas!');
       return;
     }
 
@@ -62,8 +62,6 @@ function Register() {
           address: formData.address,
         }
       );
-
-      console.log('✅ Réponse API :', response.data);
 
       const { token, client } = response.data;
       sessionStorage.setItem('token', token);
@@ -147,7 +145,7 @@ function Register() {
             <img
               src={URL.createObjectURL(formData.profilePicture)}
               alt="Preview"
-              style={{ width: '10px', marginTop: '10px', borderRadius: '10px' }}
+              style={{ width: '50px', marginTop: '10px', borderRadius: '30px' }}
             />
           )}
 

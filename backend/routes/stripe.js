@@ -33,8 +33,8 @@ router.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5000/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "http://localhost:5000/api/stripe/cancel",
+      success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://natty20.github.io/GoFind/cancel`,
       metadata: {
         clientId: String(client?._id),
         prestataireId: String(prestataire?._id),
