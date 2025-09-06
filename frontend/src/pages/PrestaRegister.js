@@ -14,7 +14,7 @@ const PrestataireRegister = () => {
     prenom: '',
     phone: '',
     address: '',
-    profilePicture: null,
+    profilePicture: '',
     selectedPrestations: [],
     email: '',
     password: '',
@@ -103,9 +103,7 @@ const PrestataireRegister = () => {
       data.append('prenom', formData.prenom);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
-      if (formData.profilePicture) {
-        data.append('profilePicture', formData.profilePicture);
-      }
+      data.append('profilePicture', formData.profilePicture);
       data.append('email', formData.email);
       data.append('password', formData.password);
 
@@ -121,20 +119,15 @@ const PrestataireRegister = () => {
 
       const response = await axios.post(
         'https://gofind-v9ee.onrender.com/api/prestataires/register',
-        data,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+        data
       );
 
-      console.log('✅ Réponse API :', response.data);
+      const { token, prestataire } = response.data;
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('client', JSON.stringify(prestataire));
+      setPrestataire(prestataire);
 
-      // ⚠️ Ton backend ne renvoie PAS de token, juste { message, prestataire }
-      if (response.data.prestataire) {
-        sessionStorage.setItem(
-          'prestataire',
-          JSON.stringify(response.data.prestataire)
-        );
-        setPrestataire(response.data.prestataire);
-      }
+      console.log('✅ Réponse API :', response.data);
 
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
@@ -209,6 +202,7 @@ const PrestataireRegister = () => {
             type="file"
             name="profilePicture"
             onChange={handleFileChange}
+            accept="image/*"
             required
           />
 

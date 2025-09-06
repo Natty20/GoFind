@@ -4,7 +4,7 @@ const SousPrestation = require("../models/SousPrestation");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
+// const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 
@@ -17,6 +17,7 @@ const register = async (req, res) => {
       password,
       phone,
       address,
+      profilePicture,
       selectedPrestations,
     } = req.body;
 
@@ -49,10 +50,6 @@ const register = async (req, res) => {
         message: "Veuillez fournir une photo de profil (profilePicture).",
       });
     }
-
-    const profilePicture = `/uploads/${req.file.filename}`;
-
-    // const profilePicture = req.file ? `/uploads/${req.file.filename}` : null;
 
     bcrypt.setRandomFallback((len) => crypto.randomBytes(len));
     const salt = await bcrypt.genSalt(10);

@@ -12,15 +12,15 @@ const {
   getPrestataireById,
 } = require("../controllers/prestataireController");
 // const { upload } = require("../controllers/prestataireController");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+// const multer = require("multer");
+// const upload = multer({ dest: "uploads/" });
 const {
   authenticateUser,
   authorizeAdmin,
 } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-router.post("/register", upload.single("profilePicture"), register);
+router.post("/register", register);
 router.post("/login", login);
 router.get("/", getAllPrestataires);
 router.get("/:id", getPrestataireById);
@@ -45,7 +45,6 @@ router.post("/:id/realisations", addRealisation);
 router.delete("/:id/realisations/:realisationId", deleteRealisation);
 router.post(
   "/:id/realisations/upload",
-  upload.single("file"),
   uploadRealisation,
 );
 

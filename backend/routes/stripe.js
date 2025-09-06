@@ -33,8 +33,8 @@ router.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://natty20.github.io/GoFind/cancel`,
+      success_url: `https://natty20.github.io/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://natty20.github.io/cancel`,
       metadata: {
         clientId: String(client?._id),
         prestataireId: String(prestataire?._id),
@@ -75,12 +75,12 @@ router.get("/confirm-payment", async (req, res) => {
       };
 
       await axios.post(
-        "http://localhost:5000/api/reservations/new",
+        "https://natty20.github.io/api/reservations/new",
         reservationData,
       );
 
       return res.redirect(
-        `http://localhost:8080/success?session_id=${req.query.session_id}`,
+        `https://natty20.github.io/success?session_id=${req.query.session_id}`,
       );
     } else {
       return res.status(400).json({ error: "Paiement non validé." });
