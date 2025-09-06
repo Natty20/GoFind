@@ -17,7 +17,7 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-  // "https://natty20.github.io",
+  "https://natty20.github.io",
   "https://natty20.github.io/GoFind",
 ];
 
@@ -32,8 +32,9 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
+
 
 app.use(express.json());
 app.use((req, res, next) => {

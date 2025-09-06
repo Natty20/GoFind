@@ -105,6 +105,10 @@ const register = async (req, res) => {
     });
     await newPrestataire.save();
 
+    const token = jwt.sign({ id: newPrestataire._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+
     for (let prestation of prestationsArray) {
       for (let sousPrestationId of prestation.selectedSousPrestations) {
         await SousPrestation.findByIdAndUpdate(sousPrestationId, {
@@ -117,7 +121,7 @@ const register = async (req, res) => {
     res.status(201).json({
       message: "Prestataire créé avec succès !",
       prestataire: newPrestataire,
-      // token: generateToken(newPrestataire._id), // optionnel
+      token: token,
     });
   } catch (err) {
     console.error("Erreur lors de la création du prestataire:", err);

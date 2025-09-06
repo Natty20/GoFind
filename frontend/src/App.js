@@ -35,7 +35,7 @@ function App() {
   return (
     <AuthProvider>
       <HelmetProvider>
-        <Router>
+        <Router basename="/GoFind">
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />

@@ -86,6 +86,7 @@ const PrestataireRegister = () => {
   };
 
   // Gérer l'inscription
+  // Gérer l'inscription
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
@@ -108,7 +109,7 @@ const PrestataireRegister = () => {
       data.append('email', formData.email);
       data.append('password', formData.password);
 
-      // Transformer les prestations en format attendu par le backend
+      // ⚡ Garder "selectedSousPrestations"
       const formattedPrestations = formData.selectedPrestations.map(
         (prestationId) => ({
           prestationId,
@@ -118,26 +119,27 @@ const PrestataireRegister = () => {
 
       data.append('selectedPrestations', JSON.stringify(formattedPrestations));
 
-      console.log('📤 Données envoyées :', Object.fromEntries(data.entries())); // Debug
-
       const response = await axios.post(
         'https://gofind-v9ee.onrender.com/api/prestataires/register',
         data,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
+        { headers: { 'Content-Type': 'multipart/form-data' } }
       );
 
-      const { token, prestataire } = response.data;
+      console.log('✅ Réponse API :', response.data);
 
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
-      setPrestataire(prestataire);
+      // ⚠️ Ton backend ne renvoie PAS de token, juste { message, prestataire }
+      if (response.data.prestataire) {
+        sessionStorage.setItem(
+          'prestataire',
+          JSON.stringify(response.data.prestataire)
+        );
+        setPrestataire(response.data.prestataire);
+      }
 
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
     } catch (error) {
-      console.error('❌ Erreur API :', error.response?.data);
+      console.error('❌ Erreur API :', error.response?.data || error.message);
       setError(
         error.response?.data?.message || "Erreur lors de l'inscription."
       );
