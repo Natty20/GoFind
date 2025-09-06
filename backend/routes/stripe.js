@@ -4,11 +4,12 @@ const axios = require("axios");
 
 const router = express.Router();
 const stripe = require("stripe")(
-  "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI",
+  "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
 );
 
+// ✅ Création d’une session Stripe
 router.post("/create-checkout-session", async (req, res) => {
-  console.log("Requête reçue pour Stripe :", req.body);
+  console.log("📥 Requête reçue pour Stripe :", req.body);
   try {
     const {
       montant,
@@ -38,7 +39,7 @@ router.post("/create-checkout-session", async (req, res) => {
       metadata: {
         clientId: String(client?._id),
         prestataireId: String(prestataire?._id),
-        prestations: JSON.stringify(prestations),
+        prestations: JSON.stringify(prestations), // ⚡ Déjà formatées par le front
         date: String(selectedDate),
         heure: String(selectedHour),
         description: description || "Pas de description",
@@ -47,46 +48,52 @@ router.post("/create-checkout-session", async (req, res) => {
 
     res.json({ id: session.id });
   } catch (error) {
-    console.error("Erreur Stripe:", error);
+    console.error("❌ Erreur Stripe:", error);
     res.status(500).send("Erreur lors de la création de la session Stripe");
   }
 });
 
+// ✅ Confirmation du paiement et création de réservation
 router.get("/confirm-payment", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(
-      req.query.session_id,
+      req.query.session_id
     );
 
     if (session.payment_status === "paid") {
+      // 🔄 Reformatage des prestations
+      const prestations = JSON.parse(session.metadata.prestations).map((p) => ({
+        prestationId: p.prestationId,
+        sousPrestations: (p.selectedSousPrestations || []).map(
+          (sp) => sp.sousPrestationId
+        ),
+      }));
+
       const reservationData = {
         clientId: session.metadata.clientId,
         prestataireId: session.metadata.prestataireId,
-        prestations: JSON.parse(session.metadata.prestations).map((p) => ({
-          prestationId: p.prestationId,
-          sousPrestations: p.selectedSousPrestations.map(
-            (sp) => sp.sousPrestationId,
-          ),
-        })),
+        prestations,
         date: session.metadata.date,
         heure: session.metadata.heure,
         modePaiement: "Carte via Stripe",
         description: session.metadata.description || "Pas de description",
       };
 
+      console.log("📦 Réservation envoyée au backend :", reservationData);
+
       await axios.post(
         "https://gofind-v9ee.onrender.com/api/reservations/new",
-        reservationData,
+        reservationData
       );
 
       return res.redirect(
-        `https://natty20.github.io/GoFind/success?session_id=${req.query.session_id}`,
+        `https://natty20.github.io/GoFind/success?session_id=${req.query.session_id}`
       );
     } else {
       return res.status(400).json({ error: "Paiement non validé." });
     }
   } catch (error) {
-    console.error("Erreur confirmation Stripe :", error.message);
+    console.error("❌ Erreur confirmation Stripe :", error.message);
     return res.status(500).json({ error: error.message });
   }
 });

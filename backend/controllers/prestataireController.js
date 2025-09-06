@@ -107,7 +107,6 @@ const register = async (req, res) => {
       }
     }
 
-    // ✅ Tu peux aussi renvoyer un token ici si tu veux faire une auto-login
     res.status(201).json({
       message: "Prestataire créé avec succès !",
       prestataire: newPrestataire,
@@ -260,111 +259,111 @@ const getMultiplePrestataires = async (req, res) => {
 // à revoir et tester ce code en bas
 
 // Ajouter une réalisation (image/vidéo) à un prestataire
-const addRealisation = async (req, res) => {
-  try {
-    const { id } = req.params; // ID du prestataire
-    const { realisationUrl } = req.body; // URL de l'image ou vidéo
+// const addRealisation = async (req, res) => {
+//   try {
+//     const { id } = req.params; // ID du prestataire
+//     const { realisationUrl } = req.body; // URL de l'image ou vidéo
 
-    const prestataire = await Prestataire.findById(id);
-    if (!prestataire) {
-      return res.status(404).json({ message: "Prestataire non trouvé" });
-    }
+//     const prestataire = await Prestataire.findById(id);
+//     if (!prestataire) {
+//       return res.status(404).json({ message: "Prestataire non trouvé" });
+//     }
 
-    prestataire.realisations.push(realisationUrl);
-    await prestataire.save();
+//     prestataire.realisations.push(realisationUrl);
+//     await prestataire.save();
 
-    res
-      .status(200)
-      .json({ message: "Réalisation ajoutée avec succès", prestataire });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-};
+//     res
+//       .status(200)
+//       .json({ message: "Réalisation ajoutée avec succès", prestataire });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Erreur serveur" });
+//   }
+// };
 
 // Supprimer une réalisation d'un prestataire
-const deleteRealisation = async (req, res) => {
-  try {
-    const { id, realisationId } = req.params;
+// const deleteRealisation = async (req, res) => {
+//   try {
+//     const { id, realisationId } = req.params;
 
-    const prestataire = await Prestataire.findById(id);
-    if (!prestataire) {
-      return res.status(404).json({ message: "Prestataire non trouvé" });
-    }
+//     const prestataire = await Prestataire.findById(id);
+//     if (!prestataire) {
+//       return res.status(404).json({ message: "Prestataire non trouvé" });
+//     }
 
-    // Supprime la réalisation par son URL
-    prestataire.realisations = prestataire.realisations.filter(
-      (realisation) => realisation !== realisationId,
-    );
-    await prestataire.save();
+//     // Supprime la réalisation par son URL
+//     prestataire.realisations = prestataire.realisations.filter(
+//       (realisation) => realisation !== realisationId,
+//     );
+//     await prestataire.save();
 
-    res
-      .status(200)
-      .json({ message: "Réalisation supprimée avec succès", prestataire });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-};
+//     res
+//       .status(200)
+//       .json({ message: "Réalisation supprimée avec succès", prestataire });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Erreur serveur" });
+//   }
+// };
 
 // Configuration de Multer
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/gif",
-    "video/mp4",
-    "video/mpeg",
-  ];
-  if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(
-      new Error(
-        "Format de fichier non pris en charge (JPEG, JPG, PNG, GIF, MP4 uniquement)",
-      ),
-      false,
-    );
-  }
-};
+// const fileFilter = (req, file, cb) => {
+//   const allowedTypes = [
+//     "image/jpeg",
+//     "image/jpg",
+//     "image/png",
+//     "image/gif",
+//     "video/mp4",
+//     "video/mpeg",
+//   ];
+//   if (allowedTypes.includes(file.mimetype)) {
+//     cb(null, true);
+//   } else {
+//     cb(
+//       new Error(
+//         "Format de fichier non pris en charge (JPEG, JPG, PNG, GIF, MP4 uniquement)",
+//       ),
+//       false,
+//     );
+//   }
+// };
 
 // Configuration de Multer pour le stockage des fichiers
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Dossier où stocker les fichiers
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Générer un nom unique
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/"); // Dossier où stocker les fichiers
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname)); // Générer un nom unique
+//   },
+// });
 
-const upload = multer({
-  storage,
-  fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // limite: 5MB max
-});
+// const upload = multer({
+//   storage,
+//   fileFilter,
+//   limits: { fileSize: 5 * 1024 * 1024 }, // limite: 5MB max
+// });
 
 // Route pour ajouter une image/vidéo
-const uploadRealisation = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const fileUrl = `/uploads/${req.file.filename}`; // Chemin du fichier
+// const uploadRealisation = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const fileUrl = `/uploads/${req.file.filename}`; // Chemin du fichier
 
-    const prestataire = await Prestataire.findById(id);
-    if (!prestataire) {
-      return res.status(404).json({ message: "Prestataire non trouvé" });
-    }
+//     const prestataire = await Prestataire.findById(id);
+//     if (!prestataire) {
+//       return res.status(404).json({ message: "Prestataire non trouvé" });
+//     }
 
-    prestataire.realisations.push(fileUrl);
-    await prestataire.save();
+//     prestataire.realisations.push(fileUrl);
+//     await prestataire.save();
 
-    res.status(200).json({ message: "Fichier uploadé avec succès", fileUrl });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-};
+//     res.status(200).json({ message: "Fichier uploadé avec succès", fileUrl });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Erreur serveur" });
+//   }
+// };
 
 module.exports = {
   register,
@@ -373,9 +372,9 @@ module.exports = {
   getPrestataireById,
   updatePrestataire,
   deletePrestataire,
-  addRealisation,
-  deleteRealisation,
-  upload,
-  uploadRealisation,
+  // addRealisation,
+  // deleteRealisation,
+  // upload,
+  // uploadRealisation,
   getMultiplePrestataires,
 };

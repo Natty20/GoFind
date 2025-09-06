@@ -27,17 +27,31 @@ const PaymentPage = () => {
     try {
       const stripe = await stripePromise;
 
+      // 🔄 Reformater les prestations pour backend
+      const selectedPrestations = prestations.map((prestation) => ({
+        prestationId: prestation.prestationId,
+        selectedSousPrestations: prestation.selectedSousPrestations.map(
+          (sous) => ({
+            sousPrestationId: sous.sousPrestationId,
+          })
+        ),
+      }));
+
+      const payload = {
+        montant,
+        client,
+        prestataire,
+        prestations: selectedPrestations,
+        selectedDate,
+        selectedHour,
+        description,
+      };
+
+      console.log('📤 Données envoyées à Stripe:', payload);
+
       const { data } = await axios.post(
         'https://gofind-v9ee.onrender.com/api/create-checkout-session',
-        {
-          montant,
-          client,
-          prestataire,
-          prestations,
-          selectedDate,
-          selectedHour,
-          description,
-        }
+        payload
       );
 
       const result = await stripe.redirectToCheckout({ sessionId: data.id });
@@ -53,80 +67,6 @@ const PaymentPage = () => {
     setLoading(false);
   };
 
-  // const [selectedPayment, setSelectedPayment] = useState('');
-
-  // console.log('📌 Données reçues :', location.state);
-
-  // const handlePaymentChange = (e) => {
-  //   setSelectedPayment(e.target.value);
-  // };
-
-  // const handleConfirmPayment = async () => {
-  //   if (!selectedPayment) {
-  //     alert('Veuillez sélectionner un moyen de paiement !');
-  //     return;
-  //   }
-
-  //   try {
-  //     if (!Array.isArray(prestations)) {
-  //       console.error(
-  //         "❌ 'prestations' doit être un tableau valide",
-  //         prestations
-  //       );
-  //       alert(
-  //         'Erreur : les prestations ne sont pas valides. Veuillez réessayer.'
-  //       );
-  //       return;
-  //     }
-
-  //     // Créer un tableau pour les prestations et sous-prestations associées
-  //     const selectedPrestations = prestations.map((prestation) => ({
-  //       prestationId: prestation.prestationId,
-  //       prestationNom: prestation.prestationNom,
-  //       sousPrestations: Array.isArray(prestation.selectedSousPrestations)
-  //         ? prestation.selectedSousPrestations.map(
-  //             (sousPrestation) => sousPrestation.sousPrestationId
-  //           ) // Envoie uniquement les IDs
-  //         : [], // Si `selectedSousPrestations` est undefined, on met un tableau vide.
-  //     }));
-
-  //     // Données envoyées à l'API
-  //     const reservationData = {
-  //       clientId: client?._id,
-  //       prestataireId: prestataire?._id,
-  //       prestations: selectedPrestations, // Envoi des prestations avec les sous-prestations filtrées
-  //       date: selectedDate,
-  //       heure: selectedHour,
-  //       modePaiement: selectedPayment,
-  //       description: description || '',
-  //     };
-
-  //     console.log('Données envoyées:', reservationData);
-
-  //     // Envoi de la requête POST
-  //     await axios.post(
-  //       'http://localhost:5000/api/reservations/new',
-  //       reservationData
-  //     );
-  //     if (selectedPayment && montant && selectedDate) {
-  //       navigate('/demande_envoye', {
-  //         state: {
-  //           client,
-  //           prestataire,
-  //           selectedPayment,
-  //           montant,
-  //           selectedDate,
-  //         },
-  //       });
-  //     } else {
-  //       alert('Problème avec la réservation. Vérifiez les informations.');
-  //     }
-  //   } catch (error) {
-  //     console.error('❌ Erreur lors du paiement :', error);
-  //     alert('Une erreur est survenue. Veuillez réessayer.');
-  //   }
-  // };
-
   return (
     <div className="payment-page">
       <div className="note">
@@ -140,22 +80,6 @@ const PaymentPage = () => {
         <h1>
           Sélectionnez Votre Moyen De Paiement Pour Confirmer Le Rendez-Vous
         </h1>
-        {/* <div className="payment-options">
-          {['Espèces', 'Chèque', 'PayPal', 'Virement Bancaire'].map(
-            (method) => (
-              <label key={method}>
-                <input
-                  type="radio"
-                  name="payment"
-                  value={method}
-                  checked={selectedPayment === method}
-                  onChange={handlePaymentChange}
-                />
-                {method}
-              </label>
-            )
-          )}
-        </div> */}
 
         <div className="amount-section">
           <p>Montant À Régler</p>
