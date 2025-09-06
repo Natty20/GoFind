@@ -4,7 +4,7 @@ const SousPrestation = require("../models/SousPrestation");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-// const multer = require("multer");
+const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 
