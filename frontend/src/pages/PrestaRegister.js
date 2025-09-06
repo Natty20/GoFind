@@ -53,7 +53,10 @@ const PrestataireRegister = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({ ...formData, profilePicture: file });
+      setFormData({
+        ...formData,
+        profilePicture: file, // garde le File pour preview
+      });
     }
   };
 
@@ -98,16 +101,6 @@ const PrestataireRegister = () => {
     }
 
     try {
-      const data = new FormData();
-      data.append('nom', formData.nom);
-      data.append('prenom', formData.prenom);
-      data.append('phone', formData.phone);
-      data.append('address', formData.address);
-      data.append('profilePicture', formData.profilePicture);
-      data.append('email', formData.email);
-      data.append('password', formData.password);
-
-      // ⚡ Garder "selectedSousPrestations"
       const formattedPrestations = formData.selectedPrestations.map(
         (prestationId) => ({
           prestationId,
@@ -115,19 +108,29 @@ const PrestataireRegister = () => {
         })
       );
 
-      data.append('selectedPrestations', JSON.stringify(formattedPrestations));
+      const payload = {
+        nom: formData.nom,
+        prenom: formData.prenom,
+        phone: formData.phone,
+        address: formData.address,
+        email: formData.email,
+        password: formData.password,
+        profilePicture:
+          formData.profilePicture instanceof File
+            ? 'https://via.placeholder.com/150' // ou Cloudinary si upload
+            : formData.profilePicture,
+        selectedPrestations: formattedPrestations,
+      };
 
       const response = await axios.post(
         'https://gofind-v9ee.onrender.com/api/prestataires/register',
-        data
+        payload
       );
 
       const { token, prestataire } = response.data;
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('client', JSON.stringify(prestataire));
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
-
-      console.log('✅ Réponse API :', response.data);
 
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
@@ -208,7 +211,11 @@ const PrestataireRegister = () => {
 
           {formData.profilePicture && (
             <img
-              src={URL.createObjectURL(formData.profilePicture)}
+              src={
+                typeof formData.profilePicture === 'string'
+                  ? formData.profilePicture
+                  : URL.createObjectURL(formData.profilePicture)
+              }
               alt="Preview"
               style={{ width: '50px', marginTop: '10px', borderRadius: '30px' }}
             />
