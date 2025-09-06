@@ -1,15 +1,16 @@
 const express = require("express");
 require("dotenv").config();
 const axios = require("axios");
-
 const router = express.Router();
+
 const stripe = require("stripe")(
   "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
 );
 
-// ✅ Création d’une session Stripe
+// 👉 1. Création session Stripe
 router.post("/create-checkout-session", async (req, res) => {
   console.log("📥 Requête reçue pour Stripe :", req.body);
+
   try {
     const {
       montant,
@@ -34,12 +35,15 @@ router.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
+
+      // 👉 Redirection vers ton backend qui fera la sauvegarde
+      success_url: `https://gofind-v9ee.onrender.com/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://natty20.github.io/GoFind/cancel`,
+
       metadata: {
         clientId: String(client?._id),
         prestataireId: String(prestataire?._id),
-        prestations: JSON.stringify(prestations), // ⚡ Déjà formatées par le front
+        prestations: JSON.stringify(prestations),
         date: String(selectedDate),
         heure: String(selectedHour),
         description: description || "Pas de description",
@@ -53,7 +57,7 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-// ✅ Confirmation du paiement et création de réservation
+// 👉 2. Confirmation du paiement + Sauvegarde réservation
 router.get("/confirm-payment", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(
@@ -61,31 +65,33 @@ router.get("/confirm-payment", async (req, res) => {
     );
 
     if (session.payment_status === "paid") {
-      // 🔄 Reformatage des prestations
-      const prestations = JSON.parse(session.metadata.prestations).map((p) => ({
-        prestationId: p.prestationId,
-        sousPrestations: (p.selectedSousPrestations || []).map(
-          (sp) => sp.sousPrestationId
-        ),
-      }));
+      console.log("✅ Paiement confirmé :", session.id);
 
+      // Reconstruction des données de réservation
+      const prestations = JSON.parse(session.metadata.prestations);
       const reservationData = {
         clientId: session.metadata.clientId,
         prestataireId: session.metadata.prestataireId,
-        prestations,
+        prestations: prestations.map((p) => ({
+          prestationId: p.prestationId,
+          sousPrestations: p.selectedSousPrestations.map(
+            (sp) => sp.sousPrestationId
+          ),
+        })),
         date: session.metadata.date,
         heure: session.metadata.heure,
         modePaiement: "Carte via Stripe",
         description: session.metadata.description || "Pas de description",
       };
 
-      console.log("📦 Réservation envoyée au backend :", reservationData);
+      console.log("📤 Données envoyées à l'API réservation :", reservationData);
 
       await axios.post(
         "https://gofind-v9ee.onrender.com/api/reservations/new",
         reservationData
       );
 
+      // 👉 Redirection finale vers ton frontend (GitHub Pages)
       return res.redirect(
         `https://natty20.github.io/GoFind/success?session_id=${req.query.session_id}`
       );
