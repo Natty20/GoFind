@@ -110,7 +110,8 @@ const AdminAddPage = () => {
       { name: 'phone', label: 'Phone', type: 'text' },
     ],
     prestataires: [
-      { name: 'nom', label: 'Nom et Prénom', type: 'text' },
+      { name: 'nom', label: 'Nom', type: 'text' },
+      { name: 'prenom', label: 'Prénom', type: 'text' },
       { name: 'email', label: 'Email', type: 'email' },
       { name: 'password', label: 'Mot de passe', type: 'password' },
       { name: 'phone', label: 'Phone', type: 'text' },

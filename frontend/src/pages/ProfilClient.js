@@ -60,7 +60,7 @@ const ClientProfile = () => {
     (r) => new Date(r.date) <= now && r.etat === 'terminé'
   );
   const rdvAnnules = rdvs.filter(
-    (r) => r.etat === 'declinée' || r.etat === 'annulé'
+    (r) => r.etat === 'declinée' || r.etat === 'declinée'
   );
 
   // Formatage date

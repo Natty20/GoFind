@@ -130,9 +130,7 @@ const ListeDemandesPrestataire = () => {
             onChange={(e) => handleStatusChange(res._id, e.target.value)}
           >
             <option value="acceptée">Acceptée</option>
-            <option value="en cours">En cours</option>
-            <option value="terminée">Terminée</option>
-            <option value="annulée">Annulée</option>
+            <option value="déclinée">Annulée</option>
           </select>
         </td>
         <td>{res.modePaiement || '—'}</td>

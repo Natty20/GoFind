@@ -50,7 +50,7 @@ const PaymentPage = () => {
       console.log('📤 Données envoyées à Stripe:', payload);
 
       const { data } = await axios.post(
-        'https://gofind-v9ee.onrender.com/api/create-checkout-session',
+        'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
         payload
       );
 
