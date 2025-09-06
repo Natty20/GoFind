@@ -44,13 +44,6 @@ const register = async (req, res) => {
       });
     }
 
-    // Vérifie si un fichier a bien été envoyé
-    if (!req.file) {
-      return res.status(400).json({
-        message: "Veuillez fournir une photo de profil (profilePicture).",
-      });
-    }
-
     bcrypt.setRandomFallback((len) => crypto.randomBytes(len));
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
