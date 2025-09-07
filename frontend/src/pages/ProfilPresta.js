@@ -82,13 +82,12 @@ const ProfilPresta = () => {
 
       setPrestataire(res.data.prestataire); // mettre à jour l'état local
       setIsEditing(false);
-      alert("✅ Profil prestataire mis à jour avec succès !");
+      alert('✅ Profil prestataire mis à jour avec succès !');
     } catch (err) {
       console.error('Erreur lors de la mise à jour :', err);
-      alert("❌ Impossible de mettre à jour le profil.");
+      alert('❌ Impossible de mettre à jour le profil.');
     }
   };
-
 
   const sousPrestationsChoisies = [];
   prestataire?.selectedPrestations.forEach((item) => {

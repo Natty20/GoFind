@@ -82,9 +82,7 @@ const ClientProfile = () => {
   const rdvTermines = rdvs.filter(
     (r) => new Date(r.date) <= now && r.etat === 'terminé'
   );
-  const rdvAnnules = rdvs.filter(
-    (r) => r.etat === 'declinée'
-  );
+  const rdvAnnules = rdvs.filter((r) => r.etat === 'declinée');
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

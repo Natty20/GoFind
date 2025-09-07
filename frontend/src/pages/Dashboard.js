@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Home,
-  Users,
-  Package,
-  Plus,
-  Edit,
-  Trash,
-} from 'lucide-react';
+import { Home, Users, Package, Plus, Edit, Trash } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Admin/Dashboard.css';
 
@@ -18,8 +11,7 @@ const menuItems = [
     icon: <Package size={20} />,
     endpoint: '/prestataires',
   },
-  
-  
+
   {
     name: 'prestations',
     icon: <Package size={20} />,
@@ -29,7 +21,7 @@ const menuItems = [
     name: 'sousprestations',
     icon: <Package size={20} />,
     endpoint: '/sousprestations',
-  }
+  },
 ];
 
 const entityToEndpoint = {
@@ -200,15 +192,15 @@ const Dashboard = () => {
                           <span>
                             <strong>Nom:</strong> {item.nom}
                           </span>
-                            <span>
-                              <strong>Prénom:</strong> {item.prenom}
-                            </span>
-                            <span>
-                              <strong>Email:</strong> {item.email}
-                            </span>
-                            <span>
-                              <strong>Téléphone:</strong> {item.phone}
-                            </span>
+                          <span>
+                            <strong>Prénom:</strong> {item.prenom}
+                          </span>
+                          <span>
+                            <strong>Email:</strong> {item.email}
+                          </span>
+                          <span>
+                            <strong>Téléphone:</strong> {item.phone}
+                          </span>
                           <span>
                             <strong>Prestation:</strong> {item.prestation}
                           </span>
@@ -257,7 +249,7 @@ const Dashboard = () => {
                             <strong>Email :</strong> {item.email}
                           </span>
                         </>
-                      )  : (
+                      ) : (
                         <span>{JSON.stringify(item, null, 2)}</span>
                       )}
                     </div>
