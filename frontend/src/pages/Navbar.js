@@ -50,8 +50,6 @@ const Navbar = () => {
               />
             </Link>
           </div>
-
-          {/* Hamburger */}
           <div
             className={`hamburger ${menuOpen ? 'active' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}

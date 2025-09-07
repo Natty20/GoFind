@@ -17,12 +17,11 @@ const AdminDetailsPage = () => {
           prestations: 'prestations',
           sousprestations: 'sousprestations',
           prestataires: 'prestataires',
-          reservations: 'reservations',
         };
 
-        // const endpoint = entityToEndpoint[entity] || entity;
+        const endpoint = entityToEndpoint[entity] || entity;
         const response = await fetch(
-          `https://gofind-v9ee.onrender.com/api/${entityToEndpoint}/${id}`,
+          `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

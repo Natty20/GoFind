@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import '../styles/Client/Paiement.css';
@@ -10,7 +10,6 @@ const stripePromise = loadStripe(
 
 const PaymentPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const {
     prestataire,
     client,
@@ -27,7 +26,7 @@ const PaymentPage = () => {
     try {
       const stripe = await stripePromise;
 
-      // 🔄 Reformater les prestations pour backend
+      // 🔄 Reformater pour backend
       const selectedPrestations = prestations.map((prestation) => ({
         prestationId: prestation.prestationId,
         selectedSousPrestations: prestation.selectedSousPrestations.map(
@@ -54,15 +53,14 @@ const PaymentPage = () => {
         payload
       );
 
+      // 👉 Redirection vers Stripe Checkout
       const result = await stripe.redirectToCheckout({ sessionId: data.id });
 
       if (result.error) {
-        console.error('Erreur Stripe:', result.error);
-        navigate('/cancel');
+        console.error('❌ Erreur Stripe:', result.error.message);
       }
     } catch (error) {
-      console.error('Erreur lors du paiement:', error);
-      navigate('/cancel');
+      console.error('❌ Erreur lors du paiement:', error);
     }
     setLoading(false);
   };

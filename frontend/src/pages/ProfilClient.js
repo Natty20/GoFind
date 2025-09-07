@@ -8,6 +8,8 @@ const ClientProfile = () => {
   const [rdvs, setRdvs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({});
 
   const clientId = sessionStorage.getItem('clientId');
   const token = sessionStorage.getItem('token');
@@ -34,6 +36,7 @@ const ClientProfile = () => {
         ]);
 
         setClient(clientRes.data.client);
+        setFormData(clientRes.data.client); // Préremplir formulaire
         setRdvs(rdvRes.data || []);
       } catch (err) {
         console.error(err);
@@ -46,13 +49,33 @@ const ClientProfile = () => {
     fetchClientData();
   }, [clientId, token]);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const res = await axios.put(
+        `https://gofind-v9ee.onrender.com/api/auth/${clientId}`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setClient(res.data.client); // mettre à jour l’état
+      setEditMode(false);
+      alert('✅ Profil mis à jour avec succès !');
+    } catch (err) {
+      console.error(err);
+      alert('❌ Erreur lors de la mise à jour du profil.');
+    }
+  };
+
   if (loading) return <p>Chargement des informations...</p>;
   if (error)
     return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
 
   const now = new Date();
 
-  // Filtrage selon "etat" (état = en attente, acceptée, déclinée)
   const rdvAVenir = rdvs.filter(
     (r) => new Date(r.date) > now && r.etat === 'acceptée'
   );
@@ -60,10 +83,9 @@ const ClientProfile = () => {
     (r) => new Date(r.date) <= now && r.etat === 'terminé'
   );
   const rdvAnnules = rdvs.filter(
-    (r) => r.etat === 'declinée' || r.etat === 'declinée'
+    (r) => r.etat === 'declinée'
   );
 
-  // Formatage date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString('fr-FR', {
@@ -76,30 +98,80 @@ const ClientProfile = () => {
     <div className="profilclient-container">
       {/* Profil client */}
       <div className="profile-card">
-        <div className="settings-icon">
+        <div className="settings-icon" onClick={() => setEditMode(!editMode)}>
           <FaCog />
         </div>
-        <div className="profile-info">
-          <img
-            src={
-              client?.profilePicture ||
-              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
-            }
-            alt="Profil"
-            className="profile-pic"
-          />
-          <h1>
-            {client?.nom} {client?.prenom}
-          </h1>
-          <p className="location">
-            <FaMapMarkerAlt /> {client?.address || 'Adresse non renseignée'}
-          </p>
-          <p>Email : {client?.email}</p>
-          <p>Téléphone : {client?.phone || 'Non renseigné'}</p>
-        </div>
+
+        {!editMode ? (
+          <div className="profile-info">
+            <img
+              src={
+                client?.profilePicture ||
+                'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+              }
+              alt="Profil"
+              className="profile-pic"
+            />
+            <h1>
+              {client?.nom} {client?.prenom}
+            </h1>
+            <p className="location">
+              <FaMapMarkerAlt /> {client?.address || 'Adresse non renseignée'}
+            </p>
+            <p>Email : {client?.email}</p>
+            <p>Téléphone : {client?.phone || 'Non renseigné'}</p>
+          </div>
+        ) : (
+          <div className="profile-edit-form">
+            <input
+              type="text"
+              name="nom"
+              value={formData.nom || ''}
+              onChange={handleChange}
+              placeholder="Nom"
+            />
+            <input
+              type="text"
+              name="prenom"
+              value={formData.prenom || ''}
+              onChange={handleChange}
+              placeholder="Prénom"
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email || ''}
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone || ''}
+              onChange={handleChange}
+              placeholder="Téléphone"
+            />
+            <input
+              type="text"
+              name="address"
+              value={formData.address || ''}
+              onChange={handleChange}
+              placeholder="Adresse"
+            />
+            <input
+              type="password"
+              name="password"
+              value={formData.password || ''}
+              onChange={handleChange}
+              placeholder="Nouveau mot de passe"
+            />
+            <button onClick={handleUpdate}>💾 Mettre à jour</button>
+          </div>
+        )}
       </div>
 
-      {/* Statistiques rendez-vous */}
+      {/* ... RDVs comme avant */}
+
       <h2 className="section-title">Vos Rendez-Vous</h2>
       <div className="appointments">
         <div className="appointment">
@@ -115,8 +187,6 @@ const ClientProfile = () => {
           <p>Annulés</p>
         </div>
       </div>
-
-      {/* Liste détaillée des RDV */}
 
       {rdvAVenir.length > 0 && (
         <div className="rdv-section">

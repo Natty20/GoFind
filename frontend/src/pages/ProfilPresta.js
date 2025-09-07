@@ -67,20 +67,28 @@ const ProfilPresta = () => {
         profilePicture: formData.profilePicture,
       };
 
+      // si mot de passe rempli → on ajoute au payload
       if (formData.password && formData.password.trim() !== '') {
         payload.password = formData.password;
       }
 
-      await axios.put(
+      const res = await axios.put(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
-        payload
+        payload,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
-      setPrestataire({ ...prestataire, ...payload });
+
+      setPrestataire(res.data.prestataire); // mettre à jour l'état local
       setIsEditing(false);
+      alert("✅ Profil prestataire mis à jour avec succès !");
     } catch (err) {
       console.error('Erreur lors de la mise à jour :', err);
+      alert("❌ Impossible de mettre à jour le profil.");
     }
   };
+
 
   const sousPrestationsChoisies = [];
   prestataire?.selectedPrestations.forEach((item) => {
@@ -367,33 +375,3 @@ const ProfilPresta = () => {
 };
 
 export default ProfilPresta;
-
-// const handleDeleteSousPrestation = async (sousIdToRemove) => {
-//   try {
-//     const updatedSelectedPrestations = prestataire.selectedPrestations.map(
-//       (item) => ({
-//         ...item,
-//         selectedSousPrestations: item.selectedSousPrestations.filter(
-//           (id) => id !== sousIdToRemove
-//         ),
-//       })
-//     );
-
-//     await axios.put(
-//       `http://localhost:5000/api/prestataires/${prestataireId}`,
-//       {
-//         selectedPrestations: updatedSelectedPrestations,
-//       }
-//     );
-
-//     setPrestataire({
-//       ...prestataire,
-//       selectedPrestations: updatedSelectedPrestations,
-//     });
-//   } catch (err) {
-//     console.error(
-//       'Erreur lors de la suppression de la sous-prestation :',
-//       err
-//     );
-//   }
-// };

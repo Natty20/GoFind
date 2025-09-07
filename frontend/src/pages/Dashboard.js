@@ -3,8 +3,6 @@ import {
   Home,
   Users,
   Package,
-  CreditCard,
-  Settings,
   Plus,
   Edit,
   Trash,
@@ -13,13 +11,15 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Admin/Dashboard.css';
 
 const menuItems = [
+  { name: 'admins', icon: <Users size={20} />, endpoint: '/admin' },
+  { name: 'clients', icon: <Users size={20} />, endpoint: '/auth/clients' },
   {
     name: 'prestataires',
     icon: <Package size={20} />,
     endpoint: '/prestataires',
   },
-  { name: 'clients', icon: <Users size={20} />, endpoint: '/auth/clients' },
-  { name: 'admins', icon: <Users size={20} />, endpoint: '/admin' },
+  
+  
   {
     name: 'prestations',
     icon: <Package size={20} />,
@@ -29,14 +29,7 @@ const menuItems = [
     name: 'sousprestations',
     icon: <Package size={20} />,
     endpoint: '/sousprestations',
-  },
-  {
-    name: 'reservations',
-    icon: <Package size={20} />,
-    endpoint: '/reservations/all',
-  },
-  { name: 'Paiements', icon: <CreditCard size={20} />, endpoint: '/paiements' },
-  { name: 'Paramètres', icon: <Settings size={20} />, endpoint: '/parametres' },
+  }
 ];
 
 const entityToEndpoint = {
@@ -45,7 +38,6 @@ const entityToEndpoint = {
   prestations: 'prestations',
   sousprestations: 'sousprestations',
   prestataires: 'prestataires',
-  reservations: 'reservations',
 };
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -148,7 +140,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* --- Sidebar --- */}
       <div className="sidebar">
         <Home size={20} />
         <h1 className="sidebar-title">Tableau de bord</h1>
@@ -165,7 +156,7 @@ const Dashboard = () => {
         </ul>
       </div>
 
-      {/* --- Main Content --- */}
+      {/* --- ze main Content --- */}
       <div className="main-content">
         <div className="content-card">
           <div className="content-header">
@@ -186,11 +177,6 @@ const Dashboard = () => {
                     <div className="data-info">
                       {activeTab === 'clients' ? (
                         <>
-                          <img
-                            src={item.profilePicture}
-                            alt={item.nom}
-                            className="provider-image"
-                          />
                           <span>
                             <strong>Nom:</strong> {item.nom}
                           </span>
@@ -199,6 +185,9 @@ const Dashboard = () => {
                           </span>
                           <span>
                             <strong>Email:</strong> {item.email}
+                          </span>
+                          <span>
+                            <strong>Téléphone:</strong> {item.phone}
                           </span>
                         </>
                       ) : activeTab === 'prestataires' ? (
@@ -211,8 +200,17 @@ const Dashboard = () => {
                           <span>
                             <strong>Nom:</strong> {item.nom}
                           </span>
+                            <span>
+                              <strong>Prénom:</strong> {item.prenom}
+                            </span>
+                            <span>
+                              <strong>Email:</strong> {item.email}
+                            </span>
+                            <span>
+                              <strong>Téléphone:</strong> {item.phone}
+                            </span>
                           <span>
-                            <strong>Email:</strong> {item.email}
+                            <strong>Prestation:</strong> {item.prestation}
                           </span>
                         </>
                       ) : activeTab === 'prestations' ? (
@@ -259,31 +257,7 @@ const Dashboard = () => {
                             <strong>Email :</strong> {item.email}
                           </span>
                         </>
-                      ) : activeTab === 'reservations' ? (
-                        <>
-                          <span>
-                            <strong>Id:</strong> {item._id}
-                          </span>
-                          <span>
-                            <strong>Client:</strong> {item.client.nom}{' '}
-                            {item.client.prenom} ({item.client.phone})
-                          </span>
-                          <span>
-                            <strong>Prestataire:</strong> {item.prestataire.nom}
-                          </span>
-                          <span>
-                            <strong>Prestations:</strong>
-                            {item.prestations.map((p) => (
-                              <span key={p._id}>
-                                {p.prestationId.nom} -
-                                {p.sousPrestations
-                                  .map((sp) => sp.nom)
-                                  .join(', ')}
-                              </span>
-                            ))}
-                          </span>
-                        </>
-                      ) : (
+                      )  : (
                         <span>{JSON.stringify(item, null, 2)}</span>
                       )}
                     </div>

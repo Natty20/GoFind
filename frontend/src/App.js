@@ -54,7 +54,6 @@ function App() {
             <Route path="/paiement" element={<Paiement />} />
             <Route path="/demande_envoye" element={<Demande />} />
             <Route path="/liste_de_rdv/:id" element={<RdvListe />} />
-            {/* <Route path="/mon-profil" element={<ProfilClient />} /> */}
             <Route path="/cancel" element={<CancelPage />} />
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/choix_compte" element={<ChoixCompte />} />
