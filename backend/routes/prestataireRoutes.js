@@ -5,9 +5,6 @@ const {
   getAllPrestataires,
   updatePrestataire,
   deletePrestataire,
-  addRealisation,
-  deleteRealisation,
-  uploadRealisation,
   getMultiplePrestataires,
   getPrestataireById,
 } = require("../controllers/prestataireController");
@@ -41,11 +38,11 @@ router.put(
 router.delete("/:id", authenticateUser, authorizeAdmin, deletePrestataire);
 router.post("/multiple", getMultiplePrestataires);
 
-router.post("/:id/realisations", addRealisation);
-router.delete("/:id/realisations/:realisationId", deleteRealisation);
-router.post(
-  "/:id/realisations/upload",
-  uploadRealisation,
-);
+// router.post("/:id/realisations", addRealisation);
+// router.delete("/:id/realisations/:realisationId", deleteRealisation);
+// router.post(
+//   "/:id/realisations/upload",
+//   uploadRealisation,
+// );
 
 module.exports = router;
