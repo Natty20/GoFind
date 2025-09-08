@@ -26,7 +26,6 @@ const PaymentPage = () => {
     try {
       const stripe = await stripePromise;
 
-      // 🔄 Reformater pour backend
       const selectedPrestations = prestations.map((prestation) => ({
         prestationId: prestation.prestationId,
         selectedSousPrestations: prestation.selectedSousPrestations.map(
