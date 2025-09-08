@@ -108,21 +108,21 @@ const ProfilPresta = () => {
     });
   });
 
-  // const addTask = () => {
-  //   if (inputValue.trim() !== '') {
-  //     setTasks([...tasks, inputValue]);
-  //     setInputValue('');
-  //   }
-  // };
+  const addTask = () => {
+    if (inputValue.trim() !== '') {
+      setTasks([...tasks, inputValue]);
+      setInputValue('');
+    }
+  };
 
-  // const deleteTask = (index) => {
-  //   const updatedTasks = tasks.filter((_, i) => i !== index);
-  //   setTasks(updatedTasks);
-  // };
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
 
-  // const handleKeyPress = (e) => {
-  //   if (e.key === 'Enter') addTask();
-  // };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') addTask();
+  };
 
   if (loading) return <p>Chargement des informations...</p>;
   if (error)
