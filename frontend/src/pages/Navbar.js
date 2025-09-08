@@ -83,7 +83,7 @@ const Navbar = () => {
           {/* Section droite : Liens et Profil */}
           <div className={`navbar-right ${menuOpen ? 'active' : ''}`}>
             {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
-            {role !== 'admin' && <Link to="/about">à propos</Link>}
+            {/* {role !== 'admin' && <Link to="/about">à propos</Link>} */}
 
             {/* Si connecter */}
             {user ? (

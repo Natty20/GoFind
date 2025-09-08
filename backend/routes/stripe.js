@@ -57,7 +57,6 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-// 👉 2. Confirmation du paiement + Sauvegarde réservation
 router.get("/confirm-payment", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(
@@ -84,24 +83,22 @@ router.get("/confirm-payment", async (req, res) => {
         description: session.metadata.description || "Pas de description",
       };
 
-      console.log("📤 Données envoyées à l'API réservation :", reservationData);
-
+      // 🔥 Sauvegarde dans ta BDD
       await axios.post(
         "https://gofind-v9ee.onrender.com/api/reservations/new",
         reservationData
       );
 
-      // 👉 Redirection finale vers ton frontend (GitHub Pages)
-      return res.redirect(
-        `https://natty20.github.io/GoFind/success?session_id=${req.query.session_id}`
-      );
+      // 👉 Redirection finale vers ta page frontend
+      return res.redirect("https://natty20.github.io/GoFind/success");
     } else {
-      return res.status(400).json({ error: "Paiement non validé." });
+      return res.redirect("https://natty20.github.io/GoFind/cancel");
     }
   } catch (error) {
     console.error("❌ Erreur confirmation Stripe :", error.message);
-    return res.status(500).json({ error: error.message });
+    return res.redirect("https://natty20.github.io/GoFind/cancel");
   }
 });
+
 
 module.exports = router;

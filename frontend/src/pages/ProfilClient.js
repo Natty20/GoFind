@@ -121,6 +121,7 @@ const ClientProfile = () => {
           </div>
         ) : (
           <div className="profile-edit-form">
+            <p className="label">Nom: </p>
             <input
               type="text"
               name="nom"
@@ -128,6 +129,8 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Nom"
             />
+
+            <p className="label">Prénom: </p>
             <input
               type="text"
               name="prenom"
@@ -135,6 +138,8 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Prénom"
             />
+
+            <p className="label">Email: </p>
             <input
               type="email"
               name="email"
@@ -142,6 +147,8 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Email"
             />
+
+            <p className="label">Téléphone: </p>
             <input
               type="text"
               name="phone"
@@ -149,6 +156,8 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Téléphone"
             />
+
+            <p className="label">Address: </p>
             <input
               type="text"
               name="address"
@@ -156,6 +165,8 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Adresse"
             />
+
+            <p className="label">Mot de passe: </p>
             <input
               type="password"
               name="password"
@@ -163,12 +174,10 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Nouveau mot de passe"
             />
-            <button onClick={handleUpdate}>💾 Mettre à jour</button>
+            <button onClick={handleUpdate}>Mettre à jour</button>
           </div>
         )}
       </div>
-
-      {/* ... RDVs comme avant */}
 
       <h2 className="section-title">Vos Rendez-Vous</h2>
       <div className="appointments">
