@@ -6,9 +6,10 @@
 }
 
 .provider-image {
-  width: 25%;
-  height: 20%;
-  object-fit: cover;
+  width: 15% !important;
+  height: 10% !important;
+  object-fit: cover !important;
+  border-radius: none !important;
 }
 
 .sidebar {
@@ -48,21 +49,18 @@
   background-color: #9c2e32;
 }
 
-/* --- Contenu principal --- */
 .main-content {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
 }
 
-/* --- Carte contenant les données (remplace le tableau) --- */
 .data-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* --- Style de chaque carte --- */
 .data-card {
   background: white;
   padding: 15px;
@@ -73,7 +71,6 @@
   align-items: center;
 }
 
-/* --- Informations des cartes --- */
 .data-info {
   display: flex;
   flex-direction: column;
@@ -81,7 +78,6 @@
   color: #333;
 }
 
-/* --- Boutons Modifier / Supprimer alignés à droite --- */
 .data-actions {
   display: flex;
   gap: 10px;
@@ -100,8 +96,8 @@
 }
 
 .edit-button {
-  background-color: #f0ad4e;
-  color: white;
+  background-color: #f3dbdd;
+  color: #c9302c;
 }
 
 .delete-button {
@@ -110,14 +106,14 @@
 }
 
 .edit-button:hover {
-  background-color: #ec971f;
+  border: 1px solid #c9302c;
+  background-color: white;
 }
 
 .delete-button:hover {
   background-color: #c9302c;
 }
 
-/* --- Message de chargement et gestion du texte --- */
 .loading-message,
 .no-data {
   text-align: center;
@@ -126,7 +122,7 @@
   color: #666;
 }
 
-/* --- Responsive Design --- */
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;

@@ -185,7 +185,7 @@ const ListeDemandesPrestataire = () => {
         </table>
       </section>
 
-      <pre>{JSON.stringify(reservations, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(reservations, null, 2)}</pre> */}
     </main>
   );
 };

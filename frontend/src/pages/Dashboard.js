@@ -202,7 +202,8 @@ const Dashboard = () => {
                             <strong>Téléphone:</strong> {item.phone}
                           </span>
                           <span>
-                            <strong>Prestation:</strong> {item.prestation}
+                            <strong>Prestation:</strong>{' '}
+                            {item.selectedPrestations[0]}
                           </span>
                         </>
                       ) : activeTab === 'prestations' ? (

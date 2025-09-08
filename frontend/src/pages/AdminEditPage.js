@@ -134,7 +134,7 @@ const AdminEditPage = () => {
 
       setSuccess(true);
       alert('✅ Modification réussie !');
-      navigate(`/dashboard/${entity}`);
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour');
@@ -149,6 +149,8 @@ const AdminEditPage = () => {
         key === '_id' ||
         key === 'createdAt' ||
         key === 'updatedAt' ||
+        key === 'role' ||
+        key === '__v' ||
         key === 'password'
       ) {
         return null;

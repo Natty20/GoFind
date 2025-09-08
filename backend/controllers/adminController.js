@@ -143,10 +143,41 @@ const getAllAdmins = async (req, res) => {
   }
 };
 
+const updateAdmin = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const { nom, prenom, email, phone } = req.body;
+
+    const updatedAdmin = await Admin.findByIdAndUpdate(
+      id,
+      {
+        nom,
+        prenom,
+        email,
+        phone
+      },
+      { new: true },
+    );
+
+    if (!updatedAdmin) {
+      return res.status(404).json({ message: "Compte non trouvé" });
+    }
+
+    res.status(200).json({
+      message: "Les modifications on été prise en compte!",
+      admin: updateAdmin,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
 module.exports = {
   login,
   register,
   getAllAdmins,
   getAdminById,
   deleteAdmin,
+  updateAdmin
 };

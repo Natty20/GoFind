@@ -12,7 +12,7 @@ const ProfilPresta = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
 
-  const [activeTab, setActiveTab] = useState('images');
+  // const [activeTab, setActiveTab] = useState('images');
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -82,10 +82,10 @@ const ProfilPresta = () => {
 
       setPrestataire(res.data.prestataire); // mettre à jour l'état local
       setIsEditing(false);
-      alert('✅ Profil prestataire mis à jour avec succès !');
+      alert('Information(s) mis à jour avec succès !');
     } catch (err) {
       console.error('Erreur lors de la mise à jour :', err);
-      alert('❌ Impossible de mettre à jour le profil.');
+      alert('❌ Impossible de mettre à jour votre profil.');
     }
   };
 
@@ -144,7 +144,7 @@ const ProfilPresta = () => {
                 {prestataire.nom} {prestataire.prenom}
               </h1>
               <h2>
-                Prestation(s){' '}
+                Prestation(s) :{' '}
                 {prestataire.selectedPrestations
                   .map((item) => {
                     const prestation = allPrestations.find(
@@ -172,42 +172,55 @@ const ProfilPresta = () => {
             </div>
           ) : (
             <div className="form-edit">
+              <p className="label">Nom: </p>
               <input
                 name="nom"
                 value={formData.nom}
                 onChange={handleInputChange}
                 placeholder="Nom"
               />
+
+              <p className="label">Prénom: </p>
               <input
                 name="prenom"
                 value={formData.prenom}
                 onChange={handleInputChange}
                 placeholder="Prénom"
               />
+
+              <p className="label">Email: </p>
               <input
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Email"
               />
+
+              <p className="label">Phone: </p>
               <input
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Téléphone"
               />
+
+              <p className="label">Address: </p>
               <input
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
                 placeholder="Adresse"
               />
+
+              <p className="label">Photp de profile: </p>
               <input
                 name="profilePicture"
                 value={formData.profilePicture}
                 onChange={handleInputChange}
                 placeholder="URL de la photo de profil"
               />
+
+              <p className="label">Mot de passe: </p>
               <input
                 type="password"
                 name="password"
@@ -222,7 +235,7 @@ const ProfilPresta = () => {
         </div>
       </section>
 
-      <section className="presta-realisation">
+      {/* <section className="presta-realisation">
         <div className="realisation-header">
           <h4>Mes Réalisations</h4>
           <button>Ajouter une Réalisation</button>
@@ -368,7 +381,7 @@ const ProfilPresta = () => {
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 };

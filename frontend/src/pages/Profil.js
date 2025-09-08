@@ -10,7 +10,7 @@ const ProfilePage = () => {
   const [sousPrestations, setSousPrestations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('images');
+  // const [activeTab, setActiveTab] = useState('images');
 
   useEffect(() => {
     const fetchPrestataire = async () => {
@@ -80,9 +80,16 @@ const ProfilePage = () => {
             className="provider-image"
           />
           <div className="provider-info">
-            <h1>{prestataire.nom}</h1>
-            <p>{prestataire.address}</p>
-            <a href={`mailto:${prestataire.email}`}>{prestataire.email}</a>
+            <h1>
+              {prestataire.nom} {prestataire.prenom}{' '}
+            </h1>
+            <p className="location">
+              {prestataire.address || 'Adresse non renseignée'}
+            </p>
+            <a href={`mailto:${prestataire.email}`}>
+              Email : {prestataire.email}
+            </a>
+            <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
           </div>
         </div>
         <div className="provider-calendar">
@@ -124,7 +131,7 @@ const ProfilePage = () => {
 
       {/* Section Réalisations */}
 
-      <div className="realisation-section">
+      {/* <div className="realisation-section">
         <h3>Réalisations</h3>
         <div className="tabs">
           <button
@@ -181,7 +188,7 @@ const ProfilePage = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -61,11 +61,11 @@ const Navbar = () => {
 
           {/* Section gauche : Menu selon le rôle */}
           <div className={`navbar-left ${menuOpen ? 'active' : ''}`}>
-            {role === 'client' && (
+            {/* {role === 'client' && (
               <>
                 <Link to="/messages">Messages</Link>
               </>
-            )}
+            )} */}
 
             {role === 'prestataire' && (
               <>
