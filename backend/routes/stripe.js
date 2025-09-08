@@ -90,9 +90,9 @@ router.get("/confirm-payment", async (req, res) => {
       );
 
       // 👉 Redirection finale vers ta page frontend
-      return res.redirect("https://natty20.github.io/GoFind/success");
+      return res.redirect("https://natty20.github.io/GoFind/#/success");
     } else {
-      return res.redirect("https://natty20.github.io/GoFind/cancel");
+      return res.redirect("https://natty20.github.io/GoFind/#/cancel");
     }
   } catch (error) {
     console.error("❌ Erreur confirmation Stripe :", error.message);

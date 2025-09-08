@@ -203,7 +203,7 @@ const Dashboard = () => {
                           </span>
                           <span>
                             <strong>Prestation:</strong>{' '}
-                            {item.selectedPrestations[0]}
+                            {item.selectedPrestations}
                           </span>
                         </>
                       ) : activeTab === 'prestations' ? (

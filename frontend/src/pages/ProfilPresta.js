@@ -68,9 +68,9 @@ const ProfilPresta = () => {
       };
 
       // si mot de passe rempli → on ajoute au payload
-      if (formData.password && formData.password.trim() !== '') {
-        payload.password = formData.password;
-      }
+      // if (formData.password && formData.password.trim() !== '') {
+      //   payload.password = formData.password;
+      // }
 
       const res = await axios.put(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
@@ -108,21 +108,21 @@ const ProfilPresta = () => {
     });
   });
 
-  const addTask = () => {
-    if (inputValue.trim() !== '') {
-      setTasks([...tasks, inputValue]);
-      setInputValue('');
-    }
-  };
+  // const addTask = () => {
+  //   if (inputValue.trim() !== '') {
+  //     setTasks([...tasks, inputValue]);
+  //     setInputValue('');
+  //   }
+  // };
 
-  const deleteTask = (index) => {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
-    setTasks(updatedTasks);
-  };
+  // const deleteTask = (index) => {
+  //   const updatedTasks = tasks.filter((_, i) => i !== index);
+  //   setTasks(updatedTasks);
+  // };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') addTask();
-  };
+  // const handleKeyPress = (e) => {
+  //   if (e.key === 'Enter') addTask();
+  // };
 
   if (loading) return <p>Chargement des informations...</p>;
   if (error)
@@ -166,7 +166,7 @@ const ProfilPresta = () => {
               <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
               <div className="description">
                 <h3>Ma description</h3>
-                <p>Morem ipsum dolor sit amet...</p>
+                {/* <p>Morem ipsum dolor sit amet...</p> */}
                 <button onClick={() => setIsEditing(true)}>Modifier</button>
               </div>
             </div>
@@ -218,15 +218,6 @@ const ProfilPresta = () => {
                 value={formData.profilePicture}
                 onChange={handleInputChange}
                 placeholder="URL de la photo de profil"
-              />
-
-              <p className="label">Mot de passe: </p>
-              <input
-                type="password"
-                name="password"
-                value={formData.password || ''}
-                onChange={handleInputChange}
-                placeholder="Nouveau mot de passe (optionnel)"
               />
               <button onClick={handleSave}>Enregistrer</button>
               <button onClick={() => setIsEditing(false)}>Annuler</button>
