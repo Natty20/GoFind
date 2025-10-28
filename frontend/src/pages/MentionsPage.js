@@ -1,7 +1,7 @@
 // src/components/MentionsLegales.js
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import '../styles/MentionsLegales.css';
+import '../styles/Mentions.css';
 
 const MentionsLegales = () => {
   return (

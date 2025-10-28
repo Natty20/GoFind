@@ -1,7 +1,7 @@
 // src/components/Contact.js
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import '../styles/Contact.css';
+import '../styles/All/Contact.css';
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
