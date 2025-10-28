@@ -280,7 +280,7 @@ const PrestataireRegister = () => {
             </div>
           ))}
 
-          <button className="register-btn" type="submit">
+          <button className="btn-secondary" type="submit">
             Devenir Prestataire
           </button>
         </form>
@@ -296,7 +296,7 @@ const PrestataireRegister = () => {
           </p>
           <p>Vous avez déjà un compte chez GoFind?</p>
           <button
-            className="register-btn"
+            className="btn-primary"
             onClick={() => navigate('/prestataire_login')}
           >
             Connecter Vous

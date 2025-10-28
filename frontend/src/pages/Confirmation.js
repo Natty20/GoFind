@@ -120,7 +120,7 @@ const Confirmation = () => {
           ></textarea>
         </div>
 
-        <button className="btn-demande" onClick={handleConfirm}>
+        <button className="btn-secondary" onClick={handleConfirm}>
           Confirmer et payer
         </button>
       </div>

@@ -70,7 +70,7 @@ function LoginForm() {
             Mot de passe oublié?
           </a>
 
-          <button type="submit" className="login-btn">
+          <button type="submit" className="btn-secondary">
             Se Connecter
           </button>
         </form>
@@ -78,7 +78,7 @@ function LoginForm() {
         <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
           <button
-            className="gotoregister"
+            className="btn-primary"
             color="danger"
             onClick={() => navigate('/register')}
           >
@@ -97,8 +97,7 @@ function LoginForm() {
         </p>
 
         <button
-          className="gotoregidter"
-          color="danger"
+          className="btn-primary"
           onClick={() => navigate('/login_admin')}
         >
           Admin login

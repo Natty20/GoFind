@@ -72,7 +72,7 @@ function PrestaLogin() {
             Mot de passe oublié?
           </a>
 
-          <button type="submit" className="login-btn">
+          <button type="submit" className="btn-secondary">
             Se Connecter
           </button>
         </form>
@@ -80,7 +80,7 @@ function PrestaLogin() {
         <div className="sans-compte">
           <p>Vous n’avez pas de compte?</p>
           <button
-            className="gotoregister"
+            className="btn-primary"
             color="danger"
             onClick={() => navigate('/prestataire_register')}
           >

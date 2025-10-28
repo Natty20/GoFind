@@ -52,10 +52,10 @@ const DemandeEnvoyee = () => {
           </div>
         </div>
         <div className="actions">
-          <button className="prestations" onClick={handleGoToPrestation}>
+          <button className="btn-primary" onClick={handleGoToPrestation}>
             Voir Nos Prestations
           </button>
-          <button className="rendez-vous" onClick={handleGoToReservations}>
+          <button className="btn-secondary" onClick={handleGoToReservations}>
             Voir Mes Rendez-Vous
           </button>
         </div>

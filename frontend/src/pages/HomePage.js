@@ -81,7 +81,7 @@ const HomePage = () => {
         </p>
         <Link to={'/prestation'}>
           {' '}
-          <button className="cta-button">DÉCOUVRIR NOS PRESTATIONS</button>{' '}
+          <button className="btn-primary">DÉCOUVRIR NOS PRESTATIONS</button>{' '}
         </Link>
       </section>
 
@@ -96,8 +96,8 @@ const HomePage = () => {
           <Link to={'/prestation'}>
             <div className="buttons">
               <Link></Link>
-              <button>SAVOIR +</button>
-              <button id="exeption-2">RÉSERVER</button>
+              <button className="btn-primary">SAVOIR +</button>
+              <button className="btn-secondary">RÉSERVER</button>
             </div>
           </Link>
           <img

@@ -30,13 +30,13 @@ const ChoixCompte = () => {
         <div className="choix-boutons">
           <button
             onClick={() => handleChoix('client')}
-            className="choix-btn client"
+            className="btn-primary"
           >
             Je suis un Client
           </button>
           <button
             onClick={() => handleChoix('prestataire')}
-            className="choix-btn prestataire"
+            className="btn-secondary"
           >
             Je suis un Prestataire
           </button>

@@ -153,7 +153,7 @@ const Dashboard = () => {
         <div className="content-card">
           <div className="content-header">
             <h2 className="content-title">{activeTab}</h2>
-            <button className="add-button" onClick={handleAdd}>
+            <button className="btn-primary" onClick={handleAdd}>
               <Plus size={20} /> Ajouter un {activeTab}
             </button>
           </div>

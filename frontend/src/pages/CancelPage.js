@@ -8,10 +8,10 @@ const CancelPage = () => {
       <p className="message">
         Votre paiement n&apos;a pas été complété. Vous pouvez réessayer.
       </p>
-      <Link to="/paiement" className="button">
+      <Link to="/paiement" className="btn-primary">
         Réessayer
       </Link>
-      <Link to="/" className="homeButton">
+      <Link to="/" className="btn-secondary">
         Retour à l&apos;accueil
       </Link>
     </div>

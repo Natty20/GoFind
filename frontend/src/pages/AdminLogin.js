@@ -66,7 +66,7 @@ function AdminLogin() {
             required
           />
 
-          <button type="submit" className="login-btn">
+          <button type="submit" className="btn-secondary">
             Se Connecter
           </button>
         </form>

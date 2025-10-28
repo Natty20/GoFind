@@ -30,9 +30,10 @@ import ProfilPresta from './pages/ProfilPresta';
 import AdminAddPage from './pages/AdminAddPage';
 import AdminEditPage from './pages/AdminEditPage';
 import AdminDetailsPage from './pages/AdminDetailsPage';
-import AboutPage from './pages/AboutPage';
-import FAQPage from './pages/FAQPage';
-import ContactPage from './pages/ContactPage';
+import MentionsLegales from './pages/MentionsPage';
+import Contact from './pages/ContactPage';
+import FAQ from './pages/FAQPage';
+import About from './pages/AboutPage';
 
 function App() {
   return (
@@ -59,9 +60,10 @@ function App() {
             <Route path="/liste_de_rdv/:id" element={<RdvListe />} />
             <Route path="/cancel" element={<CancelPage />} />
             <Route path="/success" element={<SuccessPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/mentions-legales" element={<MentionsLegales />} />
             <Route path="/choix_compte" element={<ChoixCompte />} />
             <Route path="/reservations" element={<Reservation />} />
             <Route path="/mon-profil" element={<MonProfilRouter />} />

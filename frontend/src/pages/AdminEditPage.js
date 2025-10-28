@@ -197,10 +197,10 @@ const AdminEditPage = () => {
       <form onSubmit={handleSubmit}>
         {renderFormFields()}
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <button type="submit" style={{ padding: '10px 20px' }}>
+          <button type="submit" className='btn-secondary'>
             Enregistrer
           </button>
-          <button type="button" onClick={() => navigate('/dashboard')}>
+          <button className="btn-primary" type="button" onClick={() => navigate('/dashboard')}>
             Retour
           </button>
         </div>

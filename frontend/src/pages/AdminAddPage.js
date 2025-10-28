@@ -312,7 +312,7 @@ const AdminAddPage = () => {
             </div>
           );
         })}
-        <button type="submit" disabled={loading}>
+        <button className="btn-secondary" type="submit" disabled={loading}>
           {loading ? 'Chargement...' : 'Ajouter'}
         </button>
       </form>

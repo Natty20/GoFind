@@ -188,7 +188,7 @@ function Register() {
             required
           />
 
-          <button className="register-btn" type="submit">
+          <button className="btn-secondary" type="submit">
             Devenir Client
           </button>
         </form>
