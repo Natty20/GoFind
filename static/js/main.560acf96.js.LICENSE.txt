@@ -1,3 +1,9 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 /*!
   react-datepicker v8.2.1
   https://github.com/Hacker0x01/react-datepicker
