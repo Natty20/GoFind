@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import '../styles/FAQ.css';
+import '../styles/All/FAQ.css';
 
 const FAQ = () => {
   return (
