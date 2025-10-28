@@ -1,4 +1,3 @@
-// HomePage.js
 import React from 'react';
 import '../styles/All/Footer.css';
 import { Link } from 'react-router-dom';
