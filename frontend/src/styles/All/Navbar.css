@@ -31,7 +31,7 @@
 /* Navbar Links */
 .navbar-left a,
 .navbar-right a {
-  color: black;
+  color: var(--primary-text-color);
   text-decoration: none;
   font-size: 1rem;
   text-transform: capitalize;
@@ -41,7 +41,7 @@
 
 .navbar-left a:hover,
 .navbar-right a:hover {
-  color: #d9534f;
+  color: var(--main-color);
 }
 
 .dropdown {
@@ -60,7 +60,7 @@
   display: none;
   position: absolute;
   right: 0;
-  background: white;
+  background: var(--secondary-color);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   overflow: hidden;
@@ -71,9 +71,9 @@
 .dropdown-content button {
   display: block;
   padding: 10px 15px;
-  color: #333;
+  color: var(--primary-text-color);
   text-decoration: none;
-  background: white;
+  background: var(--secondary-text-color);
   border: none;
   width: 100%;
   text-align: left;
@@ -81,7 +81,7 @@
 
 .dropdown-content a:hover,
 .dropdown-content button:hover {
-  background-color: #f1f1f1;
+  background-color: var(--bg-color);
 }
 
 .dropdown:hover .dropdown-content {
@@ -99,7 +99,7 @@
 .hamburger span {
   width: 25px;
   height: 3px;
-  background: black;
+  background: var(--primary-text-color);
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -139,7 +139,7 @@
     width: 100%;
     padding: 1rem;
     gap: 1rem;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--bg-color);
   }
 
   .navbar-left.active,

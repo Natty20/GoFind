@@ -30,6 +30,9 @@ import ProfilPresta from './pages/ProfilPresta';
 import AdminAddPage from './pages/AdminAddPage';
 import AdminEditPage from './pages/AdminEditPage';
 import AdminDetailsPage from './pages/AdminDetailsPage';
+import AboutPage from './pages/AboutPage';
+import FAQPage from './pages/FAQPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
@@ -56,6 +59,9 @@ function App() {
             <Route path="/liste_de_rdv/:id" element={<RdvListe />} />
             <Route path="/cancel" element={<CancelPage />} />
             <Route path="/success" element={<SuccessPage />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/choix_compte" element={<ChoixCompte />} />
             <Route path="/reservations" element={<Reservation />} />
             <Route path="/mon-profil" element={<MonProfilRouter />} />

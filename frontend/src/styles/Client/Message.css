@@ -12,7 +12,7 @@
 .profile-section {
   display: flex;
   align-items: center;
-  border: 1px solid #b22222;
+  border: 1px solid var(--main-color);
   padding: 1rem 4rem;
 }
 
@@ -26,12 +26,12 @@
 
 .role {
   font-size: 16px;
-  color: #b22222;
+  color: var(--main-color);
 }
 
 .date-section {
   font-size: 16px;
-  color: #b22222;
+  color: var(--main-color);
   margin-top: 2rem;
 }
 
@@ -69,21 +69,21 @@
 }
 
 .message-box {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  background-color: var(--bg-color);
+  border: 1px solid var(--bg-color);
   border-radius: 12px;
   padding: 8px 12px;
   max-width: 70%;
 }
 
 .sent .message-box {
-  background-color: #fff5f5;
-  border-color: #b22222;
+  background-color: var(--secondary-color);
+  border-color: var(--main-color);
 }
 
 /* Messages input section */
 .messages-input-section {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--bg-color);
   padding: 1rem 0;
   margin: 2rem;
   display: flex;
@@ -93,7 +93,7 @@
 .input-container {
   display: flex;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 1px solid var(--bg-color);
   border-radius: 24px;
   padding: 10px;
   flex: 1;
@@ -101,7 +101,7 @@
 
 .input-container .fas {
   font-size: 20px;
-  color: #b22222;
+  color: var(--main-color);
   margin-right: 12px;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .send-button {
-  background: #b22222;
+  background: var(--main-color);
   border: none;
   color: white;
   font-size: 1rem;
@@ -125,7 +125,7 @@
 
 /* Confirm button style */
 .confirm-button {
-  background-color: #b22222;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 8px;

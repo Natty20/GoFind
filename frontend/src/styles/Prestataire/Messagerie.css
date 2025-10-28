@@ -8,7 +8,7 @@
 /* Sidebar */
 .sidebar {
   width: 25%;
-  background-color: #f3dbdd;
+  background-color: var(--secondary-color);
   color: white;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@
 .contact-item {
   padding: 15px;
   margin: 5px 0;
-  background-color: #e1b0ac;
+  background-color: var(--secondary-color);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -36,7 +36,7 @@
 
 .contact-item:hover,
 .contact-item.active {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
 }
 
 /* Chat Window */
@@ -47,19 +47,19 @@
 }
 
 .chat-header {
-  background-color: #ecf0f1;
+  background-color: var(--bg-color);
   padding: 15px;
   text-align: center;
   font-size: 1.25rem;
   font-weight: bold;
-  border-bottom: 1px solid #bdc3c7;
+  border-bottom: 1px solid var(--bg-color);
 }
 
 .chat-body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #fff;
+  background-color: white;
 }
 
 .chat-message {
@@ -72,18 +72,18 @@
 
 .chat-message.sent {
   align-self: flex-end !important;
-  background-color: #ba3e40;
-  color: white;
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
 }
 
 .chat-message.received {
   align-self: flex-start;
-  background-color: #ecf0f1;
+  background-color: var(--bg-color);
 }
 
 .chat-time {
   font-size: 0.75rem;
-  color: black;
+  color: var(--primary-text-color);
   position: absolute;
   bottom: -1rem;
   right: 1rem;
@@ -93,8 +93,8 @@
 .chat-footer {
   display: flex;
   padding: 10px;
-  background-color: #ecf0f1;
-  border-top: 1px solid #bdc3c7;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--bg-color);
 }
 
 .chat-footer input {
@@ -107,8 +107,8 @@
 }
 
 .chat-footer button {
-  background-color: #ba3e40;
-  color: white;
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -116,8 +116,8 @@
 }
 
 .chat-footer button:hover {
-  background-color: #f3dbdd;
-  color: #ba3e40;
+  background-color: var(--bg-color);
+  color: var(--main-color);
 }
 
 @media (max-width: 768px) {

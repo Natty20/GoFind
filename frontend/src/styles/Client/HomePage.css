@@ -1,18 +1,17 @@
 .homepage {
-  font-family: 'Roboto Serif', serif;
   margin: 6rem 0 0 0;
 }
 
 h1,
 h2,
 h3 {
-  font-family: 'Xanh Mono', monospace;
+  font-family: var(--title-font);
 }
 
 /* Section 1: Gofind Presentation */
 .gofind-presentation {
-  background-color: #000;
-  color: #fff;
+  background-color: black;
+  color: white;
   text-align: center;
 
   /* padding: 2rem; */
@@ -28,7 +27,7 @@ h3 {
 
 .gofind-presentation h2 {
   font-size: 1.5rem;
-  color: #d9534f;
+  color: var(--main-color);
   margin: 0;
 }
 
@@ -39,7 +38,7 @@ h3 {
 .gofind-presentation .cta-button {
   background-color: black;
   color: white;
-  border: 1px solid #d9534f;
+  border: 1px solid var(--main-color);
   border-radius: 30px;
   padding: 1rem 2rem;
   cursor: pointer;
@@ -47,8 +46,8 @@ h3 {
 }
 
 .cta-button:hover {
-  background-color: #f3dbdd;
-  color: #d9534f;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
   border: none;
 }
 
@@ -63,16 +62,16 @@ h3 {
 .artisanat-left h2,
 .photographie-right h2 {
   font-size: 2rem;
-  color: #000;
+  color: black;
 }
 
 .category .buttons button,
 .exeption-container .exeption button {
   margin: 0.5rem;
   padding: 1rem;
-  border: 1px solid #d9534f;
-  background-color: #fff;
-  color: #d9534f;
+  border: 1px solid var(--main-color);
+  background-color: var(--bg-color);
+  color: var(--main-color);
   cursor: pointer;
   border-radius: 3rem;
   width: 20%;
@@ -119,7 +118,7 @@ h3 {
 .photographie-right p,
 .category p {
   font-size: 1rem;
-  color: #666;
+  color: var(--third-text-color);
   margin-bottom: 2rem;
 }
 
@@ -137,12 +136,12 @@ h3 {
 
 #exeption-1 {
   background-color: white;
-  color: #c65353;
-  border: 2px solid #c65353;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
 }
 
 #exeption-2 {
-  background-color: #c65353;
+  background-color: var(--main-color);
   color: white;
 }
 
@@ -181,14 +180,14 @@ h3 {
 .steps-header h2 {
   font-size: 25px;
   font-weight: bold;
-  color: #000;
+  color: black;
   text-decoration: underline;
 }
 
 .steps-header p {
   font-size: 15px;
   width: 50%;
-  color: #333;
+  color: black;
   margin: 0 auto;
 }
 
@@ -207,7 +206,7 @@ h3 {
 
 .step-number {
   font-size: 24px;
-  color: #d9534f;
+  color: var(--main-color);
   font-weight: bold;
 }
 
@@ -216,7 +215,7 @@ h3 {
   height: 150px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #c65353;
+  border: 2px solid var(--main-color);
 }
 
 .step-image {
@@ -227,19 +226,19 @@ h3 {
 
 .step-description {
   font-size: 15px;
-  color: #000;
+  color: black;
   background-color: white;
   margin-top: -35px;
   padding: 10px;
   border: 2px solid transparent;
   border-bottom: 1px solid transparent;
-  border-color: #f3dbdd;
+  border-color: var(--secondary-color);
   cursor: pointer;
 }
 
 .step-description:hover {
-  background-color: #f3dbdd;
-  color: #d9534f;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
   border: none;
 }
 

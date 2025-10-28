@@ -3,7 +3,7 @@
   display: flex;
   height: auto;
   border-radius: 2rem;
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
@@ -17,15 +17,15 @@
 }
 
 .choix-left-panel {
-  background-color: #fff;
+  background-color: var(--secondary-text-color);
   padding: 2rem;
   /* margin-bottom: 1rem; */
 }
 
 .choix-right-panel {
   width: 50%;
-  background: #f3dbdd !important;
-  color: #ba3e40 !important;
+  background: var(--secondary-color) !important;
+  color: var(--main-color) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@
   font-size: 1.5rem;
   /* margin: 1rem; */
   text-transform: uppercase;
-  color: #ba3e40;
+  color: var(--main-color);
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
@@ -66,13 +66,13 @@
 }
 
 .choix-btn.client {
-  background-color: #ba3e40;
-  color: #f3dbdd;
+  background-color: var(--main-color);
+  color: var(--secondary-color);
 }
 
 .choix-btn.prestataire {
-  background-color: #f3dbdd;
-  color: #ba3e40;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
 }
 
 .choix-btn:hover {

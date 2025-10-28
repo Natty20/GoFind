@@ -1,7 +1,7 @@
 .profilclient-container {
   width: 100%;
   min-height: 100vh;
-  background-color: #f8f8f8;
+  background-color: var(--bg-color);
   margin: 6rem 0 0 0;
 }
 
@@ -9,7 +9,7 @@
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background: white;
+  background: var(--secondary-text-color);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
@@ -19,7 +19,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  color: red;
+  color: var(--error);
   font-size: 20px;
 }
 
@@ -27,14 +27,14 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 2px solid gray;
+  border: 2px solid var(--third-text-color);
 }
 
 .location {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: gray;
+  color: var(--third-text-color);
   font-size: 14px;
 }
 
@@ -42,7 +42,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--bg-color);
   padding-top: 10px;
 }
 
@@ -56,21 +56,21 @@
 }
 
 .red {
-  color: red;
+  color: var(--error);
 }
 
 .gray {
-  color: lightgray;
+  color: var(--third-text-color);
 }
 
 .gray-text {
-  color: gray;
+  color: var(--third-text-color);
 }
 
 .section-title {
   text-align: center;
   margin-top: 40px;
-  color: red;
+  color: var(--error);
   font-weight: bold;
 }
 
@@ -79,38 +79,38 @@
   padding-left: 0;
   list-style: none;
   font-size: 14px;
-  color: #444;
+  color: var(--third-text-color);
 }
 
 .rdv-list li {
   margin: 4px 0;
-  background: #f1f1f1;
+  background: var(--bg-color);
   padding: 6px 10px;
   border-radius: 6px;
   text-align: left;
 }
 
 .rdv-list li strong {
-  color: #333;
+  color: var(--primary-text-color);
 }
 
 .no-rdv {
   font-size: 13px;
-  color: #888;
+  color: var(--third-text-color);
   margin-top: 6px;
 }
 
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: #f8f8f8;
+  background-color: var(--bg-color);
 }
 
 .profile-card {
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background: white;
+  background: var(--secondary-text-color);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
@@ -121,7 +121,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  color: red;
+  color: var(--error);
   font-size: 20px;
 }
 
@@ -129,7 +129,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 2px solid gray;
+  border: 2px solid var(--third-text-color);
 }
 
 .location {
@@ -144,7 +144,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--bg-color);
   padding-top: 10px;
 }
 
@@ -158,11 +158,11 @@
 }
 
 .red {
-  color: red;
+  color: var(--error);
 }
 
 .green {
-  color: green;
+  color: var(--success);
 }
 
 .blue {
@@ -170,13 +170,13 @@
 }
 
 .gray-text {
-  color: gray;
+  color: var(--third-text-color);
 }
 
 .section-title {
   text-align: center;
   margin-top: 40px;
-  color: #ba3e40;
+  color: var(--main-color);
   font-weight: bold;
 }
 
@@ -188,7 +188,7 @@
 }
 
 .rdv-title {
-  color: #ba3e40;
+  color: var(--main-color);
   text-align: center;
   font-size: 1.2rem;
   margin-bottom: 1rem;
@@ -196,7 +196,7 @@
 }
 
 .rdv-card {
-  background: #fff;
+  background: var(--secondary-text-color);
   padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -214,16 +214,16 @@
 }
 
 .etat-acceptée {
-  color: green;
-  background-color: #e7f6e7;
+  color: var(--success);
+  background-color: var(--bg-color);
 }
 
 .etat-declinee {
-  color: red;
-  background-color: #fce5e5;
+  color: var(--success);
+  background-color: var(--bg-color);
 }
 
 .etat-termine {
-  color: #444;
-  background-color: #e0e0e0;
+  color: var(--third-text-color);
+  background-color: var(--bg-color);
 }

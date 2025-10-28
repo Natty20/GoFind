@@ -1,0 +1,54 @@
+.mentions-page {
+  padding: 50px 20px;
+  background: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.mentions-container {
+  max-width: 900px;
+  width: 100%;
+  background: var(--bg-color);
+  padding: 36px;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+.mentions-title {
+  font-size: 2rem;
+  margin-bottom: 18px;
+  color: black;
+  text-align: left;
+}
+
+.mentions-container h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--main-color);
+}
+
+.mentions-container p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  color: black;
+}
+
+.mentions-container a {
+  color: var(--main-color);
+  text-decoration: none;
+}
+
+.mentions-container a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .mentions-container {
+    padding: 22px;
+  }
+
+  .mentions-title {
+    font-size: 1.6rem;
+  }
+}

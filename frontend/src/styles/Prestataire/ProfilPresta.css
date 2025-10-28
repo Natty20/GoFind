@@ -30,7 +30,7 @@
 }
 
 h1 {
-  color: #333;
+  color: black;
   margin-bottom: 20px;
 }
 
@@ -47,7 +47,7 @@ h1 {
 
 .presta-names h2 {
   font-size: 1.5rem;
-  color: #dc3545;
+  color: var(--main-color);
   text-transform: uppercase;
   margin: 1rem;
 }
@@ -79,8 +79,8 @@ h1 {
   width: 20%;
   padding: 15px;
   font-size: 15px;
-  background-color: #ba3e40;
-  color: white;
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -100,15 +100,15 @@ h1 {
 td,
 th {
   padding: 10px;
-  border-bottom: 2px solid #ddd;
-  border-right: 2px solid #ddd;
+  border-bottom: 2px solid var(--bg-color);
+  border-right: 2px solid var(--bg-color);
 }
 
 thead th {
   padding: 12px;
   font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--bg-color);
 }
 
 tbody tr {
@@ -129,19 +129,19 @@ tbody tr {
 }
 
 .edit-btn {
-  background-color: #f3dbdd !important;
-  color: #dc3545 !important;
+  background-color: var(--secondary-color) !important;
+  color: var(--main-color) !important;
 }
 
 .edit-btn:hover {
-  background-color: #dc3545 !important;
+  background-color: var(--main-color) !important;
   color: white !important;
 }
 
 .delete-btn {
   padding: 5px 10px;
-  background-color: #dc3545;
-  color: #fff;
+  background-color: var(--main-color);
+  color: white;
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -150,7 +150,7 @@ tbody tr {
 }
 
 .delete-btn:hover {
-  background-color: #a71d2a;
+  background-color: var(--main-color);
 }
 
 .realisation-header {
@@ -164,7 +164,7 @@ tbody tr {
 
 .provider-reviews button {
   margin-top: 1rem;
-  background-color: red;
+  background-color: var(--error);
   padding: 0.5rem;
   color: white;
   border: none;
@@ -172,8 +172,7 @@ tbody tr {
 }
 
 .todo-container {
-  font-family: Arial, sans-serif;
-  background: #fff;
+  background: white;
   padding: 20px 30px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -191,7 +190,7 @@ tbody tr {
 input[type='text'] {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--bg-color);
   border-radius: 4px;
   font-size: 16px;
 }
@@ -200,16 +199,16 @@ input[type='text'] {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #f3dbdd;
-  color: #ba3e40;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
 }
 
 .todo-list {
@@ -224,14 +223,14 @@ button:hover {
   align-items: center;
   padding: 10px 15px;
   margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--bg-color);
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .todo-item span {
   font-size: 16px;
-  color: #333;
+  color: black;
 }
 
 @media (max-width: 768px) {
@@ -271,7 +270,7 @@ button:hover {
 .form-edit input {
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--third-text-color);
   border-radius: 6px;
   width: 100%;
 }
@@ -279,8 +278,8 @@ button:hover {
 .form-edit button {
   padding: 12px;
   font-size: 1rem;
-  background-color: #ba3e40;
-  color: white;
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -292,8 +291,8 @@ button:hover {
 }
 
 .form-edit button:hover {
-  background-color: #f3dbdd;
-  color: #ba3e40;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
 }
 @media (max-width: 480px) {
   .info-presta img {
@@ -333,10 +332,10 @@ button:hover {
   thead th {
     padding: 5px;
     font-size: 0.8rem;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid var(--bg-color);
   }
 
   tbody tr {
-    border: 1px solid black;
+    border: 1px solid var(--primary-text-color);
   }
 }

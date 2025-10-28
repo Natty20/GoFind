@@ -4,24 +4,24 @@
 
 .liste-rdv h1 {
   text-align: center;
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   padding: 1rem;
-  color: white;
+  color: var(--secondary-text-color);
   margin: 0;
 }
 
 .upcoming h2,
 .termines h4 {
-  background-color: #f3dbdd;
+  background-color: var(--bg-color);
   padding: 1rem;
-  color: #ba3e40;
+  color: var(--main-color);
   text-align: start;
   margin: 0;
 }
 
 .upcoming-appointment,
 .appointment-termines {
-  border: 1px solid black;
+  border: 1px solid var(--primary-text-color);
   padding: 1.5rem;
   margin: 1rem;
   display: flex;
@@ -29,7 +29,7 @@
 }
 
 .etat {
-  background-color: #f3dbdd;
+  background-color: var(--bg-color);
   width: 20%;
 }
 
@@ -69,13 +69,13 @@
 
 .upcoming-appointment-buttons button,
 .appointment-termines-down button {
-  background-color: #d32f2f;
+  background-color: var(--main-color);
   border: none;
   padding: 1rem;
   border-radius: 1rem;
   width: 80%;
   margin: 2rem 8rem 0;
-  color: white;
+  color: var(--secondary-text-color);
   font-size: 1.3rem;
   text-transform: capitalize;
   cursor: pointer;
@@ -84,15 +84,15 @@
 
 .upcoming-appointment-buttons .reporter,
 .upcoming-appointment-buttons .supprimer {
-  background-color: white;
-  border: 1px solid #ba3e40;
-  color: #ba3e40;
+  background-color: var(--secondary-text-color);
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
 }
 
 .appointment-termines-down p {
   font-size: 1.5rem;
   text-align: center;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 /* Responsivr */

@@ -26,7 +26,7 @@
 
 .text-container h1 {
   font-size: 1.5rem;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 .text-container p {
@@ -58,16 +58,16 @@
   align-items: center;
   width: 100%;
   max-width: 600px;
-  background-color: #f9f9f9;
+  background-color: var(--bg-color);
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px #f3dbdd;
+  box-shadow: 0 4px 6px var(--secondary-color);
   cursor: pointer;
 }
 
 .prestataire-card:hover {
   max-width: 590px;
-  background-color: #f9f9f9;
+  background-color: var(--bg-color);
 }
 
 .prestataire-image {
@@ -85,12 +85,12 @@
 .prestataire-info h3 {
   font-size: 18px;
   margin: 0 0 5px;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 .prestataire-info p {
   font-size: 14px;
-  color: #777;
+  color: var(--third-text-color);
   margin: 2px 0;
 }
 
@@ -126,7 +126,7 @@
 .category-card p {
   font-size: 16px;
   font-weight: bold;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 a {

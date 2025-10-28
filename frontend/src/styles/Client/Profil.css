@@ -1,5 +1,4 @@
 .profile-page {
-  font-family: Arial, sans-serif;
   line-height: 1.5;
   padding: 20px;
   max-width: 1200px;
@@ -12,7 +11,7 @@
 .provider-description,
 .review,
 .realisation-section {
-  background: #f5f5f7;
+  background: var(--bg-color);
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -46,7 +45,7 @@
 }
 
 .provider-info a {
-  color: #ba3e40;
+  color: var(--main-color);
   text-decoration: none;
 }
 
@@ -65,7 +64,7 @@
 }
 
 .prestation-item p {
-  color: #ba3e40;
+  color: var(--main-color);
   text-transform: uppercase;
 }
 
@@ -83,7 +82,7 @@
   width: 20%;
   padding: 15px;
   font-size: 15px;
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -92,9 +91,9 @@
 
 .provider-calendar button:hover,
 .tabs button:hover {
-  background-color: #f3dbdd;
-  color: #ba3e40;
-  border: 1px solid #f3dbdd;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
+  border: 1px solid var(--secondary-color);
 }
 
 /* Section Description */
@@ -102,7 +101,7 @@
 .provider-reviews h2 {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 /* Section Réalisations */
@@ -115,7 +114,7 @@
 .tabs {
   display: flex;
   justify-content: center;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--bg-color);
   margin-bottom: 20px;
 }
 
@@ -126,14 +125,14 @@
   background: none;
   font-size: 18px;
   cursor: pointer;
-  color: #333;
+  color: black;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .tabs button.active {
-  color: #ba3e40;
-  border-bottom: 3px solid #ba3e40;
+  color: var(--main-color);
+  border-bottom: 3px solid var(--main-color);
 }
 
 /* Grille des images */

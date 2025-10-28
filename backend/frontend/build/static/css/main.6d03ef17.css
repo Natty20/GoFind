@@ -32,7 +32,7 @@ html {
   padding: 0;
 }
 .gradient-form {
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   border-radius: 2rem;
   box-shadow: 0 8px 16px #00000040;
   display: flex;
@@ -42,12 +42,12 @@ html {
 }
 .right-panel {
   background: #f3dbdd !important;
-  color: #ba3e40 !important;
+  color: var(--main-color) !important;
   text-align: center;
   width: 50%;
 }
 .text-center h4 {
-  color: #ba3e40;
+  color: var(--main-color);
   text-align: center;
   text-transform: uppercase;
 }
@@ -58,7 +58,7 @@ html {
   transition: color 0.3s ease;
 }
 .text-muted:hover {
-  color: #ba3e40;
+  color: var(--main-color);
 }
 .left-panel .input-container {
   margin: 1rem;
@@ -70,7 +70,7 @@ html {
   width: 120px;
 }
 .signin {
-  background: #ba3e40;
+  background: var(--main-color);
   border: none;
   border-radius: 30px;
   color: #fff;
@@ -81,14 +81,14 @@ html {
 }
 .signin:hover {
   background: #f3dbdd;
-  border: 2px solid #ba3e40;
-  color: #ba3e40;
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
 }
 .gotoregidter {
   background-color: #f3dbdd;
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   border-radius: 30px;
-  color: #ba3e40;
+  color: var(--main-color);
   cursor: pointer;
   font-size: 15px;
   height: 46px;
@@ -107,7 +107,7 @@ html {
   text-align: center !important;
 }
 .register-form {
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   border-radius: 2rem;
   box-shadow: 0 8px 16px #00000040;
   display: flex;
@@ -247,8 +247,8 @@ html {
   }
 }
 .register-btn {
-  background-color: #ba3e40;
-  border: 1px solid #ba3e40;
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
   border-radius: 30px;
   color: #fff;
   cursor: pointer;
@@ -259,13 +259,13 @@ html {
 }
 .register-btn:hover {
   background-color: #f3dbdd;
-  border: 1px solid #ba3e40;
-  color: #ba3e40;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
 }
 .register-right-panel {
   align-items: center;
   background: #f3dbdd;
-  color: #ba3e40;
+  color: var(--main-color);
   display: flex;
   justify-content: center;
   padding: 1rem;
@@ -663,7 +663,7 @@ h3 {
 }
 .categorie {
   background-color: #fff;
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   border-radius: 5px;
   cursor: pointer;
   margin: 0 10px;
@@ -671,12 +671,12 @@ h3 {
   width: 15%;
 }
 .categorie.active {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   color: #f3dbdd;
 }
 .categorie.active:hover {
   background-color: #f3dbdd;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 .hero {
   align-items: center;
@@ -688,7 +688,7 @@ h3 {
   width: 55%;
 }
 .hero-text {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 1.2rem;
   line-height: 1.6;
   padding: 3rem;
@@ -726,7 +726,7 @@ h3 {
   width: 30%;
 }
 .service-text h3 {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 10px;
@@ -824,7 +824,7 @@ h3 {
   text-align: center;
 }
 .text-container h2 {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 1.5rem;
 }
 .text-container p {
@@ -872,7 +872,7 @@ h3 {
   width: 80px;
 }
 .prestataire-info h4 {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 18px;
   margin: 0 0 5px;
 }
@@ -905,7 +905,7 @@ h3 {
   width: 100%;
 }
 .category-card p {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 16px;
   font-weight: 700;
 }
@@ -1000,7 +1000,7 @@ a {
   height: 100vh;
 }
 .sidebar {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   box-shadow: 2px 0 5px #0000001a;
   color: #fff;
   display: flex;
@@ -1155,7 +1155,7 @@ a {
   margin: 5px 0;
 }
 .provider-info a {
-  color: #ba3e40;
+  color: var(--main-color);
   text-decoration: none;
 }
 .provider-calendar {
@@ -1175,7 +1175,7 @@ a {
   width: 250px;
 }
 .provider-calendar button {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -1199,11 +1199,11 @@ a {
 .provider-calendar button:hover {
   background-color: #f3dbdd;
   border: 1px solid #f3dbdd;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 .provider-description h2,
 .provider-reviews h2 {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 20px;
   margin-bottom: 10px;
 }
@@ -1219,8 +1219,8 @@ a {
   margin-bottom: 20px;
 }
 .tabs button.active {
-  border-bottom: 3px solid #ba3e40;
-  color: #ba3e40;
+  border-bottom: 3px solid var(--main-color);
+  color: var(--main-color);
 }
 .tabs button:hover {
   color: #f3dbdd;
@@ -1268,7 +1268,7 @@ a {
   margin: 0;
 }
 span {
-  color: #ba3e40;
+  color: var(--main-color);
   font-weight: 700;
 }
 .review p {
@@ -1276,7 +1276,7 @@ span {
   margin: 5px 0;
 }
 .provider-reviews a {
-  color: #ba3e40;
+  color: var(--main-color);
   display: inline-block;
   margin-top: 20px;
   text-decoration: none;
@@ -2936,7 +2936,7 @@ label {
   margin: 4.5rem 0;
 }
 .liste-rdv h2 {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   color: #fff;
   margin: 0;
   padding: 1rem;
@@ -2945,7 +2945,7 @@ label {
 .termines h3,
 .upcoming h3 {
   background-color: #f3dbdd;
-  color: #ba3e40;
+  color: var(--main-color);
   margin: 0;
   padding: 1rem;
   text-align: start;
@@ -3007,11 +3007,11 @@ label {
 .upcoming-appointment-buttons .reporter,
 .upcoming-appointment-buttons .supprimer {
   background-color: #fff;
-  border: 1px solid #ba3e40;
-  color: #ba3e40;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
 }
 .appointment-termines-down p {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 1.5rem;
   text-align: center;
 }
@@ -3200,7 +3200,7 @@ h1 {
 .description button,
 .realisation-header button,
 .services-header button {
-  background-color: #ba3e40;
+  background-color: var(--main-color);
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -3316,7 +3316,7 @@ input[type="text"] {
 }
 button:hover {
   background-color: #f3dbdd;
-  color: #ba3e40;
+  color: var(--main-color);
 }
 .todo-list {
   list-style-type: none;
@@ -3414,7 +3414,7 @@ button:hover {
   width: 100px;
 }
 .rdv-header h1 {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 1.5rem;
   margin: 1rem;
   text-align: center;
@@ -3492,7 +3492,7 @@ th {
   margin: 0 15rem;
 }
 .prestation-title {
-  color: #ba3e40;
+  color: var(--main-color);
   font-size: 1.3rem;
   text-align: center !important;
 }

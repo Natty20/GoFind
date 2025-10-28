@@ -1,14 +1,9 @@
-body,
-html {
-  font-family: 'Roboto Serif', serif;
-}
-
 .login-page {
   margin: 6rem 0 0 0;
   display: flex;
   height: auto;
   border-radius: 2rem;
-  border: 1px solid #ba3e40;
+  border: 1px solid var(--main-color);
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
@@ -22,7 +17,7 @@ html {
 }
 
 .login-left-panel {
-  background-color: #fff;
+  background-color: var(--secondary-text-color);
   padding: 2rem;
   /* margin-bottom: 1rem; */
 }
@@ -36,7 +31,7 @@ html {
   font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
-  color: #ba3e40;
+  color: var(--main-color);
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
@@ -47,14 +42,14 @@ html {
 }
 
 .text-muted {
-  color: #999;
+  color: var(--third-text-color);
   font-size: 0.9rem;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .text-muted:hover {
-  color: #ba3e40;
+  color: var(--main-color);
 }
 
 .login-input-container {
@@ -68,22 +63,22 @@ html {
   padding: 1rem 4rem;
   margin: 2rem;
   font-size: 1.1rem;
-  background: #ba3e40;
-  color: #fff;
+  background: var(--main-color);
+  color: var(--secondary-text-color);
   /* width: 15rem; */
   cursor: pointer;
 }
 
 .login-btn:hover {
-  background: #f3dbdd;
-  color: #ba3e40;
-  border: 2px solid #ba3e40;
+  background: var(--secondary-color);
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
 }
 
 .gotoregister {
-  background-color: #f3dbdd;
-  color: #ba3e40;
-  border: 1px solid #ba3e40;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
   border-radius: 3rem;
   padding: 1rem 4rem;
   margin: 2rem;
@@ -93,8 +88,8 @@ html {
 
 .login-right-panel {
   width: 50%;
-  background: #f3dbdd !important;
-  color: #ba3e40 !important;
+  background: var(--secondary-color) !important;
+  color: var(--main-color) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,7 +101,7 @@ html {
   font-size: 1.5rem;
   /* margin: 1rem; */
   text-transform: uppercase;
-  color: #ba3e40;
+  color: var(--main-color);
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
