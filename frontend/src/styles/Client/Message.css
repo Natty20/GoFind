@@ -124,7 +124,7 @@
 }
 
 /* Confirm button style */
-.confirm-button {
+/* .confirm-button {
   background-color: var(--main-color);
   color: white;
   border: none;
@@ -135,7 +135,7 @@
   margin: 2rem 13rem;
   width: 70%;
   text-align: center;
-}
+} */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -182,7 +182,7 @@
     margin: 0;
   }
 
-  .confirm-button {
+  .btn-secondary {
     width: 60%;
     margin: 1rem 8rem;
   }
@@ -215,7 +215,7 @@
     font-size: 18px;
   }
 
-  .confirm-button {
+  .btn-secondary {
     margin: 1rem 5rem;
   }
 }

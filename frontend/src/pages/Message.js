@@ -76,7 +76,7 @@ const Messages = () => {
           selectedHour,
         }}
       >
-        <button className="confirm-button">Confirmer</button>
+        <button className="btn-secondary">Confirmer</button>
       </Link>
     </div>
   );

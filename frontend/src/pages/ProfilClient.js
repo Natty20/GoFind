@@ -174,7 +174,9 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Nouveau mot de passe"
             />
-            <button onClick={handleUpdate}>Mettre à jour</button>
+            <button className="btn-secondary" onClick={handleUpdate}>
+              Mettre à jour
+            </button>
           </div>
         )}
       </div>

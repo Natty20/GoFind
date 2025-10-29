@@ -73,7 +73,7 @@ h3 {
   cursor: pointer;
 }
 
-.choose-time {
+/* .choose-time {
   display: block;
   margin: 2rem auto;
   padding: 1rem 5rem;
@@ -89,7 +89,7 @@ h3 {
   background-color: var(--secondary-color);
   color: var(--main-color);
   border: none;
-}
+} */
 
 .custom-datepicker {
   background: var(--secondary-text-color);

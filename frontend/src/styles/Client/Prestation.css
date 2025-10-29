@@ -14,7 +14,7 @@
 
 .categorie {
   width: 15%;
-  background-color: var(--secondary-color);
+  background-color: white;
   border: 1px solid var(--main-color);
   color: var(--main-color);
   border-radius: 3rem;

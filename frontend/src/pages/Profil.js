@@ -124,7 +124,7 @@ const ProfilePage = () => {
             to={`/crenaux/${prestataire._id}`}
             state={{ prestataire, prestations, sousPrestations }}
           >
-            <button>Contacter</button>
+            <button className="btn-secondary">Contacter</button>
           </Link>
         </div>
       </section>

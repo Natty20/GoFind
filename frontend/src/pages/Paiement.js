@@ -85,7 +85,7 @@ const PaymentPage = () => {
           </p>
         </div>
 
-        <button className="confirm-button" onClick={handleStripePayment}>
+        <button className="btn-seconary" onClick={handleStripePayment}>
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
         </button>
       </main>

@@ -133,7 +133,7 @@ function Crenaux() {
           ))}
         </div>
 
-        <button className="choose-time" onClick={handleConfirmHour}>
+        <button className="btn-secondary" onClick={handleConfirmHour}>
           Choisissez l&#39;horaire
         </button>
       </div>
