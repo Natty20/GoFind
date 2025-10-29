@@ -35,7 +35,7 @@ h3 {
   margin: 1rem 15rem;
 }
 
-.gofind-presentation .cta-button {
+/* .gofind-presentation .cta-button {
   background-color: black;
   color: white;
   border: 1px solid var(--main-color);
@@ -49,7 +49,7 @@ h3 {
   background-color: var(--secondary-color);
   color: var(--main-color);
   border: none;
-}
+} */
 
 .category {
   margin: 10px;

@@ -1,6 +1,6 @@
 .mentions-page {
   padding: 50px 20px;
-  background: var(--bg-color);
+  background: var(--secondary-color);
   min-height: 100vh;
   display: flex;
   justify-content: center;

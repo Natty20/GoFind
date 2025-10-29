@@ -1,6 +1,6 @@
 .contact-page {
   padding: 50px 20px;
-  background: var(--bg-color);
+  background: var(--secondary-color);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@
 .contact-container {
   max-width: 780px;
   width: 100%;
-  background: var(--secondary-color);
+  background: var(--bg-color);
   padding: 36px;
   border-radius: 14px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
@@ -44,9 +44,9 @@
 .contact-form textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid var(--bg-color);
+  border: 1px solid var(--secondary-color);
   border-radius: 10px;
-  background: var(--secondary-color);
+  background: var(--bg-color);
   font-size: 1rem;
   color: var(--primary-text-color);
   box-sizing: border-box;

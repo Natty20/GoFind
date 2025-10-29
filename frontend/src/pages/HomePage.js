@@ -81,7 +81,9 @@ const HomePage = () => {
         </p>
         <Link to={'/prestation'}>
           {' '}
-          <button className="btn-primary">DÉCOUVRIR NOS PRESTATIONS</button>{' '}
+          <button className="btn-primary">
+            DÉCOUVRIR NOS PRESTATIONS
+          </button>{' '}
         </Link>
       </section>
 
@@ -94,11 +96,9 @@ const HomePage = () => {
           <h2>{presta.nom.toUpperCase()}</h2>
           <p>{presta.shortDescription}</p>
           <Link to={'/prestation'}>
-            <div className="buttons">
-              <Link></Link>
-              <button className="btn-primary">SAVOIR +</button>
-              <button className="btn-secondary">RÉSERVER</button>
-            </div>
+            <button className="btn-primary">SAVOIR +</button>
+            <button className="btn-secondary">RÉSERVER</button>
+            <div className="buttons"></div>
           </Link>
           <img
             src={presta.profileImage || '/images/default.jpg'}

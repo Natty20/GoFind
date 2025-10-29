@@ -104,14 +104,13 @@ const AdminDetailsPage = () => {
       </div>
 
       <div style={{ marginTop: '2rem' }}>
-        <button className="btn-secondary"
+        <button
+          className="btn-secondary"
           onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}
         >
           Modifier
         </button>
-        <button className="btn-primary"
-          onClick={() => navigate('/dashboard')}
-        >
+        <button className="btn-primary" onClick={() => navigate('/dashboard')}>
           Retour
         </button>
       </div>

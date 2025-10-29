@@ -28,10 +28,7 @@ const ChoixCompte = () => {
         </div>
 
         <div className="choix-boutons">
-          <button
-            onClick={() => handleChoix('client')}
-            className="btn-primary"
-          >
+          <button onClick={() => handleChoix('client')} className="btn-primary">
             Je suis un Client
           </button>
           <button
