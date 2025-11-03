@@ -123,6 +123,11 @@
   cursor: pointer;
 }
 
+.message-container button {
+  justify-content: center;
+  padding: 1rem 15rem;
+}
+
 /* Confirm button style */
 /* .confirm-button {
   background-color: var(--main-color);

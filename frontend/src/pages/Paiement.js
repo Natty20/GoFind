@@ -65,31 +65,32 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="payment-page">
+    <main className="payment-page">
       <div className="note">
         <p>
           <strong>Note :</strong> Vous serez remboursé(e) de votre acompte si la
-          prestation est annulée.
+          prestation est annulée par le(a) prestataire.
         </p>
       </div>
 
-      <main className="payment-container">
+      <section className="payment-container">
         <h1>
-          Sélectionnez Votre Moyen De Paiement Pour Confirmer Le Rendez-Vous
+          Pour Confirmer votre Rendez-Vous, vous devez payer une acompte enfin
+          de confirmer votre choix
         </h1>
 
         <div className="amount-section">
-          <p>Montant À Régler</p>
+          <p></p>
           <p className="total-amount">
-            Total: <strong>{montant}€</strong>
+            Montant À Régler: <strong>{montant}€</strong>
           </p>
         </div>
 
-        <button className="btn-seconary" onClick={handleStripePayment}>
+        <button className="btn-secondary" onClick={handleStripePayment}>
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
         </button>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 };
 

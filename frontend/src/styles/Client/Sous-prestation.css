@@ -1,6 +1,6 @@
-.SousPrestation {
-  margin: 6rem 0 0 0;
-  padding: 20px;
+.SousPrestation-page {
+  margin: 5rem 0 0 0;
+  /* padding: 20px; */
 }
 
 .main-section {
@@ -21,16 +21,18 @@
 .text-container {
   flex: 1;
   text-align: center;
-  margin-top: -10rem;
+  /* margin-top: -10rem; */
 }
 
-.text-container h1 {
+/* .text-container h1 {
   font-size: 1.5rem;
   color: var(--main-color);
-}
+} */
 
 .text-container p {
-  font-size: 16px;
+  font-family: var(--paragraph-font);
+  font-size: 1rem;
+  margin: 2rem;
 }
 
 /* Prestataires section */
@@ -126,7 +128,7 @@
 .category-card p {
   font-size: 16px;
   font-weight: bold;
-  color: var(--main-color);
+  color: var(--primary-text-color);
 }
 
 a {

@@ -50,6 +50,13 @@ const ChoixCompte = () => {
             service : nous créons de la valeur pour chaque personne que nous
             accompagnons.
           </p>
+
+          <button
+            className="btn-primary"
+            onClick={() => navigate('/login_admin')}
+          >
+            Admin login
+          </button>
         </div>
       </div>
     </main>

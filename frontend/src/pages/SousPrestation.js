@@ -110,7 +110,7 @@ const SousPrestation = () => {
     return <p className="error">Sous-prestation non trouvée.</p>;
 
   return (
-    <div className="SousPrestation">
+    <div className="SousPrestation-page">
       <Helmet>
         <title>
           {' '}
@@ -136,14 +136,16 @@ const SousPrestation = () => {
           />
         </div>
         <div className="text-container">
-          <h1>{sousPrestation.title}</h1>
+          <h1 className="tittles">{sousPrestation.title}</h1>
           <p>{sousPrestation.longDescription}</p>
         </div>
       </section>
 
       {/* Section des prestataires */}
       <section className="prestataires-section">
-        <h2>Découvrez nos prestataires dans {sousPrestation.nom}</h2>
+        <h2 className="tittles">
+          Découvrez nos prestataires dans {sousPrestation.nom}
+        </h2>
         <div className="prestataires-list">
           {prestataires.length > 0 ? (
             prestataires.map((prestataire) => (
@@ -171,7 +173,9 @@ const SousPrestation = () => {
 
       {/* Section des autres sous-prestations de la même prestation */}
       <section className="other-categories">
-        <h3>Autres prestations dans {sousPrestation.prestation}</h3>
+        <h3 className="tittles">
+          Autres prestations dans {sousPrestation.prestation}
+        </h3>
         <div className="categories-list">
           {autresSousPrestations.length > 0 ? (
             autresSousPrestations.map((sousP) => (

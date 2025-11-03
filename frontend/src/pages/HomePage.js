@@ -70,7 +70,7 @@ const HomePage = () => {
           src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
           alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
         />
-        <h2 className="section1">Simplifiez votre quotidien grâce à GoFind</h2>
+        <h2 className="tittles">Simplifiez votre quotidien grâce à GoFind</h2>
         <p>
           La plateforme qui connecte clients et prestataires qualifiés. Avec
           plus de 20 millions de comptes professionnels sur les réseaux sociaux,
@@ -93,7 +93,7 @@ const HomePage = () => {
           key={presta._id}
           className={`category ${presta.nom.toLowerCase()}`}
         >
-          <h2>{presta.nom.toUpperCase()}</h2>
+          <h2 className="tittles">{presta.nom.toUpperCase()}</h2>
           <p>{presta.shortDescription}</p>
           <Link to={'/prestation'}>
             <button className="btn-primary">SAVOIR +</button>
@@ -118,12 +118,13 @@ const HomePage = () => {
                   // Image à gauche, texte à droite
                   <>
                     <div className="artisanat-left">
-                      <h2>{presta.nom.toUpperCase()}</h2>
+                      <h2 className="tittles">{presta.nom.toUpperCase()}</h2>
                       <p>{presta.shortDescription}</p>
-                      <div className="exeption">
-                        <button>SAVOIR +</button>
-                        <button id="exeption-2">RÉSERVER</button>
-                      </div>
+                      <Link to={'/prestation'}>
+                        <button className="btn-primary">SAVOIR +</button>
+                        <button className="btn-secondary">RÉSERVER</button>
+                        <div className="buttons"></div>
+                      </Link>
                       <img
                         src={presta.profileImage || '/images/default.jpg'}
                         alt={presta.shortDescription}
@@ -155,12 +156,13 @@ const HomePage = () => {
                       </div>
                     </div>
                     <div className="artisanat-left">
-                      <h2>{presta.nom.toUpperCase()}</h2>
+                      <h2 className="tittles">{presta.nom.toUpperCase()}</h2>
                       <p>{presta.shortDescription}</p>
-                      <div className="exeption">
-                        <button>SAVOIR +</button>
-                        <button id="exeption-2">RÉSERVER</button>
-                      </div>
+                      <Link to={'/prestation'}>
+                        <button className="btn-primary">SAVOIR +</button>
+                        <button className="btn-secondary">RÉSERVER</button>
+                        <div className="buttons"></div>
+                      </Link>
                       <img
                         src={presta.profileImage || '/images/default.jpg'}
                         alt={presta.shortDescription}

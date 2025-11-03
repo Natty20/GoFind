@@ -64,7 +64,7 @@ const Confirmation = () => {
   };
 
   return (
-    <main className="confirmation">
+    <main className="confirmation-page">
       <div className="confirmation-container">
         <div className="presta-profile">
           <img
@@ -72,12 +72,15 @@ const Confirmation = () => {
             alt={prestataire?.nom || 'Prestataire inconnu'}
             className="profile-picture"
           />
-          <h1>{prestataire?.nom || 'Prestataire inconnu'}</h1>
+          <h1 className="tittles">
+            {prestataire?.nom || 'Prestataire inconnu'} {prestataire?.prenom}
+          </h1>
         </div>
 
         <div className="note">
           <h2>
-            <strong>Note: </strong>Le Rendez-Vous Est En Attente
+            <strong>Note: </strong>Votre demande de Rendez-Vous est maintenant
+            en attente
           </h2>
         </div>
 

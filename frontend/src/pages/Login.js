@@ -42,7 +42,7 @@ function LoginForm() {
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h1>GoFind ton plaisir près de chez toi</h1>
+          <h1 className="tittles">GoFind ton plaisir près de chez toi</h1>
           <p>Veuillez vous connecter à votre compte</p>
         </div>
 
@@ -95,13 +95,6 @@ function LoginForm() {
           service : nous créons de la valeur pour chaque personne que nous
           accompagnons.
         </p>
-
-        <button
-          className="btn-primary"
-          onClick={() => navigate('/login_admin')}
-        >
-          Admin login
-        </button>
       </div>
     </main>
   );

@@ -1,5 +1,5 @@
-.app {
-  margin: 100px 0px 0px 0px;
+.presstation-page {
+  margin: 5rem 0 0 0;
 }
 
 /* Categories */
@@ -46,7 +46,7 @@
 }
 
 .hero-image {
-  width: 55%;
+  width: 50%;
 }
 
 .hero-text {
@@ -98,16 +98,17 @@
   text-align: left;
 }
 
-.service-text h2 {
+/* .service-text h2 {
   font-size: 20px;
   font-weight: bold;
   color: var(--main-color);
   margin-bottom: 10px;
   text-transform: uppercase;
   text-align: center;
-}
+} */
 
 .service-text p {
+  font-family: var(--paragraph-font);
   font-size: 14px;
   line-height: 1.6;
   color: var(--third-text-color);
@@ -181,9 +182,6 @@
 
   .services h2 {
     font-size: 0.9rem;
-  }
-  .service-text h3 {
-    font-size: 1.2rem;
   }
 
   .service-text p {

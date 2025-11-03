@@ -93,7 +93,7 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="provider-calendar">
-          <h2>Prestations proposées</h2>
+          <h2 className="tittles">Prestations proposées</h2>
           {prestataire.selectedPrestations.length > 0 ? (
             prestataire.selectedPrestations.map((prestation, index) => (
               <div key={index} className="prestation-item">

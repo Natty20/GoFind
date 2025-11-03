@@ -111,7 +111,7 @@ function Crenaux() {
       )}
 
       <div className="date-picker">
-        <h2>Sélectionner Une Date</h2>
+        <h2 className="tittles">Sélectionner Une Date</h2>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
@@ -120,7 +120,7 @@ function Crenaux() {
           minDate={new Date()}
         />
 
-        <h3>Sélectionner Une Heure</h3>
+        <h3 className="tittles">Sélectionner Une Heure</h3>
         <div className="time-slots">
           {hours.map((hour, index) => (
             <button

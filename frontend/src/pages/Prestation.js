@@ -81,7 +81,7 @@ const Prestation = () => {
           content="prestations, service, réservation, beauté, événementiel, artisanat, photographie, décoration, traiteur, animation, mariage, professionnel, prestataire qualifié"
         />
       </Helmet>
-      <section className="app">
+      <section className="presstation-page">
         <div className="types-categorie">
           {['Événementielle', 'Beauté', 'Artisanat', 'Photographie'].map(
             (cat) => (
@@ -131,7 +131,7 @@ const Prestation = () => {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <h2>
+                          <h2 className="tittles">
                             {sous.nom ? sous.nom.toUpperCase() : 'Nom inconnu'}
                           </h2>
                           <p>{sous.longDescription || 'Pas de description'}</p>

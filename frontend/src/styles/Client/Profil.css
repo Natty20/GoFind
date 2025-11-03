@@ -1,8 +1,8 @@
 .profile-page {
   line-height: 1.5;
   padding: 20px;
-  max-width: 1200px;
-  margin: 6rem 0 0 0;
+  /* max-width: 1200px; */
+  margin: 5rem 0 0 0;
   /* margin-top: 3rem; */
 }
 
@@ -23,7 +23,7 @@
 }
 
 .provider-image {
-  width: 35%;
+  width: 50%;
   height: 50%;
   object-fit: cover;
   border-radius: 50%;
@@ -50,16 +50,18 @@
 }
 
 .provider-calendar {
-  margin-top: 20px;
+  margin-top: 1rem;
   text-align: center;
 }
 
-.provider-calendar h2 {
+/* .provider-calendar h2 {
   font-size: 18px;
   margin-bottom: 10px;
-}
+} */
 
-.prestation-item {
+.prestation-item,
+.prestation-item ul,
+.prestation-item li {
   list-style: none;
 }
 
@@ -77,17 +79,9 @@
   background-color: #f9f9f9;
 } */
 
-/* .provider-calendar button {
-  margin-top: 20px;
+.provider-calendar button {
   width: 20%;
-  padding: 15px;
-  font-size: 15px;
-  background-color: var(--main-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-} */
+}
 
 .tabs button:hover {
   background-color: var(--secondary-color);

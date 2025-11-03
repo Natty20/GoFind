@@ -1,5 +1,5 @@
 .homepage {
-  margin: 6rem 0 0 0;
+  margin: 5rem 0 0 0;
 }
 
 h1,
@@ -11,7 +11,7 @@ h3 {
 /* Section 1: Gofind Presentation */
 .gofind-presentation {
   background-color: black;
-  color: white;
+  color: var(--secondary-text-color);
   text-align: center;
 
   /* padding: 2rem; */
@@ -19,20 +19,21 @@ h3 {
 }
 
 .gofind-presentation img {
-  width: 22.6%;
+  width: 20%;
   border-radius: 50%;
-  cursor: pointer;
+  /* cursor: pointer; */
   margin: 3rem;
 }
 
-.gofind-presentation h2 {
+/* .gofind-presentation h2 {
   font-size: 1.5rem;
   color: var(--main-color);
   margin: 0;
-}
+} */
 
 .gofind-presentation p {
   margin: 1rem 15rem;
+  font-family: var(--paragraph-font);
 }
 
 /* .gofind-presentation .cta-button {
@@ -62,7 +63,6 @@ h3 {
 .artisanat-left h2,
 .photographie-right h2 {
   font-size: 2rem;
-  color: black;
 }
 
 .category .buttons button,
