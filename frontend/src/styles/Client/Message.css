@@ -125,7 +125,8 @@
 
 .message-container button {
   justify-content: center;
-  padding: 1rem 15rem;
+  width: 80%;
+  margin: 1rem 5rem;
 }
 
 /* Confirm button style */

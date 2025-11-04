@@ -61,7 +61,7 @@ function App() {
             <Route path="/cancel" element={<CancelPage />} />
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/apropos" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/mentions-legales" element={<MentionsLegales />} />
             <Route path="/choix_compte" element={<ChoixCompte />} />

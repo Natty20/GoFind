@@ -23,8 +23,8 @@
 }
 
 .profile-picture {
-  width: 15%;
-  height: 15%;
+  width: 25%;
+  height: 25%;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -92,7 +92,7 @@ label {
 .confirmation-container button {
   justify-content: center;
   width: 80%;
-  padding: 1rem 15rem;
+  margin: 1rem 5rem;
   font-weight: bold;
 }
 

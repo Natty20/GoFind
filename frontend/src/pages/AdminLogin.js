@@ -41,13 +41,13 @@ function AdminLogin() {
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h1>GoFind ton plaisir près de chez toi</h1>
+          <h1 className="tittles">GoFind ton plaisir près de chez toi</h1>
           <p>Veuillez vous connecter à votre compte</p>
         </div>
 
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
-        <form onSubmit={handleLogin} className="input-container">
+        <form onSubmit={handleLogin} className="login-input-container">
           <p className="label">Email :</p>
           <MDBInput
             id="input"
@@ -79,14 +79,14 @@ function AdminLogin() {
         </div>
       </div>
 
-      <div className="right-panel">
-        <div>
-          <h4>We are more than just a company</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </div>
+      <div className="login-right-panel">
+        <h2>Nous sommes plus qu’une simple entreprise</h2>
+        <p>
+          Nous construisons des relations durables basées sur la confiance,
+          l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+          service : nous créons de la valeur pour chaque personne que nous
+          accompagnons.
+        </p>
       </div>
     </main>
   );

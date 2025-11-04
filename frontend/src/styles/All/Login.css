@@ -39,7 +39,7 @@
 
 .welcome-text img {
   border-radius: 50%;
-  width: 10%;
+  width: 20%;
 }
 
 .text-muted {
@@ -91,6 +91,7 @@
   width: 60%;
   background: var(--secondary-color) !important;
   color: var(--main-color) !important;
+  border-radius: 0 2rem 2rem 0;
   display: flex;
   align-items: center;
   justify-content: center;

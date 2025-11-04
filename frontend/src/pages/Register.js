@@ -195,7 +195,7 @@ function Register() {
       </div>
 
       <div className="register-right-panel">
-        <div>
+        <div className="about">
           <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
             Avec GoFind, accédez à une large gamme de prestations pensées pour

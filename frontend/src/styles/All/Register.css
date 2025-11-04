@@ -21,10 +21,7 @@
 .register-left-panel {
   background-color: var(--secondary-text-color);
 }
-.register-left-panel,
-.register-right-panel {
-  width: auto;
-}
+
 .register-right-panel {
   /* width: 30%; */
   background: var(--secondary-color);
@@ -33,7 +30,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1rem;
+  padding: 1 10rem 1 10;
 }
 .welcome-text p {
   text-align: center;
@@ -48,8 +45,9 @@
   width: 100%;
 }
 
-.register-input-container {
-  width: 50%;
+.about {
+  margin: 0;
+  padding: 1rem;
 }
 .register-input-container p {
   font-size: 1.5rem;

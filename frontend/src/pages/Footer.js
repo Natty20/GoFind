@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* Liens de navigation du footer */}
         <div className="footer-links">
-          <Link to={'/about'}>À propos</Link>
+          <Link to={'/apropos'}>À propos</Link>
           <Link to={'/prestation'}>Prestations</Link>
           <Link to={'/faq'}>FAQ</Link>
           <Link to={'/contact'}>Contact</Link>

@@ -117,9 +117,9 @@ h3 {
   font-weight: bold;
   cursor: pointer;
 }
-.date-picker button {
-  justify-content: center;
-  padding: 1rem 15rem;
+button.btn-secondary {
+  width: 80%;
+  margin: 1rem 5rem;
 }
 
 /* Modal Styles */
