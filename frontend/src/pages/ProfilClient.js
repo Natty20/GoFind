@@ -96,11 +96,11 @@ const ClientProfile = () => {
     <div className="profilclient-container">
       {/* Profil client */}
       <div className="profile-card">
-        <div className="settings-icon" onClick={() => setEditMode(!editMode)}>
+        <div className="settings-icon" onClick={() => setIsEditing(!isEditing)}>
           <FaCog />
         </div>
 
-        {!editMode ? (
+        {!isEditing ? (
           <div className="profile-info">
             <img
               src={
