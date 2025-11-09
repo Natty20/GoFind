@@ -167,7 +167,12 @@ const ProfilPresta = () => {
               <div className="description">
                 <h3>Ma description</h3>
                 {/* <p>Morem ipsum dolor sit amet...</p> */}
-                <button onClick={() => setIsEditing(true)}>Modifier</button>
+                <button
+                  className="btn-secondary"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Modifier
+                </button>
               </div>
             </div>
           ) : (
@@ -212,15 +217,22 @@ const ProfilPresta = () => {
                 placeholder="Adresse"
               />
 
-              <p className="label">Photp de profile: </p>
+              <p className="label">Photo de profile: </p>
               <input
                 name="profilePicture"
                 value={formData.profilePicture}
                 onChange={handleInputChange}
                 placeholder="URL de la photo de profil"
               />
-              <button onClick={handleSave}>Enregistrer</button>
-              <button onClick={() => setIsEditing(false)}>Annuler</button>
+              <button className="btn-secondary" onClick={handleSave}>
+                Enregistrer
+              </button>
+              <button
+                className="btn-primary"
+                onClick={() => setIsEditing(false)}
+              >
+                Annuler
+              </button>
             </div>
           )}
         </div>

@@ -50,7 +50,7 @@ function Crenaux() {
   const handleConfirmHour = () => {
     if (!client) {
       alert('Vous devez être connecté pour prendre un rendez-vous.');
-      navigate('/login');
+      navigate('/login', { state: { from: location.pathname } });
       return;
     }
 
@@ -133,7 +133,7 @@ function Crenaux() {
           ))}
         </div>
 
-        <button className="btn-secondary" onClick={handleConfirmHour}>
+        <button className="crenaux btn-secondary" onClick={handleConfirmHour}>
           Choisissez l&#39;horaire
         </button>
       </div>

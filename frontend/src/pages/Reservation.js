@@ -124,7 +124,8 @@ const ListeDemandesPrestataire = () => {
         </td>
         <td>{res.description}</td>
         <td>{new Date(res.date).toLocaleString('fr-FR')}</td>
-        <td>
+        <td className={`etat ${res.etat.toLowerCase()}`}>{res.etat}</td>
+        {/* <td>
           <select
             value={res.etat}
             onChange={(e) => handleStatusChange(res._id, e.target.value)}
@@ -132,7 +133,7 @@ const ListeDemandesPrestataire = () => {
             <option value="acceptée">Acceptée</option>
             <option value="déclinée">Annulée</option>
           </select>
-        </td>
+        </td> */}
         <td>{res.modePaiement || '—'}</td>
         <td>
           {res.facture ? (

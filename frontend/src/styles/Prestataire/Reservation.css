@@ -146,6 +146,29 @@ td {
   margin-top: 2rem;
 }
 
+/* --- Couleurs des statuts --- */
+.etat {
+  font-weight: bold;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+/* 🟢 Statut accepté */
+.etat.acceptée,
+.etat.accepté {
+  color: #2ecc71;
+  /* vert */
+}
+
+/* 🔴 Statut refusé ou annulé */
+.etat.annulée,
+.etat.annulé,
+.etat.déclinée,
+.etat.refusée {
+  color: #e74c3c;
+  /* rouge */
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .coordonees-details {

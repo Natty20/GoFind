@@ -2,16 +2,18 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/All/Login.css';
 
 function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setClient } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  const from = location.state?.from || '/';
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -28,9 +30,10 @@ function LoginForm() {
       sessionStorage.setItem('client', JSON.stringify(client));
       setClient(client); // ✅ Met à jour globalement le client
 
-      navigate('/');
+      navigate(from, { replace: true });
     } catch (error) {
       setError('Email ou mot de passe incorrect.');
+      console.error('Erreur de connexion :', err);
     }
   };
 

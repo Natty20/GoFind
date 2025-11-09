@@ -120,7 +120,7 @@ const ClientProfile = () => {
             <p>Téléphone : {client?.phone || 'Non renseigné'}</p>
           </div>
         ) : (
-          <div className="profile-edit-form">
+          <div className="form-edit">
             <p className="label">Nom: </p>
             <input
               type="text"
@@ -165,6 +165,13 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Adresse"
             />
+            <p className="label">Photo de profile: </p>
+            <input
+              name="profilePicture"
+              value={formData.profilePicture}
+              onChange={handleChange}
+              placeholder="URL de la photo de profil"
+            />
 
             <p className="label">Mot de passe: </p>
             <input
@@ -176,6 +183,9 @@ const ClientProfile = () => {
             />
             <button className="btn-secondary" onClick={handleUpdate}>
               Mettre à jour
+            </button>
+            <button className="btn-primary" onClick={() => setIsEditing(false)}>
+              Annuler
             </button>
           </div>
         )}

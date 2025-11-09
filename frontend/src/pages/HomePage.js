@@ -81,7 +81,7 @@ const HomePage = () => {
         </p>
         <Link to={'/prestation'}>
           {' '}
-          <button className="btn-primary">
+          <button className="btn-secondary">
             DÉCOUVRIR NOS PRESTATIONS
           </button>{' '}
         </Link>

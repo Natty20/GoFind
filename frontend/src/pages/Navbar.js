@@ -38,7 +38,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="homepage">
+    <div className="navpage">
       <nav className="navbar">
         <div className="navbar-container">
           {/* left side - logo */}
