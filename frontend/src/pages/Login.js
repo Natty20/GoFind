@@ -33,7 +33,7 @@ function LoginForm() {
       navigate(from, { replace: true });
     } catch (error) {
       setError('Email ou mot de passe incorrect.');
-      console.error('Erreur de connexion :', err);
+      console.error('Erreur de connexion :', error);
     }
   };
 

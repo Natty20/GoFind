@@ -8,7 +8,7 @@ const ClientProfile = () => {
   const [rdvs, setRdvs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editMode, setEditMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
 
   const clientId = sessionStorage.getItem('clientId');
@@ -62,8 +62,8 @@ const ClientProfile = () => {
       );
 
       setClient(res.data.client); // mettre à jour l’état
-      setEditMode(false);
-      alert('✅ Profil mis à jour avec succès !');
+      setIsEditing(false);
+      alert('✅ Information(s) mis à jour avec succès !');
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour du profil.');
