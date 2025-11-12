@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/All/About.css';
 import { Helmet } from 'react-helmet';
 
-const About = () => {
+const AboutPage = () => {
   return (
     <div className="aboutPage">
       <Helmet>
@@ -25,11 +25,10 @@ const About = () => {
         <h1 className="Title">Une idée née d’un besoin réel</h1>
         <p>
           Tout a commencé avec une frustration : passer des heures à chercher un
-          bon prestataire, demander des recommandations partout, hésiter…{' '}
-          <br>
-            Alors nous avons imaginé GoFind — un endroit où chacun peut trouver
-            facilement la bonne personne pour la bonne tâche.
-          </br>{' '}
+          bon prestataire, demander des recommandations partout, hésiter… <br />
+          Alors nous avons imaginé GoFind — un endroit où chacun peut trouver
+          facilement la bonne personne pour la bonne tâche.
+          <br />
           Un réseau de talents locaux, de passionnés, de professionnels qui
           aiment leur métier autant que vous aimez bien être accompagné.
         </p>
@@ -53,4 +52,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Success = () => {
+const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Récupère les infos passées via navigate(..., { state })
-  const reservationInfo = location.state;
+  const reservationInfo = location.state || {};
 
   const handleGoToPrestation = () => {
     navigate('/prestation');
@@ -43,7 +42,7 @@ const Success = () => {
         </div>
         <div className="message">
           <h2>Paiement réussi ! 🎉</h2>
-          <p>Votre rendez-vous a été confirmé.</p>
+          <p>Votre demande de rendez-vous a été envoyé au prestataire.</p>
         </div>
         <div className="paiment-details">
           <div className="paiement-method">
@@ -68,4 +67,4 @@ const Success = () => {
   );
 };
 
-export default Success;
+export default SuccessPage;
