@@ -23,8 +23,8 @@
 }
 
 .provider-image {
-  width: 50%;
-  height: 50%;
+  width: 20% !important;
+  /* height: 50%; */
   object-fit: cover;
   border-radius: 50%;
 }
@@ -79,9 +79,9 @@
   background-color: #f9f9f9;
 } */
 
-.provider-calendar button {
+/* .provider-calendar button {
   width: 20%;
-}
+} */
 
 .tabs button:hover {
   background-color: var(--secondary-color);
@@ -165,9 +165,9 @@
     font-size: 14px;
   }
 
-  .btn-secondary {
+  /* .btn-secondary {
     width: 50%;
-  }
+  } */
 
   /* Realisation Section */
   .realisation-section {
@@ -184,6 +184,16 @@
 
 @media (max-width: 480px) {
   /* Provider Details */
+  .profile {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 6rem 0;
+    padding: 1rem;
+  }
+  .profile p {
+    margin: 0.25rem;
+  }
   .provider-info {
     margin: 2rem 0;
     padding: 0.2rem;
@@ -198,7 +208,7 @@
   }
 
   .provider-image {
-    width: 40%;
+    width: 40% !important;
     height: 10%;
   }
 
@@ -206,10 +216,9 @@
     font-size: 1rem;
   }
 
-  .btn-secondary {
-    width: 70%;
-    padding: 12px;
-    font-size: 14px;
+  button.crenaux.btn-secondary {
+    margin: 1rem 5rem;
+    /* width: 80%; */
   }
 
   /* Realisation Section */

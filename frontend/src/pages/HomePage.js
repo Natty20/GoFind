@@ -96,9 +96,10 @@ const HomePage = () => {
           <h2 className="tittles">{presta.nom.toUpperCase()}</h2>
           <p>{presta.shortDescription}</p>
           <Link to={'/prestation'}>
-            <button className="btn-primary">SAVOIR +</button>
-            <button className="btn-secondary">RÉSERVER</button>
-            <div className="buttons"></div>
+            <div className="reserve">
+              <button className="btn-primary">SAVOIR +</button>
+              <button className="btn-secondary">RÉSERVER</button>
+            </div>
           </Link>
           <img
             src={presta.profileImage || '/images/default.jpg'}

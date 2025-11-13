@@ -4,7 +4,7 @@
 }
 
 .profile-picture {
-  width: 15%;
+  width: 15% !important;
   height: 15%;
   border-radius: 50%;
   object-fit: cover;

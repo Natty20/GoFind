@@ -143,6 +143,11 @@
   text-align: center;
 } */
 
+.message-container button {
+  margin: 1rem 5rem;
+  width: 80%;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .messages-header {
@@ -197,20 +202,21 @@
 /* mobile phones */
 @media (max-width: 480px) {
   .profile-img {
-    width: 70px;
+    /* width: 70px; */
     height: 40px;
   }
 
-  .profile-section {
-    padding: 0.8rem;
+  .profile-section,
+  .date-section {
+    /* padding: 0.8rem; */
+    font-size: 0.65rem !important;
+  }
+  .date-section {
+    font-size: 0.65rem !important;
   }
 
   .role {
     font-size: 0.8rem;
-  }
-
-  .date-section {
-    font-size: 1rem;
   }
 
   .message-input {

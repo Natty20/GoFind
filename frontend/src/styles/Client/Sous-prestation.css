@@ -219,10 +219,17 @@ a {
   }
 
   .text-container p {
-    font-size: 12px;
+    font-size: 1rem;
+    margin: 0;
   }
 
   /* Prestataires section */
+  .prestataires-section h2 {
+    font-size: 1rem;
+  }
+  .prestataires-list {
+    padding: 0.55rem;
+  }
   .prestataire-card {
     max-width: 100%;
     padding: 15px;

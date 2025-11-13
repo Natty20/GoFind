@@ -75,7 +75,10 @@ const ProfilePage = () => {
       <section className="provider-details">
         <div className="details">
           <img
-            src={prestataire.profilePicture}
+            src={
+              prestataire.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt={prestataire.nom}
             className="provider-image"
           />

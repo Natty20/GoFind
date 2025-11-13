@@ -19,7 +19,10 @@ const Messages = () => {
       <header className="messages-header">
         <div className="profile-section">
           <img
-            src={prestataire?.profilePicture || '/images/default.jpg'}
+            src={
+              prestataire?.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt="profile"
             className="profile-img"
           />
@@ -39,7 +42,10 @@ const Messages = () => {
       <div className="messages-content">
         <div className="message-received">
           <img
-            src={prestataire?.profilePicture || '/images/default.jpg'}
+            src={
+              prestataire?.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt="profile"
             className="profile-img"
           />
@@ -47,7 +53,10 @@ const Messages = () => {
         </div>
         <div className="message-received">
           <img
-            src={prestataire?.profilePicture || '/images/default.jpg'}
+            src={
+              prestataire?.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt="profile"
             className="profile-img"
           />
@@ -57,7 +66,10 @@ const Messages = () => {
         </div>
         <div className="message-sent">
           <img
-            src={client?.profilePicture || '/images/gigi.jpg'}
+            src={
+              client?.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt="profile"
             className="profile-img"
           />

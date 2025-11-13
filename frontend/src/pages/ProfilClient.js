@@ -83,6 +83,9 @@ const ClientProfile = () => {
     (r) => new Date(r.date) <= now && r.etat === 'terminé'
   );
   const rdvAnnules = rdvs.filter((r) => r.etat === 'declinée');
+  const rdvPending = rdvs.filter(
+    (r) => new Date(r.date) > now && r.etat === 'en attente'
+  );
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -202,6 +205,10 @@ const ClientProfile = () => {
           <p>Terminés</p>
         </div>
         <div className="appointment">
+          <span className="number green">{rdvPending.length}</span>
+          <p>Pending</p>
+        </div>
+        <div className="appointment">
           <span className="number red">{rdvAnnules.length}</span>
           <p>Annulés</p>
         </div>
@@ -221,7 +228,8 @@ const ClientProfile = () => {
                   alt={r.prestataire?.nom || 'Prestataire'}
                 />
                 <p>
-                  <strong>Prestataire :</strong> {r.prestataire?.nom || 'N/A'}
+                  <strong>Prestataire :</strong> {r.prestataire?.nom || 'N/A'}{' '}
+                  {r.prestataire?.prenom || 'N/A'}
                 </p>
               </div>
 
@@ -290,6 +298,30 @@ const ClientProfile = () => {
         </div>
       )}
 
+      {rdvPending.length > 0 && (
+        <div className="rdv-section">
+          <h3 className="rdv-title">En Attente</h3>
+          {rdvTermines.map((r) => (
+            <div key={r._id} className="rdv-card pending">
+              <p>
+                <strong>Prestataire :</strong> {r.prestataireNom || 'N/A'}
+              </p>
+              <p>
+                <strong>Date :</strong> {formatDate(r.date)}
+              </p>
+              <p>
+                <strong>État :</strong>{' '}
+                <span
+                  className={`etat etat-${r.etat.replace('é', 'e').replace(' ', '')}`}
+                >
+                  {r.etat.charAt(0).toUpperCase() + r.etat.slice(1)}
+                </span>
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {rdvAnnules.length > 0 && (
         <div className="rdv-section">
           <h3 className="rdv-title">Annulés</h3>
@@ -303,7 +335,11 @@ const ClientProfile = () => {
               </p>
               <p>
                 <strong>État :</strong>{' '}
-                <span className="etat etat-declinee">Déclinée</span>
+                <span
+                  className={`etat etat-${r.etat.replace('é', 'e').replace(' ', '')}`}
+                >
+                  {r.etat.charAt(0).toUpperCase() + r.etat.slice(1)}
+                </span>
               </p>
             </div>
           ))}

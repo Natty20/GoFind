@@ -10,10 +10,15 @@
 }
 
 .presta-profile {
-  display: grid;
+  display: flex;
+  gap: 2rem;
   justify-content: center;
   margin: 1rem;
   margin-bottom: 0;
+}
+
+.presta-profile h1 {
+  margin-top: 1.5rem;
 }
 
 .infos {
@@ -23,8 +28,8 @@
 }
 
 .profile-picture {
-  width: 50%;
-  height: 50%;
+  width: 50% !important;
+  height: 50% !important;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -154,6 +159,9 @@ label {
 }
 
 @media (max-width: 480px) {
+  .presta-profile {
+    border-radius: 50% !important;
+  }
   .presta-profile h2 {
     font-size: 1rem;
   }
@@ -170,5 +178,9 @@ label {
     display: flex;
     flex-direction: column;
     text-align: center;
+  }
+  .confirmation-container button {
+    margin: 1rem 5rem;
+    width: auto;
   }
 }

@@ -304,17 +304,29 @@ h3 {
 }
 
 @media (max-width: 480px) {
+  .homepage {
+    margin: 0;
+  }
   .gofind-presentation img {
     width: 50%;
   }
 
   .gofind-presentation p {
     font-size: 0.9rem;
+    margin: 0.55rem;
   }
 
   .gofind-presentation h2 {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     text-transform: uppercase;
+  }
+  .gofind-presentation button {
+    font-size: 0.75rem;
+  }
+  .reserve button {
+    margin: 1rem 5rem;
+    font-size: 0.75rem;
+    width: auto;
   }
 
   .artisanat-left,

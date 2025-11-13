@@ -15,13 +15,16 @@ function Crenaux() {
   const [prestations] = useState(location.state?.prestations || {});
   const [sousPrestations] = useState(location.state?.sousPrestations || {});
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedHour, setSelectedHour] = useState('7h-12h (Disponible)');
+  const [selectedHour, setSelectedHour] = useState('7h-12h');
 
-  const hours = [
-    '7h-12h (Disponible)',
-    '12h-17h (Disponible)',
-    '17h-22h (Disponible)',
-  ];
+  useEffect(() => {
+    const available = getAvailableHours(selectedDate);
+    if (!available.includes(selectedHour)) {
+      setSelectedHour(available[0] || ''); // Choisit la première dispo
+    }
+  }, [selectedDate]);
+
+  const hours = ['7h-12h', '12h-17h', '17h-22h'];
   const [client, setClient] = useState(null);
 
   useEffect(() => {
@@ -71,12 +74,38 @@ function Crenaux() {
     });
   };
 
+  const getAvailableHours = (date) => {
+    const now = new Date();
+    const availableHours = [];
+
+    hours.forEach((hour) => {
+      const [startHourStr, endHourStr] = hour.split('-');
+      const startHour = parseInt(startHourStr);
+      const endHour = parseInt(endHourStr);
+
+      // Si c'est aujourd'hui et que la plage est déjà passée, on l'ignore
+      if (
+        date.toDateString() === now.toDateString() &&
+        endHour <= now.getHours()
+      ) {
+        return;
+      }
+
+      availableHours.push(hour);
+    });
+
+    return availableHours;
+  };
+
   return (
     <main>
       {prestataire && (
         <div className="profile">
           <img
-            src={prestataire.profilePicture}
+            src={
+              prestataire.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt={prestataire.nom}
             className="profile-picture"
           />
@@ -122,7 +151,7 @@ function Crenaux() {
 
         <h3 className="tittles">Sélectionner Une Heure</h3>
         <div className="time-slots">
-          {hours.map((hour, index) => (
+          {getAvailableHours(selectedDate).map((hour, index) => (
             <button
               key={index}
               className={selectedHour === hour ? 'hour selected' : 'hour'}

@@ -133,7 +133,10 @@ const ProfilPresta = () => {
       <section className="info">
         <div className="info-presta">
           <img
-            src={formData.profilePicture || 'https://via.placeholder.com/80'}
+            src={
+              formData.profilePicture ||
+              'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+            }
             alt={`Photo de profil de ${formData.nom} ${formData.prenom}`}
             className="profile-pic"
           />
