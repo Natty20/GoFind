@@ -27,9 +27,9 @@
   text-align: center;
 }
 
-.profile-picture {
-  width: 50% !important;
-  height: 50% !important;
+.confirmation-profile-picture {
+  width: 15%;
+  height: 15%;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -125,7 +125,7 @@ label {
     gap: 1.5rem;
   }
 
-  .profile-picture {
+  .confirmation-profile-picture {
     width: 35%;
     height: auto;
   }
@@ -171,7 +171,7 @@ label {
     gap: 1rem;
   }
 
-  .profile-picture {
+  .confirmation-profile-picture {
     width: 50%;
     height: auto;
     border-radius: 50%;

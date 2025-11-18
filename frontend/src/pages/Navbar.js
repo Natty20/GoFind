@@ -20,6 +20,7 @@ const Navbar = () => {
     setPrestataire(null);
     setAdmin(null);
     navigate('/');
+    setMenuOpen(false);
   };
 
   // Déterminer le rôle et l'utilisateur
@@ -50,7 +51,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Hamburger menu */}
+          {/* Hamburger */}
           <div
             className={`hamburger ${menuOpen ? 'active' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -60,25 +61,19 @@ const Navbar = () => {
             <span></span>
           </div>
 
-          {/* Menu gauche selon rôle */}
-          <div className={`navbar-left ${menuOpen ? 'active' : ''}`}>
-            {role === 'client' && (
-              <>
-                {/* <Link to="/messages">Messages</Link> */}
-                <Link to="/rendezvous">Mes Rendez-vous</Link>
-              </>
-            )}
+          {/* Desktop links */}
+          <div className="navbar-left">
+            {role === 'client' && <Link to="/rendezvous">Mes Rendez-vous</Link>}
             {role === 'prestataire' && (
               <>
                 <Link to="/reservations">Réservations</Link>
-                <Link to="/mes-prestations">Mes Prestations</Link>
+                {/* <Link to="/mes-prestations">Mes Prestations</Link> */}
               </>
             )}
             {role === 'admin' && <Link to="/dashboard">Tableau de Bord</Link>}
           </div>
 
-          {/* Menu droite */}
-          <div className={`navbar-right ${menuOpen ? 'active' : ''}`}>
+          <div className="navbar-right">
             {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
 
             {user ? (
@@ -100,6 +95,33 @@ const Navbar = () => {
               <Link to="/choix_compte">Compte</Link>
             )}
           </div>
+
+          {/* Mobile menu (tout rôle) */}
+          {menuOpen && (
+            <div className="navbar-mobile-links">
+              {role === 'client' && (
+                <Link to="/rendezvous">Mes Rendez-vous</Link>
+              )}
+              {role === 'prestataire' && (
+                <>
+                  <Link to="/reservations">Réservations</Link>
+                  <Link to="/mes-prestations">Mes Prestations</Link>
+                </>
+              )}
+              {role === 'admin' && <Link to="/dashboard">Tableau de Bord</Link>}
+
+              {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
+
+              {user ? (
+                <>
+                  <Link to="/mon-profil">Mon Profil</Link>
+                  <button onClick={handleLogout}>Déconnexion</button>
+                </>
+              ) : (
+                <Link to="/choix_compte">Compte</Link>
+              )}
+            </div>
+          )}
         </div>
       </nav>
     </div>

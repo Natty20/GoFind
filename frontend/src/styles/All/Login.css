@@ -189,13 +189,13 @@
   }
 
   .welcome-text img {
-    width: 40%;
+    width: 20%;
     /* image plus large sur mobile */
     border-radius: 50%;
   }
 
   .login-input-container {
-    width: 100%;
+    width: 70%;
     /* full width sur mobile */
     padding: 0.5rem;
   }
@@ -209,6 +209,7 @@
   .login-right-panel {
     padding: 1.5rem 1rem;
     border-radius: 0 0 1rem 1rem;
+    width: auto;
   }
 
   .login-right-panel h2 {

@@ -1,21 +1,21 @@
-.profile {
+.crenaux-profile {
   text-align: center;
   margin: 5rem 0 1rem 0;
 }
 
-.profile-picture {
+.crenaux-profile-picture {
   width: 15% !important;
   height: 15%;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.profile h1 {
+.crenaux-profile h1 {
   margin: 0.5rem 0;
   color: var(--primary-text-color);
 }
 
-.profile p {
+.crenaux-profile p {
   color: var(--main-color);
 }
 
@@ -118,8 +118,8 @@ h3 {
   cursor: pointer;
 }
 button.crenaux.btn-secondary {
-  width: 80%;
-  margin: 1rem 5rem;
+  width: 70%;
+  margin: 1rem 9rem;
 }
 
 /* Modal Styles */
@@ -169,19 +169,19 @@ button.crenaux.btn-secondary {
 /* Responsive */
 
 @media (max-width: 768px) {
-  .profile {
+  .crenaux-profile {
     margin: 6rem 0;
     display: flex;
     flex-direction: column;
     padding: 1rem;
   }
 
-  .profile h1 {
+  .crenaux-profile h1 {
     margin: 5rem 0;
     font-size: 1rem;
   }
 
-  .profile p {
+  .crenaux-profile p {
     font-size: 1rem;
     margin: 5rem 0;
   }
@@ -251,11 +251,11 @@ button.crenaux.btn-secondary {
   .crenaux-profile > div {
     flex: 1;
   }
-  .profile h1 {
+  .crenaux-profile h1 {
     font-size: 1.25rem;
     margin: 0;
   }
-  .profile p {
+  .crenaux-profile p {
     font-size: 1rem !important;
   }
 
@@ -292,6 +292,7 @@ button.crenaux.btn-secondary {
     width: 100%;
   }
   .button.crenaux.btn-secondary {
-    width: 60%;
+    width: 60% !important;
+    margin: 1rem 5rem !important;
   }
 }

@@ -17,8 +17,8 @@
 }
 
 .info-presta img {
-  width: 600px;
-  height: 300px;
+  width: 25%;
+  height: 20%;
   border-radius: 3.5rem;
   padding: 2rem;
   object-fit: cover;
@@ -72,7 +72,6 @@ h1 {
   margin: 1rem 5rem;
 }
 
-.description button,
 .services-header button,
 .realisation-header button {
   margin: 1rem;
@@ -286,18 +285,22 @@ button:hover {
 
 @media (max-width: 480px) {
   .info-presta img {
-    width: 100%;
-    height: auto;
-    padding: 0.5rem;
-    border-radius: 2rem;
+    width: 50%;
+    /* height: auto; */
+    /* padding: 0.5rem;
+    border-radius: 2rem; */
   }
 
   .presta-names {
-    margin: 0 1rem;
+    margin: 0 4rem;
   }
 
   .presta-names h1 {
     font-size: 1.4rem;
+  }
+
+  .description h3 {
+    font-size: 1.5rem;
   }
 
   .presta-names h2 {

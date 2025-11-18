@@ -152,7 +152,7 @@ const SousPrestation = () => {
               <div key={prestataire._id} className="prestataire-card">
                 <div className="prestataire-image">
                   <img
-                    src={prestataire.image || '/images/beza.jpg'}
+                    src={prestataire.profilePicture || '/images/beza.jpg'}
                     alt={prestataire.nom}
                   />
                 </div>

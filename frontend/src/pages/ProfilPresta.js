@@ -168,7 +168,7 @@ const ProfilPresta = () => {
               </p>
               <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
               <div className="description">
-                <h3>Ma description</h3>
+                <h3 className="tittles">Ma description</h3>
                 {/* <p>Morem ipsum dolor sit amet...</p> */}
                 <button
                   className="btn-secondary"

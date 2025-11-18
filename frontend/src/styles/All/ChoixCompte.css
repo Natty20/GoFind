@@ -155,6 +155,9 @@
     margin-top: 1rem;
     align-items: stretch;
   }
+  .choix-boutons button {
+    width: 100%;
+  }
 
   .choix-btn {
     width: 100%;

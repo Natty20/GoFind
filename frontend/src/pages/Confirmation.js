@@ -70,7 +70,7 @@ const Confirmation = () => {
           <img
             src={prestataire?.profilePicture || '/images/gigi.jpg'}
             alt={prestataire?.nom || 'Prestataire inconnu'}
-            className="profile-picture"
+            className="confirmation-profile-picture"
           />
           <h1 className="tittles">
             {prestataire?.nom || 'Prestataire inconnu'} {prestataire?.prenom}

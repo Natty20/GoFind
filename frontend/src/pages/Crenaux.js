@@ -100,14 +100,14 @@ function Crenaux() {
   return (
     <main className="crenaux">
       {prestataire && (
-        <div className="profile">
+        <div className="crenaux-profile">
           <img
             src={
               prestataire.profilePicture ||
               'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
             }
             alt={prestataire.nom}
-            className="profile-picture"
+            className="crenaux-profile-picture"
           />
           <h1>{prestataire.nom}</h1>
           {prestataire.selectedPrestations.length > 0 ? (

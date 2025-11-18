@@ -248,10 +248,11 @@
   .register-left-panel,
   .register-right-panel {
     padding: 1.2rem 1rem;
+    width: auto;
   }
 
   .register-input-container {
-    width: 100%;
+    width: auto;
   }
 
   #input {
@@ -292,7 +293,7 @@
   .register-right-panel p {
     font-size: 0.85rem;
     line-height: 1.5;
-    margin: 0.5rem 1rem;
+    margin: 0;
   }
 
   .devenirPro {
