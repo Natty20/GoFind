@@ -22,10 +22,9 @@ const Navbar = () => {
     navigate('/');
   };
 
-  // Déterminer le rôle de l'utilisateur qui sera connecté
+  // Déterminer le rôle et l'utilisateur
   let user = null;
   let role = '';
-
   if (client) {
     user = client;
     role = 'client';
@@ -41,15 +40,17 @@ const Navbar = () => {
     <div className="navpage">
       <nav className="navbar">
         <div className="navbar-container">
-          {/* left side - logo */}
+          {/* Logo */}
           <div className="navbar-logo">
             <Link to="/">
               <img
                 src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
-                alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
+                alt="GoFind"
               />
             </Link>
           </div>
+
+          {/* Hamburger menu */}
           <div
             className={`hamburger ${menuOpen ? 'active' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -59,33 +60,27 @@ const Navbar = () => {
             <span></span>
           </div>
 
-          {/* Section gauche : Menu selon le rôle */}
+          {/* Menu gauche selon rôle */}
           <div className={`navbar-left ${menuOpen ? 'active' : ''}`}>
-            {/* {role === 'client' && (
+            {role === 'client' && (
               <>
-                <Link to="/messages">Messages</Link>
+                {/* <Link to="/messages">Messages</Link> */}
+                <Link to="/rendezvous">Mes Rendez-vous</Link>
               </>
-            )} */}
-
+            )}
             {role === 'prestataire' && (
               <>
-                <Link to="/reservations">Reservations</Link>
+                <Link to="/reservations">Réservations</Link>
+                <Link to="/mes-prestations">Mes Prestations</Link>
               </>
             )}
-
-            {role === 'admin' && (
-              <>
-                <Link to="/dashboard">Tableau de Bord</Link>
-              </>
-            )}
+            {role === 'admin' && <Link to="/dashboard">Tableau de Bord</Link>}
           </div>
 
-          {/* Section droite : Liens et Profil */}
+          {/* Menu droite */}
           <div className={`navbar-right ${menuOpen ? 'active' : ''}`}>
             {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
-            {/* {role !== 'admin' && <Link to="/about">à propos</Link>} */}
 
-            {/* Si connecter */}
             {user ? (
               <div className="dropdown">
                 <button
@@ -102,7 +97,6 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              /* sinon */
               <Link to="/choix_compte">Compte</Link>
             )}
           </div>

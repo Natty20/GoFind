@@ -62,7 +62,7 @@ function Crenaux() {
       return;
     }
 
-    navigate('/message', {
+    navigate('/confirmation', {
       state: {
         prestataire,
         client,
@@ -98,7 +98,7 @@ function Crenaux() {
   };
 
   return (
-    <main>
+    <main className="crenaux">
       {prestataire && (
         <div className="profile">
           <img

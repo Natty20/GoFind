@@ -235,75 +235,65 @@ button:hover {
 
 @media (max-width: 768px) {
   .info-presta img {
-    width: 500px;
-    height: 300px;
-    margin: 0 3rem;
+    width: 400px;
+    height: 250px;
+    margin: 0 auto;
+    padding: 1rem;
   }
 
   .presta-names {
-    margin: 0 5rem;
-    margin-bottom: 2rem;
+    margin: 0 2rem;
+    text-align: center;
+  }
+
+  .presta-names h1 {
+    font-size: 2rem;
+  }
+
+  .presta-names h2 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
   }
 
   .description p {
-    margin: 0;
+    margin: 0 1rem;
+    font-size: 1rem;
   }
 
   .description button,
   .services-header button,
   .realisation-header button {
-    width: auto;
+    width: 40%;
+    font-size: 0.9rem;
   }
 
   .service-table {
-    margin: 0.9rem;
+    margin: 1rem;
+    overflow-x: auto;
+  }
+
+  td,
+  th {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+
+  .form-edit button {
+    width: 70%;
+    font-size: 0.9rem;
   }
 }
 
-.form-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 3rem 4rem;
-}
-
-.form-edit input {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid var(--third-text-color);
-  border-radius: 6px;
-  width: 100%;
-}
-
-.form-edit button {
-  padding: 12px;
-  font-size: 1rem;
-  background-color: var(--main-color);
-  color: var(--secondary-text-color);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 50%;
-  align-self: center;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-}
-
-.form-edit button:hover {
-  background-color: var(--secondary-color);
-  color: var(--main-color);
-}
 @media (max-width: 480px) {
   .info-presta img {
-    width: 150px;
-    height: 150px;
-    padding-top: 0;
+    width: 100%;
+    height: auto;
+    padding: 0.5rem;
+    border-radius: 2rem;
   }
 
   .presta-names {
-    margin: 0 1.3rem;
-    margin-bottom: 2rem;
+    margin: 0 1rem;
   }
 
   .presta-names h1 {
@@ -312,30 +302,41 @@ button:hover {
 
   .presta-names h2 {
     font-size: 1rem;
+    margin: 0.3rem 0;
     text-transform: none;
-    margin: 0;
   }
 
-  .description h3,
-  .services-header h1,
-  .realisation-header h4,
-  .clients-avis h2 {
-    font-size: 1.5rem;
+  .description p {
+    margin: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .description button,
+  .services-header button,
+  .realisation-header button {
+    width: 80%;
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .service-table {
+    margin: 0.5rem;
+    overflow-x: auto;
+    font-size: 0.8rem;
   }
 
   td,
   th {
-    padding: 0.3rem;
-    font-size: 0.8rem;
+    padding: 4px;
+    font-size: 0.75rem;
   }
 
-  thead th {
-    padding: 5px;
-    font-size: 0.8rem;
-    border-bottom: 2px solid var(--bg-color);
+  .form-edit {
+    margin: 1rem;
   }
 
-  tbody tr {
-    border: 1px solid var(--primary-text-color);
+  .form-edit button {
+    width: 90%;
+    font-size: 0.85rem;
   }
 }

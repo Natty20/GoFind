@@ -138,24 +138,87 @@
 
 /* RESPONSIVE PAT */
 
+/* -------------------------
+      RESPONSIVE TABLETTE
+--------------------------- */
 @media (max-width: 768px) {
-  .welcome-text h1 {
-    font-size: 1rem;
+  .login-page {
+    flex-direction: column;
+    /* passe en colonne */
+    padding: 2rem 1rem;
+    border-radius: 1.5rem;
+  }
+
+  .login-left-panel,
+  .login-right-panel {
+    width: 100%;
+    border-radius: 0;
+    padding: 2rem 1rem;
+  }
+
+  .login-input-container {
+    width: 75%;
+    /* formulaires un peu + larges */
+  }
+
+  .welcome-text img {
+    width: 30%;
+    /* image proportionnelle */
   }
 
   .login-right-panel h2 {
-    font-size: 1.5rem;
-    margin: 0.5rem;
+    font-size: 1.4rem;
   }
 
   .login-right-panel p {
-    font-size: 1rem;
-    margin: 0.4rem;
+    font-size: 0.95rem;
+    margin: 0.5rem 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .welcome-text h1 {
-    font-size: 2rem;
+  .login-page {
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    margin-top: 3rem;
+    border-radius: 1rem;
+  }
+
+  .login-left-panel {
+    padding: 1.2rem;
+  }
+
+  .welcome-text img {
+    width: 40%;
+    /* image plus large sur mobile */
+    border-radius: 50%;
+  }
+
+  .login-input-container {
+    width: 100%;
+    /* full width sur mobile */
+    padding: 0.5rem;
+  }
+
+  #input {
+    padding: 0.6rem;
+    border-radius: 2rem;
+    font-size: 1rem;
+  }
+
+  .login-right-panel {
+    padding: 1.5rem 1rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .login-right-panel h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .login-right-panel p {
+    font-size: 0.85rem;
+    margin: 0.4rem 0.8rem;
+    line-height: 1.5;
   }
 }

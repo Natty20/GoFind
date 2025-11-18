@@ -6,38 +6,29 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Liens de navigation du footer */}
         <div className="footer-links">
-          <Link to={'/apropos'}>À propos</Link>
-          <Link to={'/prestation'}>Prestations</Link>
-          <Link to={'/faq'}>FAQ</Link>
-          <Link to={'/contact'}>Contact</Link>
-          <Link to={'/mentions-legales'}>Mentions légales</Link>
+          <Link to="/apropos">À propos</Link>
+          <Link to="/prestation">Prestations</Link>
+          <Link to="/faq">FAQ</Link>
+          <Link to="/contact">Contact</Link>
+          <Link to="/mentions-legales">Mentions légales</Link>
         </div>
 
-        {/* Informations de contact */}
-        <div className="footer-contact">
-          <p>Téléphone : +33 1 23 45 67 89</p>
-          <p>Email : giginatty20@gmail.com</p>
-        </div>
-
-        {/* Réseaux sociaux */}
         <div className="footer-social">
-          <a href="#facebook" className="social-icon">
-            FB
+          <a href="#" className="social-icon">
+            <i className="fab fa-facebook-f"></i>
           </a>
-          <a href="#twitter" className="social-icon">
-            TW
+          <a href="#" className="social-icon">
+            <i className="fab fa-twitter"></i>
           </a>
-          <a href="#instagram" className="social-icon">
-            IG
+          <a href="#" className="social-icon">
+            <i className="fab fa-instagram"></i>
           </a>
-          <a href="#linkedin" className="social-icon">
-            LN
+          <a href="#" className="social-icon">
+            <i className="fab fa-linkedin-in"></i>
           </a>
         </div>
 
-        {/* Copyright */}
         <div className="footer-copyright">
           <p>&copy; 2025 GoFind. Tous droits réservés.</p>
         </div>
