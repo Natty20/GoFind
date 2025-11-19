@@ -25,7 +25,7 @@ const menuItems = [
   {
     name: 'reservations',
     icon: <Package size={20} />,
-    endpoint: '/reservations',
+    endpoint: '/all',
   },
 ];
 
