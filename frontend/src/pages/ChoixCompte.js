@@ -23,7 +23,7 @@ const ChoixCompte = () => {
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h1>GoFind ton plaisir près de chez toi</h1>
+          <h1 className="tittles">GoFind ton plaisir près de chez toi</h1>
           <p>Veuillez choisir pour continuer :</p>
         </div>
 

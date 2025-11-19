@@ -285,22 +285,23 @@ button:hover {
 
 @media (max-width: 480px) {
   .info-presta img {
-    width: 50%;
+    width: 40%;
     /* height: auto; */
     /* padding: 0.5rem;
     border-radius: 2rem; */
   }
 
   .presta-names {
-    margin: 0 4rem;
+    margin: 0 3rem;
   }
 
   .presta-names h1 {
-    font-size: 1.4rem;
+    font-size: 2rem;
   }
 
   .description h3 {
-    font-size: 1.5rem;
+    font-size: 1rem;
+    margin: 1rem;
   }
 
   .presta-names h2 {
@@ -322,6 +323,10 @@ button:hover {
     padding: 10px;
   }
 
+  .description button {
+    margin: 1rem;
+  }
+
   .service-table {
     margin: 0.5rem;
     overflow-x: auto;
@@ -341,5 +346,10 @@ button:hover {
   .form-edit button {
     width: 90%;
     font-size: 0.85rem;
+    margin: 1rem;
+  }
+
+  .onrdv {
+    width: 90%;
   }
 }

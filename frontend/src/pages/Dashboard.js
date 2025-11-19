@@ -22,6 +22,11 @@ const menuItems = [
     icon: <Package size={20} />,
     endpoint: '/sousprestations',
   },
+  {
+    name: 'reservations',
+    icon: <Package size={20} />,
+    endpoint: '/reservations',
+  },
 ];
 
 const entityToEndpoint = {
@@ -30,6 +35,7 @@ const entityToEndpoint = {
   prestations: 'prestations',
   sousprestations: 'sousprestations',
   prestataires: 'prestataires',
+  reservations: 'reservations',
 };
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -75,6 +81,17 @@ const Dashboard = () => {
 
         const result = await response.json();
 
+        // Cas spécial : l’API des réservations renvoie { reservations: [...] }
+        if (activeTab === 'reservations') {
+          if (Array.isArray(result)) {
+            setData(result);
+          } else {
+            setData([]);
+          }
+          return;
+        }
+
+        // Comportement normal pour les autres onglets
         if (Array.isArray(result)) {
           setData(result);
         } else {
@@ -153,7 +170,7 @@ const Dashboard = () => {
         <div className="content-card">
           <div className="content-header">
             <h2 className="content-title">{activeTab}</h2>
-            <button className="btn-primary" onClick={handleAdd}>
+            <button className="dashboard btn-primary" onClick={handleAdd}>
               <Plus size={20} /> Ajouter un {activeTab}
             </button>
           </div>
@@ -232,6 +249,47 @@ const Dashboard = () => {
                           </span>
                           <span>
                             <strong>Catégorie:</strong> {item.prestation}
+                          </span>
+                        </>
+                      ) : activeTab === 'reservations' ? (
+                        <>
+                          <span>
+                            <strong>Client :</strong> {item.client?.nom}{' '}
+                            {item.client?.prenom}
+                          </span>
+
+                          <span>
+                            <strong>Téléphone :</strong> {item.client?.phone}
+                          </span>
+
+                          <span>
+                            <strong>Date :</strong>{' '}
+                            {new Date(item.date).toLocaleDateString()}
+                          </span>
+
+                          <span>
+                            <strong>Heure :</strong> {item.heure}
+                          </span>
+
+                          <span>
+                            <strong>État :</strong> {item.etat}
+                          </span>
+
+                          <span>
+                            <strong>Prestation :</strong>
+                            {item.prestations
+                              ?.map((p) => p.prestationId?.nom)
+                              .join(', ')}
+                          </span>
+
+                          <span>
+                            <strong>Sous-prestations :</strong>
+                            {item.prestations
+                              ?.flatMap(
+                                (p) =>
+                                  p.sousPrestations?.map((s) => s.nom) || []
+                              )
+                              .join(', ')}
                           </span>
                         </>
                       ) : activeTab === 'admins' ? (

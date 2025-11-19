@@ -4,7 +4,7 @@
 }
 
 .crenaux-profile-picture {
-  width: 15% !important;
+  width: 10%;
   height: 15%;
   border-radius: 50%;
   object-fit: cover;
@@ -190,6 +190,10 @@ button.crenaux.btn-secondary {
     list-style: none;
   }
 
+  .prestation-item ul li {
+    margin: -4rem -1rem 0;
+  }
+
   .date-picker h2,
   h3 {
     margin: 1.5rem 0;
@@ -291,8 +295,11 @@ button.crenaux.btn-secondary {
   .modal-buttons button {
     width: 100%;
   }
-  .button.crenaux.btn-secondary {
-    width: 60% !important;
+  button.crenaux.btn-secondary {
+    width: 65% !important;
     margin: 1rem 5rem !important;
+  }
+  .react-datepicker__input-container input {
+    width: 90%;
   }
 }

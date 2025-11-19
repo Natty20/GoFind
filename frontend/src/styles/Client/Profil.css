@@ -23,7 +23,7 @@
 }
 
 .provider-image {
-  width: 20% !important;
+  width: 15% !important;
   /* height: 50%; */
   object-fit: cover;
   border-radius: 50%;
@@ -36,7 +36,7 @@
 }
 
 .provider-info h1 {
-  font-size: 30px;
+  font-size: 3rem;
   margin: 0;
 }
 
@@ -200,7 +200,7 @@
   }
 
   .provider-info h1 {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 
   .provider-info p {
@@ -208,7 +208,7 @@
   }
 
   .provider-image {
-    width: 40% !important;
+    width: 30% !important;
     height: 10%;
   }
 

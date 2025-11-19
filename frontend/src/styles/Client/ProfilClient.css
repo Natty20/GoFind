@@ -20,6 +20,7 @@
   /* right: 10px; */
   color: var(--error);
   font-size: 20px;
+  cursor: pointer;
 }
 
 .profile-pic {

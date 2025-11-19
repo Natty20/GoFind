@@ -171,7 +171,7 @@ const ListeDemandesPrestataire = () => {
 
       <section className="rdv-confirmes">
         <h2>Mes Rendez-vous</h2>
-        <table>
+        <table className="onrdv">
           <thead>
             <tr>
               <th>Client</th>

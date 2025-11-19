@@ -152,3 +152,38 @@
     justify-content: flex-end;
   }
 }
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    flex-direction: row;
+    margin: 4rem 0;
+  }
+
+  .sidebar {
+    width: 30%;
+    text-align: center;
+  }
+
+  .menu-item {
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .data-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .data-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  button.dashboard.btn-primary {
+    width: 90%;
+    width: 0.5rem;
+  }
+}

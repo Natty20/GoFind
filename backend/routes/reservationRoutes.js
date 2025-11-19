@@ -25,7 +25,7 @@ router.put("/:reservationId/accept", acceptReservation);
 router.put("/:reservationId/decline", declineReservation);
 
 // pour les admins
-router.get("/all", getAllReservations, authenticateUser, authorizeAdmin);
+router.get("/all", authenticateUser, authorizeAdmin, getAllReservations);
 router.delete("/:id", deleteReservation, authorizeAdmin, authenticateUser);
 router.get("/:id", getReservationById, authorizeAdmin, authenticateUser);
 

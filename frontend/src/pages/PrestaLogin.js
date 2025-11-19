@@ -43,7 +43,7 @@ function PrestaLogin() {
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
             alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
           />
-          <h1>GoFind ton plaisir près de chez toi</h1>
+          <h1 className="tittles">GoFind ton plaisir près de chez toi</h1>
           <p>Veuillez vous connecter à votre compte</p>
         </div>
 
@@ -52,22 +52,21 @@ function PrestaLogin() {
         <form onSubmit={handleLogin} className="login-input-container">
           <p className="label">Email :</p>
           <MDBInput
-            id="email"
+            id="input"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <p>Mot de passe:</p>
+          <p className="label">Mot de passe :</p>
           <MDBInput
-            id="password"
+            id="input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           <a className="text-muted" href="#!">
             Mot de passe oublié?
           </a>

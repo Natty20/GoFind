@@ -1,5 +1,5 @@
 .confirmation-page {
-  margin: 6rem 0 0 0;
+  margin: 4rem 0 0 0;
   padding: 0;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .presta-profile h1 {
-  margin-top: 1.5rem;
+  margin-top: 6.5rem;
 }
 
 .infos {
@@ -172,7 +172,7 @@ label {
   }
 
   .confirmation-profile-picture {
-    width: 50%;
+    /* width: 50%; */
     height: auto;
     border-radius: 50%;
   }
@@ -180,6 +180,7 @@ label {
   .presta-profile h1 {
     font-size: 1rem;
     text-align: center;
+    margin-top: 1rem;
   }
 
   .note {
@@ -207,7 +208,7 @@ label {
   }
 
   .custom-textarea {
-    width: 100%;
+    width: 95%;
     font-size: 0.9rem;
   }
 
