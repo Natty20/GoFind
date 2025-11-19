@@ -53,7 +53,11 @@ const Dashboard = () => {
         return;
       }
 
-      const apiUrl = `https://gofind-v9ee.onrender.com/api${activeItem.endpoint}`;
+      const apiUrl =
+        activeTab === 'reservations'
+          ? 'https://gofind-v9ee.onrender.com/api/reservations/all'
+          : `https://gofind-v9ee.onrender.com/api${activeItem.endpoint}`;
+
       const token = sessionStorage.getItem('token');
 
       if (!token) {
