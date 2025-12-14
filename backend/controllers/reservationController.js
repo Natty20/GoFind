@@ -148,9 +148,30 @@ const getReservationsByPrestataire = async (req, res) => {
   }
 };
 
+const updateReservation = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const reservation = await Reservation.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+
+    if (!reservation) {
+      return res.status(404).json({ message: "Réservation non trouvée" });
+    }
+
+    res.status(200).json(reservation);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
+};
+
+
 const deleteReservation = async (req, res) => {
   try {
-    const { reservationId } = req.params;
+    const { id } = req.params;
     const reservation = await Reservation.findByIdAndDelete(reservationId);
 
     if (!reservation) {
@@ -215,6 +236,7 @@ module.exports = {
   getReservationById,
   getReservationsByClient,
   getReservationsByPrestataire,
+  updateReservation,
   deleteReservation,
   acceptReservation,
   declineReservation,

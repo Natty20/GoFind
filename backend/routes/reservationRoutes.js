@@ -6,6 +6,7 @@ const {
   getReservationsByPrestataire,
   deleteReservation,
   acceptReservation,
+  updateReservation,
   declineReservation,
   getAllReservations,
   getReservationById,
@@ -26,7 +27,19 @@ router.put("/:reservationId/decline", declineReservation);
 
 // pour les admins
 router.get("/all", authenticateUser, authorizeAdmin, getAllReservations);
-router.delete("/:id", deleteReservation, authorizeAdmin, authenticateUser);
+router.delete(
+  "/:id",
+  authenticateUser,
+  authorizeAdmin,
+  deleteReservation
+);
 router.get("/:id", getReservationById, authorizeAdmin, authenticateUser);
+router.put(
+  "/:id",
+  authenticateUser,
+  authorizeAdmin,
+  updateReservation
+);
+
 
 module.exports = router;

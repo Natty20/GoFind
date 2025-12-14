@@ -6,19 +6,20 @@ const AdminEditPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
+  const [prestataires, setPrestataires] = useState([]);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
 
   const entityToEndpoint = {
     clients: 'auth',
+    admins: 'admin',
     prestations: 'prestations',
     sousprestations: 'sousprestations',
     prestataires: 'prestataires',
-    admins: 'admin',
     reservations: 'reservations',
   };
 
-  // 🔹 Fonction récursive pour aplatir un objet en { "client.nom": "xxx" }
+  // 🔹 Aplatir un objet
   const flattenObject = (obj, parentKey = '', res = {}) => {
     for (let key in obj) {
       const propName = parentKey ? `${parentKey}.${key}` : key;
@@ -35,7 +36,7 @@ const AdminEditPage = () => {
     return res;
   };
 
-  // 🔹 Fonction pour reconstruire l'objet imbriqué avant PUT
+  // 🔹 Reconstruire l'objet
   const unflattenObject = (flatObj) => {
     const result = {};
     for (let key in flatObj) {
@@ -52,12 +53,23 @@ const AdminEditPage = () => {
     return result;
   };
 
-  // 1. Fetch de l'élément à modifier
+  // 🔹 Champs modifiables pour une réservation
+  const reservationEditableFields = [
+    'date',
+    'heure',
+    'etat',
+    'description',
+    'modePaiement',
+    'prestataire',
+  ];
+
+  // 🔹 Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
+
         if (!endpoint) {
           alert('Entité non reconnue');
           return;
@@ -73,15 +85,27 @@ const AdminEditPage = () => {
         if (!response.ok) throw new Error('Erreur de récupération');
 
         const data = await response.json();
-
         const dataKey = Object.keys(data).find(
           (key) => typeof data[key] === 'object'
         );
-
         const rawData = dataKey ? data[dataKey] : data;
 
-        // 🔹 On aplati pour le formulaire
         setFormData(flattenObject(rawData));
+
+        // 🔹 Charger les prestataires si réservation
+        if (entity === 'reservations') {
+          const prestataireRes = await fetch(
+            'https://gofind-v9ee.onrender.com/api/prestataires',
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          if (prestataireRes.ok) {
+            const prestataireData = await prestataireRes.json();
+            setPrestataires(prestataireData);
+          }
+        }
       } catch (err) {
         console.error(err);
         alert('Erreur lors du chargement');
@@ -93,30 +117,45 @@ const AdminEditPage = () => {
     fetchData();
   }, [entity, id]);
 
-  // 2. Gérer les changements dans le formulaire
+  // 🔹 Handle change
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     let val = value;
 
     if (type === 'number') val = Number(value);
-    else if (type === 'checkbox') val = checked;
+    if (type === 'checkbox') val = checked;
 
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
-  // 3. Envoyer les modifications
+  // 🔹 Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('token');
       const endpoint = entityToEndpoint[entity];
-      if (!endpoint) {
-        alert('Entité non reconnue');
-        return;
-      }
 
-      // 🔹 Reconstruire l'objet original
-      const payload = unflattenObject(formData);
+      let payload = unflattenObject(formData);
+
+      // 🔹 Cas réservation
+      if (entity === 'reservations') {
+        const filteredPayload = {};
+        reservationEditableFields.forEach((field) => {
+          if (payload[field] !== undefined) {
+            filteredPayload[field] = payload[field];
+          }
+        });
+
+        // 🔹 Forcer prestataire en ID
+        if (
+          filteredPayload.prestataire &&
+          typeof filteredPayload.prestataire === 'object'
+        ) {
+          filteredPayload.prestataire = filteredPayload.prestataire._id;
+        }
+
+        payload = filteredPayload;
+      }
 
       const response = await fetch(
         `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
@@ -133,7 +172,7 @@ const AdminEditPage = () => {
       if (!response.ok) throw new Error('Erreur de mise à jour');
 
       setSuccess(true);
-      alert('✅ Modification réussie !');
+      alert('✅ Modification réussie');
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
@@ -141,78 +180,140 @@ const AdminEditPage = () => {
     }
   };
 
-  // 4. Formulaire dynamique
+  // 🔹 Formulaire
   const renderFormFields = () => {
+    if (entity === 'reservations') {
+      return (
+        <>
+          {/* Client */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Client</label>
+            <input
+              type="text"
+              disabled
+              value={
+                typeof formData.client === 'object'
+                  ? `${formData.client.prenom} ${formData.client.nom}`
+                  : ''
+              }
+            />
+          </div>
+
+          {/* Date */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Date</label>
+            <input
+              type="date"
+              name="date"
+              value={formData.date?.slice(0, 10) || ''}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Heure */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Heure</label>
+            <input
+              type="time"
+              name="heure"
+              value={formData.heure || ''}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* État */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>État</label>
+            <select
+              name="etat"
+              value={formData.etat || ''}
+              onChange={handleChange}
+            >
+              <option value="en attente">En attente</option>
+              <option value="acceptée">Acceptée</option>
+              <option value="déclinée">Déclinée</option>
+            </select>
+          </div>
+
+          {/* Paiement */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Mode de paiement</label>
+            <select
+              name="modePaiement"
+              value={formData.modePaiement || ''}
+              onChange={handleChange}
+            >
+              <option value="Cash">Cash</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Carte">Carte</option>
+            </select>
+          </div>
+
+          {/* Prestataire */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Prestataire</label>
+            <select
+              name="prestataire"
+              value={
+                typeof formData.prestataire === 'object'
+                  ? formData.prestataire?._id
+                  : formData.prestataire || ''
+              }
+              onChange={handleChange}
+            >
+              <option value="">— Non assigné —</option>
+              {prestataires.map((p) => (
+                <option key={p._id} value={p._id}>
+                  {p.nom}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Description */}
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Description</label>
+            <textarea
+              name="description"
+              rows={4}
+              value={formData.description || ''}
+              onChange={handleChange}
+            />
+          </div>
+        </>
+      );
+    }
+
+    // 🔹 Autres entités
     return Object.entries(formData).map(([key, value]) => {
       if (
-        key === 'id' ||
-        key === '_id' ||
-        key === 'createdAt' ||
-        key === 'updatedAt' ||
-        key === 'role' ||
-        key === '__v' ||
-        key === 'password'
-      ) {
+        ['_id', 'createdAt', 'updatedAt', '__v', 'password', 'role'].includes(
+          key
+        )
+      )
         return null;
-      }
-
-      let inputType = 'text';
-
-      if (typeof value === 'number') inputType = 'number';
-      else if (typeof value === 'boolean') inputType = 'checkbox';
-      else if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
-        inputType = 'datetime-local';
-        value = value.slice(0, 16); // 🔹 Ajuste au format attendu par input
-      }
 
       return (
         <div key={key} style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontWeight: 'bold' }}>{key}</label>
-          <input
-            type={inputType}
-            name={key}
-            value={inputType === 'checkbox' ? undefined : (value ?? '')}
-            checked={inputType === 'checkbox' ? value : undefined}
-            onChange={handleChange}
-            style={{ padding: '8px', width: '100%' }}
-          />
+          <label>{key}</label>
+          <input name={key} value={value ?? ''} onChange={handleChange} />
         </div>
       );
     });
   };
 
-  // 5. Affichage du loader
-  if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <p>Chargement en cours...</p>
-      </div>
-    );
-  }
+  if (loading) return <p>Chargement...</p>;
 
-  // 6. Affichage principal
   return (
     <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h1>Modifier un(e) {entity}</h1>
+      <h1>Modifier {entity}</h1>
       <form onSubmit={handleSubmit}>
         {renderFormFields()}
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <button type="submit" className="btn-secondary">
-            Enregistrer
-          </button>
-          <button
-            className="btn-primary"
-            type="button"
-            onClick={() => navigate('/dashboard')}
-          >
-            Retour
-          </button>
-        </div>
-        {success && (
-          <p style={{ color: 'green', marginTop: '1rem' }}>
-            ✅ Modification réussie !
-          </p>
-        )}
+        <button type="submit">Enregistrer</button>
+        <button type="button" onClick={() => navigate('/dashboard')}>
+          Retour
+        </button>
+        {success && <p style={{ color: 'green' }}>Modification réussie</p>}
       </form>
     </div>
   );
