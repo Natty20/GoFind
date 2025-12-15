@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+
 import { AuthProvider } from './context/AuthContext';
 import { HelmetProvider } from 'react-helmet-async';
 import Login from './pages/Login';
@@ -39,7 +41,7 @@ function App() {
   return (
     <AuthProvider>
       <HelmetProvider>
-        <Router basename="/GoFind">
+        <Router>
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />

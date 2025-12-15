@@ -103,7 +103,7 @@ const AdminEditPage = () => {
 
           if (prestataireRes.ok) {
             const prestataireData = await prestataireRes.json();
-            setPrestataires(prestataireData);
+            setPrestataires(prestataireData.prestataires || []);
           }
         }
       } catch (err) {

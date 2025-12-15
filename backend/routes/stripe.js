@@ -40,8 +40,12 @@ router.post("/create-checkout-session", async (req, res) => {
       // success_url: `https://gofind-v9ee.onrender.com/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
       // cancel_url: `https://natty20.github.io/GoFind/cancel`,
 
-      success_url: "https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "https://natty20.github.io/GoFind/cancel",
+      // success_url: "https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}",
+      // cancel_url: "https://natty20.github.io/GoFind/cancel",
+
+      success_url: 'https://natty20.github.io/GoFind/#/success',
+      cancel_url: 'https://natty20.github.io/GoFind/#/cancel',
+
 
 
       metadata: {
