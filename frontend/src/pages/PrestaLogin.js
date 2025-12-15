@@ -21,16 +21,24 @@ function PrestaLogin() {
         'https://gofind-v9ee.onrender.com/api/prestataires/login',
         { email, password }
       );
+
       const { token, prestataire } = response.data;
 
+      if (!token || !prestataire) {
+        throw new Error('Réponse invalide');
+      }
+
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('role', 'prestataire');
       sessionStorage.setItem('prestataireId', prestataire._id);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
 
       setPrestataire(prestataire);
 
-      navigate('/');
+      // ✅ REDIRECTION CORRECTE
+      navigate(`/reservations`);
     } catch (error) {
+      console.error(error);
       setError('Email ou mot de passe incorrect.');
     }
   };

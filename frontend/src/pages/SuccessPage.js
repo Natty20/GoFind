@@ -1,11 +1,12 @@
+// frontend/pages/SuccessPage.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const [reservationInfo, setReservationInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [reservationSaved, setReservationSaved] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const sessionId = new URLSearchParams(window.location.search).get(
@@ -13,63 +14,62 @@ const SuccessPage = () => {
     );
 
     if (!sessionId) {
-      setLoading(false);
+      setError('Session manquante.');
       return;
     }
 
-    axios
-      .post('https://gofind-v9ee.onrender.com/api/stripe/confirm-payment', {
-        sessionId,
-      })
-      .then((res) => {
-        setReservationInfo(res.data.reservation);
-      })
-      .catch((err) => {
-        console.error('Erreur confirmation paiement:', err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const confirmPayment = async () => {
+      try {
+        const res = await axios.post(
+          'https://gofind-v9ee.onrender.com/api/stripe/confirm-payment',
+          { sessionId }
+        );
+
+        if (res.data.success) {
+          setReservationSaved(true);
+        } else {
+          setError('Erreur lors de la sauvegarde de la réservation.');
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Erreur lors de la confirmation du paiement.');
+      }
+    };
+
+    confirmPayment();
   }, []);
 
-  if (loading) {
-    return <p>Validation du paiement en cours...</p>;
-  }
-
-  if (!reservationInfo) {
+  if (error) {
     return (
       <main className="demande-envoye">
-        <h1>Informations de réservation manquantes</h1>
-        <button onClick={() => navigate('/')}>Retour accueil</button>
+        <div className="demande-envoyee-container">
+          <h1>❌ {error}</h1>
+          <button onClick={() => navigate('/')}>Retour à l'accueil</button>
+        </div>
       </main>
     );
+  }
+
+  if (!reservationSaved) {
+    return <p>Chargement de la confirmation de réservation...</p>;
   }
 
   return (
     <main className="demande-envoye">
       <div className="demande-envoyee-container">
-        <h2>🎉 Paiement réussi !</h2>
-        <p>Votre réservation a bien été enregistrée.</p>
-
-        <p>
-          <strong>Date :</strong> {reservationInfo.date}
-        </p>
-        <p>
-          <strong>Heure :</strong> {reservationInfo.heure}
-        </p>
-        <p>
-          <strong>Paiement :</strong> {reservationInfo.modePaiement}
-        </p>
-
+        <div className="icon">
+          <div className="circle">
+            <span>&#10004;</span>
+          </div>
+        </div>
+        <div className="message">
+          <h2>Paiement réussi ! 🎉</h2>
+          <p>Votre demande de rendez-vous a été envoyée au prestataire.</p>
+        </div>
         <button onClick={() => navigate('/prestation')}>
-          Voir nos prestations
+          Voir Nos Prestations
         </button>
-
-        <button
-          onClick={() => navigate(`/liste_de_rdv/${reservationInfo.clientId}`)}
-        >
-          Voir mes rendez-vous
-        </button>
+        <button onClick={() => navigate('/')}>Retour à l'accueil</button>
       </div>
     </main>
   );

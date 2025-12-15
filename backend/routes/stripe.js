@@ -1,16 +1,12 @@
+// backend/routes/stripe.js
 const express = require("express");
 require("dotenv").config();
 const axios = require("axios");
 const router = express.Router();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // mets ta clé secrète dans .env
 
-const stripe = require("stripe")(
-  "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
-);
-
-// 👉 1. Création session Stripe
+// 👉 Création session Stripe
 router.post("/create-checkout-session", async (req, res) => {
-  console.log("📥 Requête reçue pour Stripe :", req.body);
-
   try {
     const {
       montant,
@@ -36,17 +32,9 @@ router.post("/create-checkout-session", async (req, res) => {
       ],
       mode: "payment",
 
-      // 👉 Redirection vers ton backend qui fera la sauvegarde
-      // success_url: `https://gofind-v9ee.onrender.com/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
-      // cancel_url: `https://natty20.github.io/GoFind/cancel`,
-
-      // success_url: "https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}",
-      // cancel_url: "https://natty20.github.io/GoFind/cancel",
-
-      success_url: 'https://natty20.github.io/GoFind/#/success',
-      cancel_url: 'https://natty20.github.io/GoFind/#/cancel',
-
-
+      // ✅ Redirection frontend avec session_id
+      success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://natty20.github.io/GoFind/cancel?session_id={CHECKOUT_SESSION_ID}`,
 
       metadata: {
         clientId: String(client?._id),
@@ -65,6 +53,7 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+// 👉 Confirmation du paiement
 router.post("/confirm-payment", async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -98,6 +87,7 @@ router.post("/confirm-payment", async (req, res) => {
       description: session.metadata.description || "Pas de description",
     };
 
+    // 🔥 Sauvegarde dans ta BDD
     await axios.post(
       "https://gofind-v9ee.onrender.com/api/reservations/new",
       reservationData
@@ -112,7 +102,5 @@ router.post("/confirm-payment", async (req, res) => {
     return res.status(500).json({ message: "Erreur Stripe" });
   }
 });
-
-
 
 module.exports = router;
