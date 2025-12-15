@@ -15,40 +15,37 @@ const createReservation = async (req, res) => {
       modePaiement,
       description,
     } = req.body;
-    // faire une vérification d'abord si le client et le prestataire existent dans la bdd
+
     const client = await Client.findById(clientId);
     const prestataire = await Prestataire.findById(prestataireId);
+
     if (!client || !prestataire) {
-      return res
-        .status(404)
-        .json({ message: "Client ou Prestataire introuvable." });
+      return res.status(404).json({
+        message: "Client ou Prestataire introuvable.",
+      });
     }
-    // voir si les prestations et sous-presta choisi existent dans la bdd
+
     const prestationsData = await Promise.all(
-      prestations.map(async (prestation) => {
-        const prestationObj = await Prestation.findById(
-          prestation.prestationId,
+      prestations.map(async (p) => {
+        const prestation = await Prestation.findById(p.prestationId);
+        if (!prestation) throw new Error("Prestation non trouvée");
+
+        const sousPrestations = await Promise.all(
+          p.sousPrestations.map(async (spId) => {
+            const sp = await SousPrestation.findById(spId);
+            if (!sp) throw new Error("Sous-prestation non trouvée");
+            return sp._id;
+          })
         );
-        if (!prestationObj) {
-          throw new Error("Prestation non trouvée.");
-        }
-        const sousPrestationsData = await Promise.all(
-          prestation.sousPrestations.map(async (sousPrestationId) => {
-            const sousPrestationObj =
-              await SousPrestation.findById(sousPrestationId);
-            if (!sousPrestationObj) {
-              throw new Error("Sous-prestation non trouvée.");
-            }
-            return sousPrestationObj._id;
-          }),
-        );
+
         return {
-          prestationId: prestationObj._id,
-          sousPrestations: sousPrestationsData,
+          prestationId: prestation._id,
+          sousPrestations,
         };
-      }),
+      })
     );
-    const newReservation = new Reservation({
+
+    const reservation = new Reservation({
       client: clientId,
       prestataire: prestataireId,
       prestations: prestationsData,
@@ -57,70 +54,62 @@ const createReservation = async (req, res) => {
       modePaiement,
       description,
     });
-    await newReservation.save();
+
+    await reservation.save();
+
     res.status(201).json({
       message: "Réservation créée avec succès",
-      reservation: newReservation,
+      reservation,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erreur du serveur", error: error.message });
+    res.status(500).json({
+      message: "Erreur du serveur",
+      error: error.message,
+    });
   }
 };
+
 
 const getAllReservations = async (req, res) => {
   try {
     const reservations = await Reservation.find()
       .populate("client", "nom prenom phone")
       .populate("prestataire", "nom profilePicture")
-      .populate({
-        path: "prestations.prestationId",
-        select: "nom",
-      })
-      .populate({
-        path: "prestations.sousPrestations",
-        select: "nom",
-      });
+      .populate("prestations.prestationId", "nom")
+      .populate("prestations.sousPrestations", "nom");
 
     res.status(200).json(reservations);
   } catch (error) {
-    res.status(500).json({ message: "Erreur du serveur", error });
+    res.status(500).json({ message: "Erreur serveur", error });
   }
 };
 
 const getReservationById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const reservation = await Reservation.findById(id);
+    const reservation = await Reservation.findById(req.params.id)
+      .populate("client", "nom prenom phone")
+      .populate("prestataire", "nom profilePicture")
+      .populate("prestations.prestationId", "nom")
+      .populate("prestations.sousPrestations", "nom");
 
     if (!reservation) {
       return res.status(404).json({ message: "Réservation non trouvée" });
     }
 
-    res.status(200).json({
-      message: "Réservation récupérée avec succès!",
-      reservation,
-    });
+    res.status(200).json({ reservation });
   } catch (error) {
-    console.error("Erreur lors de la récupération de la réservation :", error);
-    res.status(500).json({ message: "Erreur serveur! c est impossible" });
+    res.status(500).json({ message: "Erreur serveur", error });
   }
 };
 
 const getReservationsByClient = async (req, res) => {
   try {
-    const { clientId } = req.params;
-    const reservations = await Reservation.find({ client: clientId })
+    const reservations = await Reservation.find({
+      client: req.params.clientId,
+    })
       .populate("prestataire", "nom profilePicture")
-      .populate({
-        path: "prestations.prestationId",
-        select: "nom",
-      })
-      .populate({
-        path: "prestations.sousPrestations",
-        select: "nom",
-      });
+      .populate("prestations.prestationId", "nom")
+      .populate("prestations.sousPrestations", "nom");
 
     res.status(200).json(reservations);
   } catch (error) {
@@ -130,17 +119,12 @@ const getReservationsByClient = async (req, res) => {
 
 const getReservationsByPrestataire = async (req, res) => {
   try {
-    const { prestataireId } = req.params;
-    const reservations = await Reservation.find({ prestataire: prestataireId })
-      .populate("client", "nom prenom phone image")
-      .populate({
-        path: "prestations.prestationId",
-        select: "nom",
-      })
-      .populate({
-        path: "prestations.sousPrestations",
-        select: "nom description",
-      });
+    const reservations = await Reservation.find({
+      prestataire: req.params.prestataireId,
+    })
+      .populate("client", "nom prenom phone")
+      .populate("prestations.prestationId", "nom")
+      .populate("prestations.sousPrestations", "nom");
 
     res.status(200).json(reservations);
   } catch (error) {
@@ -148,13 +132,28 @@ const getReservationsByPrestataire = async (req, res) => {
   }
 };
 
+
 const updateReservation = async (req, res) => {
   try {
-    const { id } = req.params;
+    const allowedFields = [
+      "date",
+      "heure",
+      "etat",
+      "modePaiement",
+      "description",
+      "prestataire",
+    ];
+
+    const updateData = {};
+    allowedFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updateData[field] = req.body[field];
+      }
+    });
 
     const reservation = await Reservation.findByIdAndUpdate(
-      id,
-      req.body,
+      req.params.id,
+      updateData,
       { new: true }
     );
 
@@ -171,62 +170,52 @@ const updateReservation = async (req, res) => {
 
 const deleteReservation = async (req, res) => {
   try {
-    const { id } = req.params;
-    const reservation = await Reservation.findByIdAndDelete(reservationId);
+    const reservation = await Reservation.findByIdAndDelete(req.params.id);
 
     if (!reservation) {
-      return res
-        .status(404)
-        .json({ message: "Réservation non trouvée dans la bdd" });
+      return res.status(404).json({
+        message: "Réservation non trouvée",
+      });
     }
 
-    res.status(200).json({ message: "Réservation supprimée avec succès!" });
+    res.status(200).json({
+      message: "Réservation supprimée avec succès",
+    });
   } catch (error) {
-    res.status(500).json({ message: "Erreur du serveur", error });
+    res.status(500).json({ message: "Erreur serveur", error });
   }
 };
 
+
 const acceptReservation = async (req, res) => {
   try {
-    const { reservationId } = req.params;
-
-    const reservation = await Reservation.findById(reservationId);
+    const reservation = await Reservation.findById(req.params.reservationId);
     if (!reservation) {
-      return res
-        .status(404)
-        .json({ message: "Réservation non trouvée dans la bdd" });
+      return res.status(404).json({ message: "Réservation non trouvée" });
     }
 
     reservation.etat = "acceptée";
     await reservation.save();
 
-    res
-      .status(200)
-      .json({ message: "Réservation acceptée avec succès!", reservation });
+    res.status(200).json({ reservation });
   } catch (error) {
-    res.status(500).json({ message: "Erreur du serveur", error });
+    res.status(500).json({ message: "Erreur serveur", error });
   }
 };
 
 const declineReservation = async (req, res) => {
   try {
-    const { reservationId } = req.params;
-
-    const reservation = await Reservation.findById(reservationId);
+    const reservation = await Reservation.findById(req.params.reservationId);
     if (!reservation) {
-      return res
-        .status(404)
-        .json({ message: "Réservation non trouvée dans la bdd" });
+      return res.status(404).json({ message: "Réservation non trouvée" });
     }
 
     reservation.etat = "déclinée";
     await reservation.save();
 
-    res
-      .status(200)
-      .json({ message: "Réservation déclinée avec succès!", reservation });
+    res.status(200).json({ reservation });
   } catch (error) {
-    res.status(500).json({ message: "Erreur du serveur", error });
+    res.status(500).json({ message: "Erreur serveur", error });
   }
 };
 

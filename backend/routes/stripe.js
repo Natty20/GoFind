@@ -37,8 +37,12 @@ router.post("/create-checkout-session", async (req, res) => {
       mode: "payment",
 
       // 👉 Redirection vers ton backend qui fera la sauvegarde
-      success_url: `https://gofind-v9ee.onrender.com/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://natty20.github.io/GoFind/cancel`,
+      // success_url: `https://gofind-v9ee.onrender.com/api/stripe/confirm-payment?session_id={CHECKOUT_SESSION_ID}`,
+      // cancel_url: `https://natty20.github.io/GoFind/cancel`,
+
+      success_url: "https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://natty20.github.io/GoFind/cancel",
+
 
       metadata: {
         clientId: String(client?._id),
@@ -57,48 +61,54 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-router.get("/confirm-payment", async (req, res) => {
+router.post("/confirm-payment", async (req, res) => {
   try {
-    const session = await stripe.checkout.sessions.retrieve(
-      req.query.session_id
+    const { sessionId } = req.body;
+
+    if (!sessionId) {
+      return res.status(400).json({ message: "sessionId manquant" });
+    }
+
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    if (session.payment_status !== "paid") {
+      return res.status(400).json({ message: "Paiement non validé" });
+    }
+
+    console.log("✅ Paiement confirmé :", session.id);
+
+    const prestations = JSON.parse(session.metadata.prestations);
+
+    const reservationData = {
+      clientId: session.metadata.clientId,
+      prestataireId: session.metadata.prestataireId,
+      prestations: prestations.map((p) => ({
+        prestationId: p.prestationId,
+        sousPrestations: p.selectedSousPrestations.map(
+          (sp) => sp.sousPrestationId
+        ),
+      })),
+      date: session.metadata.date,
+      heure: session.metadata.heure,
+      modePaiement: "Carte via Stripe",
+      description: session.metadata.description || "Pas de description",
+    };
+
+    await axios.post(
+      "https://gofind-v9ee.onrender.com/api/reservations/new",
+      reservationData
     );
 
-    if (session.payment_status === "paid") {
-      console.log("✅ Paiement confirmé :", session.id);
-
-      // Reconstruction des données de réservation
-      const prestations = JSON.parse(session.metadata.prestations);
-      const reservationData = {
-        clientId: session.metadata.clientId,
-        prestataireId: session.metadata.prestataireId,
-        prestations: prestations.map((p) => ({
-          prestationId: p.prestationId,
-          sousPrestations: p.selectedSousPrestations.map(
-            (sp) => sp.sousPrestationId
-          ),
-        })),
-        date: session.metadata.date,
-        heure: session.metadata.heure,
-        modePaiement: "Carte via Stripe",
-        description: session.metadata.description || "Pas de description",
-      };
-
-      // 🔥 Sauvegarde dans ta BDD
-      await axios.post(
-        "https://gofind-v9ee.onrender.com/api/reservations/new",
-        reservationData
-      );
-
-      // 👉 Redirection finale vers ta page frontend
-      return res.redirect("https://natty20.github.io/GoFind/success");
-    } else {
-      return res.redirect("https://natty20.github.io/GoFind/cancel");
-    }
+    return res.status(200).json({
+      success: true,
+      reservation: reservationData,
+    });
   } catch (error) {
     console.error("❌ Erreur confirmation Stripe :", error.message);
-    return res.redirect("https://natty20.github.io/GoFind/cancel");
+    return res.status(500).json({ message: "Erreur Stripe" });
   }
 });
+
 
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const {
   getReservationsByClient,
   createReservation,
@@ -11,29 +12,53 @@ const {
   getAllReservations,
   getReservationById,
 } = require("../controllers/reservationController");
+
 const {
   authorizeAdmin,
   authenticateUser,
 } = require("../middlewares/authMiddleware");
 
-//Créer une réservation
+
+// CLIENT
+
 router.post("/new", createReservation);
-router.get("/client/:clientId", getReservationsByClient);
+router.get("/client/:clientId", authenticateUser, getReservationsByClient);
 
-// Récupérer les réservations d'un prestataire
-router.get("/prestataire/:prestataireId", getReservationsByPrestataire);
-router.put("/:reservationId/accept", acceptReservation);
-router.put("/:reservationId/decline", declineReservation);
 
-// pour les admins
-router.get("/all", authenticateUser, authorizeAdmin, getAllReservations);
-router.delete(
+// PRESTATAIRE
+router.get(
+  "/prestataire/:prestataireId",
+  authenticateUser,
+  getReservationsByPrestataire
+);
+
+router.put(
+  "/:reservationId/accept",
+  authenticateUser,
+  acceptReservation
+);
+
+router.put(
+  "/:reservationId/decline",
+  authenticateUser,
+  declineReservation
+);
+
+// ADMIN
+router.get(
+  "/all",
+  authenticateUser,
+  authorizeAdmin,
+  getAllReservations
+);
+
+router.get(
   "/:id",
   authenticateUser,
   authorizeAdmin,
-  deleteReservation
+  getReservationById
 );
-router.get("/:id", getReservationById, authorizeAdmin, authenticateUser);
+
 router.put(
   "/:id",
   authenticateUser,
@@ -41,5 +66,11 @@ router.put(
   updateReservation
 );
 
+router.delete(
+  "/:id",
+  authenticateUser,
+  authorizeAdmin,
+  deleteReservation
+);
 
 module.exports = router;

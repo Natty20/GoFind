@@ -1,33 +1,46 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [reservationInfo, setReservationInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const reservationInfo = location.state || {};
+  useEffect(() => {
+    const sessionId = new URLSearchParams(window.location.search).get(
+      'session_id'
+    );
 
-  const handleGoToPrestation = () => {
-    navigate('/prestation');
-  };
-
-  const handleGoToReservations = () => {
-    if (reservationInfo?.clientId) {
-      navigate(`/liste_de_rdv/${reservationInfo.clientId}`);
+    if (!sessionId) {
+      setLoading(false);
+      return;
     }
-  };
+
+    axios
+      .post('https://gofind-v9ee.onrender.com/api/stripe/confirm-payment', {
+        sessionId,
+      })
+      .then((res) => {
+        setReservationInfo(res.data.reservation);
+      })
+      .catch((err) => {
+        console.error('Erreur confirmation paiement:', err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>Validation du paiement en cours...</p>;
+  }
 
   if (!reservationInfo) {
     return (
       <main className="demande-envoye">
-        <div className="demande-envoyee-container">
-          <h1>Informations de réservation manquantes.</h1>
-          <p>
-            Vous pouvez revenir à la page d&apos;accueil ou refaire votre
-            demande.
-          </p>
-          <button onClick={() => navigate('/')}>Retour à l&apos;accueil</button>
-        </div>
+        <h1>Informations de réservation manquantes</h1>
+        <button onClick={() => navigate('/')}>Retour accueil</button>
       </main>
     );
   }
@@ -35,33 +48,28 @@ const SuccessPage = () => {
   return (
     <main className="demande-envoye">
       <div className="demande-envoyee-container">
-        <div className="icon">
-          <div className="circle">
-            <span>&#10004;</span>
-          </div>
-        </div>
-        <div className="message">
-          <h2>Paiement réussi ! 🎉</h2>
-          <p>Votre demande de rendez-vous a été envoyé au prestataire.</p>
-        </div>
-        <div className="paiment-details">
-          <div className="paiement-method">
-            <p>Mode de paiement :</p>
-            <strong>{reservationInfo.modePaiement || 'Carte'}</strong>
-          </div>
-          <div className="paiement-date">
-            <p>Date :</p>
-            <strong>{reservationInfo.date || 'Non définie'}</strong>
-          </div>
-        </div>
-        <div className="actions">
-          <button className="prestations" onClick={handleGoToPrestation}>
-            Voir Nos Prestations
-          </button>
-          <button className="rendez-vous" onClick={handleGoToReservations}>
-            Voir Mes Rendez-Vous
-          </button>
-        </div>
+        <h2>🎉 Paiement réussi !</h2>
+        <p>Votre réservation a bien été enregistrée.</p>
+
+        <p>
+          <strong>Date :</strong> {reservationInfo.date}
+        </p>
+        <p>
+          <strong>Heure :</strong> {reservationInfo.heure}
+        </p>
+        <p>
+          <strong>Paiement :</strong> {reservationInfo.modePaiement}
+        </p>
+
+        <button onClick={() => navigate('/prestation')}>
+          Voir nos prestations
+        </button>
+
+        <button
+          onClick={() => navigate(`/liste_de_rdv/${reservationInfo.clientId}`)}
+        >
+          Voir mes rendez-vous
+        </button>
       </div>
     </main>
   );

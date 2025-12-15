@@ -1,319 +1,197 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import SubFormSection from './SubFormSection';
 
 const AdminAddPage = () => {
-  const [formData, setFormData] = useState({
-    nom: '',
-    prenom: '',
-    email: '',
-    password: '',
-    phone: '',
-    address: '',
-    profilePicture: null,
-    selectedPrestations: [],
-  });
-  const [loading, setLoading] = useState(false);
-  const [prestations, setPrestations] = useState([]);
-  const [selectedSousPrestations, setSelectedSousPrestations] = useState({});
-  const [sousPrestations, setSousPrestations] = useState({});
   const { entity } = useParams();
   const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const [clients, setClients] = useState([]);
+  const [prestataires, setPrestataires] = useState([]);
+  const [prestations, setPrestations] = useState([]);
+  const [sousPrestations, setSousPrestations] = useState({});
+
+  /* ---------------- FETCH DATA ---------------- */
+
   useEffect(() => {
-    const fetchData = async () => {
+    const token = sessionStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    const fetchAll = async () => {
       try {
-        if (entity === 'prestataires' || entity === 'sousprestations') {
-          const prestRes = await axios.get(
-            'https://gofind-v9ee.onrender.com/api/prestations'
-          );
-          const prestationsData = prestRes.data.prestations || [];
-          setPrestations(prestationsData);
+        if (entity === 'reservations') {
+          const [clientsRes, prestatairesRes, prestationsRes, sousRes] =
+            await Promise.all([
+              axios.get('https://gofind-v9ee.onrender.com/api/auth/clients', {
+                headers,
+              }),
+              axios.get('https://gofind-v9ee.onrender.com/api/prestataires', {
+                headers,
+              }),
+              axios.get('https://gofind-v9ee.onrender.com/api/prestations', {
+                headers,
+              }),
+              axios.get(
+                'https://gofind-v9ee.onrender.com/api/sousprestations',
+                { headers }
+              ),
+            ]);
 
-          const sousRes = await axios.get(
-            'https://gofind-v9ee.onrender.com/api/sousprestations'
-          );
-          const sousPrestationsData = sousRes.data.sousprestations || [];
+          setClients(clientsRes.data.clients || []);
+          setPrestataires(prestatairesRes.data.prestataires || []);
+          setPrestations(prestationsRes.data.prestations || []);
 
-          const sousPrestationsMap = {};
-          prestationsData.forEach((prestation) => {
-            sousPrestationsMap[prestation._id] = sousPrestationsData.filter(
-              (sp) => sp.prestation === prestation._id
+          const map = {};
+          prestationsRes.data.prestations.forEach((p) => {
+            map[p._id] = sousRes.data.sousprestations.filter(
+              (sp) => sp.prestation === p._id
             );
           });
-
-          setSousPrestations(sousPrestationsMap);
+          setSousPrestations(map);
         }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
+      } catch (err) {
+        console.error(err);
+        alert('Erreur chargement données');
       }
     };
 
-    fetchData();
+    fetchAll();
   }, [entity]);
+
+  /* ---------------- HANDLERS ---------------- */
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePrestationsChange = (e) => {
-    const selectedIds = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-
-    setFormData((prev) => ({ ...prev, selectedPrestations: selectedIds }));
-
-    const newSelectedSousPrestations = {};
-    selectedIds.forEach((prestationId) => {
-      newSelectedSousPrestations[prestationId] = [];
+  const handlePrestationChange = (e) => {
+    const prestationId = e.target.value;
+    setFormData({
+      ...formData,
+      prestationId,
+      sousPrestations: [],
     });
-    setSelectedSousPrestations(newSelectedSousPrestations);
   };
 
-  const handleSousPrestationsChange = (prestationId, e) => {
-    const selectedIds = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedSousPrestations((prev) => ({
-      ...prev,
-      [prestationId]: selectedIds,
-    }));
+  const handleSousPrestationsChange = (e) => {
+    const values = Array.from(e.target.selectedOptions, (o) => o.value);
+    setFormData({ ...formData, sousPrestations: values });
   };
 
-  const entityToEndpoint = {
-    clients: { method: 'post', url: 'auth/register' },
-    admins: { method: 'post', url: 'admin/register' },
-    prestataires: { method: 'post', url: 'prestataires/register' },
-    prestations: { method: 'post', url: 'prestations' },
-    sousprestations: { method: 'post', url: 'sousprestations' },
-    reservations: { method: 'post', url: 'reservations/new' },
-  };
-
-  const entityConfigs = {
-    clients: [
-      { name: 'nom', label: 'Nom', type: 'text' },
-      { name: 'prenom', label: 'Prénom', type: 'text' },
-      { name: 'email', label: 'Email', type: 'email' },
-      { name: 'password', label: 'Mot de passe', type: 'password' },
-      { name: 'phone', label: 'Phone', type: 'text' },
-      { name: 'profilePicture', label: 'Profile Picture (URL)', type: 'text' },
-      { name: 'address', label: 'Address', type: 'text' },
-    ],
-    admins: [
-      { name: 'nom', label: 'Nom', type: 'text' },
-      { name: 'prenom', label: 'Prénom', type: 'text' },
-      { name: 'email', label: 'Email', type: 'email' },
-      { name: 'password', label: 'Mot de passe', type: 'password' },
-      { name: 'phone', label: 'Phone', type: 'text' },
-    ],
-    prestataires: [
-      { name: 'nom', label: 'Nom', type: 'text' },
-      { name: 'prenom', label: 'Prénom', type: 'text' },
-      { name: 'email', label: 'Email', type: 'email' },
-      { name: 'password', label: 'Mot de passe', type: 'password' },
-      { name: 'phone', label: 'Phone', type: 'text' },
-      { name: 'address', label: 'Address', type: 'text' },
-      { name: 'profilePicture', label: 'Profile Picture (URL)', type: 'text' },
-      { name: 'selectedPrestations', label: 'Prestations', type: 'custom' },
-    ],
-    prestations: [
-      { name: 'nom', label: 'Nom de la prestation', type: 'text' },
-      { name: 'shortDescription', label: 'Short Description', type: 'text' },
-      { name: 'longDescription', label: 'Long Description', type: 'text' },
-      { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      {
-        name: 'backgroundImage',
-        label: 'Background Image (URL)',
-        type: 'text',
-      },
-      { name: 'overlayImage', label: 'Overlay Image (URL)', type: 'text' },
-      {
-        name: 'sousPrestations',
-        label: 'Sous-prestations',
-        type: 'subForm',
-        fields: [
-          { name: 'nom', label: 'Nom', type: 'text' },
-          { name: 'title', label: 'Title', type: 'text' },
-          {
-            name: 'shortDescription',
-            label: 'Short Description',
-            type: 'text',
-          },
-          { name: 'longDescription', label: 'Long Description', type: 'text' },
-          { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-          {
-            name: 'backgroundImage',
-            label: 'Background Image (URL)',
-            type: 'text',
-          },
-        ],
-      },
-    ],
-    sousprestations: [
-      { name: 'nom', label: 'Nom', type: 'text' },
-      { name: 'title', label: 'Title', type: 'text' },
-      { name: 'shortDescription', label: 'Short Description', type: 'text' },
-      { name: 'longDescription', label: 'Long Description', type: 'text' },
-      { name: 'profileImage', label: 'Profile Image (URL)', type: 'text' },
-      {
-        name: 'backgroundImage',
-        label: 'Background Image (URL)',
-        type: 'text',
-      },
-      {
-        name: 'prestationId',
-        label: 'Associer à une prestation',
-        type: 'select',
-        options: prestations,
-      },
-    ],
-  };
-
-  const currentEntityConfig = entityConfigs[entity] || [];
+  /* ---------------- SUBMIT ---------------- */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      const config = entityToEndpoint[entity];
-      if (!config) throw new Error('Endpoint inconnu!');
-      const baseUrl = 'https://gofind-v9ee.onrender.com/api';
       const token = sessionStorage.getItem('token');
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const headers = { Authorization: `Bearer ${token}` };
 
-      let payload = { ...formData };
-
-      if (entity === 'prestataires') {
-        payload.selectedPrestations = (formData.selectedPrestations || []).map(
-          (prestationId) => ({
-            prestationId,
-            selectedSousPrestations:
-              selectedSousPrestations[prestationId] || [],
-          })
-        );
-      }
-
-      if (entity === 'sousprestations') {
-        const prestationId = formData.prestationId;
-        if (!prestationId) throw new Error('prestationId requis');
+      if (entity === 'reservations') {
+        const payload = {
+          clientId: formData.clientId,
+          prestataireId: formData.prestataireId,
+          date: formData.date,
+          heure: formData.heure,
+          modePaiement: formData.modePaiement,
+          description: formData.description,
+          prestations: [
+            {
+              prestationId: formData.prestationId,
+              sousPrestations: formData.sousPrestations || [],
+            },
+          ],
+        };
 
         await axios.post(
-          `${baseUrl}/sousprestations`,
-          { ...formData, prestation: prestationId },
+          'https://gofind-v9ee.onrender.com/api/reservations/new',
+          payload,
           { headers }
         );
-      } else {
-        const url = `${baseUrl}/${config.url}`;
-        const method = config.method === 'put' ? axios.put : axios.post;
-        await method(url, payload, { headers });
       }
 
-      alert('✅ Ajout réussi !');
+      alert('✅ Réservation créée');
       navigate('/dashboard');
     } catch (err) {
-      console.error('Erreur ajout :', err);
-      alert("❌ Une erreur s'est produite.");
+      console.error(err);
+      alert('❌ Erreur création réservation');
     } finally {
       setLoading(false);
     }
   };
 
+  /* ---------------- UI ---------------- */
+
+  if (entity !== 'reservations') {
+    return <p>❌ Ajout non géré ici</p>;
+  }
+
   return (
-    <div className="admin-add-page">
-      <h1>Ajouter un {entity}</h1>
+    <div style={{ maxWidth: 600, margin: 'auto' }}>
+      <h1>Ajouter une réservation</h1>
+
       <form onSubmit={handleSubmit}>
-        {currentEntityConfig.map((field) => {
-          if (field.type === 'subForm') {
-            return (
-              <SubFormSection
-                key={field.name}
-                label={field.label}
-                fields={field.fields}
-                values={formData[field.name] || []}
-                onChange={(updated) =>
-                  setFormData({ ...formData, [field.name]: updated })
-                }
-              />
-            );
-          }
+        <label>Client</label>
+        <select name="clientId" onChange={handleChange} required>
+          <option value="">-- choisir --</option>
+          {clients.map((c) => (
+            <option key={c._id} value={c._id}>
+              {c.nom} {c.prenom}
+            </option>
+          ))}
+        </select>
 
-          if (field.type === 'custom') {
-            return (
-              <div key="selectedPrestations">
-                <label>Prestations:</label>
-                <select multiple onChange={handlePrestationsChange}>
-                  {prestations.map((prestation) => (
-                    <option key={prestation._id} value={prestation._id}>
-                      {prestation.nom}
-                    </option>
-                  ))}
-                </select>
-                {(formData.selectedPrestations || []).map((prestationId) => (
-                  <div key={prestationId}>
-                    <label>
-                      Sous-prestations pour{' '}
-                      {prestations.find((p) => p._id === prestationId)?.nom} :
-                    </label>
-                    <select
-                      multiple
-                      onChange={(e) =>
-                        handleSousPrestationsChange(prestationId, e)
-                      }
-                    >
-                      {sousPrestations[prestationId]?.map((sousPrestation) => (
-                        <option
-                          key={sousPrestation._id}
-                          value={sousPrestation._id}
-                        >
-                          {sousPrestation.nom}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ))}
-              </div>
-            );
-          }
+        <label>Prestataire</label>
+        <select name="prestataireId" onChange={handleChange} required>
+          <option value="">-- choisir --</option>
+          {prestataires.map((p) => (
+            <option key={p._id} value={p._id}>
+              {p.nom} {p.prenom}
+            </option>
+          ))}
+        </select>
 
-          if (field.type === 'select') {
-            return (
-              <div key={field.name}>
-                <label>{field.label}</label>
-                <select
-                  name={field.name}
-                  value={formData[field.name] || ''}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">-- Sélectionner --</option>
-                  {(field.options || []).map((opt) => (
-                    <option key={opt._id} value={opt._id}>
-                      {opt.nom}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            );
-          }
+        <label>Prestation</label>
+        <select onChange={handlePrestationChange} required>
+          <option value="">-- choisir --</option>
+          {prestations.map((p) => (
+            <option key={p._id} value={p._id}>
+              {p.nom}
+            </option>
+          ))}
+        </select>
 
-          return (
-            <div key={field.name}>
-              <label>{field.label}</label>
-              <input
-                type={field.type}
-                name={field.name}
-                value={formData[field.name] || ''}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          );
-        })}
-        <button className="btn-secondary" type="submit" disabled={loading}>
-          {loading ? 'Chargement...' : 'Ajouter'}
+        <label>Sous-prestations</label>
+        <select multiple onChange={handleSousPrestationsChange}>
+          {(sousPrestations[formData.prestationId] || []).map((sp) => (
+            <option key={sp._id} value={sp._id}>
+              {sp.nom}
+            </option>
+          ))}
+        </select>
+
+        <label>Date</label>
+        <input type="date" name="date" onChange={handleChange} required />
+
+        <label>Heure</label>
+        <input type="time" name="heure" onChange={handleChange} required />
+
+        <label>Mode de paiement</label>
+        <select name="modePaiement" onChange={handleChange} required>
+          <option value="Cash">Cash</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Carte">Carte</option>
+        </select>
+
+        <label>Description</label>
+        <textarea name="description" onChange={handleChange} />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Création...' : 'Créer'}
         </button>
       </form>
     </div>
