@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 
 const stripeRoutes = require("./routes/stripe");
-app.use("/uploads", express.static("uploads"));
+
 
 // Routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -17,6 +17,7 @@ const reservationRoutes = require("./routes/reservationRoutes");
 connectDB();
 
 const app = express();
+app.use("/uploads", express.static("uploads"));
 
 // app.post(
 //   "/api/stripe/webhook",
