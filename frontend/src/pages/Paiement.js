@@ -60,11 +60,17 @@ const PaymentPage = () => {
 
   return (
     <main className="payment-page">
-      <h1>Confirmer votre rendez-vous</h1>
-      <p>Montant à régler : {montant}€</p>
-      <button onClick={handleStripePayment} disabled={loading}>
-        {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
-      </button>
+      <div className="payment-container">
+        <h1 className="note">Confirmer votre rendez-vous</h1>
+        <p>Montant à régler : {montant}€</p>
+        <button
+          className="btn-secondary"
+          onClick={handleStripePayment}
+          disabled={loading}
+        >
+          {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
+        </button>
+      </div>
     </main>
   );
 };

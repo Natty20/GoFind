@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const Reservation = require("../models/Reservation"); // adapte selon ton projet
 const bodyParser = require("body-parser");
+const stripe = require("stripe")("sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI");
 
 // --------------------------
 // 1️⃣ Création de session Stripe
