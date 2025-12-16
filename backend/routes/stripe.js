@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-// const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const Reservation = require("../models/Reservation");
-const stripe = require("stripe")("sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI");
+const stripe = require("stripe")(
+  "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
+);
 
-// --------------------------
+// ============================
 // 1️⃣ CREATE CHECKOUT SESSION
-// --------------------------
+// ============================
 router.post("/create-checkout-session", async (req, res) => {
   try {
     const {
@@ -26,16 +27,15 @@ router.post("/create-checkout-session", async (req, res) => {
         {
           price_data: {
             currency: "eur",
-            product_data: {
-              name: "Acompte rendez-vous",
-            },
+            product_data: { name: "Acompte rendez-vous" },
             unit_amount: montant * 100,
           },
           quantity: 1,
         },
       ],
-      success_url:
-        "https://natty20.github.io/GoFind/#/success?session_id={CHECKOUT_SESSION_ID}",
+
+      // ⚠️ SUCCESS SANS QUERY STRING
+      success_url: "https://natty20.github.io/GoFind/#/success",
       cancel_url: "https://natty20.github.io/GoFind/#/cancel",
 
       metadata: {
@@ -55,9 +55,9 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-// --------------------------
-// 2️⃣ CONFIRM PAYMENT
-// --------------------------
+// ============================
+// 2️⃣ CONFIRM PAYMENT (SERVER)
+// ============================
 router.post("/confirm-payment", async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -80,7 +80,7 @@ router.post("/confirm-payment", async (req, res) => {
       prestations: prestations.map((p) => ({
         prestationId: p.prestationId,
         sousPrestations: p.selectedSousPrestations.map(
-          (sp) => sp.sousPrestationId,
+          (sp) => sp.sousPrestationId
         ),
       })),
       date: session.metadata.date,
@@ -92,10 +92,7 @@ router.post("/confirm-payment", async (req, res) => {
 
     await reservation.save();
 
-    res.status(201).json({
-      success: true,
-      reservation,
-    });
+    return res.status(201).json({ success: true });
   } catch (err) {
     console.error("❌ confirm-payment error:", err.message);
     res.status(500).json({ message: "Erreur confirmation paiement" });

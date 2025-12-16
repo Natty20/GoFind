@@ -52,6 +52,7 @@ const PaymentPage = () => {
         payload
       );
 
+      sessionStorage.setItem('stripeSessionId', data.id);
       const result = await stripe.redirectToCheckout({ sessionId: data.id });
 
       if (result.error) {
