@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const SuccessPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const confirmPayment = async () => {
