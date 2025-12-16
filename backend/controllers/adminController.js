@@ -145,7 +145,7 @@ const getAllAdmins = async (req, res) => {
 
 const updateAdmin = async (req, res) => {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const { nom, prenom, email, phone } = req.body;
 
     const updatedAdmin = await Admin.findByIdAndUpdate(
@@ -154,7 +154,7 @@ const updateAdmin = async (req, res) => {
         nom,
         prenom,
         email,
-        phone
+        phone,
       },
       { new: true },
     );
@@ -179,5 +179,5 @@ module.exports = {
   getAllAdmins,
   getAdminById,
   deleteAdmin,
-  updateAdmin
+  updateAdmin,
 };

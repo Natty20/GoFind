@@ -3,35 +3,36 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const SuccessPage = () => {
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const confirmPayment = async () => {
-  //     // Stripe envoie ?session_id=...
-  //     const params = new URLSearchParams(location.search);
-  //     const sessionId = params.get('session_id');
+  useEffect(() => {
+    const confirmPayment = async () => {
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get('session_id');
 
-  //     if (!sessionId) {
-  //       alert('❌ Session manquante.');
-  //       return;
-  //     }
+      if (!sessionId) {
+        console.error('❌ session_id manquant');
+        return;
+      }
 
-  //     try {
-  //       await axios.post(
-  //         'https://gofind-v9ee.onrender.com/api/stripe/confirm-payment',
-  //         { sessionId }
-  //       );
-  //       alert('✅ Réservation enregistrée !');
-  //       navigate('/dashboard'); // ou autre page
-  //     } catch (err) {
-  //       console.error('Erreur confirmation paiement:', err);
-  //       alert('❌ Impossible d’enregistrer la réservation');
-  //     }
-  //   };
+      try {
+        await axios.post(
+          'https://gofind-v9ee.onrender.com/api/stripe/confirm-payment',
+          { sessionId }
+        );
 
-  //   confirmPayment();
-  // }, [location, navigate]);
+        console.log('✅ Réservation enregistrée');
+      } catch (err) {
+        console.error(
+          '❌ Erreur confirmation:',
+          err.response?.data || err.message
+        );
+      }
+    };
+
+    confirmPayment();
+  }, [location]);
 
   return (
     <main className="demande-envoye">

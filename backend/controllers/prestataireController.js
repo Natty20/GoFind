@@ -96,8 +96,8 @@ const register = async (req, res) => {
     await newPrestataire.save();
 
     const token = jwt.sign({ id: newPrestataire._id }, process.env.JWT_SECRET, {
-          expiresIn: "1d",
-        });
+      expiresIn: "1d",
+    });
 
     for (let prestation of prestationsArray) {
       for (let sousPrestationId of prestation.selectedSousPrestations) {

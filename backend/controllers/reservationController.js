@@ -35,14 +35,14 @@ const createReservation = async (req, res) => {
             const sp = await SousPrestation.findById(spId);
             if (!sp) throw new Error("Sous-prestation non trouvée");
             return sp._id;
-          })
+          }),
         );
 
         return {
           prestationId: prestation._id,
           sousPrestations,
         };
-      })
+      }),
     );
 
     const reservation = new Reservation({
@@ -68,7 +68,6 @@ const createReservation = async (req, res) => {
     });
   }
 };
-
 
 const getAllReservations = async (req, res) => {
   try {
@@ -132,7 +131,6 @@ const getReservationsByPrestataire = async (req, res) => {
   }
 };
 
-
 const updateReservation = async (req, res) => {
   try {
     const allowedFields = [
@@ -154,7 +152,7 @@ const updateReservation = async (req, res) => {
     const reservation = await Reservation.findByIdAndUpdate(
       req.params.id,
       updateData,
-      { new: true }
+      { new: true },
     );
 
     if (!reservation) {
@@ -166,7 +164,6 @@ const updateReservation = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error });
   }
 };
-
 
 const deleteReservation = async (req, res) => {
   try {
@@ -185,7 +182,6 @@ const deleteReservation = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error });
   }
 };
-
 
 const acceptReservation = async (req, res) => {
   try {

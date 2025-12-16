@@ -8,8 +8,5 @@
     "main.ce49bc2f.js.map": "/GoFind/static/js/main.ce49bc2f.js.map",
     "488.e75445ad.chunk.js.map": "/GoFind/static/js/488.e75445ad.chunk.js.map"
   },
-  "entrypoints": [
-    "static/css/main.6b2f1505.css",
-    "static/js/main.ce49bc2f.js"
-  ]
+  "entrypoints": ["static/css/main.6b2f1505.css", "static/js/main.ce49bc2f.js"]
 }
