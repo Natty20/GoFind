@@ -6,7 +6,8 @@ const SuccessPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const sessionId = sessionStorage.getItem('stripeSessionId');
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
 
     if (!sessionId) {
       console.error('❌ sessionId absent');
@@ -19,7 +20,7 @@ const SuccessPage = () => {
         sessionId,
       })
       .then(() => {
-        sessionStorage.removeItem('stripeSessionId');
+        console.log('✅ Réservation sauvegardée !');
       })
       .catch(() => {
         navigate('/cancel');

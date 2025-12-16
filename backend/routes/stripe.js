@@ -35,8 +35,9 @@ router.post("/create-checkout-session", async (req, res) => {
       ],
 
       // ⚠️ SUCCESS SANS QUERY STRING
-      success_url: "https://natty20.github.io/GoFind/#/success",
+      success_url: "https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "https://natty20.github.io/GoFind/#/cancel",
+
 
       metadata: {
         clientId: client._id,
