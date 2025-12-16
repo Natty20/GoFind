@@ -1,58 +1,37 @@
-// frontend/pages/SuccessPage.js
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SuccessPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [reservationSaved, setReservationSaved] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const sessionId = new URLSearchParams(window.location.search).get(
-      'session_id'
-    );
-
-    if (!sessionId) {
-      setError('Session manquante.');
-      return;
-    }
-
     const confirmPayment = async () => {
+      // Stripe envoie ?session_id=...
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get('session_id');
+
+      if (!sessionId) {
+        alert('❌ Session manquante.');
+        return;
+      }
+
       try {
-        const res = await axios.post(
+        await axios.post(
           'https://gofind-v9ee.onrender.com/api/stripe/confirm-payment',
           { sessionId }
         );
-
-        if (res.data.success) {
-          setReservationSaved(true);
-        } else {
-          setError('Erreur lors de la sauvegarde de la réservation.');
-        }
+        alert('✅ Réservation enregistrée !');
+        navigate('/dashboard'); // ou autre page
       } catch (err) {
-        console.error(err);
-        setError('Erreur lors de la confirmation du paiement.');
+        console.error('Erreur confirmation paiement:', err);
+        alert('❌ Impossible d’enregistrer la réservation');
       }
     };
 
     confirmPayment();
-  }, []);
-
-  if (error) {
-    return (
-      <main className="demande-envoye">
-        <div className="demande-envoyee-container">
-          <h1>❌ {error}</h1>
-          <button onClick={() => navigate('/')}>Retour à l'accueil</button>
-        </div>
-      </main>
-    );
-  }
-
-  if (!reservationSaved) {
-    return <p>Chargement de la confirmation de réservation...</p>;
-  }
+  }, [location, navigate]);
 
   return (
     <main className="demande-envoye">
@@ -69,7 +48,7 @@ const SuccessPage = () => {
         <button onClick={() => navigate('/prestation')}>
           Voir Nos Prestations
         </button>
-        <button onClick={() => navigate('/')}>Retour à l'accueil</button>
+        <button onClick={() => navigate('/')}>Retour à l&apos;accueil</button>
       </div>
     </main>
   );

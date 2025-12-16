@@ -21,15 +21,37 @@ const ListeDemandesPrestataire = () => {
   }, []);
 
   const fetchReservations = async () => {
-    if (!prestataireId) return;
+    const prestataireData = sessionStorage.getItem('prestataire');
+    const token = sessionStorage.getItem('token');
+
+    if (!prestataireData || !token) {
+      console.error('❌ Prestataire ou token manquant');
+      setError('Utilisateur non connecté');
+      setLoading(false);
+      return;
+    }
+
+    const prestataireId = JSON.parse(prestataireData)._id;
+
     setLoading(true);
     try {
       const res = await axios.get(
-        `https://gofind-v9ee.onrender.com/api/reservations/prestataire/${prestataireId}`
+        `https://gofind-v9ee.onrender.com/api/reservations/prestataire/${prestataireId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       setReservations(res.data);
       setError('');
     } catch (err) {
+      console.error(
+        'Erreur API Prestataire:',
+        err.response?.status,
+        err.response?.data
+      );
       setError('Erreur lors du chargement des réservations.');
     } finally {
       setLoading(false);
@@ -37,12 +59,26 @@ const ListeDemandesPrestataire = () => {
   };
 
   const updateStatut = async (reservationId, action) => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      console.error('❌ Token manquant');
+      return;
+    }
+
     try {
-      const endpoint = `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/${action}`;
-      await axios.put(endpoint);
-      fetchReservations(); // Refresh après update
+      await axios.put(
+        `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/${action}`,
+        {}, // pas de body
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      fetchReservations(); // rafraîchir la liste
     } catch (error) {
-      console.error('Erreur lors de la mise à jour :', error);
+      console.error(
+        'Erreur lors de la mise à jour :',
+        error.response?.data || error.message
+      );
     }
   };
 

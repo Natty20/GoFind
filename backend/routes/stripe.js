@@ -33,7 +33,9 @@ router.post("/create-checkout-session", async (req, res) => {
       mode: "payment",
 
       // ✅ Redirection frontend avec session_id
-      success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
+      // success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: 'https://natty20.github.io/GoFind/#/success?session_id={CHECKOUT_SESSION_ID}',
+
       cancel_url: `https://natty20.github.io/GoFind/cancel?session_id={CHECKOUT_SESSION_ID}`,
 
       metadata: {

@@ -29,9 +29,9 @@ function PrestaLogin() {
       }
 
       sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       sessionStorage.setItem('role', 'prestataire');
       sessionStorage.setItem('prestataireId', prestataire._id);
-      sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
 
       setPrestataire(prestataire);
 
