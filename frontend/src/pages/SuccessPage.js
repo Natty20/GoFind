@@ -8,31 +8,35 @@ const SuccessPage = () => {
 
   useEffect(() => {
     const confirmPayment = async () => {
-      const params = new URLSearchParams(location.search);
-      const sessionId = params.get('session_id');
-
-      if (!sessionId) {
-        console.error('❌ session_id manquant');
-        return;
-      }
-
       try {
+        // 🔥 récupération depuis le HASH
+        const hash = window.location.hash;
+        const queryString = hash.split('?')[1];
+        const params = new URLSearchParams(queryString);
+        const sessionId = params.get('session_id');
+
+        if (!sessionId) {
+          console.error('❌ session_id introuvable');
+          navigate('/cancel');
+          return;
+        }
+
         await axios.post(
           'https://gofind-v9ee.onrender.com/api/stripe/confirm-payment',
           { sessionId }
         );
 
-        console.log('✅ Réservation enregistrée');
+        setLoading(false);
       } catch (err) {
-        console.error(
-          '❌ Erreur confirmation:',
-          err.response?.data || err.message
-        );
+        console.error('❌ Confirmation échouée :', err);
+        navigate('/cancel');
       }
     };
 
     confirmPayment();
-  }, [location]);
+  }, [navigate]);
+
+  if (loading) return <p>Validation du paiement...</p>;
 
   return (
     <main className="demande-envoye">
