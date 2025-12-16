@@ -1,22 +1,15 @@
-// backend/routes/stripe.js
 const express = require("express");
-require("dotenv").config();
-const axios = require("axios");
 const router = express.Router();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // mets ta clé secrète dans .env
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const Reservation = require("../models/Reservation"); // adapte selon ton projet
+const bodyParser = require("body-parser");
 
-// 👉 Création session Stripe
+// --------------------------
+// 1️⃣ Création de session Stripe
+// --------------------------
 router.post("/create-checkout-session", async (req, res) => {
   try {
-    const {
-      montant,
-      client,
-      prestataire,
-      prestations,
-      selectedDate,
-      selectedHour,
-      description,
-    } = req.body;
+    const { montant, client, prestataire, prestations, selectedDate, selectedHour, description } = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -31,16 +24,11 @@ router.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-
-      // ✅ Redirection frontend avec session_id
-      // success_url: `https://natty20.github.io/GoFind/success?session_id={CHECKOUT_SESSION_ID}`,
-      success_url: 'https://natty20.github.io/GoFind/#/success?session_id={CHECKOUT_SESSION_ID}',
-
-      cancel_url: `https://natty20.github.io/GoFind/cancel?session_id={CHECKOUT_SESSION_ID}`,
-
+      success_url: "https://natty20.github.io/GoFind/#/success",
+      cancel_url: "https://natty20.github.io/GoFind/#/cancel",
       metadata: {
-        clientId: String(client?._id),
-        prestataireId: String(prestataire?._id),
+        clientId: String(client._id),
+        prestataireId: String(prestataire._id),
         prestations: JSON.stringify(prestations),
         date: String(selectedDate),
         heure: String(selectedHour),
@@ -49,60 +37,57 @@ router.post("/create-checkout-session", async (req, res) => {
     });
 
     res.json({ id: session.id });
-  } catch (error) {
-    console.error("❌ Erreur Stripe:", error);
-    res.status(500).send("Erreur lors de la création de la session Stripe");
+  } catch (err) {
+    console.error("❌ Erreur création session Stripe:", err.message);
+    res.status(500).send("Erreur création session Stripe");
   }
 });
 
-// 👉 Confirmation du paiement
-router.post("/confirm-payment", async (req, res) => {
-  try {
-    const { sessionId } = req.body;
+// --------------------------
+// 2️⃣ Webhook Stripe pour confirmer le paiement
+// --------------------------
+router.post(
+  "/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  async (req, res) => {
+    const sig = req.headers["stripe-signature"];
+    let event;
 
-    if (!sessionId) {
-      return res.status(400).json({ message: "sessionId manquant" });
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    } catch (err) {
+      console.log("⚠️ Signature webhook invalide:", err.message);
+      return res.sendStatus(400);
     }
 
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
 
-    if (session.payment_status !== "paid") {
-      return res.status(400).json({ message: "Paiement non validé" });
+      try {
+        const prestations = JSON.parse(session.metadata.prestations);
+
+        await Reservation.create({
+          client: session.metadata.clientId,
+          prestataire: session.metadata.prestataireId,
+          prestations: prestations.map((p) => ({
+            prestationId: p.prestationId,
+            sousPrestations: p.selectedSousPrestations.map((sp) => sp.sousPrestationId),
+          })),
+          date: session.metadata.date,
+          heure: session.metadata.heure,
+          modePaiement: "Carte via Stripe",
+          description: session.metadata.description || "Pas de description",
+          etat: "en attente",
+        });
+
+        console.log("✅ Réservation sauvegardée !");
+      } catch (err) {
+        console.error("❌ Erreur création réservation:", err.message);
+      }
     }
 
-    console.log("✅ Paiement confirmé :", session.id);
-
-    const prestations = JSON.parse(session.metadata.prestations);
-
-    const reservationData = {
-      clientId: session.metadata.clientId,
-      prestataireId: session.metadata.prestataireId,
-      prestations: prestations.map((p) => ({
-        prestationId: p.prestationId,
-        sousPrestations: p.selectedSousPrestations.map(
-          (sp) => sp.sousPrestationId
-        ),
-      })),
-      date: session.metadata.date,
-      heure: session.metadata.heure,
-      modePaiement: "Carte via Stripe",
-      description: session.metadata.description || "Pas de description",
-    };
-
-    // 🔥 Sauvegarde dans ta BDD
-    await axios.post(
-      "https://gofind-v9ee.onrender.com/api/reservations/new",
-      reservationData
-    );
-
-    return res.status(200).json({
-      success: true,
-      reservation: reservationData,
-    });
-  } catch (error) {
-    console.error("❌ Erreur confirmation Stripe :", error.message);
-    return res.status(500).json({ message: "Erreur Stripe" });
+    res.sendStatus(200);
   }
-});
+);
 
 module.exports = router;

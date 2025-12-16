@@ -9,6 +9,7 @@ const AdminEditPage = () => {
   const [prestataires, setPrestataires] = useState([]);
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const from = location.state?.from || '/';
 
   const entityToEndpoint = {
     clients: 'auth',
@@ -173,7 +174,7 @@ const AdminEditPage = () => {
 
       setSuccess(true);
       alert('✅ Modification réussie');
-      navigate('/dashboard');
+      navigate(from, { replace: true });
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour');
@@ -261,7 +262,7 @@ const AdminEditPage = () => {
               }
               onChange={handleChange}
             >
-              <option value="">— Non assigné —</option>
+              <option value="">— Choisissez —</option>
               {prestataires.map((p) => (
                 <option key={p._id} value={p._id}>
                   {p.nom}
@@ -309,8 +310,14 @@ const AdminEditPage = () => {
       <h1>Modifier {entity}</h1>
       <form onSubmit={handleSubmit}>
         {renderFormFields()}
-        <button type="submit">Enregistrer</button>
-        <button type="button" onClick={() => navigate('/dashboard')}>
+        <button className="btn-secondary" type="submit">
+          Enregistrer
+        </button>
+        <button
+          className="btn-primary"
+          type="button"
+          onClick={() => navigate('/dashboard')}
+        >
           Retour
         </button>
         {success && <p style={{ color: 'green' }}>Modification réussie</p>}

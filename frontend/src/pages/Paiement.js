@@ -45,51 +45,26 @@ const PaymentPage = () => {
         description,
       };
 
-      console.log('📤 Données envoyées à Stripe:', payload);
-
       const { data } = await axios.post(
         'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
         payload
       );
 
-      // 👉 Redirection vers Stripe Checkout
-      const result = await stripe.redirectToCheckout({ sessionId: data.id });
-
-      if (result.error) {
-        console.error('❌ Erreur Stripe:', result.error.message);
-      }
-    } catch (error) {
-      console.error('❌ Erreur lors du paiement:', error);
+      await stripe.redirectToCheckout({ sessionId: data.id });
+    } catch (err) {
+      console.error('❌ Erreur paiement:', err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
     <main className="payment-page">
-      <div className="note">
-        <p>
-          <strong>Note :</strong> Vous serez remboursé(e) de votre acompte si la
-          prestation est annulée par le(a) prestataire.
-        </p>
-      </div>
-
-      <section className="payment-container">
-        <h1>
-          Pour Confirmer votre Rendez-Vous, vous devez payer une acompte enfin
-          de confirmer votre choix
-        </h1>
-
-        <div className="amount-section">
-          <p></p>
-          <p className="total-amount">
-            Montant À Régler: <strong>{montant}€</strong>
-          </p>
-        </div>
-
-        <button className="btn-secondary" onClick={handleStripePayment}>
-          {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
-        </button>
-      </section>
+      <h1>Confirmer votre rendez-vous</h1>
+      <p>Montant à régler : {montant}€</p>
+      <button onClick={handleStripePayment} disabled={loading}>
+        {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
+      </button>
     </main>
   );
 };
