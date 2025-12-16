@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import '../styles/Client/Paiement.css';
@@ -10,6 +10,7 @@ const stripePromise = loadStripe(
 
 const PaymentPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     prestataire,
     client,
@@ -20,80 +21,81 @@ const PaymentPage = () => {
     description,
   } = location.state || {};
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState({ open: false, type: '', message: '' });
 
   const handleStripePayment = async () => {
     setLoading(true);
     try {
       const stripe = await stripePromise;
 
-      const selectedPrestations = prestations.map((prestation) => ({
-        prestationId: prestation.prestationId,
-        selectedSousPrestations: prestation.selectedSousPrestations.map(
-          (sous) => ({
-            sousPrestationId: sous.sousPrestationId,
-          })
-        ),
-      }));
-
+      // Préparer les prestations pour le backend
       const payload = {
         montant,
         client,
         prestataire,
-        prestations: selectedPrestations,
+        prestations,
         selectedDate,
         selectedHour,
         description,
       };
 
-      console.log('📤 Données envoyées à Stripe:', payload);
-
+      // 1️⃣ Création de session Stripe
       const { data } = await axios.post(
         'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
         payload
       );
 
-      sessionStorage.setItem('stripeSessionId', data.id);
+      // 2️⃣ Redirection vers Stripe
       const result = await stripe.redirectToCheckout({ sessionId: data.id });
 
       if (result.error) {
-        console.error('❌ Erreur Stripe:', result.error.message);
+        setModal({ open: true, type: 'error', message: result.error.message });
       }
-    } catch (error) {
-      console.error('❌ Erreur lors du paiement:', error);
+    } catch (err) {
+      console.error('Erreur paiement:', err);
+      setModal({
+        open: true,
+        type: 'error',
+        message: 'Erreur lors du paiement.',
+      });
     }
     setLoading(false);
   };
 
+  const handleCloseModal = () => {
+    setModal({ open: false, type: '', message: '' });
+    navigate('/profil'); // ou "/" si tu préfères l'accueil
+  };
+
   return (
     <main className="payment-page">
-      {' '}
-      <div className="note">
-        {' '}
+      <div className="payment-container">
+        <h1>Confirmez votre rendez-vous</h1>
         <p>
-          {' '}
-          <strong>Note :</strong> Vous serez remboursé(e) de votre acompte si la
-          prestation est annulée par le(a) prestataire.{' '}
-        </p>{' '}
-      </div>{' '}
-      <section className="payment-container">
-        {' '}
-        <h1>
-          Pour Confirmer votre Rendez-Vous, vous devez payer une acompte enfin
-          de confirmer votre choix{' '}
-        </h1>{' '}
-        <div className="amount-section">
-          {' '}
-          <p></p>{' '}
-          <p className="total-amount">
-            {' '}
-            Montant À Régler: <strong>{montant}€</strong>{' '}
-          </p>{' '}
-        </div>{' '}
-        <button className="btn-secondary" onClick={handleStripePayment}>
-          {' '}
+          Montant à régler : <strong>{montant}€</strong>
+        </p>
+        <button
+          className="btn-secondary"
+          onClick={handleStripePayment}
+          disabled={loading}
+        >
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
-        </button>{' '}
-      </section>{' '}
+        </button>
+      </div>
+
+      {modal.open && (
+        <div className={`modal ${modal.type}`}>
+          <div className="modal-content">
+            <h2>
+              {modal.type === 'success' ? 'Paiement réussi 🎉' : 'Erreur ❌'}
+            </h2>
+            <p>{modal.message}</p>
+            <button className="btn-primary" onClick={handleCloseModal}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
