@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import '../styles/Client/Paiement.css';
@@ -10,7 +10,6 @@ const stripePromise = loadStripe(
 
 const PaymentPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const {
     prestataire,
     client,
@@ -20,29 +19,31 @@ const PaymentPage = () => {
     montant,
     description,
   } = location.state || {};
+
   const [loading, setLoading] = useState(false);
 
   const handleStripePayment = async () => {
     setLoading(true);
-
     try {
       const { data } = await axios.post(
-        '/api/stripe/create-checkout-session',
-        payload
+        'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
+        {
+          montant,
+          client,
+          prestataire,
+          prestations,
+          selectedDate,
+          selectedHour,
+          description,
+        }
       );
-
-      // 🔥 ON SAUVEGARDE AVANT STRIPE
-      await axios.post('/api/stripe/confirm-payment', {
-        sessionId: data.id,
-      });
 
       const stripe = await stripePromise;
       await stripe.redirectToCheckout({ sessionId: data.id });
     } catch (err) {
       console.error(err);
-      alert('Paiement échoué');
+      alert('Erreur lors du paiement');
     }
-
     setLoading(false);
   };
 
