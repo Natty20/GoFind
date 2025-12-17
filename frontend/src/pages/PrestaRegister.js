@@ -5,8 +5,8 @@ import { AuthContext } from '../context/AuthContext';
 import { MDBInput } from 'mdb-react-ui-kit';
 import '../styles/All/Register.css';
 
-// 🔹 Fonction d'upload Cloudinary
-const uploadImageToCloudinary = async (file) => {
+// 🔹 Fonction pour uploader une image sur Cloudinary
+async function uploadImageToCloudinary(file) {
   const formData = new FormData();
   formData.append('file', file);
   formData.append(
@@ -14,13 +14,12 @@ const uploadImageToCloudinary = async (file) => {
     process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
   );
 
-  const response = await axios.post(
+  const res = await axios.post(
     `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
     formData
   );
-
-  return response.data.secure_url;
-};
+  return res.data.secure_url;
+}
 
 const PrestataireRegister = () => {
   const navigate = useNavigate();
@@ -66,9 +65,7 @@ const PrestataireRegister = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData({ ...formData, profilePicture: file });
-    }
+    if (file) setFormData({ ...formData, profilePicture: file });
   };
 
   const handlePrestationsChange = (e) => {
@@ -107,7 +104,6 @@ const PrestataireRegister = () => {
     }
 
     try {
-      // 🔹 Upload Cloudinary
       let profilePictureUrl = '';
       if (formData.profilePicture instanceof File) {
         profilePictureUrl = await uploadImageToCloudinary(
@@ -171,6 +167,7 @@ const PrestataireRegister = () => {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom:</p>
           <MDBInput
+            id="input"
             type="text"
             name="nom"
             value={formData.nom}
@@ -180,6 +177,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Prénom:</p>
           <MDBInput
+            id="input"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -189,6 +187,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Téléphone :</p>
           <MDBInput
+            id="input"
             type="number"
             name="phone"
             value={formData.phone}
@@ -198,6 +197,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Adresse :</p>
           <MDBInput
+            id="input"
             type="text"
             name="address"
             value={formData.address}
@@ -228,6 +228,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Email :</p>
           <MDBInput
+            id="input"
             type="email"
             name="email"
             value={formData.email}
@@ -237,6 +238,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
+            id="input"
             type="password"
             name="password"
             value={formData.password}
@@ -246,6 +248,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Confirmer le mot de passe :</p>
           <MDBInput
+            id="input"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}

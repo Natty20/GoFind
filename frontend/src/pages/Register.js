@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/All/Register.css';
 
-// 🔹 Fonction d'upload Cloudinary
-const uploadImageToCloudinary = async (file) => {
+async function uploadImageToCloudinary(file) {
   const formData = new FormData();
   formData.append('file', file);
   formData.append(
@@ -14,13 +13,12 @@ const uploadImageToCloudinary = async (file) => {
     process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
   );
 
-  const response = await axios.post(
+  const res = await axios.post(
     `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
     formData
   );
-
-  return response.data.secure_url;
-};
+  return res.data.secure_url;
+}
 
 function Register() {
   const navigate = useNavigate();
@@ -49,9 +47,7 @@ function Register() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData({ ...formData, profilePicture: file });
-    }
+    if (file) setFormData({ ...formData, profilePicture: file });
   };
 
   const handleRegister = async (e) => {
@@ -65,7 +61,6 @@ function Register() {
     }
 
     try {
-      // 🔹 Upload Cloudinary
       let profilePictureUrl = '';
       if (formData.profilePicture instanceof File) {
         profilePictureUrl = await uploadImageToCloudinary(
@@ -111,6 +106,7 @@ function Register() {
           <p>Créez votre compte pour accéder à nos services</p>
         </div>
 
+        {/* Affichage des erreurs ou succès */}
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
@@ -119,6 +115,7 @@ function Register() {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom: </p>
           <MDBInput
+            id="input"
             type="text"
             name="nom"
             value={formData.nom}
@@ -126,8 +123,9 @@ function Register() {
             required
           />
 
-          <p className="label">Prenom :</p>
+          <p className="label">Prenon :</p>
           <MDBInput
+            id="input"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -137,6 +135,7 @@ function Register() {
 
           <p className="label">Phone :</p>
           <MDBInput
+            id="input"
             type="text"
             name="phone"
             value={formData.phone}
@@ -163,6 +162,7 @@ function Register() {
 
           <p className="label">Address :</p>
           <MDBInput
+            id="input"
             type="text"
             name="address"
             value={formData.address}
@@ -171,6 +171,7 @@ function Register() {
 
           <p className="label">Email :</p>
           <MDBInput
+            id="input"
             type="email"
             name="email"
             value={formData.email}
@@ -180,6 +181,7 @@ function Register() {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
+            id="input"
             type="password"
             name="password"
             value={formData.password}
@@ -189,6 +191,7 @@ function Register() {
 
           <p className="label">Confirmer :</p>
           <MDBInput
+            id="input"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
