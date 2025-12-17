@@ -5,23 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const SuccessPage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.split('?')[1]);
-    const sessionId = params.get('session_id');
-
-    if (!sessionId) {
-      navigate('/cancel');
-      return;
-    }
-
-    axios
-      .post('https://gofind-v9ee.onrender.com/api/stripe/confirm-payment', {
-        sessionId,
-      })
-      .catch(() => {
-        navigate('/cancel');
-      });
-  }, [navigate]);
   return (
     <main className="demande-envoye">
       <div className="demande-envoyee-container">
