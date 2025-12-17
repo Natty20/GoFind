@@ -33,10 +33,8 @@ router.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url:
-        "https://natty20.github.io/GoFind/#/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url:
-        "https://natty20.github.io/GoFind/#/cancel",
+      success_url: "https://natty20.github.io/GoFind/#/success",
+      cancel_url: "https://natty20.github.io/GoFind/#/cancel",
 
       metadata: {
         clientId: client._id,
@@ -62,10 +60,6 @@ router.post("/confirm-payment", async (req, res) => {
   try {
     const { sessionId } = req.body;
 
-    if (!sessionId) {
-      return res.status(400).json({ message: "sessionId manquant" });
-    }
-
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid") {
@@ -74,13 +68,13 @@ router.post("/confirm-payment", async (req, res) => {
 
     const prestations = JSON.parse(session.metadata.prestations);
 
-    const reservation = new Reservation({
+    await Reservation.create({
       client: session.metadata.clientId,
       prestataire: session.metadata.prestataireId,
-      prestations: prestations.map((p) => ({
+      prestations: prestations.map(p => ({
         prestationId: p.prestationId,
         sousPrestations: p.selectedSousPrestations.map(
-          (sp) => sp.sousPrestationId
+          sp => sp.sousPrestationId
         ),
       })),
       date: session.metadata.date,
@@ -90,13 +84,13 @@ router.post("/confirm-payment", async (req, res) => {
       modePaiement: "Stripe",
     });
 
-    await reservation.save();
+    res.json({ success: true });
 
-    res.status(201).json({ success: true });
   } catch (err) {
-    console.error("❌ confirm-payment error:", err.message);
-    res.status(500).json({ message: "Erreur confirmation paiement" });
+    console.error(err);
+    res.status(500).json({ error: "Erreur paiement" });
   }
 });
+
 
 module.exports = router;

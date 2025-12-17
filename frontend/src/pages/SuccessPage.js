@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
-    const hash = location.hash;
-    const params = new URLSearchParams(hash.split('?')[1]);
+    const params = new URLSearchParams(window.location.hash.split('?')[1]);
     const sessionId = params.get('session_id');
 
     if (!sessionId) {
@@ -20,16 +18,10 @@ const SuccessPage = () => {
       .post('https://gofind-v9ee.onrender.com/api/stripe/confirm-payment', {
         sessionId,
       })
-      .then(() => {
-        setTimeout(() => {
-          navigate('/profil');
-        }, 3000);
-      })
       .catch(() => {
         navigate('/cancel');
       });
-  }, [location, navigate]);
-
+  }, [navigate]);
   return (
     <main className="demande-envoye">
       <div className="demande-envoyee-container">

@@ -24,29 +24,25 @@ const PaymentPage = () => {
 
   const handleStripePayment = async () => {
     setLoading(true);
+
     try {
-      const stripe = await stripePromise;
-
-      const payload = {
-        montant,
-        client,
-        prestataire,
-        prestations,
-        selectedDate,
-        selectedHour,
-        description,
-      };
-
       const { data } = await axios.post(
-        'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
+        '/api/stripe/create-checkout-session',
         payload
       );
 
+      // 🔥 ON SAUVEGARDE AVANT STRIPE
+      await axios.post('/api/stripe/confirm-payment', {
+        sessionId: data.id,
+      });
+
+      const stripe = await stripePromise;
       await stripe.redirectToCheckout({ sessionId: data.id });
     } catch (err) {
-      console.error('Erreur paiement:', err);
-      alert('Erreur lors du paiement');
+      console.error(err);
+      alert('Paiement échoué');
     }
+
     setLoading(false);
   };
 
@@ -57,7 +53,11 @@ const PaymentPage = () => {
         <p>
           Montant à régler : <strong>{montant}€</strong>
         </p>
-        <button onClick={handleStripePayment} disabled={loading}>
+        <button
+          className="btn-secondary"
+          onClick={handleStripePayment}
+          disabled={loading}
+        >
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
         </button>
       </div>
