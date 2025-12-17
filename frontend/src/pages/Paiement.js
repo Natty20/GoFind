@@ -21,14 +21,12 @@ const PaymentPage = () => {
     description,
   } = location.state || {};
   const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState({ open: false, type: '', message: '' });
 
   const handleStripePayment = async () => {
     setLoading(true);
     try {
       const stripe = await stripePromise;
 
-      // Préparer les prestations pour le backend
       const payload = {
         montant,
         client,
@@ -39,32 +37,17 @@ const PaymentPage = () => {
         description,
       };
 
-      // 1️⃣ Création de session Stripe
       const { data } = await axios.post(
         'https://gofind-v9ee.onrender.com/api/stripe/create-checkout-session',
         payload
       );
 
-      // 2️⃣ Redirection vers Stripe
-      const result = await stripe.redirectToCheckout({ sessionId: data.id });
-
-      if (result.error) {
-        setModal({ open: true, type: 'error', message: result.error.message });
-      }
+      await stripe.redirectToCheckout({ sessionId: data.id });
     } catch (err) {
       console.error('Erreur paiement:', err);
-      setModal({
-        open: true,
-        type: 'error',
-        message: 'Erreur lors du paiement.',
-      });
+      alert('Erreur lors du paiement');
     }
     setLoading(false);
-  };
-
-  const handleCloseModal = () => {
-    setModal({ open: false, type: '', message: '' });
-    navigate('/profil'); // ou "/" si tu préfères l'accueil
   };
 
   return (
@@ -74,28 +57,10 @@ const PaymentPage = () => {
         <p>
           Montant à régler : <strong>{montant}€</strong>
         </p>
-        <button
-          className="btn-secondary"
-          onClick={handleStripePayment}
-          disabled={loading}
-        >
+        <button onClick={handleStripePayment} disabled={loading}>
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
         </button>
       </div>
-
-      {modal.open && (
-        <div className={`modal ${modal.type}`}>
-          <div className="modal-content">
-            <h2>
-              {modal.type === 'success' ? 'Paiement réussi 🎉' : 'Erreur ❌'}
-            </h2>
-            <p>{modal.message}</p>
-            <button className="btn-primary" onClick={handleCloseModal}>
-              OK
-            </button>
-          </div>
-        </div>
-      )}
     </main>
   );
 };

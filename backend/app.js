@@ -3,7 +3,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const path = require("path");
 
-const stripeRoutes = require("./routes/stripe");
+
 
 
 // Routes
@@ -13,6 +13,7 @@ const sousPrestationRoutes = require("./routes/sousPrestationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const prestataireRoutes = require("./routes/prestataireRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
+const stripeRoutes = require("./routes/stripe");
 
 connectDB();
 

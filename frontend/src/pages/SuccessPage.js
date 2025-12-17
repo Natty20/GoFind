@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const hash = location.hash;
+    const params = new URLSearchParams(hash.split('?')[1]);
     const sessionId = params.get('session_id');
 
     if (!sessionId) {
-      console.error('❌ sessionId absent');
       navigate('/cancel');
       return;
     }
@@ -20,12 +21,14 @@ const SuccessPage = () => {
         sessionId,
       })
       .then(() => {
-        console.log('✅ Réservation sauvegardée !');
+        setTimeout(() => {
+          navigate('/profil');
+        }, 3000);
       })
       .catch(() => {
         navigate('/cancel');
       });
-  }, [navigate]);
+  }, [location, navigate]);
 
   return (
     <main className="demande-envoye">
