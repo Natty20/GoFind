@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../middlewares/upload");
+const upload = require("../middlewares/uploads");
 const cloudinary = require("../config/cloudinary");
 
 router.post("/image", upload.single("image"), async (req, res) => {
