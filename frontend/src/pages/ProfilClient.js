@@ -82,7 +82,10 @@ const ClientProfile = () => {
   const rdvTermines = rdvs.filter(
     (r) => new Date(r.date) <= now && r.etat === 'terminé'
   );
-  const rdvAnnules = rdvs.filter((r) => r.etat === 'declinée');
+  const rdvAnnules = rdvs.filter((r) =>
+    ['declinée', 'annulée'].includes(r.etat.toLowerCase())
+  );
+
   const rdvPending = rdvs.filter(
     (r) => new Date(r.date) > now && r.etat === 'en attente'
   );
@@ -228,8 +231,10 @@ const ClientProfile = () => {
                   alt={r.prestataire?.nom || 'Prestataire'}
                 />
                 <p>
-                  <strong>Prestataire :</strong> {r.prestataire?.nom || 'N/A'}{' '}
-                  {r.prestataire?.prenom || 'N/A'}
+                  <strong>Prestataire :</strong>{' '}
+                  {r.prestataire
+                    ? `${r.prestataire.nom} ${r.prestataire.prenom}`
+                    : 'N/A'}
                 </p>
               </div>
 
@@ -238,9 +243,6 @@ const ClientProfile = () => {
               </p>
               <p>
                 <strong>Heure :</strong> {r.heure || 'N/A'}
-              </p>
-              <p>
-                <strong>Mode de paiement :</strong> {r.modePaiement || 'N/A'}
               </p>
               <p>
                 <strong>Description :</strong>{' '}
@@ -264,15 +266,6 @@ const ClientProfile = () => {
                   ))}
                 </ul>
               </div>
-
-              <p>
-                <strong>État :</strong>{' '}
-                <span
-                  className={`etat etat-${r.etat.replace('é', 'e').replace(' ', '')}`}
-                >
-                  {r.etat.charAt(0).toUpperCase() + r.etat.slice(1)}
-                </span>
-              </p>
             </div>
           ))}
         </div>
@@ -284,15 +277,31 @@ const ClientProfile = () => {
           {rdvTermines.map((r) => (
             <div key={r._id} className="rdv-card termine">
               <p>
-                <strong>Prestataire :</strong> {r.prestataireNom || 'N/A'}
+                <strong>Prestataire :</strong>{' '}
+                {r.prestataire
+                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
+                  : 'N/A'}
               </p>
               <p>
                 <strong>Date :</strong> {formatDate(r.date)}
               </p>
-              <p>
-                <strong>État :</strong>{' '}
-                <span className="etat etat-termine">Terminé</span>
-              </p>
+              <div className="prestation-detail">
+                <strong>Prestations :</strong>
+                <ul>
+                  {r.prestations?.map((p) => (
+                    <li key={p._id}>
+                      {p.prestationId?.nom}
+                      {p.sousPrestations && p.sousPrestations.length > 0 && (
+                        <ul>
+                          {p.sousPrestations.map((sp) => (
+                            <li key={sp._id}>{sp.nom}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
@@ -301,22 +310,34 @@ const ClientProfile = () => {
       {rdvPending.length > 0 && (
         <div className="rdv-section">
           <h3 className="rdv-title">En Attente</h3>
-          {rdvTermines.map((r) => (
+          {rdvPending.map((r) => (
             <div key={r._id} className="rdv-card pending">
               <p>
-                <strong>Prestataire :</strong> {r.prestataireNom || 'N/A'}
+                <strong>Prestataire :</strong>{' '}
+                {r.prestataire
+                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
+                  : 'N/A'}
               </p>
               <p>
                 <strong>Date :</strong> {formatDate(r.date)}
               </p>
-              <p>
-                <strong>État :</strong>{' '}
-                <span
-                  className={`etat etat-${r.etat.replace('é', 'e').replace(' ', '')}`}
-                >
-                  {r.etat.charAt(0).toUpperCase() + r.etat.slice(1)}
-                </span>
-              </p>
+              <div className="prestation-detail">
+                <strong>Prestations :</strong>
+                <ul>
+                  {r.prestations?.map((p) => (
+                    <li key={p._id}>
+                      {p.prestationId?.nom}
+                      {p.sousPrestations && p.sousPrestations.length > 0 && (
+                        <ul>
+                          {p.sousPrestations.map((sp) => (
+                            <li key={sp._id}>{sp.nom}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
@@ -328,19 +349,31 @@ const ClientProfile = () => {
           {rdvAnnules.map((r) => (
             <div key={r._id} className="rdv-card annule">
               <p>
-                <strong>Prestataire :</strong> {r.prestataireNom || 'N/A'}
+                <strong>Prestataire :</strong>{' '}
+                {r.prestataire
+                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
+                  : 'N/A'}
               </p>
               <p>
                 <strong>Date :</strong> {formatDate(r.date)}
               </p>
-              <p>
-                <strong>État :</strong>{' '}
-                <span
-                  className={`etat etat-${r.etat.replace('é', 'e').replace(' ', '')}`}
-                >
-                  {r.etat.charAt(0).toUpperCase() + r.etat.slice(1)}
-                </span>
-              </p>
+              <div className="prestation-detail">
+                <strong>Prestations :</strong>
+                <ul>
+                  {r.prestations?.map((p) => (
+                    <li key={p._id}>
+                      {p.prestationId?.nom}
+                      {p.sousPrestations && p.sousPrestations.length > 0 && (
+                        <ul>
+                          {p.sousPrestations.map((sp) => (
+                            <li key={sp._id}>{sp.nom}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>

@@ -14,12 +14,11 @@ const authRoutes = require("./routes/authRoutes");
 const prestataireRoutes = require("./routes/prestataireRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const stripeRoutes = require("./routes/stripe");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 connectDB();
 
 const app = express();
-app.use("/uploads", express.static("uploads"));
-
 // app.post(
 //   "/api/stripe/webhook",
 //   express.raw({ type: "application/json" }),
@@ -61,6 +60,7 @@ app.use("/api/prestations", categorieRoutes);
 app.use("/api/sousprestations", sousPrestationRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/stripe", stripeRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use(express.static(path.join(__dirname, "frontend", "build")));
 

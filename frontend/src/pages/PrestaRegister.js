@@ -5,6 +5,23 @@ import { AuthContext } from '../context/AuthContext';
 import { MDBInput } from 'mdb-react-ui-kit';
 import '../styles/All/Register.css';
 
+// 🔹 Fonction d'upload Cloudinary
+const uploadImageToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append(
+    'upload_preset',
+    process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+  );
+
+  const response = await axios.post(
+    `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+    formData
+  );
+
+  return response.data.secure_url;
+};
+
 const PrestataireRegister = () => {
   const navigate = useNavigate();
   const { setPrestataire } = useContext(AuthContext);
@@ -27,7 +44,6 @@ const PrestataireRegister = () => {
   const [sousPrestations, setSousPrestations] = useState({});
   const [selectedSousPrestations, setSelectedSousPrestations] = useState({});
 
-  // Charger les prestations et sous-prestations depuis l'API
   useEffect(() => {
     axios
       .get('https://gofind-v9ee.onrender.com/api/prestations')
@@ -44,23 +60,17 @@ const PrestataireRegister = () => {
       );
   }, []);
 
-  // Gérer les changements des inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Gérer le fichier uploadé (photo de profil)
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({
-        ...formData,
-        profilePicture: file, // garde le File pour preview
-      });
+      setFormData({ ...formData, profilePicture: file });
     }
   };
 
-  // Gérer la sélection des prestations
   const handlePrestationsChange = (e) => {
     const selectedIds = Array.from(
       e.target.selectedOptions,
@@ -68,7 +78,6 @@ const PrestataireRegister = () => {
     );
     setFormData({ ...formData, selectedPrestations: selectedIds });
 
-    // Réinitialiser les sous-prestations sélectionnées
     const newSelectedSousPrestations = {};
     selectedIds.forEach((prestationId) => {
       newSelectedSousPrestations[prestationId] = [];
@@ -76,7 +85,6 @@ const PrestataireRegister = () => {
     setSelectedSousPrestations(newSelectedSousPrestations);
   };
 
-  // Gérer la sélection des sous-prestations
   const handleSousPrestationsChange = (prestationId, e) => {
     const selectedIds = Array.from(
       e.target.selectedOptions,
@@ -88,8 +96,6 @@ const PrestataireRegister = () => {
     }));
   };
 
-  // Gérer l'inscription
-  // Gérer l'inscription
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
@@ -101,6 +107,14 @@ const PrestataireRegister = () => {
     }
 
     try {
+      // 🔹 Upload Cloudinary
+      let profilePictureUrl = '';
+      if (formData.profilePicture instanceof File) {
+        profilePictureUrl = await uploadImageToCloudinary(
+          formData.profilePicture
+        );
+      }
+
       const formattedPrestations = formData.selectedPrestations.map(
         (prestationId) => ({
           prestationId,
@@ -115,10 +129,7 @@ const PrestataireRegister = () => {
         address: formData.address,
         email: formData.email,
         password: formData.password,
-        profilePicture:
-          formData.profilePicture instanceof File
-            ? 'https://via.placeholder.com/150' // ou Cloudinary si upload
-            : formData.profilePicture,
+        profilePicture: profilePictureUrl || formData.profilePicture,
         selectedPrestations: formattedPrestations,
       };
 
@@ -130,16 +141,13 @@ const PrestataireRegister = () => {
       const { token, prestataire } = response.data;
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
-      sessionStorage.setItem('prestataireId', prestataire._id);
       setPrestataire(prestataire);
 
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
-    } catch (error) {
-      console.error('❌ Erreur API :', error.response?.data || error.message);
-      setError(
-        error.response?.data?.message || "Erreur lors de l'inscription."
-      );
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Erreur lors de l'inscription.");
     }
   };
 
@@ -163,7 +171,6 @@ const PrestataireRegister = () => {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom:</p>
           <MDBInput
-            id="input"
             type="text"
             name="nom"
             value={formData.nom}
@@ -173,7 +180,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Prénom:</p>
           <MDBInput
-            id="input"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -183,7 +189,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Téléphone :</p>
           <MDBInput
-            id="input"
             type="number"
             name="phone"
             value={formData.phone}
@@ -193,7 +198,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Adresse :</p>
           <MDBInput
-            id="input"
             type="text"
             name="address"
             value={formData.address}
@@ -224,7 +228,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Email :</p>
           <MDBInput
-            id="input"
             type="email"
             name="email"
             value={formData.email}
@@ -234,7 +237,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
-            id="input"
             type="password"
             name="password"
             value={formData.password}
@@ -244,7 +246,6 @@ const PrestataireRegister = () => {
 
           <p className="label">Confirmer le mot de passe :</p>
           <MDBInput
-            id="input"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}

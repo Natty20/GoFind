@@ -63,7 +63,7 @@ const Navbar = () => {
 
           {/* Desktop links */}
           <div className="navbar-left">
-            {role === 'client' && <Link to="/rendezvous">Mes Rendez-vous</Link>}
+            {/* {role === 'client' && <Link to="/rendezvous">Mes Rendez-vous</Link>} */}
             {role === 'prestataire' && (
               <>
                 <Link to="/reservations">Réservations</Link>

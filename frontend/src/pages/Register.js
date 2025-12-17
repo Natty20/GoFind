@@ -5,6 +5,23 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/All/Register.css';
 
+// 🔹 Fonction d'upload Cloudinary
+const uploadImageToCloudinary = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append(
+    'upload_preset',
+    process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+  );
+
+  const response = await axios.post(
+    `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+    formData
+  );
+
+  return response.data.secure_url;
+};
+
 function Register() {
   const navigate = useNavigate();
   const { setClient } = useContext(AuthContext);
@@ -23,7 +40,6 @@ function Register() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  // gérer les changements dans les inputs
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -38,7 +54,6 @@ function Register() {
     }
   };
 
-  // gérer l'inscription
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
@@ -50,6 +65,14 @@ function Register() {
     }
 
     try {
+      // 🔹 Upload Cloudinary
+      let profilePictureUrl = '';
+      if (formData.profilePicture instanceof File) {
+        profilePictureUrl = await uploadImageToCloudinary(
+          formData.profilePicture
+        );
+      }
+
       const response = await axios.post(
         'https://gofind-v9ee.onrender.com/api/auth/register',
         {
@@ -58,8 +81,8 @@ function Register() {
           email: formData.email,
           password: formData.password,
           phone: formData.phone,
-          profilePicture: 'https://via.placeholder.com/150',
           address: formData.address,
+          profilePicture: profilePictureUrl,
         }
       );
 
@@ -71,15 +94,8 @@ function Register() {
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
-      console.error(
-        "❌ Erreur d'inscription :",
-        err.response?.data || err.message
-      );
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Erreur inconnue lors de l'inscription.");
-      }
+      console.error(err);
+      setError(err.response?.data?.message || "Erreur lors de l'inscription.");
     }
   };
 
@@ -95,7 +111,6 @@ function Register() {
           <p>Créez votre compte pour accéder à nos services</p>
         </div>
 
-        {/* Affichage des erreurs ou succès */}
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
@@ -104,7 +119,6 @@ function Register() {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom: </p>
           <MDBInput
-            id="input"
             type="text"
             name="nom"
             value={formData.nom}
@@ -112,9 +126,8 @@ function Register() {
             required
           />
 
-          <p className="label">Prenon :</p>
+          <p className="label">Prenom :</p>
           <MDBInput
-            id="input"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -124,7 +137,6 @@ function Register() {
 
           <p className="label">Phone :</p>
           <MDBInput
-            id="input"
             type="text"
             name="phone"
             value={formData.phone}
@@ -151,7 +163,6 @@ function Register() {
 
           <p className="label">Address :</p>
           <MDBInput
-            id="input"
             type="text"
             name="address"
             value={formData.address}
@@ -160,7 +171,6 @@ function Register() {
 
           <p className="label">Email :</p>
           <MDBInput
-            id="input"
             type="email"
             name="email"
             value={formData.email}
@@ -170,7 +180,6 @@ function Register() {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
-            id="input"
             type="password"
             name="password"
             value={formData.password}
@@ -180,7 +189,6 @@ function Register() {
 
           <p className="label">Confirmer :</p>
           <MDBInput
-            id="input"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
