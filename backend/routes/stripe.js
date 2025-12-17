@@ -6,64 +6,61 @@ const stripe = require("stripe")(
 );
 
 // ============================
-// 1️⃣ CREATE CHECKOUT SESSION
+// CREATE CHECKOUT SESSION
 // ============================
 router.post("/create-checkout-session", async (req, res) => {
-  try {
-    const {
-      montant,
-      client,
-      prestataire,
-      prestations,
-      selectedDate,
-      selectedHour,
-      description,
-    } = req.body;
+  const {
+    montant,
+    client,
+    prestataire,
+    prestations,
+    selectedDate,
+    selectedHour,
+    description,
+  } = req.body;
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: [
-        {
-          price_data: {
-            currency: "eur",
-            product_data: { name: "Acompte rendez-vous" },
-            unit_amount: montant * 100,
-          },
-          quantity: 1,
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "eur",
+          product_data: { name: "Paiement service" },
+          unit_amount: montant * 100,
         },
-      ],
-      success_url: "https://natty20.github.io/GoFind/#/success",
-      cancel_url: "https://natty20.github.io/GoFind/#/cancel",
-
-      metadata: {
-        clientId: client._id,
-        prestataireId: prestataire._id,
-        prestations: JSON.stringify(prestations),
-        date: selectedDate,
-        heure: selectedHour,
-        description: description || "",
+        quantity: 1,
       },
-    });
+    ],
+    success_url:
+      "https://gofind-v9ee.onrender.com/api/stripe/success?session_id={CHECKOUT_SESSION_ID}",
+    cancel_url:
+      "https://natty20.github.io/GoFind/#/cancel",
 
-    res.json({ id: session.id });
-  } catch (err) {
-    console.error("❌ Stripe error:", err.message);
-    res.status(500).json({ error: "Stripe session error" });
-  }
+    metadata: {
+      clientId: client._id,
+      prestataireId: prestataire._id,
+      prestations: JSON.stringify(prestations),
+      date: selectedDate,
+      heure: selectedHour,
+      description: description || "",
+    },
+  });
+
+  res.json({ id: session.id });
 });
 
 // ============================
-// 2️⃣ CONFIRM PAYMENT
+// STRIPE SUCCESS → SAVE + REDIRECT
 // ============================
-router.post("/confirm-payment", async (req, res) => {
+router.get("/success", async (req, res) => {
   try {
-    const { sessionId } = req.body;
+    const sessionId = req.query.session_id;
 
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid") {
-      return res.status(400).json({ message: "Paiement non confirmé" });
+      return res.redirect("https://natty20.github.io/GoFind/#/cancel");
     }
 
     const prestations = JSON.parse(session.metadata.prestations);
@@ -81,16 +78,19 @@ router.post("/confirm-payment", async (req, res) => {
       heure: session.metadata.heure,
       description: session.metadata.description,
       etat: "en attente",
-      modePaiement: "Stripe",
+      modePaiement: "Carte via Stripe",
     });
 
-    res.json({ success: true });
-
+    // ✅ REDIRECTION FINALE CLIENT
+    return res.redirect(
+      "https://natty20.github.io/GoFind/#/success"
+    );
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Erreur paiement" });
+    return res.redirect(
+      "https://natty20.github.io/GoFind/#/cancel"
+    );
   }
 });
-
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import '../styles/Client/Paiement.css';
@@ -10,7 +10,7 @@ const stripePromise = loadStripe(
 
 const PaymentPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     prestataire,
     client,
@@ -56,7 +56,10 @@ const PaymentPage = () => {
   return (
     <main className="payment-page">
       <div className="payment-container">
-        <h1>Confirmez votre rendez-vous</h1>
+        <h1 className="note">
+          Pour Confirme votre rendez-vous, vous devez payer une acompte qui ne
+          sera pas remboursé une fois la réservation annulé
+        </h1>
         <p>
           Montant à régler : <strong>{montant}€</strong>
         </p>
