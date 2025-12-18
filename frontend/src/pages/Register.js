@@ -10,8 +10,13 @@ const uploadImageToBackend = async (file) => {
   formData.append('image', file);
 
   const res = await axios.post(
-    'https://gofind-v9ee.onrender.com/api/upload',
-    formData
+    'https://gofind-v9ee.onrender.com/api/upload/image',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
 
   return res.data.url;
@@ -111,7 +116,7 @@ function Register() {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom: </p>
           <MDBInput
-            id="input"
+            id="nom"
             type="text"
             name="nom"
             value={formData.nom}
@@ -121,7 +126,7 @@ function Register() {
 
           <p className="label">Prenon :</p>
           <MDBInput
-            id="input"
+            id="prenom"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -131,7 +136,7 @@ function Register() {
 
           <p className="label">Phone :</p>
           <MDBInput
-            id="input"
+            id="phone"
             type="text"
             name="phone"
             value={formData.phone}
@@ -158,7 +163,7 @@ function Register() {
 
           <p className="label">Address :</p>
           <MDBInput
-            id="input"
+            id="address"
             type="text"
             name="address"
             value={formData.address}
@@ -167,7 +172,7 @@ function Register() {
 
           <p className="label">Email :</p>
           <MDBInput
-            id="input"
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -177,7 +182,7 @@ function Register() {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
-            id="input"
+            id="mdp"
             type="password"
             name="password"
             value={formData.password}
@@ -187,7 +192,7 @@ function Register() {
 
           <p className="label">Confirmer :</p>
           <MDBInput
-            id="input"
+            id="mdp-confirmer"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
