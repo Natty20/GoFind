@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/All/Register.css';
 
-async function uploadImageToCloudinary(file) {
+const uploadImageToBackend = async (file) => {
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
+  formData.append('image', file);
 
   const res = await axios.post(
-    `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+    'https://gofind-v9ee.onrender.com/api/upload',
     formData
   );
-  return res.data.secure_url;
-}
+
+  return res.data.url;
+};
 
 function Register() {
   const navigate = useNavigate();
@@ -59,10 +59,9 @@ function Register() {
 
     try {
       let profilePictureUrl = '';
+
       if (formData.profilePicture instanceof File) {
-        profilePictureUrl = await uploadImageToCloudinary(
-          formData.profilePicture
-        );
+        profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
       }
 
       const response = await axios.post(
