@@ -129,6 +129,13 @@ const AdminEditPage = () => {
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData((prev) => ({ ...prev, profilePicture: file }));
+    }
+  };
+
   // 🔹 Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,23 +145,38 @@ const AdminEditPage = () => {
 
       let payload = unflattenObject(formData);
 
+      // 🔹 Upload image si c'est un fichier
+      if (payload.profilePicture instanceof File) {
+        const imageForm = new FormData();
+        imageForm.append('image', payload.profilePicture);
+
+        const uploadRes = await fetch(
+          'https://gofind-v9ee.onrender.com/api/upload/image',
+          {
+            method: 'POST',
+            body: imageForm,
+          }
+        );
+
+        if (!uploadRes.ok) throw new Error('Erreur upload image');
+        const uploadData = await uploadRes.json();
+        payload.profilePicture = uploadData.url; // remplacer par l'URL
+      }
+
       // 🔹 Cas réservation
       if (entity === 'reservations') {
         const filteredPayload = {};
         reservationEditableFields.forEach((field) => {
-          if (payload[field] !== undefined) {
+          if (payload[field] !== undefined)
             filteredPayload[field] = payload[field];
-          }
         });
 
-        // 🔹 Forcer prestataire en ID
         if (
           filteredPayload.prestataire &&
           typeof filteredPayload.prestataire === 'object'
         ) {
           filteredPayload.prestataire = filteredPayload.prestataire._id;
         }
-
         payload = filteredPayload;
       }
 
@@ -293,6 +315,30 @@ const AdminEditPage = () => {
         )
       )
         return null;
+
+      if (key === 'profilePicture') {
+        return (
+          <div key={key} style={{ marginBottom: '1rem' }}>
+            <label>{key}</label>
+            <input type="file" onChange={handleFileChange} accept="image/*" />
+            {formData.profilePicture && (
+              <img
+                src={
+                  typeof formData.profilePicture === 'string'
+                    ? formData.profilePicture
+                    : URL.createObjectURL(formData.profilePicture)
+                }
+                alt="Preview"
+                style={{
+                  width: '50px',
+                  borderRadius: '30px',
+                  marginTop: '5px',
+                }}
+              />
+            )}
+          </div>
+        );
+      }
 
       return (
         <div key={key} style={{ marginBottom: '1rem' }}>

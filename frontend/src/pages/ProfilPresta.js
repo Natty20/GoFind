@@ -65,19 +65,27 @@ const ProfilPresta = () => {
 
   const handleSave = async () => {
     try {
+      let profilePictureUrl = formData.profilePicture;
+
+      // Si c'est un fichier, on upload d'abord
+      if (formData.profilePicture instanceof File) {
+        profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
+      }
+
+      // Préparer le payload avec l'URL finale
       const payload = {
         nom: formData.nom,
         prenom: formData.prenom,
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
-        profilePicture: formData.profilePicture,
+        profilePicture: profilePictureUrl,
       };
 
-      // si mot de passe rempli → on ajoute au payload
-      // if (formData.password && formData.password.trim() !== '') {
-      //   payload.password = formData.password;
-      // }
+      // Si mot de passe rempli → ajouter au payload
+      if (formData.password && formData.password.trim() !== '') {
+        payload.password = formData.password;
+      }
 
       const res = await axios.put(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
@@ -88,8 +96,9 @@ const ProfilPresta = () => {
       );
 
       setPrestataire(res.data.prestataire); // mettre à jour l'état local
+      setFormData(res.data.prestataire); // préremplir le formulaire avec les nouvelles valeurs
       setIsEditing(false);
-      alert('Information(s) mis à jour avec succès !');
+      alert('✅ Informations mises à jour avec succès !');
     } catch (err) {
       console.error('Erreur lors de la mise à jour :', err);
       alert('❌ Impossible de mettre à jour votre profil.');

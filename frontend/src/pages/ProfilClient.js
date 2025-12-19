@@ -62,15 +62,26 @@ const ClientProfile = () => {
 
   const handleUpdate = async () => {
     try {
+      let profilePictureUrl = formData.profilePicture;
+
+      // Si c'est un fichier, on upload
+      if (formData.profilePicture instanceof File) {
+        profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
+      }
+
+      // Préparer le payload avec l'URL finale
+      const payload = { ...formData, profilePicture: profilePictureUrl };
+
       const res = await axios.put(
         `https://gofind-v9ee.onrender.com/api/auth/${clientId}`,
-        formData,
+        payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setClient(res.data.client); // mettre à jour l’état
+      setClient(res.data.client);
+      setFormData(res.data.client); // Préremplir formulaire avec les nouvelles valeurs
       setIsEditing(false);
-      alert('✅ Information(s) mis à jour avec succès !');
+      alert('✅ Informations mises à jour avec succès !');
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour du profil.');
