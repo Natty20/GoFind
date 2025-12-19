@@ -5,18 +5,23 @@ import { AuthContext } from '../context/AuthContext';
 import { MDBInput } from 'mdb-react-ui-kit';
 import '../styles/All/Register.css';
 
-// 🔹 Fonction pour uploader une image sur Cloudinary
-async function uploadImageToCloudinary(file) {
+//  uploader une image sur Cloudinary pour l'fficher sur le site
+const uploadImageToBackend = async (file) => {
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET);
+  formData.append('image', file);
 
   const res = await axios.post(
-    `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
-    formData
+    'https://gofind-v9ee.onrender.com/api/upload/image',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   );
-  return res.data.secure_url;
-}
+
+  return res.data.url;
+};
 
 const PrestataireRegister = () => {
   const navigate = useNavigate();
@@ -102,10 +107,9 @@ const PrestataireRegister = () => {
 
     try {
       let profilePictureUrl = '';
+
       if (formData.profilePicture instanceof File) {
-        profilePictureUrl = await uploadImageToCloudinary(
-          formData.profilePicture
-        );
+        profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
       }
 
       const formattedPrestations = formData.selectedPrestations.map(
@@ -122,7 +126,7 @@ const PrestataireRegister = () => {
         address: formData.address,
         email: formData.email,
         password: formData.password,
-        profilePicture: profilePictureUrl || formData.profilePicture,
+        profilePicture: profilePictureUrl,
         selectedPrestations: formattedPrestations,
       };
 

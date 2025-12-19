@@ -53,6 +53,13 @@ const ClientProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, profilePicture: file });
+    }
+  };
+
   const handleUpdate = async () => {
     try {
       const res = await axios.put(
@@ -129,6 +136,7 @@ const ClientProfile = () => {
           <div className="form-edit">
             <p className="label">Nom: </p>
             <input
+              id="nom"
               type="text"
               name="nom"
               value={formData.nom || ''}
@@ -138,6 +146,7 @@ const ClientProfile = () => {
 
             <p className="label">Prénom: </p>
             <input
+              id="prenom"
               type="text"
               name="prenom"
               value={formData.prenom || ''}
@@ -147,6 +156,7 @@ const ClientProfile = () => {
 
             <p className="label">Email: </p>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email || ''}
@@ -156,7 +166,8 @@ const ClientProfile = () => {
 
             <p className="label">Téléphone: </p>
             <input
-              type="text"
+              id="phone"
+              type="number"
               name="phone"
               value={formData.phone || ''}
               onChange={handleChange}
@@ -165,6 +176,7 @@ const ClientProfile = () => {
 
             <p className="label">Address: </p>
             <input
+              id="address"
               type="text"
               name="address"
               value={formData.address || ''}
@@ -173,14 +185,31 @@ const ClientProfile = () => {
             />
             <p className="label">Photo de profile: </p>
             <input
+              type="file"
               name="profilePicture"
-              value={formData.profilePicture}
-              onChange={handleChange}
-              placeholder="URL de la photo de profil"
+              onChange={handleFileChange} // <-- ici, pas handleChange
+              accept="image/*"
             />
+
+            {formData.profilePicture && (
+              <img
+                src={
+                  typeof formData.profilePicture === 'string'
+                    ? formData.profilePicture
+                    : URL.createObjectURL(formData.profilePicture)
+                }
+                alt="Preview"
+                style={{
+                  width: '50px',
+                  marginTop: '10px',
+                  borderRadius: '30px',
+                }}
+              />
+            )}
 
             <p className="label">Mot de passe: </p>
             <input
+              id="mdp"
               type="password"
               name="password"
               value={formData.password || ''}

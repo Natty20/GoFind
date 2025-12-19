@@ -20,6 +20,7 @@
 
 .register-left-panel {
   background-color: var(--secondary-text-color);
+  width: 75rem;
 }
 
 .register-right-panel {
@@ -37,7 +38,13 @@
   text-align: center;
 }
 
-#input {
+#nom,
+#prenom,
+#phone,
+#address,
+#email,
+#mdp,
+#mdo-confirmer {
   /* width: 70% !important; */
   padding: 5px;
   border-radius: 30px;
@@ -213,7 +220,13 @@
     margin: 0 auto;
   }
 
-  #input {
+  #nom,
+  #prenom,
+  #phone,
+  #address,
+  #email,
+  #mdp,
+  #mdo-confirmer {
     padding: 0.7rem;
     font-size: 1rem;
   }
@@ -256,7 +269,13 @@
     width: auto;
   }
 
-  #input {
+  #nom,
+  #prenom,
+  #phone,
+  #address,
+  #email,
+  #mdp,
+  #mdo-confirmer {
     padding: 0.6rem;
     font-size: 0.95rem;
     border-radius: 25px;

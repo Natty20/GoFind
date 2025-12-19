@@ -62,6 +62,16 @@ app.use("/api/reservations", reservationRoutes);
 app.use("/api/stripe", stripeRoutes);
 app.use("/api/upload", uploadRoutes);
 
+app.use((err, req, res, next) => {
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({
+      message: "Image trop lourde (max 5 Mo)",
+    });
+  }
+  next(err);
+});
+
+
 app.use(express.static(path.join(__dirname, "frontend", "build")));
 
 app.get("*", (req, res) => {

@@ -23,6 +23,8 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+  const closeMenu = () => setMenuOpen(false);
+
   // Déterminer le rôle et l'utilisateur
   let user = null;
   let role = '';
@@ -43,7 +45,7 @@ const Navbar = () => {
         <div className="navbar-container">
           {/* Logo */}
           <div className="navbar-logo">
-            <Link to="/">
+            <Link to="/" onClick={closeMenu}>
               <img
                 src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
                 alt="GoFind"
@@ -66,15 +68,25 @@ const Navbar = () => {
             {/* {role === 'client' && <Link to="/rendezvous">Mes Rendez-vous</Link>} */}
             {role === 'prestataire' && (
               <>
-                <Link to="/reservations">Réservations</Link>
+                <Link to="/reservations" onClick={closeMenu}>
+                  Réservations
+                </Link>
                 {/* <Link to="/mes-prestations">Mes Prestations</Link> */}
               </>
             )}
-            {role === 'admin' && <Link to="/dashboard">Tableau de Bord</Link>}
+            {role === 'admin' && (
+              <Link to="/dashboard" onClick={closeMenu}>
+                Tableau de Bord
+              </Link>
+            )}
           </div>
 
           <div className="navbar-right">
-            {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
+            {role !== 'admin' && (
+              <Link to="/prestation" onClick={closeMenu}>
+                Prestations
+              </Link>
+            )}
 
             {user ? (
               <div className="dropdown">
@@ -86,7 +98,9 @@ const Navbar = () => {
                 </button>
                 {dropdownOpen && (
                   <div className="dropdown-content">
-                    <Link to="/mon-profil">Mon Profil</Link>
+                    <Link to="/mon-profil" onClick={closeMenu}>
+                      Mon Profil
+                    </Link>
                     <button onClick={handleLogout}>Déconnexion</button>
                   </div>
                 )}
@@ -99,26 +113,42 @@ const Navbar = () => {
           {/* Mobile menu (tout rôle) */}
           {menuOpen && (
             <div className="navbar-mobile-links">
-              {role === 'client' && (
+              {/* {role === 'client' && (
                 <Link to="/rendezvous">Mes Rendez-vous</Link>
-              )}
+              )} */}
               {role === 'prestataire' && (
                 <>
-                  <Link to="/reservations">Réservations</Link>
-                  <Link to="/mes-prestations">Mes Prestations</Link>
+                  <Link to="/reservations" onClick={closeMenu}>
+                    Réservations
+                  </Link>
+                  <Link to="/mes-prestations" onClick={closeMenu}>
+                    Mes Prestations
+                  </Link>
                 </>
               )}
-              {role === 'admin' && <Link to="/dashboard">Tableau de Bord</Link>}
+              {role === 'admin' && (
+                <Link to="/dashboard" onClick={closeMenu}>
+                  Tableau de Bord
+                </Link>
+              )}
 
-              {role !== 'admin' && <Link to="/prestation">Prestations</Link>}
+              {role !== 'admin' && (
+                <Link to="/prestation" onClick={closeMenu}>
+                  Prestations
+                </Link>
+              )}
 
               {user ? (
                 <>
-                  <Link to="/mon-profil">Mon Profil</Link>
+                  <Link to="/mon-profil" onClick={closeMenu}>
+                    Mon Profil
+                  </Link>
                   <button onClick={handleLogout}>Déconnexion</button>
                 </>
               ) : (
-                <Link to="/choix_compte">Compte</Link>
+                <Link to="/choix_compte" onClick={closeMenu}>
+                  Compte
+                </Link>
               )}
             </div>
           )}

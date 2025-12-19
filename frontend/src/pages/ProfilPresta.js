@@ -56,6 +56,13 @@ const ProfilPresta = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, profilePicture: file });
+    }
+  };
+
   const handleSave = async () => {
     try {
       const payload = {
@@ -182,6 +189,7 @@ const ProfilPresta = () => {
             <div className="form-edit">
               <p className="label">Nom: </p>
               <input
+                id="nom"
                 name="nom"
                 value={formData.nom}
                 onChange={handleInputChange}
@@ -190,6 +198,7 @@ const ProfilPresta = () => {
 
               <p className="label">Prénom: </p>
               <input
+                id="prenom"
                 name="prenom"
                 value={formData.prenom}
                 onChange={handleInputChange}
@@ -198,6 +207,7 @@ const ProfilPresta = () => {
 
               <p className="label">Email: </p>
               <input
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
@@ -206,6 +216,7 @@ const ProfilPresta = () => {
 
               <p className="label">Phone: </p>
               <input
+                id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
@@ -214,6 +225,7 @@ const ProfilPresta = () => {
 
               <p className="label">Address: </p>
               <input
+                id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
@@ -222,11 +234,26 @@ const ProfilPresta = () => {
 
               <p className="label">Photo de profile: </p>
               <input
+                type="file"
                 name="profilePicture"
-                value={formData.profilePicture}
-                onChange={handleInputChange}
-                placeholder="URL de la photo de profil"
+                onChange={handleFileChange} // <-- ici, pas handleChange
+                accept="image/*"
               />
+              {formData.profilePicture && (
+                <img
+                  src={
+                    typeof formData.profilePicture === 'string'
+                      ? formData.profilePicture
+                      : URL.createObjectURL(formData.profilePicture)
+                  }
+                  alt="Preview"
+                  style={{
+                    width: '50px',
+                    marginTop: '10px',
+                    borderRadius: '30px',
+                  }}
+                />
+              )}
               <button className="btn-secondary" onClick={handleSave}>
                 Enregistrer
               </button>

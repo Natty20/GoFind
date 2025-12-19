@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/All/Register.css';
 
+//  uploader une image sur Cloudinary pour l'fficher sur le site
 const uploadImageToBackend = async (file) => {
   const formData = new FormData();
   formData.append('image', file);
