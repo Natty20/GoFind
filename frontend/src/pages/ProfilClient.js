@@ -73,7 +73,6 @@ const ClientProfile = () => {
     return res.data.url;
   };
 
-
   const handleUpdate = async () => {
     try {
       let profilePictureUrl = formData.profilePicture;
