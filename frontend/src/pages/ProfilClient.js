@@ -60,6 +60,20 @@ const ClientProfile = () => {
     }
   };
 
+  const uploadImageToBackend = async (file) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const res = await axios.post(
+      'https://gofind-v9ee.onrender.com/api/upload/image',
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
+
+    return res.data.url;
+  };
+
+
   const handleUpdate = async () => {
     try {
       let profilePictureUrl = formData.profilePicture;
