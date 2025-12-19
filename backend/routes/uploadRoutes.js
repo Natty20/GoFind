@@ -4,6 +4,13 @@ router.post("/image", upload.single("image"), async (req, res) => {
             return res.status(400).json({ message: "Aucune image envoyée" });
         }
 
+        console.log("Cloudinary config:", {
+            cloud: process.env.CLOUDINARY_CLOUD_NAME,
+            key: process.env.CLOUDINARY_API_KEY ? "OK" : "MISSING",
+            secret: process.env.CLOUDINARY_API_SECRET ? "OK" : "MISSING",
+        });
+
+
         const stream = cloudinary.uploader.upload_stream(
             { folder: "gofind" },
             (error, result) => {
