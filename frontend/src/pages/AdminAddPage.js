@@ -6,6 +6,8 @@ const AdminAddPage = () => {
   const { entity } = useParams();
   const navigate = useNavigate();
 
+  const token = sessionStorage.getItem('token');
+
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -14,10 +16,23 @@ const AdminAddPage = () => {
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState({});
 
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  /* ---------------- SECURITY ---------------- */
+
+  useEffect(() => {
+    if (!token) {
+      alert('Accès non autorisé');
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
   /* ---------------- FETCH DATA ---------------- */
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    if (!entity) return;
+
     const headers = { Authorization: `Bearer ${token}` };
 
     const fetchAll = async () => {
@@ -31,9 +46,7 @@ const AdminAddPage = () => {
               axios.get('https://gofind-v9ee.onrender.com/api/prestataires', {
                 headers,
               }),
-              axios.get('https://gofind-v9ee.onrender.com/api/prestations', {
-                headers,
-              }),
+              axios.get('https://gofind-v9ee.onrender.com/api/prestations'),
               axios.get(
                 'https://gofind-v9ee.onrender.com/api/sousprestations',
                 { headers }
@@ -45,8 +58,8 @@ const AdminAddPage = () => {
           setPrestations(prestationsRes.data.prestations || []);
 
           const map = {};
-          prestationsRes.data.prestations.forEach((p) => {
-            map[p._id] = sousRes.data.sousprestations.filter(
+          (prestationsRes.data.prestations || []).forEach((p) => {
+            map[p._id] = (sousRes.data.sousprestations || []).filter(
               (sp) => sp.prestation === p._id
             );
           });
@@ -59,7 +72,7 @@ const AdminAddPage = () => {
     };
 
     fetchAll();
-  }, [entity]);
+  }, [entity, token]);
 
   /* ---------------- HANDLERS ---------------- */
 
@@ -81,6 +94,28 @@ const AdminAddPage = () => {
     setFormData({ ...formData, sousPrestations: values });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  /* ---------------- IMAGE UPLOAD ---------------- */
+
+  const uploadImageToBackend = async (file) => {
+    const data = new FormData();
+    data.append('image', file);
+
+    const res = await axios.post(
+      'https://gofind-v9ee.onrender.com/api/upload/image',
+      data
+    );
+
+    return res.data.url;
+  };
+
   /* ---------------- SUBMIT ---------------- */
 
   const handleSubmit = async (e) => {
@@ -88,8 +123,12 @@ const AdminAddPage = () => {
     setLoading(true);
 
     try {
-      const token = sessionStorage.getItem('token');
       const headers = { Authorization: `Bearer ${token}` };
+
+      let imageUrl = null;
+      if (imageFile) {
+        imageUrl = await uploadImageToBackend(imageFile);
+      }
 
       if (entity === 'reservations') {
         const payload = {
@@ -99,6 +138,7 @@ const AdminAddPage = () => {
           heure: formData.heure,
           modePaiement: formData.modePaiement,
           description: formData.description,
+          image: imageUrl,
           prestations: [
             {
               prestationId: formData.prestationId,
@@ -114,11 +154,11 @@ const AdminAddPage = () => {
         );
       }
 
-      alert('✅ Réservation créée');
+      alert('✅ Création réussie');
       navigate('/dashboard');
     } catch (err) {
       console.error(err);
-      alert('❌ Erreur création réservation');
+      alert('❌ Erreur lors de la création');
     } finally {
       setLoading(false);
     }
@@ -126,6 +166,7 @@ const AdminAddPage = () => {
 
   /* ---------------- UI ---------------- */
 
+  if (!entity) return <p>Chargement...</p>;
   if (entity !== 'reservations') {
     return <p>❌ Ajout non géré ici</p>;
   }
@@ -183,12 +224,22 @@ const AdminAddPage = () => {
         <label>Mode de paiement</label>
         <select name="modePaiement" onChange={handleChange} required>
           <option value="Cash">Cash</option>
-          <option value="PayPal">PayPal</option>
           <option value="Carte">Carte</option>
         </select>
 
         <label>Description</label>
         <textarea name="description" onChange={handleChange} />
+
+        <label>Image</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            alt="preview"
+            style={{ width: 100, marginTop: 10 }}
+          />
+        )}
 
         <button type="submit" disabled={loading}>
           {loading ? 'Création...' : 'Créer'}

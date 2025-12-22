@@ -137,6 +137,7 @@ const PrestataireRegister = () => {
 
       const { token, prestataire } = response.data;
       sessionStorage.setItem('token', token);
+      sessionStorage.setItem('prestataireId', prestataire.id);
       sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
 

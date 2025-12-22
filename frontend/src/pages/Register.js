@@ -85,6 +85,7 @@ function Register() {
 
       const { token, client } = response.data;
       sessionStorage.setItem('token', token);
+      sessionStorage.setItem('clientId', client.id);
       sessionStorage.setItem('client', JSON.stringify(client));
       setClient(client);
 
