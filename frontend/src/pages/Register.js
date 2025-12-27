@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../styles/All/Register.css';
 
-//  uploader une image sur Cloudinary pour l'fficher sur le site
+// Upload image sur backend
 const uploadImageToBackend = async (file) => {
   const formData = new FormData();
   formData.append('image', file);
@@ -13,14 +13,88 @@ const uploadImageToBackend = async (file) => {
   const res = await axios.post(
     'https://gofind-v9ee.onrender.com/api/upload/image',
     formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
+    { headers: { 'Content-Type': 'multipart/form-data' } }
   );
 
   return res.data.url;
+};
+
+// Composant pour lees villes
+const CityInput = ({ value, onChange }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [query, setQuery] = useState(value || '');
+
+  const handleInputChange = async (e) => {
+    const val = e.target.value;
+    setQuery(val);
+    onChange(val);
+
+    if (val.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+      );
+      const data = await res.json();
+      setSuggestions(data.features.map((f) => f.properties.city));
+    } catch (err) {
+      console.error('Erreur autocomplete villes', err);
+    }
+  };
+
+  const handleSelect = (city) => {
+    setQuery(city);
+    onChange(city);
+    setSuggestions([]);
+  };
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        type="text"
+        value={query}
+        onChange={handleInputChange}
+        placeholder="Choisissez votre ville"
+        required
+        style={{ width: '100%', padding: '8px' }}
+      />
+      {suggestions.length > 0 && (
+        <ul
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: 'white',
+            border: '1px solid #ccc',
+            maxHeight: '150px',
+            overflowY: 'auto',
+            zIndex: 10,
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+          }}
+        >
+          {suggestions.map((city, i) => (
+            <li
+              key={i}
+              onClick={() => handleSelect(city)}
+              style={{
+                padding: '8px',
+                cursor: 'pointer',
+              }}
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              {city}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
 
 function Register() {
@@ -42,10 +116,7 @@ function Register() {
   const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
@@ -65,7 +136,6 @@ function Register() {
 
     try {
       let profilePictureUrl = '';
-
       if (formData.profilePicture instanceof File) {
         profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
       }
@@ -85,7 +155,7 @@ function Register() {
 
       const { token, client } = response.data;
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('clientId', client.id);
+      sessionStorage.setItem('clientId', client._id);
       sessionStorage.setItem('client', JSON.stringify(client));
       setClient(client);
 
@@ -103,13 +173,12 @@ function Register() {
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
-            alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
+            alt="GoFind - Plateforme de mise en relation"
           />
           <h1>Rejoignez GoFind</h1>
           <p>Créez votre compte pour accéder à nos services</p>
         </div>
 
-        {/* Affichage des erreurs ou succès */}
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {success && (
           <p style={{ color: 'green', textAlign: 'center' }}>{success}</p>
@@ -126,7 +195,7 @@ function Register() {
             required
           />
 
-          <p className="label">Prenon :</p>
+          <p className="label">Prénom :</p>
           <MDBInput
             id="prenom"
             type="text"
@@ -154,7 +223,6 @@ function Register() {
             accept="image/*"
             required
           />
-
           {formData.profilePicture && (
             <img
               src={URL.createObjectURL(formData.profilePicture)}
@@ -163,13 +231,10 @@ function Register() {
             />
           )}
 
-          <p className="label">Address :</p>
-          <MDBInput
-            id="address"
-            type="text"
-            name="address"
+          <p className="label">Ville :</p>
+          <CityInput
             value={formData.address}
-            onChange={handleChange}
+            onChange={(val) => setFormData({ ...formData, address: val })}
           />
 
           <p className="label">Email :</p>

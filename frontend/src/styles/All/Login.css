@@ -116,7 +116,13 @@
   text-align: center !important;
 }
 
-#input {
+#nom,
+#prenom,
+#phone,
+#address,
+#email,
+#mdp,
+#mdp-confirmer {
   /* width: 70% !important; */
   padding: 5px;
   border-radius: 30px;
@@ -200,7 +206,13 @@
     padding: 0.5rem;
   }
 
-  #input {
+  #nom,
+  #prenom,
+  #phone,
+  #address,
+  #email,
+  #mdp,
+  #mdp-confirmer {
     padding: 0.6rem;
     border-radius: 2rem;
     font-size: 1rem;

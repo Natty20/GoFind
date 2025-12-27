@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import '../styles/Admin/Details.css';
 
 const AdminDetailsPage = () => {
   const { entity, id } = useParams();
@@ -83,27 +84,19 @@ const AdminDetailsPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '700px', margin: 'auto' }}>
+    <div className="details-page">
       <h1>
         Détails - {entity} n°{id}
       </h1>
-      <div
-        style={{
-          marginTop: '1rem',
-          padding: '1rem',
-          border: '1px solid #ccc',
-          borderRadius: '8px',
-          background: '#fafafa',
-        }}
-      >
+      <div className="details-card">
         {Object.entries(data).map(([key, value]) => (
-          <div key={key} style={{ marginBottom: '10px' }}>
+          <div key={key} className="details-field">
             <strong>{key} :</strong> {renderValue(value)}
           </div>
         ))}
       </div>
 
-      <div style={{ marginTop: '2rem' }}>
+      <div className="details-buttons">
         <button
           className="btn-secondary"
           onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}

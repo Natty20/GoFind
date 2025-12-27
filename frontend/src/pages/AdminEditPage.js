@@ -195,8 +195,8 @@ const AdminEditPage = () => {
       if (!response.ok) throw new Error('Erreur de mise à jour');
 
       setSuccess(true);
-      alert('✅ Modification réussie');
-      navigate(from, { replace: true });
+      alert('✅ Modification prise en compte!');
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour');

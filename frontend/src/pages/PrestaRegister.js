@@ -23,6 +23,84 @@ const uploadImageToBackend = async (file) => {
   return res.data.url;
 };
 
+// Composant pour lees villes
+const CityInput = ({ value, onChange }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [query, setQuery] = useState(value || '');
+
+  const handleInputChange = async (e) => {
+    const val = e.target.value;
+    setQuery(val);
+    onChange(val);
+
+    if (val.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+      );
+      const data = await res.json();
+      setSuggestions(data.features.map((f) => f.properties.city));
+    } catch (err) {
+      console.error('Erreur autocomplete villes', err);
+    }
+  };
+
+  const handleSelect = (city) => {
+    setQuery(city);
+    onChange(city);
+    setSuggestions([]);
+  };
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        type="text"
+        value={query}
+        onChange={handleInputChange}
+        placeholder="Choisissez votre ville"
+        required
+        style={{ width: '100%', padding: '8px' }}
+      />
+      {suggestions.length > 0 && (
+        <ul
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: 'white',
+            border: '1px solid #ccc',
+            maxHeight: '150px',
+            overflowY: 'auto',
+            zIndex: 10,
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+          }}
+        >
+          {suggestions.map((city, i) => (
+            <li
+              key={i}
+              onClick={() => handleSelect(city)}
+              style={{
+                padding: '8px',
+                cursor: 'pointer',
+              }}
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              {city}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
 const PrestataireRegister = () => {
   const navigate = useNavigate();
   const { setPrestataire } = useContext(AuthContext);
@@ -137,7 +215,7 @@ const PrestataireRegister = () => {
 
       const { token, prestataire } = response.data;
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('prestataireId', prestataire.id);
+      sessionStorage.setItem('prestataireId', prestataire._id);
       sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
       setPrestataire(prestataire);
 
@@ -169,7 +247,7 @@ const PrestataireRegister = () => {
         <form onSubmit={handleRegister} className="register-input-container">
           <p className="label">Nom:</p>
           <MDBInput
-            id="input"
+            id="nom"
             type="text"
             name="nom"
             value={formData.nom}
@@ -179,7 +257,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Prénom:</p>
           <MDBInput
-            id="input"
+            id="prenom"
             type="text"
             name="prenom"
             value={formData.prenom}
@@ -189,7 +267,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Téléphone :</p>
           <MDBInput
-            id="input"
+            id="phone"
             type="number"
             name="phone"
             value={formData.phone}
@@ -197,14 +275,10 @@ const PrestataireRegister = () => {
             required
           />
 
-          <p className="label">Adresse :</p>
-          <MDBInput
-            id="input"
-            type="text"
-            name="address"
+          <p className="label">Ville :</p>
+          <CityInput
             value={formData.address}
-            onChange={handleChange}
-            required
+            onChange={(val) => setFormData({ ...formData, address: val })}
           />
 
           <p className="label">Photo de profil :</p>
@@ -230,7 +304,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Email :</p>
           <MDBInput
-            id="input"
+            id="email"
             type="email"
             name="email"
             value={formData.email}
@@ -240,7 +314,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
-            id="input"
+            id="mdp"
             type="password"
             name="password"
             value={formData.password}
@@ -250,7 +324,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Confirmer le mot de passe :</p>
           <MDBInput
-            id="input"
+            id="mdp-confirmer"
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
