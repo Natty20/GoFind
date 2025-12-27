@@ -3,6 +3,7 @@ import axios from 'axios';
 import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import PropTypes from 'prop-types';
 import '../styles/All/Register.css';
 
 // Upload image sur backend
