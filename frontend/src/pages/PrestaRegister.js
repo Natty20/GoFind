@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { MDBInput } from 'mdb-react-ui-kit';
+import PropTypes from 'prop-types';
 import '../styles/All/Register.css';
 
 //  uploader une image sur Cloudinary pour l'fficher sur le site
@@ -24,6 +25,7 @@ const uploadImageToBackend = async (file) => {
 };
 
 // Composant pour lees villes
+
 const CityInput = ({ value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState(value || '');
@@ -86,10 +88,7 @@ const CityInput = ({ value, onChange }) => {
             <li
               key={i}
               onClick={() => handleSelect(city)}
-              style={{
-                padding: '8px',
-                cursor: 'pointer',
-              }}
+              style={{ padding: '8px', cursor: 'pointer' }}
               onMouseDown={(e) => e.preventDefault()}
             >
               {city}
@@ -99,6 +98,12 @@ const CityInput = ({ value, onChange }) => {
       )}
     </div>
   );
+};
+
+// 🔹 Définition des props attendues
+CityInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 const PrestataireRegister = () => {

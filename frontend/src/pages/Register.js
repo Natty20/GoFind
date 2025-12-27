@@ -82,10 +82,7 @@ const CityInput = ({ value, onChange }) => {
             <li
               key={i}
               onClick={() => handleSelect(city)}
-              style={{
-                padding: '8px',
-                cursor: 'pointer',
-              }}
+              style={{ padding: '8px', cursor: 'pointer' }}
               onMouseDown={(e) => e.preventDefault()}
             >
               {city}
@@ -95,6 +92,12 @@ const CityInput = ({ value, onChange }) => {
       )}
     </div>
   );
+};
+
+// 🔹 Définition des props attendues
+CityInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 function Register() {
