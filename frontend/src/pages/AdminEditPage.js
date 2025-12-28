@@ -352,23 +352,25 @@ const AdminEditPage = () => {
   if (loading) return <p>Chargement...</p>;
 
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h1>Modifier {entity}</h1>
-      <form onSubmit={handleSubmit}>
-        {renderFormFields()}
-        <button className="btn-secondary" type="submit">
-          Enregistrer
-        </button>
-        <button
-          className="btn-primary"
-          type="button"
-          onClick={() => navigate('/dashboard')}
-        >
-          Retour
-        </button>
-        {success && <p style={{ color: 'green' }}>Modification réussie</p>}
-      </form>
-    </div>
+    <section className="admineditpage">
+      <h1 className="tittle">Modifier {entity}</h1>
+      <div className="form-card">
+        <form onSubmit={handleSubmit}>
+          {renderFormFields()}
+          <button className="btn-secondary" type="submit">
+            Enregistrer
+          </button>
+          <button
+            className="btn-primary"
+            type="button"
+            onClick={() => navigate('/dashboard')}
+          >
+            Retour
+          </button>
+          {success && <p style={{ color: 'green' }}>Modification réussie</p>}
+        </form>
+      </div>
+    </section>
   );
 };
 

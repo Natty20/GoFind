@@ -86,7 +86,7 @@ const AdminDetailsPage = () => {
   return (
     <div className="details-page">
       <h1>
-        Détails - {entity} n°{id}
+        Détails - {entity} : {id}
       </h1>
       <div className="details-card">
         {Object.entries(data).map(([key, value]) => (

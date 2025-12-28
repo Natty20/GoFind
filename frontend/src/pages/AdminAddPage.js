@@ -228,75 +228,96 @@ const AdminAddPage = () => {
 
   const renderReservationForm = () => (
     <>
-      <label>Client</label>
-      <select name="clientId" onChange={handleChange} required>
-        <option value="">-- choisir --</option>
-        {clients.map((c) => (
-          <option key={c._id} value={c._id}>
-            {c.nom} {c.prenom}
+      <section className="champs-reserva">
+        <label className="label">Client</label>
+        <select name="clientId" onChange={handleChange} required>
+          <option value="">-- choisir --</option>
+          {clients.map((c) => (
+            <option key={c._id} value={c._id}>
+              {c.nom} {c.prenom}
+            </option>
+          ))}
+        </select>
+
+        <label className="label">Prestataire</label>
+        <select name="prestataireId" onChange={handleChange} required>
+          <option value="">-- choisir --</option>
+          {prestataires.map((p) => (
+            <option key={p._id} value={p._id}>
+              {p.nom} {p.prenom}
+            </option>
+          ))}
+        </select>
+
+        <label className="label">Prestation</label>
+        <select onChange={handlePrestationChange} required>
+          <option value="">-- choisir --</option>
+          {prestations.map((p) => (
+            <option key={p._id} value={p._id}>
+              {p.nom}
+            </option>
+          ))}
+        </select>
+
+        <label className="label">Sous-prestations</label>
+        <select multiple onChange={handleSousPrestationsChange}>
+          {(sousPrestations[formData.prestationId] || []).map((sp) => (
+            <option className="presta" key={sp._id} value={sp._id}>
+              {sp.nom}
+            </option>
+          ))}
+        </select>
+
+        <label className="label">Date</label>
+        <input
+          className="date"
+          type="date"
+          name="date"
+          onChange={handleChange}
+          required
+        />
+
+        <label className="label">Heure</label>
+        <input
+          className="time"
+          type="time"
+          name="heure"
+          onChange={handleChange}
+          required
+        />
+
+        <label className="label">Mode de paiement</label>
+        <select name="modePaiement" onChange={handleChange}>
+          <option className="modePaiement" value="Cash">
+            Cash
           </option>
-        ))}
-      </select>
+        </select>
 
-      <label>Prestataire</label>
-      <select name="prestataireId" onChange={handleChange} required>
-        <option value="">-- choisir --</option>
-        {prestataires.map((p) => (
-          <option key={p._id} value={p._id}>
-            {p.nom} {p.prenom}
-          </option>
-        ))}
-      </select>
-
-      <label>Prestation</label>
-      <select onChange={handlePrestationChange} required>
-        <option value="">-- choisir --</option>
-        {prestations.map((p) => (
-          <option key={p._id} value={p._id}>
-            {p.nom}
-          </option>
-        ))}
-      </select>
-
-      <label>Sous-prestations</label>
-      <select multiple onChange={handleSousPrestationsChange}>
-        {(sousPrestations[formData.prestationId] || []).map((sp) => (
-          <option key={sp._id} value={sp._id}>
-            {sp.nom}
-          </option>
-        ))}
-      </select>
-
-      <label>Date</label>
-      <input type="date" name="date" onChange={handleChange} required />
-
-      <label>Heure</label>
-      <input type="time" name="heure" onChange={handleChange} required />
-
-      <label>Mode de paiement</label>
-      <select name="modePaiement" onChange={handleChange}>
-        <option value="Cash">Cash</option>
-      </select>
-
-      <label>Description</label>
-      <textarea name="description" onChange={handleChange} />
+        <label className="label">Description</label>
+        <textarea
+          className="textarea"
+          name="description"
+          onChange={handleChange}
+        />
+      </section>
     </>
   );
 
   if (!entity) return <p>Chargement...</p>;
 
   return (
-    <div style={{ maxWidth: 600, margin: 'auto' }}>
+    <div className="adminaddpage" style={{ maxWidth: 600, margin: 'auto' }}>
       <h1>Ajouter {entity}</h1>
 
       <form onSubmit={handleSubmit}>
         {entity === 'reservations' ? renderReservationForm() : null}
 
-        <button type="submit" disabled={loading}>
+        <button className="btn-secondary" type="submit" disabled={loading}>
           {loading ? 'Création...' : 'Créer'}
         </button>
 
         <button
+          className="btn-primary"
           type="button"
           style={{ marginLeft: 10 }}
           onClick={() => navigate('/dashboard')}

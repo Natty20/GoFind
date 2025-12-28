@@ -1,0 +1,54 @@
+.adminaddpage {
+  margin: 6rem 0 0 0;
+  padding: 2rem;
+  overflow: hidden;
+  border-radius: 2rem;
+  border: 1px solid var(--main-color);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.champs-reserva {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 30px;
+  border: 2px solid var(--secondary-color);
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.champs-reserva input:focus,
+.champs-reserva select:focus,
+.champs-reserva textarea:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 5px var(--secondary-color);
+}
+
+.textarea,
+.time,
+.date,
+.presta {
+  padding: 0.6rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+}
+
+.champs-reserva select,
+.sous-prestations-select {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--third-text-color);
+  cursor: pointer;
+  outline: none;
+  background: var(--secondary-text-color);
+  transition: all 0.3s ease;
+}
+
+.prestations-select:hover,
+.sous-prestations-select:hover {
+  border-color: var(--main-color);
+}

@@ -54,7 +54,7 @@ function LoginForm() {
         <form onSubmit={handleLogin} className="login-input-container">
           <p className="label">Email :</p>
           <MDBInput
-            id="input"
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -63,7 +63,7 @@ function LoginForm() {
 
           <p className="label">Mot de passe :</p>
           <MDBInput
-            id="input"
+            id="mdp"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
