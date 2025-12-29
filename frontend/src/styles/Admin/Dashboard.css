@@ -168,6 +168,10 @@
     padding: 0;
   }
 
+  .menu-list {
+    display: grid;
+  }
+
   .menu-item {
     justify-content: center;
   }
