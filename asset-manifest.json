@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://natty20.github.io/GoFind/static/css/main.7d919627.css",
-    "main.js": "https://natty20.github.io/GoFind/static/js/main.06e22779.js",
+    "main.css": "https://natty20.github.io/GoFind/static/css/main.fd1807db.css",
+    "main.js": "https://natty20.github.io/GoFind/static/js/main.ccfeb1e7.js",
     "static/js/488.e75445ad.chunk.js": "https://natty20.github.io/GoFind/static/js/488.e75445ad.chunk.js",
     "index.html": "https://natty20.github.io/GoFind/index.html",
-    "main.7d919627.css.map": "https://natty20.github.io/GoFind/static/css/main.7d919627.css.map",
-    "main.06e22779.js.map": "https://natty20.github.io/GoFind/static/js/main.06e22779.js.map",
+    "main.fd1807db.css.map": "https://natty20.github.io/GoFind/static/css/main.fd1807db.css.map",
+    "main.ccfeb1e7.js.map": "https://natty20.github.io/GoFind/static/js/main.ccfeb1e7.js.map",
     "488.e75445ad.chunk.js.map": "https://natty20.github.io/GoFind/static/js/488.e75445ad.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7d919627.css",
-    "static/js/main.06e22779.js"
+    "static/css/main.fd1807db.css",
+    "static/js/main.ccfeb1e7.js"
   ]
 }
