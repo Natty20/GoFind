@@ -57,6 +57,9 @@
   display: flex;
   /* gap: 20px; */
 }
+.welcome-text p {
+  text-align: center;
+}
 
 /* .choix-btn {
   border: none;
@@ -94,8 +97,8 @@
   .choix-left-panel,
   .choix-right-panel {
     width: 100%;
-    border-radius: 0;
-    padding: 1.5rem 1rem;
+    border-radius: 2rem;
+    padding: 1rem 0;
     margin-bottom: 1rem;
   }
 
@@ -137,6 +140,12 @@
   .choix-right-panel {
     width: 100%;
     padding: 1rem;
+    border-radius: 0 0 2rem;
+  }
+
+  .choix-right-panel {
+    padding: 1rem 0;
+    width: auto !important;
   }
 
   .choix-right-panel h2 {
@@ -149,11 +158,13 @@
     line-height: 1.4;
   }
 
-  .choix-boutons {
+  .choix-boutons,
+  .choix-right-panel button {
     flex-direction: column;
     gap: 0.8rem;
     margin-top: 1rem;
-    align-items: stretch;
+    padding: 0 2rem 0 0;
+    /* align-items: stretch; */
   }
   .choix-boutons button {
     width: 100%;

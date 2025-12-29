@@ -169,7 +169,7 @@
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .register-page {
     flex-direction: column;
     margin-top: 4rem;
@@ -177,9 +177,14 @@
 
   .register-left-panel,
   .register-right-panel {
-    width: 100%;
+    width: auto;
     padding: 2rem;
     border-radius: 1rem;
+  }
+
+  .register-right-panel {
+    margin: 1rem;
+    border-radius: 2rem 2rem 0 0;
   }
 
   .register-right-panel {
@@ -193,6 +198,16 @@
   .register-input-container textarea {
     padding: 0.6rem;
     font-size: 0.95rem;
+  }
+
+  .register-left-panel,
+  .register-right-panel {
+    padding: 0;
+  }
+
+  .register-right-panel {
+    margin: 1rem;
+    border-radius: 2rem 2rem 0 0;
   }
 
   .register-right-panel h2 {

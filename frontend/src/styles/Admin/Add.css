@@ -52,3 +52,7 @@
 .sous-prestations-select:hover {
   border-color: var(--main-color);
 }
+
+.admin-add-page button {
+  width: 70% !important;
+}

@@ -16,7 +16,7 @@
 
 .footer-links {
   display: flex;
-  gap: 30px;
+  gap: 5rem;
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
@@ -34,8 +34,8 @@
 
 .footer-social {
   display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 5rem;
+  /* margin-bottom: 20px; */
 }
 
 .social-icon {
@@ -66,10 +66,6 @@
 }
 
 @media (max-width: 768px) {
-  .footer-links {
-    gap: 20px;
-  }
-
   .footer-links a {
     font-size: 16px;
   }
@@ -87,8 +83,8 @@
   }
 
   .footer-links {
-    flex-direction: column;
-    gap: 12px;
+    /* flex-direction: column; */
+    gap: 0.7rem;
   }
 
   .footer-links a {

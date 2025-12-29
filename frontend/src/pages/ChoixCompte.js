@@ -52,7 +52,7 @@ const ChoixCompte = () => {
           </p>
 
           <button
-            className="btn-primary"
+            className="btn-secondary"
             onClick={() => navigate('/login_admin')}
           >
             Admin login

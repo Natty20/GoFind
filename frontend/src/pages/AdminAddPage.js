@@ -35,6 +35,7 @@ const AdminAddPage = () => {
     reservations: 'reservations',
   };
 
+  /* 🔐 sécurité */
   useEffect(() => {
     if (!adminId || !token) {
       alert('Accès non autorisé');
@@ -42,7 +43,42 @@ const AdminAddPage = () => {
     }
   }, [adminId, token, navigate]);
 
-  /* -DATA (reservations)- */
+  /* 🔹 champs par défaut (hors réservation) */
+  useEffect(() => {
+    if (entity === 'reservations') return;
+
+    const defaultFields = {
+      prestataires: {
+        nom: '',
+        prenom: '',
+        email: '',
+        phone: '',
+        address: '',
+        profilePicture: null,
+      },
+      prestations: {
+        nom: '',
+        description: '',
+      },
+      sousprestations: {
+        nom: '',
+        prix: '',
+      },
+      clients: {
+        nom: '',
+        prenom: '',
+        email: '',
+        phone: '',
+        address: '',
+      },
+    };
+
+    if (defaultFields[entity]) {
+      setFormData(defaultFields[entity]);
+    }
+  }, [entity]);
+
+  /* ---------------- DATA RESERVATION ---------------- */
 
   useEffect(() => {
     if (entity !== 'reservations') return;
@@ -84,6 +120,8 @@ const AdminAddPage = () => {
 
     fetchAll();
   }, [entity, token]);
+
+  /* ---------------- HANDLERS ---------------- */
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -132,7 +170,7 @@ const AdminAddPage = () => {
     return result.url;
   };
 
-  /* ---------------- VALIDATION ---------------- */
+  /* ---------------- VALIDATION RESERVATION ---------------- */
 
   const validateReservation = () => {
     if (
@@ -152,11 +190,6 @@ const AdminAddPage = () => {
       return false;
     }
 
-    if (formData.modePaiement === 'Carte') {
-      alert('⚠️ Paiement carte réservé aux clients');
-      return false;
-    }
-
     return true;
   };
 
@@ -169,7 +202,7 @@ const AdminAddPage = () => {
     try {
       let payload = { ...formData };
 
-      /* 🔹 images */
+      /* 🔹 upload images */
       for (const key of imageFields) {
         if (payload[key] instanceof File) {
           payload[key] = await uploadImage(payload[key]);
@@ -188,7 +221,7 @@ const AdminAddPage = () => {
           date: formData.date,
           heure: formData.heure,
           etat: 'en attente',
-          modePaiement: formData.modePaiement,
+          modePaiement: 'Cash',
           description: formData.description || '',
           prestations: [
             {
@@ -226,104 +259,104 @@ const AdminAddPage = () => {
 
   /* ---------------- UI ---------------- */
 
-  const renderReservationForm = () => (
+  const renderGenericForm = () => (
     <>
-      <section className="champs-reserva">
-        <label className="label">Client</label>
-        <select name="clientId" onChange={handleChange} required>
-          <option value="">-- choisir --</option>
-          {clients.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.nom} {c.prenom}
-            </option>
-          ))}
-        </select>
+      {Object.entries(formData).map(([key, value]) => (
+        <div key={key}>
+          <label className="label">{key}</label>
 
-        <label className="label">Prestataire</label>
-        <select name="prestataireId" onChange={handleChange} required>
-          <option value="">-- choisir --</option>
-          {prestataires.map((p) => (
-            <option key={p._id} value={p._id}>
-              {p.nom} {p.prenom}
-            </option>
-          ))}
-        </select>
-
-        <label className="label">Prestation</label>
-        <select onChange={handlePrestationChange} required>
-          <option value="">-- choisir --</option>
-          {prestations.map((p) => (
-            <option key={p._id} value={p._id}>
-              {p.nom}
-            </option>
-          ))}
-        </select>
-
-        <label className="label">Sous-prestations</label>
-        <select multiple onChange={handleSousPrestationsChange}>
-          {(sousPrestations[formData.prestationId] || []).map((sp) => (
-            <option className="presta" key={sp._id} value={sp._id}>
-              {sp.nom}
-            </option>
-          ))}
-        </select>
-
-        <label className="label">Date</label>
-        <input
-          className="date"
-          type="date"
-          name="date"
-          onChange={handleChange}
-          required
-        />
-
-        <label className="label">Heure</label>
-        <input
-          className="time"
-          type="time"
-          name="heure"
-          onChange={handleChange}
-          required
-        />
-
-        <label className="label">Mode de paiement</label>
-        <select name="modePaiement" onChange={handleChange}>
-          <option className="modePaiement" value="Cash">
-            Cash
-          </option>
-        </select>
-
-        <label className="label">Description</label>
-        <textarea
-          className="textarea"
-          name="description"
-          onChange={handleChange}
-        />
-      </section>
+          {imageFields.includes(key) ? (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileChange(key, e.target.files[0])}
+            />
+          ) : (
+            <input
+              name={key}
+              value={value || ''}
+              onChange={handleChange}
+              required
+            />
+          )}
+        </div>
+      ))}
     </>
   );
 
-  if (!entity) return <p>Chargement...</p>;
+  const renderReservationForm = () => (
+    <section className="champs-reserva">
+      <label className="label">Client</label>
+      <select name="clientId" onChange={handleChange} required>
+        <option value="">-- choisir --</option>
+        {clients.map((c) => (
+          <option key={c._id} value={c._id}>
+            {c.nom} {c.prenom}
+          </option>
+        ))}
+      </select>
+
+      <label className="label">Prestataire</label>
+      <select name="prestataireId" onChange={handleChange} required>
+        <option value="">-- choisir --</option>
+        {prestataires.map((p) => (
+          <option key={p._id} value={p._id}>
+            {p.nom} {p.prenom}
+          </option>
+        ))}
+      </select>
+
+      <label className="label">Prestation</label>
+      <select onChange={handlePrestationChange} required>
+        <option value="">-- choisir --</option>
+        {prestations.map((p) => (
+          <option key={p._id} value={p._id}>
+            {p.nom}
+          </option>
+        ))}
+      </select>
+
+      <label className="label">Sous-prestations</label>
+      <select multiple onChange={handleSousPrestationsChange}>
+        {(sousPrestations[formData.prestationId] || []).map((sp) => (
+          <option key={sp._id} value={sp._id}>
+            {sp.nom}
+          </option>
+        ))}
+      </select>
+
+      <label className="label">Date</label>
+      <input type="date" name="date" onChange={handleChange} required />
+
+      <label className="label">Heure</label>
+      <input type="time" name="heure" onChange={handleChange} required />
+
+      <label className="label">Description</label>
+      <textarea name="description" onChange={handleChange} />
+    </section>
+  );
 
   return (
-    <div className="adminaddpage" style={{ maxWidth: 600, margin: 'auto' }}>
+    <div className="adminaddpage" style={{ maxWidth: 700, margin: 'auto' }}>
       <h1>Ajouter {entity}</h1>
 
       <form onSubmit={handleSubmit}>
-        {entity === 'reservations' ? renderReservationForm() : null}
+        {entity === 'reservations'
+          ? renderReservationForm()
+          : renderGenericForm()}
 
-        <button className="btn-secondary" type="submit" disabled={loading}>
-          {loading ? 'Création...' : 'Créer'}
-        </button>
-
-        <button
-          className="btn-primary"
-          type="button"
-          style={{ marginLeft: 10 }}
-          onClick={() => navigate('/dashboard')}
-        >
-          Retour
-        </button>
+        <div className="admin-add-page">
+          <button className="btn-secondary" type="submit" disabled={loading}>
+            {loading ? 'Création...' : 'Créer'}
+          </button>
+          <button
+            className="btn-primary"
+            type="button"
+            onClick={() => navigate('/dashboard')}
+          >
+            Retour
+          </button>
+        </div>
 
         {success && <p style={{ color: 'green' }}>Création réussie</p>}
       </form>

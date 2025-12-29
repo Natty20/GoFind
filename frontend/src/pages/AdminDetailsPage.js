@@ -88,7 +88,7 @@ const AdminDetailsPage = () => {
       <h1>
         Détails - {entity} : {id}
       </h1>
-      <div className="details-card">
+      <div className="admin-details-card">
         {Object.entries(data).map(([key, value]) => (
           <div key={key} className="details-field">
             <strong>{key} :</strong> {renderValue(value)}

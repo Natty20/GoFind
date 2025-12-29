@@ -282,6 +282,7 @@ const PrestataireRegister = () => {
 
           <p className="label">Ville :</p>
           <CityInput
+            id="nom"
             value={formData.address}
             onChange={(val) => setFormData({ ...formData, address: val })}
           />

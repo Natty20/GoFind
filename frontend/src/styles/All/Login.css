@@ -157,7 +157,7 @@
 
   .login-left-panel,
   .login-right-panel {
-    width: 100%;
+    width: auto;
     border-radius: 0;
     padding: 2rem 1rem;
   }
@@ -192,6 +192,7 @@
 
   .login-left-panel {
     padding: 1.2rem;
+    width: auto;
   }
 
   .welcome-text img {
@@ -201,9 +202,17 @@
   }
 
   .login-input-container {
-    width: 70%;
+    width: 80% !important;
     /* full width sur mobile */
-    padding: 0.5rem;
+    padding: 0 2rem 0 0;
+  }
+
+  .login-input-container button,
+  .sans-compte button {
+    margin: 1rem;
+    width: 100% !important;
+    font-size: 1rem;
+    padding: 1rem;
   }
 
   #nom,

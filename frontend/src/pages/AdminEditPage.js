@@ -1,15 +1,16 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const AdminEditPage = () => {
   const { entity, id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [formData, setFormData] = useState({});
   const [prestataires, setPrestataires] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(false);
-  const from = location.state?.from || '/';
+
+  const from = location.state?.from || '/dashboard';
 
   const entityToEndpoint = {
     clients: 'auth',
@@ -20,7 +21,26 @@ const AdminEditPage = () => {
     reservations: 'reservations',
   };
 
-  // 🔹 Aplatir un objet
+  const imageFields = [
+    'profilePicture',
+    'profileImage',
+    'backgroundImage',
+    'overlayImage',
+  ];
+
+  const reservationEditableFields = [
+    'date',
+    'heure',
+    'etat',
+    'description',
+    'modePaiement',
+    'prestataire',
+  ];
+
+  /* =======================
+      UTILS
+  ======================= */
+
   const flattenObject = (obj, parentKey = '', res = {}) => {
     for (let key in obj) {
       const propName = parentKey ? `${parentKey}.${key}` : key;
@@ -37,74 +57,55 @@ const AdminEditPage = () => {
     return res;
   };
 
-  // 🔹 Reconstruire l'objet
   const unflattenObject = (flatObj) => {
     const result = {};
     for (let key in flatObj) {
       const keys = key.split('.');
       keys.reduce((acc, k, i) => {
-        if (i === keys.length - 1) {
-          acc[k] = flatObj[key];
-        } else {
-          acc[k] = acc[k] || {};
-        }
+        if (i === keys.length - 1) acc[k] = flatObj[key];
+        else acc[k] = acc[k] || {};
         return acc[k];
       }, result);
     }
     return result;
   };
 
-  // 🔹 Champs modifiables pour une réservation
-  const reservationEditableFields = [
-    'date',
-    'heure',
-    'etat',
-    'description',
-    'modePaiement',
-    'prestataire',
-  ];
+  /* =======================
+      FETCH DATA
+  ======================= */
 
-  // 🔹 Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
 
-        if (!endpoint) {
-          alert('Entité non reconnue');
-          return;
-        }
+        if (!endpoint) throw new Error('Entité inconnue');
 
-        const response = await fetch(
+        const res = await fetch(
           `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        if (!response.ok) throw new Error('Erreur de récupération');
+        if (!res.ok) throw new Error('Erreur chargement');
 
-        const data = await response.json();
+        const data = await res.json();
         const dataKey = Object.keys(data).find(
           (key) => typeof data[key] === 'object'
         );
-        const rawData = dataKey ? data[dataKey] : data;
 
+        const rawData = dataKey ? data[dataKey] : data;
         setFormData(flattenObject(rawData));
 
-        // 🔹 Charger les prestataires si réservation
         if (entity === 'reservations') {
-          const prestataireRes = await fetch(
+          const pRes = await fetch(
             'https://gofind-v9ee.onrender.com/api/prestataires',
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
 
-          if (prestataireRes.ok) {
-            const prestataireData = await prestataireRes.json();
-            setPrestataires(prestataireData.prestataires || []);
+          if (pRes.ok) {
+            const pData = await pRes.json();
+            setPrestataires(pData.prestataires || []);
           }
         }
       } catch (err) {
@@ -118,7 +119,10 @@ const AdminEditPage = () => {
     fetchData();
   }, [entity, id]);
 
-  // 🔹 Handle change
+  /* =======================
+      HANDLERS
+  ======================= */
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     let val = value;
@@ -129,58 +133,60 @@ const AdminEditPage = () => {
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, field) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, profilePicture: file }));
+      setFormData((prev) => ({ ...prev, [field]: file }));
     }
   };
 
-  // 🔹 Submit
+  /* =======================
+      SUBMIT
+  ======================= */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const token = sessionStorage.getItem('token');
       const endpoint = entityToEndpoint[entity];
-
       let payload = unflattenObject(formData);
 
-      // 🔹 Upload image si c'est un fichier
-      if (payload.profilePicture instanceof File) {
-        const imageForm = new FormData();
-        imageForm.append('image', payload.profilePicture);
+      // 🔹 Upload images
+      for (const field of imageFields) {
+        if (payload[field] instanceof File) {
+          const formImg = new FormData();
+          formImg.append('image', payload[field]);
 
-        const uploadRes = await fetch(
-          'https://gofind-v9ee.onrender.com/api/upload/image',
-          {
-            method: 'POST',
-            body: imageForm,
-          }
-        );
+          const uploadRes = await fetch(
+            'https://gofind-v9ee.onrender.com/api/upload/image',
+            {
+              method: 'POST',
+              body: formImg,
+            }
+          );
 
-        if (!uploadRes.ok) throw new Error('Erreur upload image');
-        const uploadData = await uploadRes.json();
-        payload.profilePicture = uploadData.url; // remplacer par l'URL
+          if (!uploadRes.ok) throw new Error(`Upload ${field} échoué`);
+          const uploadData = await uploadRes.json();
+          payload[field] = uploadData.url;
+        }
       }
 
       // 🔹 Cas réservation
       if (entity === 'reservations') {
-        const filteredPayload = {};
-        reservationEditableFields.forEach((field) => {
-          if (payload[field] !== undefined)
-            filteredPayload[field] = payload[field];
+        const filtered = {};
+        reservationEditableFields.forEach((f) => {
+          if (payload[f] !== undefined) filtered[f] = payload[f];
         });
 
-        if (
-          filteredPayload.prestataire &&
-          typeof filteredPayload.prestataire === 'object'
-        ) {
-          filteredPayload.prestataire = filteredPayload.prestataire._id;
+        if (typeof filtered.prestataire === 'object') {
+          filtered.prestataire = filtered.prestataire._id;
         }
-        payload = filteredPayload;
+
+        payload = filtered;
       }
 
-      const response = await fetch(
+      const res = await fetch(
         `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
         {
           method: 'PUT',
@@ -192,147 +198,102 @@ const AdminEditPage = () => {
         }
       );
 
-      if (!response.ok) throw new Error('Erreur de mise à jour');
+      if (!res.ok) throw new Error('Update failed');
 
-      setSuccess(true);
-      alert('✅ Modification prise en compte!');
-      navigate('/dashboard');
+      alert('✅ Modification réussie');
+      navigate(from);
     } catch (err) {
       console.error(err);
       alert('❌ Erreur lors de la mise à jour');
     }
   };
 
-  // 🔹 Formulaire
+  /* =======================
+      RENDER FORM
+  ======================= */
+
   const renderFormFields = () => {
     if (entity === 'reservations') {
       return (
         <>
-          {/* Client */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Client</label>
-            <input
-              type="text"
-              disabled
-              value={
-                typeof formData.client === 'object'
-                  ? `${formData.client.prenom} ${formData.client.nom}`
-                  : ''
-              }
-            />
-          </div>
+          <label>Date</label>
+          <input
+            type="date"
+            name="date"
+            value={formData.date?.slice(0, 10) || ''}
+            onChange={handleChange}
+          />
 
-          {/* Date */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Date</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date?.slice(0, 10) || ''}
-              onChange={handleChange}
-            />
-          </div>
+          <label>Heure</label>
+          <input
+            type="time"
+            name="heure"
+            value={formData.heure || ''}
+            onChange={handleChange}
+          />
 
-          {/* Heure */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Heure</label>
-            <input
-              type="time"
-              name="heure"
-              value={formData.heure || ''}
-              onChange={handleChange}
-            />
-          </div>
+          <label>État</label>
+          <select
+            name="etat"
+            value={formData.etat || ''}
+            onChange={handleChange}
+          >
+            <option value="en attente">En attente</option>
+            <option value="acceptée">Acceptée</option>
+            <option value="déclinée">Déclinée</option>
+          </select>
 
-          {/* État */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>État</label>
-            <select
-              name="etat"
-              value={formData.etat || ''}
-              onChange={handleChange}
-            >
-              <option value="en attente">En attente</option>
-              <option value="acceptée">Acceptée</option>
-              <option value="déclinée">Déclinée</option>
-            </select>
-          </div>
+          <label>Prestataire</label>
+          <select
+            name="prestataire"
+            value={formData.prestataire?._id || ''}
+            onChange={handleChange}
+          >
+            <option value="">— Choisir —</option>
+            {prestataires.map((p) => (
+              <option key={p._id} value={p._id}>
+                {p.nom}
+              </option>
+            ))}
+          </select>
 
-          {/* Paiement */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Mode de paiement</label>
-            <select
-              name="modePaiement"
-              value={formData.modePaiement || ''}
-              onChange={handleChange}
-            >
-              <option value="Cash">Cash</option>
-              <option value="PayPal">PayPal</option>
-              <option value="Carte">Carte</option>
-            </select>
-          </div>
-
-          {/* Prestataire */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Prestataire</label>
-            <select
-              name="prestataire"
-              value={
-                typeof formData.prestataire === 'object'
-                  ? formData.prestataire?._id
-                  : formData.prestataire || ''
-              }
-              onChange={handleChange}
-            >
-              <option value="">— Choisissez —</option>
-              {prestataires.map((p) => (
-                <option key={p._id} value={p._id}>
-                  {p.nom}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Description */}
-          <div style={{ marginBottom: '1rem' }}>
-            <label>Description</label>
-            <textarea
-              name="description"
-              rows={4}
-              value={formData.description || ''}
-              onChange={handleChange}
-            />
-          </div>
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={formData.description || ''}
+            onChange={handleChange}
+          />
         </>
       );
     }
 
-    // 🔹 Autres entités
     return Object.entries(formData).map(([key, value]) => {
       if (
-        ['_id', 'createdAt', 'updatedAt', '__v', 'password', 'role'].includes(
+        ['_id', '__v', 'password', 'role', 'createdAt', 'updatedAt'].includes(
           key
         )
       )
         return null;
 
-      if (key === 'profilePicture') {
+      if (imageFields.includes(key)) {
         return (
-          <div key={key} style={{ marginBottom: '1rem' }}>
+          <div key={key}>
             <label>{key}</label>
-            <input type="file" onChange={handleFileChange} accept="image/*" />
-            {formData.profilePicture && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, key)}
+            />
+            {value && (
               <img
-                src={
-                  typeof formData.profilePicture === 'string'
-                    ? formData.profilePicture
-                    : URL.createObjectURL(formData.profilePicture)
-                }
-                alt="Preview"
+                src={value instanceof File ? URL.createObjectURL(value) : value}
+                alt={key}
                 style={{
-                  width: '50px',
-                  borderRadius: '30px',
-                  marginTop: '5px',
+                  width: 80,
+                  height: 80,
+                  objectFit: 'cover',
+                  marginTop: 8,
+                  borderRadius: 8,
                 }}
               />
             )}
@@ -341,7 +302,7 @@ const AdminEditPage = () => {
       }
 
       return (
-        <div key={key} style={{ marginBottom: '1rem' }}>
+        <div key={key}>
           <label>{key}</label>
           <input name={key} value={value ?? ''} onChange={handleChange} />
         </div>
@@ -353,23 +314,24 @@ const AdminEditPage = () => {
 
   return (
     <section className="admineditpage">
-      <h1 className="tittle">Modifier {entity}</h1>
-      <div className="form-card">
-        <form onSubmit={handleSubmit}>
-          {renderFormFields()}
-          <button className="btn-secondary" type="submit">
+      <h1>Modifier {entity}</h1>
+
+      <form onSubmit={handleSubmit}>
+        {renderFormFields()}
+
+        <div className="admin-edit-btn">
+          <button type="submit" className="btn-secondary">
             Enregistrer
           </button>
           <button
-            className="btn-primary"
             type="button"
-            onClick={() => navigate('/dashboard')}
+            className="btn-primary"
+            onClick={() => navigate(from)}
           >
             Retour
           </button>
-          {success && <p style={{ color: 'green' }}>Modification réussie</p>}
-        </form>
-      </div>
+        </div>
+      </form>
     </section>
   );
 };
