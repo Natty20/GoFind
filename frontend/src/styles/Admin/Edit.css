@@ -22,3 +22,17 @@
 .admin-edit-btn button {
   width: 70% !important;
 }
+
+@media (max-width: 480px) {
+  .admin-edit-btn button {
+    width: 60%;
+    margin: 1rem 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-edit-btn button {
+    width: 60%;
+    margin: 1rem 5rem;
+  }
+}

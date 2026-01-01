@@ -5,7 +5,8 @@
   margin: 6rem 0 0 0;
 }
 
-.provider-image {
+.admin-provider-image,
+.admin-prestation-image {
   width: 15% !important;
   height: 10% !important;
   object-fit: cover !important;
@@ -193,5 +194,11 @@
   button.dashboard.btn-primary {
     width: 90%;
     margin: 0.5rem;
+  }
+  .admin-prestation-image {
+    height: 20%;
+    width: 30%;
+    object-fit: cover;
+    border-radius: 50%;
   }
 }

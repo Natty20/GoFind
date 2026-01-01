@@ -83,8 +83,10 @@ h3 {
 
 .category img {
   width: 100%;
-  max-width: 600px;
+  max-width: 30rem;
   margin-top: 1rem;
+  max-height: 20rem;
+  object-fit: cover;
 }
 
 /* Artisanat and Photographie Exception Sections */
@@ -147,9 +149,10 @@ h3 {
 
 .artisanat-image,
 .photographie-image {
+  height: 50%;
+  margin-top: 7rem;
   width: 100%;
-  height: auto;
-  margin-top: 20px;
+  object-fit: cover;
 }
 
 /* Right Background Image with Overlay */
@@ -157,9 +160,11 @@ h3 {
   flex: 1;
   background-size: cover;
   background-position: center;
+  max-height: 35rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 35rem;
 }
 
 .right-overlay {

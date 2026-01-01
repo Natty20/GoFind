@@ -158,8 +158,10 @@ const SousPrestation = () => {
                 </div>
                 <Link to={`/profil/${prestataire._id}`}>
                   <div className="prestataire-info">
-                    <h3>{prestataire.nom}</h3>
-                    <p>{prestataire.phone}</p>
+                    <h3>
+                      {prestataire.nom} {prestataire.prenom}
+                    </h3>
+                    <p>{prestataire.address}</p>
                     <p>{prestataire.realisations}</p>
                   </div>
                 </Link>

@@ -101,7 +101,7 @@ const Prestation = () => {
             <>
               <div className="hero">
                 <img
-                  src={prestationActive.profileImage || 'default.jpg'}
+                  src={prestationActive.backgroundImage || 'default.jpg'}
                   alt={prestationActive.shortDescription}
                   className="hero-image"
                 />

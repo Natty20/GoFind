@@ -13,7 +13,7 @@
 }
 
 .categorie {
-  width: 15%;
+  width: auto;
   background-color: white;
   border: 1px solid var(--main-color);
   color: var(--main-color);
@@ -30,6 +30,7 @@
 .categorie.active {
   background-color: var(--main-color);
   color: var(--secondary-color);
+  width: auto;
 }
 
 .categorie.active:hover {
@@ -47,6 +48,8 @@
 
 .hero-image {
   width: 50%;
+  height: 40rem;
+  object-fit: fill;
 }
 
 .hero-text {
@@ -174,6 +177,7 @@
 
   .hero-image {
     width: 90%;
+    max-height: 25rem;
   }
 
   .hero-text {
@@ -190,6 +194,9 @@
 
   .services h2 {
     font-size: 0.9rem;
+  }
+  .service-text {
+    width: auto;
   }
 
   .service-text p {

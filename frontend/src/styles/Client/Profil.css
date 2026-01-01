@@ -18,6 +18,10 @@
   box-shadow: 0 2px 10px rgb(101, 99, 99);
 }
 
+.provider-details {
+  max-width: 50rem;
+}
+
 .details {
   display: flex;
 }
@@ -230,5 +234,11 @@
   .tabs button {
     font-size: 14px;
     padding: 10px;
+  }
+  .prestation-item ul li {
+    margin: 0;
+  }
+  .provider-calendar {
+    margin: 0;
   }
 }

@@ -42,22 +42,20 @@ const ChoixCompte = () => {
       </div>
 
       <div className="choix-right-panel">
-        <div>
-          <h2>Nous sommes plus qu’une simple entreprise</h2>
-          <p>
-            Nous construisons des relations durables basées sur la confiance,
-            l’innovation et l’humain. Notre mission va bien au-delà d’un simple
-            service : nous créons de la valeur pour chaque personne que nous
-            accompagnons.
-          </p>
+        <h2>Nous sommes plus qu’une simple entreprise</h2>
+        <p>
+          Nous construisons des relations durables basées sur la confiance,
+          l’innovation et l’humain. Notre mission va bien au-delà d’un simple
+          service : nous créons de la valeur pour chaque personne que nous
+          accompagnons.
+        </p>
 
-          <button
-            className="btn-secondary"
-            onClick={() => navigate('/login_admin')}
-          >
-            Admin login
-          </button>
-        </div>
+        <button
+          className="btn-secondary"
+          onClick={() => navigate('/login_admin')}
+        >
+          Admin login
+        </button>
       </div>
     </main>
   );

@@ -228,7 +228,7 @@ const Dashboard = () => {
                           <img
                             src={item.profileImage}
                             alt={item.shortDescription}
-                            className="provider-image"
+                            className="admin-provider-image"
                           />
                           <span>
                             <strong>Nom:</strong> {item.nom}
@@ -243,7 +243,7 @@ const Dashboard = () => {
                           <img
                             src={item.profileImage}
                             alt={item.nom}
-                            className="provider-image"
+                            className="admin-prestation-image"
                           />
                           <span>
                             <strong>Nom:</strong> {item.nom}

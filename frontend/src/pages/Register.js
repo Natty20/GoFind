@@ -36,9 +36,7 @@ const CityInput = ({ value, onChange }) => {
     }
 
     try {
-      const res = await fetch(
-        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
-      );
+      const res = await fetch(`/api/cities?q=${encodeURIComponent(val)}`);
       const data = await res.json();
       setSuggestions(data.features.map((f) => f.properties.city));
     } catch (err) {
