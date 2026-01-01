@@ -30,7 +30,7 @@
 .categorie.active {
   background-color: var(--main-color);
   color: var(--secondary-color);
-  width: auto;
+  /* width: auto; */
 }
 
 .categorie.active:hover {
@@ -164,7 +164,7 @@
   }
 
   .categorie {
-    width: 45%;
+    width: 47.5%;
     padding: 0.5rem 0.5rem;
     margin: 0;
     /* color: black; */

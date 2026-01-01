@@ -102,18 +102,20 @@ h3 {
 
 .exeption-container {
   display: flex;
+  max-height: 40rem;
 }
 
 .artisanat-left,
 .photographie-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: whitesmoke;
-  text-align: center;
+  background-color: #f5f5f5;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  /* justify-content: center; */
   padding: 20px;
+  text-align: center;
+  max-height: fit-content;
 }
 
 .artisanat-left p,
@@ -150,9 +152,9 @@ h3 {
 .artisanat-image,
 .photographie-image {
   height: 50%;
-  margin-top: 7rem;
-  width: 100%;
+  margin-top: 3.5rem;
   object-fit: cover;
+  width: 100%;
 }
 
 /* Right Background Image with Overlay */

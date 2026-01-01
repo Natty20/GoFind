@@ -12,13 +12,13 @@ const AdminAddPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  /* 🔹 data réservation */
+  /* ------------------ DATA ------------------ */
   const [clients, setClients] = useState([]);
   const [prestataires, setPrestataires] = useState([]);
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState({});
+  const [availablePrestataires, setAvailablePrestataires] = useState([]);
 
-  /* 🔹 champs image */
   const imageFields = [
     'profilePicture',
     'profileImage',
@@ -35,7 +35,7 @@ const AdminAddPage = () => {
     reservations: 'reservations',
   };
 
-  /* 🔐 sécurité */
+  /* ------------------ SÉCURITÉ ------------------ */
   useEffect(() => {
     if (!adminId || !token) {
       alert('Accès non autorisé');
@@ -43,7 +43,7 @@ const AdminAddPage = () => {
     }
   }, [adminId, token, navigate]);
 
-  /* 🔹 champs par défaut (hors réservation) */
+  /* ------------------ INIT FORM DATA ------------------ */
   useEffect(() => {
     if (entity === 'reservations') return;
 
@@ -56,30 +56,21 @@ const AdminAddPage = () => {
         address: '',
         profilePicture: null,
       },
-      prestations: {
-        nom: '',
-        description: '',
-      },
-      sousprestations: {
-        nom: '',
-        prix: '',
-      },
+      prestations: { nom: '', description: '' },
+      sousprestations: { nom: '', prix: '' },
       clients: {
         nom: '',
         prenom: '',
         email: '',
         phone: '',
         address: '',
+        profilePicture: null,
       },
     };
-
-    if (defaultFields[entity]) {
-      setFormData(defaultFields[entity]);
-    }
+    if (defaultFields[entity]) setFormData(defaultFields[entity]);
   }, [entity]);
 
-  /* ---------------- DATA RESERVATION ---------------- */
-
+  /* ------------------ FETCH DATA RESERVATION ------------------ */
   useEffect(() => {
     if (entity !== 'reservations') return;
 
@@ -95,7 +86,9 @@ const AdminAddPage = () => {
             axios.get('https://gofind-v9ee.onrender.com/api/prestataires', {
               headers,
             }),
-            axios.get('https://gofind-v9ee.onrender.com/api/prestations'),
+            axios.get('https://gofind-v9ee.onrender.com/api/prestations', {
+              headers,
+            }),
             axios.get('https://gofind-v9ee.onrender.com/api/sousprestations', {
               headers,
             }),
@@ -117,19 +110,14 @@ const AdminAddPage = () => {
         alert('Erreur chargement données');
       }
     };
-
     fetchAll();
   }, [entity, token]);
 
-  /* ---------------- HANDLERS ---------------- */
-
+  /* ------------------ HANDLERS ------------------ */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    let val = value;
-
-    if (type === 'number') val = Number(value);
-    if (type === 'checkbox') val = checked;
-
+    let val =
+      type === 'number' ? Number(value) : type === 'checkbox' ? checked : value;
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
@@ -142,36 +130,39 @@ const AdminAddPage = () => {
     setFormData((prev) => ({
       ...prev,
       prestationId,
-      sousPrestations: [],
+      sousPrestationsSelected: [],
+      prestataireId: '',
     }));
+
+    // reset prestataires disponibles
+    setAvailablePrestataires([]);
   };
 
   const handleSousPrestationsChange = (e) => {
-    const values = Array.from(e.target.selectedOptions, (o) => o.value);
-    setFormData((prev) => ({ ...prev, sousPrestations: values }));
+    const selectedSP = Array.from(e.target.selectedOptions, (o) => o.value);
+    setFormData((prev) => ({ ...prev, sousPrestationsSelected: selectedSP }));
+
+    // filtrer les prestataires disponibles pour les sous-prestations sélectionnées
+    const filtered = prestataires.filter((p) =>
+      p.sousPrestations.some((spId) => selectedSP.includes(spId))
+    );
+    setAvailablePrestataires(filtered);
   };
 
-  /* ---------------- IMAGE UPLOAD ---------------- */
-
+  /* ------------------ UPLOAD IMAGE ------------------ */
   const uploadImage = async (file) => {
     const data = new FormData();
     data.append('image', file);
-
     const res = await fetch(
       'https://gofind-v9ee.onrender.com/api/upload/image',
-      {
-        method: 'POST',
-        body: data,
-      }
+      { method: 'POST', body: data }
     );
-
     if (!res.ok) throw new Error('Erreur upload image');
     const result = await res.json();
     return result.url;
   };
 
-  /* ---------------- VALIDATION RESERVATION ---------------- */
-
+  /* ------------------ VALIDATION RESERVATION ------------------ */
   const validateReservation = () => {
     if (
       !formData.clientId ||
@@ -183,26 +174,21 @@ const AdminAddPage = () => {
       alert('❌ Champs obligatoires manquants');
       return false;
     }
-
-    const selectedDate = new Date(`${formData.date}T${formData.heure}`);
-    if (selectedDate < new Date()) {
+    if (new Date(`${formData.date}T${formData.heure}`) < new Date()) {
       alert('❌ Date invalide');
       return false;
     }
-
     return true;
   };
 
-  /* ---------------- SUBMIT ---------------- */
-
+  /* ------------------ SUBMIT ------------------ */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       let payload = { ...formData };
 
-      /* 🔹 upload images */
+      // upload images
       for (const key of imageFields) {
         if (payload[key] instanceof File) {
           payload[key] = await uploadImage(payload[key]);
@@ -211,7 +197,6 @@ const AdminAddPage = () => {
 
       const endpoint = entityToEndpoint[entity];
 
-      /* 🔹 CAS RESERVATION */
       if (entity === 'reservations') {
         if (!validateReservation()) return;
 
@@ -226,7 +211,7 @@ const AdminAddPage = () => {
           prestations: [
             {
               prestationId: formData.prestationId,
-              sousPrestations: formData.sousPrestations || [],
+              sousPrestations: formData.sousPrestationsSelected || [],
             },
           ],
         };
@@ -257,14 +242,12 @@ const AdminAddPage = () => {
     }
   };
 
-  /* ---------------- UI ---------------- */
-
+  /* ------------------ UI ------------------ */
   const renderGenericForm = () => (
     <>
       {Object.entries(formData).map(([key, value]) => (
-        <div key={key}>
-          <label className="label">{key}</label>
-
+        <div key={key} style={{ marginBottom: '1rem' }}>
+          <label>{key}</label>
           {imageFields.includes(key) ? (
             <input
               type="file"
@@ -286,7 +269,7 @@ const AdminAddPage = () => {
 
   const renderReservationForm = () => (
     <section className="champs-reserva">
-      <label className="label">Client</label>
+      <label>Client</label>
       <select name="clientId" onChange={handleChange} required>
         <option value="">-- choisir --</option>
         {clients.map((c) => (
@@ -296,17 +279,7 @@ const AdminAddPage = () => {
         ))}
       </select>
 
-      <label className="label">Prestataire</label>
-      <select name="prestataireId" onChange={handleChange} required>
-        <option value="">-- choisir --</option>
-        {prestataires.map((p) => (
-          <option key={p._id} value={p._id}>
-            {p.nom} {p.prenom}
-          </option>
-        ))}
-      </select>
-
-      <label className="label">Prestation</label>
+      <label>Prestation</label>
       <select onChange={handlePrestationChange} required>
         <option value="">-- choisir --</option>
         {prestations.map((p) => (
@@ -316,7 +289,7 @@ const AdminAddPage = () => {
         ))}
       </select>
 
-      <label className="label">Sous-prestations</label>
+      <label>Sous-prestations</label>
       <select multiple onChange={handleSousPrestationsChange}>
         {(sousPrestations[formData.prestationId] || []).map((sp) => (
           <option key={sp._id} value={sp._id}>
@@ -325,13 +298,23 @@ const AdminAddPage = () => {
         ))}
       </select>
 
-      <label className="label">Date</label>
+      <label>Prestataire</label>
+      <select name="prestataireId" onChange={handleChange} required>
+        <option value="">-- choisir --</option>
+        {availablePrestataires.map((p) => (
+          <option key={p._id} value={p._id}>
+            {p.nom} {p.prenom}
+          </option>
+        ))}
+      </select>
+
+      <label>Date</label>
       <input type="date" name="date" onChange={handleChange} required />
 
-      <label className="label">Heure</label>
+      <label>Heure</label>
       <input type="time" name="heure" onChange={handleChange} required />
 
-      <label className="label">Description</label>
+      <label>Description</label>
       <textarea name="description" onChange={handleChange} />
     </section>
   );

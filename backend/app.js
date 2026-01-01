@@ -28,18 +28,15 @@ app.use(
 
         scriptSrc: [
           "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
           "https://js.stripe.com",
         ],
 
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
-          "https://cdnjs.cloudflare.com",
-        ],
-
-        fontSrc: [
-          "'self'",
-          "https://cdnjs.cloudflare.com",
+          "https://fonts.googleapis.com",
         ],
 
         imgSrc: [
@@ -47,6 +44,7 @@ app.use(
           "data:",
           "blob:",
           "https://res.cloudinary.com",
+          "https://stripe.com",
         ],
 
         connectSrc: [
@@ -58,12 +56,20 @@ app.use(
         ],
 
         frameSrc: [
+          "'self'",
           "https://js.stripe.com",
+          "https://hooks.stripe.com",
+        ],
+
+        fontSrc: [
+          "'self'",
+          "https://fonts.gstatic.com",
         ],
       },
     },
   })
 );
+
 // Github pages
 const allowedOrigins = [
   "https://natty20.github.io",

@@ -25,14 +25,14 @@
 
 @media (max-width: 480px) {
   .admin-edit-btn button {
-    width: 60%;
-    margin: 1rem 5rem;
+    width: 60% !important;
+    margin: 1rem 5rem !important;
   }
 }
 
 @media (max-width: 768px) {
   .admin-edit-btn button {
-    width: 60%;
-    margin: 1rem 5rem;
+    width: 60% !important;
+    margin: 1rem 5rem !important;
   }
 }
