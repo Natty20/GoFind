@@ -12,13 +12,13 @@ const AdminAddPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  /* ------------------ DATA ------------------ */
+  /* 🔹 données réservation */
   const [clients, setClients] = useState([]);
-  const [prestataires, setPrestataires] = useState([]);
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState({});
   const [availablePrestataires, setAvailablePrestataires] = useState([]);
 
+  /* 🔹 champs image */
   const imageFields = [
     'profilePicture',
     'profileImage',
@@ -35,7 +35,7 @@ const AdminAddPage = () => {
     reservations: 'reservations',
   };
 
-  /* ------------------ SÉCURITÉ ------------------ */
+  /* ---------------- sécurité ---------------- */
   useEffect(() => {
     if (!adminId || !token) {
       alert('Accès non autorisé');
@@ -43,7 +43,7 @@ const AdminAddPage = () => {
     }
   }, [adminId, token, navigate]);
 
-  /* ------------------ INIT FORM DATA ------------------ */
+  /* ---------------- initialisation formulaires génériques ---------------- */
   useEffect(() => {
     if (entity === 'reservations') return;
 
@@ -56,21 +56,27 @@ const AdminAddPage = () => {
         address: '',
         profilePicture: null,
       },
-      prestations: { nom: '', description: '' },
-      sousprestations: { nom: '', prix: '' },
+      prestations: {
+        nom: '',
+        description: '',
+      },
+      sousprestations: {
+        nom: '',
+        prix: '',
+      },
       clients: {
         nom: '',
         prenom: '',
         email: '',
         phone: '',
         address: '',
-        profilePicture: null,
       },
     };
+
     if (defaultFields[entity]) setFormData(defaultFields[entity]);
   }, [entity]);
 
-  /* ------------------ FETCH DATA RESERVATION ------------------ */
+  /* ---------------- fetch données réservations ---------------- */
   useEffect(() => {
     if (entity !== 'reservations') return;
 
@@ -78,26 +84,20 @@ const AdminAddPage = () => {
 
     const fetchAll = async () => {
       try {
-        const [clientsRes, prestatairesRes, prestationsRes, sousRes] =
-          await Promise.all([
-            axios.get('https://gofind-v9ee.onrender.com/api/auth/clients', {
-              headers,
-            }),
-            axios.get('https://gofind-v9ee.onrender.com/api/prestataires', {
-              headers,
-            }),
-            axios.get('https://gofind-v9ee.onrender.com/api/prestations', {
-              headers,
-            }),
-            axios.get('https://gofind-v9ee.onrender.com/api/sousprestations', {
-              headers,
-            }),
-          ]);
+        const [clientsRes, prestationsRes, sousRes] = await Promise.all([
+          axios.get('https://gofind-v9ee.onrender.com/api/auth/clients', {
+            headers,
+          }),
+          axios.get('https://gofind-v9ee.onrender.com/api/prestations'),
+          axios.get('https://gofind-v9ee.onrender.com/api/sousprestations', {
+            headers,
+          }),
+        ]);
 
         setClients(clientsRes.data.clients || []);
-        setPrestataires(prestatairesRes.data.prestataires || []);
         setPrestations(prestationsRes.data.prestations || []);
 
+        // map prestationId -> sous prestations
         const map = {};
         prestationsRes.data.prestations.forEach((p) => {
           map[p._id] = sousRes.data.sousprestations.filter(
@@ -110,14 +110,16 @@ const AdminAddPage = () => {
         alert('Erreur chargement données');
       }
     };
+
     fetchAll();
   }, [entity, token]);
 
-  /* ------------------ HANDLERS ------------------ */
+  /* ---------------- handlers génériques ---------------- */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    let val =
-      type === 'number' ? Number(value) : type === 'checkbox' ? checked : value;
+    let val = value;
+    if (type === 'number') val = Number(value);
+    if (type === 'checkbox') val = checked;
     setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
@@ -125,31 +127,53 @@ const AdminAddPage = () => {
     setFormData((prev) => ({ ...prev, [key]: file }));
   };
 
+  /* ---------------- handlers réservation ---------------- */
   const handlePrestationChange = (e) => {
     const prestationId = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      prestationId,
-      sousPrestationsSelected: [],
-      prestataireId: '',
-    }));
-
-    // reset prestataires disponibles
-    setAvailablePrestataires([]);
+    setFormData((prev) => ({ ...prev, prestationId, sousPrestations: [] }));
+    setAvailablePrestataires([]); // reset prestataires disponibles
   };
 
-  const handleSousPrestationsChange = (e) => {
-    const selectedSP = Array.from(e.target.selectedOptions, (o) => o.value);
-    setFormData((prev) => ({ ...prev, sousPrestationsSelected: selectedSP }));
+  const handleSousPrestationsChange = async (e) => {
+    const selectedIds = Array.from(e.target.selectedOptions, (o) => o.value);
+    setFormData((prev) => ({ ...prev, sousPrestations: selectedIds }));
 
-    // filtrer les prestataires disponibles pour les sous-prestations sélectionnées
-    const filtered = prestataires.filter((p) =>
-      p.sousPrestations.some((spId) => selectedSP.includes(spId))
-    );
-    setAvailablePrestataires(filtered);
+    // récupérer les prestataires disponibles
+    try {
+      const selectedSousPrestations = selectedIds
+        .map((id) =>
+          Object.values(sousPrestations)
+            .flat()
+            .find((sp) => sp._id === id)
+        )
+        .filter(Boolean);
+
+      const prestataireIds = [
+        ...new Set(
+          selectedSousPrestations.flatMap((sp) => sp.prestataires || [])
+        ),
+      ];
+
+      if (prestataireIds.length === 0) {
+        setAvailablePrestataires([]);
+        return;
+      }
+
+      const headers = { Authorization: `Bearer ${token}` };
+      const { data } = await axios.post(
+        'https://gofind-v9ee.onrender.com/api/prestataires/multiple',
+        { ids: prestataireIds },
+        { headers }
+      );
+
+      setAvailablePrestataires(data.prestataires || []);
+    } catch (err) {
+      console.error('Erreur récupération prestataires:', err);
+      setAvailablePrestataires([]);
+    }
   };
 
-  /* ------------------ UPLOAD IMAGE ------------------ */
+  /* ---------------- upload image ---------------- */
   const uploadImage = async (file) => {
     const data = new FormData();
     data.append('image', file);
@@ -162,7 +186,7 @@ const AdminAddPage = () => {
     return result.url;
   };
 
-  /* ------------------ VALIDATION RESERVATION ------------------ */
+  /* ---------------- validation réservation ---------------- */
   const validateReservation = () => {
     if (
       !formData.clientId ||
@@ -174,17 +198,19 @@ const AdminAddPage = () => {
       alert('❌ Champs obligatoires manquants');
       return false;
     }
-    if (new Date(`${formData.date}T${formData.heure}`) < new Date()) {
+    const selectedDate = new Date(`${formData.date}T${formData.heure}`);
+    if (selectedDate < new Date()) {
       alert('❌ Date invalide');
       return false;
     }
     return true;
   };
 
-  /* ------------------ SUBMIT ------------------ */
+  /* ---------------- submit ---------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       let payload = { ...formData };
 
@@ -211,7 +237,7 @@ const AdminAddPage = () => {
           prestations: [
             {
               prestationId: formData.prestationId,
-              sousPrestations: formData.sousPrestationsSelected || [],
+              sousPrestations: formData.sousPrestations || [],
             },
           ],
         };
@@ -242,12 +268,12 @@ const AdminAddPage = () => {
     }
   };
 
-  /* ------------------ UI ------------------ */
+  /* ---------------- UI ---------------- */
   const renderGenericForm = () => (
     <>
       {Object.entries(formData).map(([key, value]) => (
-        <div key={key} style={{ marginBottom: '1rem' }}>
-          <label>{key}</label>
+        <div key={key}>
+          <label className="label">{key}</label>
           {imageFields.includes(key) ? (
             <input
               type="file"
@@ -298,7 +324,7 @@ const AdminAddPage = () => {
         ))}
       </select>
 
-      <label>Prestataire</label>
+      <label>Prestataire disponible</label>
       <select name="prestataireId" onChange={handleChange} required>
         <option value="">-- choisir --</option>
         {availablePrestataires.map((p) => (
@@ -322,7 +348,6 @@ const AdminAddPage = () => {
   return (
     <div className="adminaddpage" style={{ maxWidth: 700, margin: 'auto' }}>
       <h1>Ajouter {entity}</h1>
-
       <form onSubmit={handleSubmit}>
         {entity === 'reservations'
           ? renderReservationForm()
