@@ -15280,7 +15280,7 @@
                   className: "text-center",
                   children: [
                     (0, Me.jsx)("img", {
-                      src: "/images/GF-logo.png",
+                      src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                       style: { width: "120px" },
                       alt: "logo",
                     }),
@@ -15421,7 +15421,7 @@
                     className: "text-center",
                     children: [
                       (0, Me.jsx)("img", {
-                        src: "/images/GF-logo.png",
+                        src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                         style: { width: "120px" },
                         alt: "logo",
                       }),
@@ -15652,7 +15652,7 @@
                     className: "text-center",
                     children: [
                       (0, Me.jsx)("img", {
-                        src: "/images/GF-logo.png",
+                        src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                         style: { width: "120px" },
                         alt: "logo",
                       }),
@@ -16034,7 +16034,7 @@
                       children: (0, Me.jsx)(Ee, {
                         to: "/",
                         children: (0, Me.jsx)("img", {
-                          src: "/images/GF-logo.png",
+                          src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                           alt: "GoFind - Plateforme de mise en relation entre clients et prestataires",
                         }),
                       }),
@@ -16199,7 +16199,7 @@
                 className: "gofind-presentation",
                 children: [
                   (0, Me.jsx)("img", {
-                    src: "/images/GF-logo.png",
+                    src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                     alt: "GoFind - Plateforme de mise en relation entre clients et prestataires",
                   }),
                   (0, Me.jsx)("h2", {
@@ -16907,7 +16907,7 @@
                     className: "text-center",
                     children: [
                       (0, Me.jsx)("img", {
-                        src: "/images/GF-logo.png",
+                        src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                         style: { width: "120px" },
                         alt: "logo",
                       }),
@@ -17539,7 +17539,7 @@
                     className: "text-center",
                     children: [
                       (0, Me.jsx)("img", {
-                        src: "/images/GF-logo.png",
+                        src: "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
                         style: { width: "120px" },
                         alt: "logo",
                       }),

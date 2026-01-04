@@ -38,6 +38,7 @@ router.put(
 router.delete("/:id", authenticateUser, authorizeAdmin, deletePrestataire);
 router.post("/multiple", getMultiplePrestataires);
 
+
 // router.post("/:id/realisations", addRealisation);
 // router.delete("/:id/realisations/:realisationId", deleteRealisation);
 // router.post(

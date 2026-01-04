@@ -14,6 +14,7 @@ const reservationRoutes = require("./routes/reservationRoutes");
 const stripeRoutes = require("./routes/stripe");
 const uploadRoutes = require("./routes/uploadRoutes");
 const citiesRoutes = require("./routes/citiesRoutes");
+const searchRoutes = require("./routes/searchRoutes");
 
 connectDB();
 
@@ -22,21 +23,32 @@ const app = express();
 /* ===SECURITY / CSP (HELMET)=== */
 app.use(
   helmet({
+    crossOriginEmbedderPolicy: false, // IMPORTANT pour Stripe
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
 
         scriptSrc: [
           "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
+          "'unsafe-inline'", // Stripe injecte du inline
+          "https://js.stripe.com",
+        ],
+
+        scriptSrcElem: [
+          "'self'",
           "https://js.stripe.com",
         ],
 
         styleSrc: [
           "'self'",
+          "'unsafe-inline'", // MDB + React
+          "https://cdnjs.cloudflare.com",
+        ],
+
+        styleSrcElem: [
+          "'self'",
           "'unsafe-inline'",
-          "https://fonts.googleapis.com",
+          "https://cdnjs.cloudflare.com",
         ],
 
         imgSrc: [
@@ -44,7 +56,7 @@ app.use(
           "data:",
           "blob:",
           "https://res.cloudinary.com",
-          "https://stripe.com",
+          "https://cdn.pixabay.com",
         ],
 
         connectSrc: [
@@ -56,19 +68,19 @@ app.use(
         ],
 
         frameSrc: [
-          "'self'",
           "https://js.stripe.com",
-          "https://hooks.stripe.com",
         ],
 
         fontSrc: [
           "'self'",
-          "https://fonts.gstatic.com",
+          "https://cdnjs.cloudflare.com",
+          "data:",
         ],
       },
     },
   })
 );
+
 
 // Github pages
 const allowedOrigins = [
@@ -111,6 +123,8 @@ app.use("/api/reservations", reservationRoutes);
 app.use("/api/stripe", stripeRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/cities", citiesRoutes);
+app.use('/api/search', searchRoutes);
+
 
 // error pour uploads
 app.use((err, req, res, next) => {

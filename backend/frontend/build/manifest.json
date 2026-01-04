@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/images/GF-logo",
+      "src": "https://res.cloudinary.com/de1gtpqkk/image/upload/v1767488501/GF-logo_syghum.png",
       "type": "image/png",
       "sizes": "192x192"
     },

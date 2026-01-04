@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Users } from 'lucide-react';
+import axios from 'axios';
 import '../styles/All/Navbar.css';
 
 const Navbar = () => {
@@ -10,6 +11,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // === Recherche ===
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');
@@ -25,7 +31,6 @@ const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
-  // Déterminer le rôle et l'utilisateur
   let user = null;
   let role = '';
   if (client) {
@@ -38,6 +43,40 @@ const Navbar = () => {
     user = admin;
     role = 'admin';
   }
+
+  // === Autocomplete recherche ===
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!query) {
+        setSuggestions([]);
+        return;
+      }
+      try {
+        const { data } = await axios.get(
+          `https://gofind-v9ee.onrender.com/api/search/autocomplete?query=${encodeURIComponent(
+            query
+          )}`
+        );
+        setSuggestions(data.results || []);
+        setShowSuggestions(true);
+      } catch (err) {
+        console.error('Erreur autocomplete:', err);
+      }
+    };
+
+    const debounce = setTimeout(fetchSuggestions, 300); // 300ms debounce
+    return () => clearTimeout(debounce);
+  }, [query]);
+
+  const handleSelectSuggestion = (item) => {
+    // Naviguer vers la page de recherche ou prestataire
+    if (item.type === 'prestataire') navigate(`/prestataire/${item._id}`);
+    else if (item.type === 'prestation') navigate(`/prestation/${item._id}`);
+    else if (item.type === 'sousprestation')
+      navigate(`/sousprestation/${item._id}`);
+    setQuery('');
+    setShowSuggestions(false);
+  };
 
   return (
     <div className="navpage">
@@ -63,15 +102,13 @@ const Navbar = () => {
             <span></span>
           </div>
 
-          {/* Desktop links */}
+          {/* Navbar gauche */}
           <div className="navbar-left">
-            {/* {role === 'client' && <Link to="/rendezvous">Mes Rendez-vous</Link>} */}
             {role === 'prestataire' && (
               <>
                 <Link to="/reservations" onClick={closeMenu}>
                   Réservations
                 </Link>
-                {/* <Link to="/mes-prestations">Mes Prestations</Link> */}
               </>
             )}
             {role === 'admin' && (
@@ -81,11 +118,40 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Navbar droite */}
           <div className="navbar-right">
             {role !== 'admin' && (
               <Link to="/prestation" onClick={closeMenu}>
                 Prestations
               </Link>
+            )}
+
+            {/* === Champ recherche === */}
+            {role !== 'admin' && (
+              <div className="navbar-search">
+                <input
+                  type="text"
+                  placeholder="Rechercher prestataire, prestation, ville..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onFocus={() => setShowSuggestions(true)}
+                />
+                {showSuggestions && suggestions.length > 0 && (
+                  <ul className="search-suggestions">
+                    {suggestions.map((item) => (
+                      <li
+                        key={item._id}
+                        onClick={() => handleSelectSuggestion(item)}
+                      >
+                        {item.nom}{' '}
+                        {item.type === 'prestataire'
+                          ? `(Prestataire)`
+                          : item.type}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             )}
 
             {user ? (
@@ -110,19 +176,13 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile menu (tout rôle) */}
+          {/* Mobile menu */}
           {menuOpen && (
             <div className="navbar-mobile-links">
-              {/* {role === 'client' && (
-                <Link to="/rendezvous">Mes Rendez-vous</Link>
-              )} */}
               {role === 'prestataire' && (
                 <>
                   <Link to="/reservations" onClick={closeMenu}>
                     Réservations
-                  </Link>
-                  <Link to="/mes-prestations" onClick={closeMenu}>
-                    Mes Prestations
                   </Link>
                 </>
               )}
@@ -131,7 +191,6 @@ const Navbar = () => {
                   Tableau de Bord
                 </Link>
               )}
-
               {role !== 'admin' && (
                 <Link to="/prestation" onClick={closeMenu}>
                   Prestations
