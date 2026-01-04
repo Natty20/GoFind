@@ -44,40 +44,6 @@ const Navbar = () => {
     role = 'admin';
   }
 
-  // === Autocomplete recherche ===
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      if (!query) {
-        setSuggestions([]);
-        return;
-      }
-      try {
-        const { data } = await axios.get(
-          `https://gofind-v9ee.onrender.com/api/search/autocomplete?query=${encodeURIComponent(
-            query
-          )}`
-        );
-        setSuggestions(data.results || []);
-        setShowSuggestions(true);
-      } catch (err) {
-        console.error('Erreur autocomplete:', err);
-      }
-    };
-
-    const debounce = setTimeout(fetchSuggestions, 300); // 300ms debounce
-    return () => clearTimeout(debounce);
-  }, [query]);
-
-  const handleSelectSuggestion = (item) => {
-    // Naviguer vers la page de recherche ou prestataire
-    if (item.type === 'prestataire') navigate(`/prestataire/${item._id}`);
-    else if (item.type === 'prestation') navigate(`/prestation/${item._id}`);
-    else if (item.type === 'sousprestation')
-      navigate(`/sousprestation/${item._id}`);
-    setQuery('');
-    setShowSuggestions(false);
-  };
-
   return (
     <div className="navpage">
       <nav className="navbar">
@@ -117,34 +83,6 @@ const Navbar = () => {
               </Link>
             )}
           </div>
-
-          {/* === Champ recherche === */}
-          {role !== 'admin' && (
-            <div className="navbar-search">
-              <input
-                type="text"
-                placeholder="Rechercher prestataire, prestation, ville..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
-              />
-              {showSuggestions && suggestions.length > 0 && (
-                <ul className="search-suggestions">
-                  {suggestions.map((item) => (
-                    <li
-                      key={item._id}
-                      onClick={() => handleSelectSuggestion(item)}
-                    >
-                      {item.nom}{' '}
-                      {item.type === 'prestataire'
-                        ? `(Prestataire)`
-                        : item.type}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
           {/* Navbar droite */}
           <div className="navbar-right">
             {role !== 'admin' && (

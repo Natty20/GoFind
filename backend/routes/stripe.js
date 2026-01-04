@@ -8,7 +8,7 @@ const stripe = require("stripe")(
 // ============================
 // CREATE CHECKOUT SESSION
 // ============================
-const frontendURL = "https://gofind-v9ee.onrender.com";
+const frontendURL = "https://go-find.vercel.app";
 router.post("/create-checkout-session", async (req, res) => {
   const {
     montant,

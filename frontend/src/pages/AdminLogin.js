@@ -21,10 +21,11 @@ function AdminLogin() {
         'https://gofind-v9ee.onrender.com/api/admin/login',
         { email, password }
       );
-      const { token, admin } = response.data;
+      const { token, admin, role } = response.data;
 
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('adminId', admin._id);
+      sessionStorage.setItem('role', role)
       sessionStorage.setItem('admin', JSON.stringify(admin));
       setAdmin(admin);
 
