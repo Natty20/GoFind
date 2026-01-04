@@ -89,7 +89,7 @@ app.use(
 // ];
 
 const allowedOrigins = [
-  "https://go-find.vercel.app",
+  "https://go-find.vercel.app/",
 ];
 
 app.use(
@@ -148,6 +148,11 @@ app.use((err, req, res, next) => {
 //     path.resolve(__dirname, "frontend", "build", "index.html")
 //   );
 // });
+
+app.use(cors({
+  origin: "*",
+}));
+
 
 // global error handling
 app.use((err, req, res, next) => {
