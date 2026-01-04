@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "https://natty20.github.io/GoFind/static/css/main.b475b7ad.css",
-    "main.js": "https://natty20.github.io/GoFind/static/js/main.4838ca96.js",
+    "main.js": "https://natty20.github.io/GoFind/static/js/main.8203f939.js",
     "static/js/488.e75445ad.chunk.js": "https://natty20.github.io/GoFind/static/js/488.e75445ad.chunk.js",
     "index.html": "https://natty20.github.io/GoFind/index.html",
     "main.b475b7ad.css.map": "https://natty20.github.io/GoFind/static/css/main.b475b7ad.css.map",
-    "main.4838ca96.js.map": "https://natty20.github.io/GoFind/static/js/main.4838ca96.js.map",
+    "main.8203f939.js.map": "https://natty20.github.io/GoFind/static/js/main.8203f939.js.map",
     "488.e75445ad.chunk.js.map": "https://natty20.github.io/GoFind/static/js/488.e75445ad.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b475b7ad.css",
-    "static/js/main.4838ca96.js"
+    "static/js/main.8203f939.js"
   ]
 }
