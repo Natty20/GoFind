@@ -20,17 +20,16 @@ connectDB();
 
 const app = express();
 
-/* ===SECURITY / CSP (HELMET)=== */
 app.use(
   helmet({
-    crossOriginEmbedderPolicy: false, // IMPORTANT pour Stripe
+    crossOriginEmbedderPolicy: false,
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
 
         scriptSrc: [
           "'self'",
-          "'unsafe-inline'", // Stripe injecte du inline
+          "'unsafe-inline'",
           "https://js.stripe.com",
         ],
 
@@ -41,7 +40,7 @@ app.use(
 
         styleSrc: [
           "'self'",
-          "'unsafe-inline'", // MDB + React
+          "'unsafe-inline'",
           "https://cdnjs.cloudflare.com",
         ],
 
@@ -82,6 +81,7 @@ app.use(
 );
 
 
+
 // Github pages
 // const allowedOrigins = [
 //   "https://natty20.github.io",
@@ -89,7 +89,7 @@ app.use(
 // ];
 
 const allowedOrigins = [
-  "https://gofind-v9ee.onrender.com",
+  "https://go-find.vercel.app",
 ];
 
 app.use(
@@ -98,14 +98,14 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error("❌ CORS bloqué pour :", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 // body parser
 app.use(express.json());
@@ -141,13 +141,13 @@ app.use((err, req, res, next) => {
 });
 
 // build front
-app.use(express.static(path.join(__dirname, "frontend", "build")));
+// app.use(express.static(path.join(__dirname, "frontend", "build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.resolve(__dirname, "frontend", "build", "index.html")
-  );
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(
+//     path.resolve(__dirname, "frontend", "build", "index.html")
+//   );
+// });
 
 // global error handling
 app.use((err, req, res, next) => {
