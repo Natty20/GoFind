@@ -17,7 +17,7 @@ const ClientProfile = () => {
   useEffect(() => {
     const fetchClientData = async () => {
       if (!clientId || !token) {
-        setError('Utilisateur non connecté ou token manquant.');
+        setError('Utilisateur non connecté');
         setLoading(false);
         return;
       }
@@ -40,7 +40,7 @@ const ClientProfile = () => {
         setRdvs(rdvRes.data || []);
       } catch (err) {
         console.error(err);
-        setError('Erreur lors du chargement des données.');
+        setError('Erreur lors du chargement des informations.');
       } finally {
         setLoading(false);
       }

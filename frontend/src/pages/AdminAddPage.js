@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const API = 'https://gofind-v9ee.onrender.com/api';
 
+/* ================= UPLOAD IMAGE ================= */
 const uploadImage = async (file) => {
   const formData = new FormData();
   formData.append('image', file);
@@ -13,14 +14,12 @@ const uploadImage = async (file) => {
     body: formData,
   });
 
-  if (!res.ok) {
-    throw new Error('Erreur upload image');
-  }
-
+  if (!res.ok) throw new Error('Erreur upload image');
   const data = await res.json();
   return data.url;
 };
 
+/* ================= PAGE ================= */
 const AdminAddPage = () => {
   const { entity } = useParams();
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ const AdminAddPage = () => {
   }, [token, role, navigate]);
 
   return (
-    <main style={{ maxWidth: 800, margin: 'auto' }}>
+    <main className="adminaddpage">
       <h1>Ajouter : {entity}</h1>
 
       {entity === 'clients' && <ClientForm />}
@@ -53,7 +52,7 @@ const AdminAddPage = () => {
 
 export default AdminAddPage;
 
-// client
+/* ================= CLIENT ================= */
 const ClientForm = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -68,15 +67,13 @@ const ClientForm = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    const image = await uploadImage(data.profilePicture);
 
-    const payload = {
+    await axios.post(`${API}/auth/register`, {
       ...data,
-      profilePicture: data.profilePicture
-        ? await uploadImage(data.profilePicture)
-        : '',
-    };
+      profilePicture: image,
+    });
 
-    await axios.post(`${API}/auth/register`, payload);
     alert('Client créé');
     navigate('/dashboard');
   };
@@ -111,11 +108,14 @@ const ClientForm = () => {
         onChange={(e) => setData({ ...data, phone: e.target.value })}
       />
       <input
+        required
         placeholder="Ville"
         onChange={(e) => setData({ ...data, address: e.target.value })}
       />
       <input
+        required
         type="file"
+        accept="image/*"
         onChange={(e) =>
           setData({ ...data, profilePicture: e.target.files[0] })
         }
@@ -125,7 +125,7 @@ const ClientForm = () => {
   );
 };
 
-// admin
+/* ================= ADMIN ================= */
 const AdminForm = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -138,7 +138,6 @@ const AdminForm = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-
     await axios.post(`${API}/admin/register`, data);
     alert('Admin créé');
     navigate('/dashboard');
@@ -178,7 +177,7 @@ const AdminForm = () => {
   );
 };
 
-// presta
+/* ================= PRESTATION + SOUS ================= */
 const PrestationForm = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -189,7 +188,31 @@ const PrestationForm = () => {
     profileImage: null,
     backgroundImage: null,
     overlayImage: null,
+    sousPrestations: [],
   });
+
+  const addSousPrestation = () => {
+    setData((prev) => ({
+      ...prev,
+      sousPrestations: [
+        ...prev.sousPrestations,
+        {
+          nom: '',
+          title: '',
+          shortDescription: '',
+          longDescription: '',
+          profileImage: null,
+          backgroundImage: null,
+        },
+      ],
+    }));
+  };
+
+  const handleSousChange = (i, key, value) => {
+    const updated = [...data.sousPrestations];
+    updated[i][key] = value;
+    setData({ ...data, sousPrestations: updated });
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -201,6 +224,13 @@ const PrestationForm = () => {
       overlayImage: data.overlayImage
         ? await uploadImage(data.overlayImage)
         : '',
+      sousPrestations: await Promise.all(
+        data.sousPrestations.map(async (sp) => ({
+          ...sp,
+          profileImage: await uploadImage(sp.profileImage),
+          backgroundImage: await uploadImage(sp.backgroundImage),
+        }))
+      ),
     };
 
     await axios.post(`${API}/prestations`, payload);
@@ -231,6 +261,7 @@ const PrestationForm = () => {
           setData({ ...data, overlayDescription: e.target.value })
         }
       />
+
       <input
         required
         type="file"
@@ -247,6 +278,48 @@ const PrestationForm = () => {
         type="file"
         onChange={(e) => setData({ ...data, overlayImage: e.target.files[0] })}
       />
+
+      <h3>Sous-prestations</h3>
+      {data.sousPrestations.map((sp, i) => (
+        <div key={i}>
+          <input
+            placeholder="Nom"
+            onChange={(e) => handleSousChange(i, 'nom', e.target.value)}
+          />
+          <input
+            placeholder="Titre"
+            onChange={(e) => handleSousChange(i, 'title', e.target.value)}
+          />
+          <textarea
+            placeholder="Short desc"
+            onChange={(e) =>
+              handleSousChange(i, 'shortDescription', e.target.value)
+            }
+          />
+          <textarea
+            placeholder="Long desc"
+            onChange={(e) =>
+              handleSousChange(i, 'longDescription', e.target.value)
+            }
+          />
+          <input
+            type="file"
+            onChange={(e) =>
+              handleSousChange(i, 'profileImage', e.target.files[0])
+            }
+          />
+          <input
+            type="file"
+            onChange={(e) =>
+              handleSousChange(i, 'backgroundImage', e.target.files[0])
+            }
+          />
+        </div>
+      ))}
+
+      <button type="button" onClick={addSousPrestation}>
+        ➕ Ajouter sous-prestation
+      </button>
       <button type="submit">Créer prestation</button>
     </form>
   );
@@ -256,6 +329,7 @@ const PrestationForm = () => {
 const SousPrestationForm = () => {
   const navigate = useNavigate();
   const [prestations, setPrestations] = useState([]);
+
   const [data, setData] = useState({
     nom: '',
     title: '',
@@ -263,7 +337,7 @@ const SousPrestationForm = () => {
     longDescription: '',
     profileImage: null,
     backgroundImage: null,
-    prestation: '',
+    prestationId: '',
   });
 
   useEffect(() => {
@@ -276,12 +350,16 @@ const SousPrestationForm = () => {
     e.preventDefault();
 
     const payload = {
-      ...data,
+      nom: data.nom,
+      title: data.title,
+      shortDescription: data.shortDescription,
+      longDescription: data.longDescription,
       profileImage: await uploadImage(data.profileImage),
       backgroundImage: await uploadImage(data.backgroundImage),
     };
 
-    await axios.post(`${API}/sousprestations/${data.prestation}`, payload);
+    await axios.post(`${API}/sousprestations/${data.prestationId}`, payload);
+
     alert('Sous-prestation créée');
     navigate('/dashboard');
   };
@@ -293,16 +371,19 @@ const SousPrestationForm = () => {
         placeholder="Nom"
         onChange={(e) => setData({ ...data, nom: e.target.value })}
       />
+
       <input
         required
         placeholder="Titre"
         onChange={(e) => setData({ ...data, title: e.target.value })}
       />
+
       <textarea
         required
         placeholder="Short description"
         onChange={(e) => setData({ ...data, shortDescription: e.target.value })}
       />
+
       <textarea
         required
         placeholder="Long description"
@@ -311,7 +392,7 @@ const SousPrestationForm = () => {
 
       <select
         required
-        onChange={(e) => setData({ ...data, prestation: e.target.value })}
+        onChange={(e) => setData({ ...data, prestationId: e.target.value })}
       >
         <option value="">Choisir prestation</option>
         {prestations.map((p) => (
@@ -324,11 +405,14 @@ const SousPrestationForm = () => {
       <input
         required
         type="file"
+        accept="image/*"
         onChange={(e) => setData({ ...data, profileImage: e.target.files[0] })}
       />
+
       <input
         required
         type="file"
+        accept="image/*"
         onChange={(e) =>
           setData({ ...data, backgroundImage: e.target.files[0] })
         }
@@ -355,7 +439,7 @@ const ReservationForm = () => {
     prestataire: '',
     date: '',
     heure: '',
-    modePaiement: 'Especes',
+    modePaiement: 'Virement Bancaire',
     description: '',
   });
 

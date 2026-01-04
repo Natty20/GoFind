@@ -118,40 +118,39 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* === Champ recherche === */}
+          {role !== 'admin' && (
+            <div className="navbar-search">
+              <input
+                type="text"
+                placeholder="Rechercher prestataire, prestation, ville..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+              />
+              {showSuggestions && suggestions.length > 0 && (
+                <ul className="search-suggestions">
+                  {suggestions.map((item) => (
+                    <li
+                      key={item._id}
+                      onClick={() => handleSelectSuggestion(item)}
+                    >
+                      {item.nom}{' '}
+                      {item.type === 'prestataire'
+                        ? `(Prestataire)`
+                        : item.type}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
           {/* Navbar droite */}
           <div className="navbar-right">
             {role !== 'admin' && (
               <Link to="/prestation" onClick={closeMenu}>
                 Prestations
               </Link>
-            )}
-
-            {/* === Champ recherche === */}
-            {role !== 'admin' && (
-              <div className="navbar-search">
-                <input
-                  type="text"
-                  placeholder="Rechercher prestataire, prestation, ville..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onFocus={() => setShowSuggestions(true)}
-                />
-                {showSuggestions && suggestions.length > 0 && (
-                  <ul className="search-suggestions">
-                    {suggestions.map((item) => (
-                      <li
-                        key={item._id}
-                        onClick={() => handleSelectSuggestion(item)}
-                      >
-                        {item.nom}{' '}
-                        {item.type === 'prestataire'
-                          ? `(Prestataire)`
-                          : item.type}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
             )}
 
             {user ? (

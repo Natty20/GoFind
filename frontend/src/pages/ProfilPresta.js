@@ -52,8 +52,7 @@ const ProfilPresta = () => {
   }, [prestataireId, prestataire]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
@@ -78,27 +77,24 @@ const ProfilPresta = () => {
 
   const handleSave = async () => {
     try {
+      // uploader la photo si c'est un fichier
       let profilePictureUrl = formData.profilePicture;
-
-      // Si c'est un fichier, on upload d'abord
       if (formData.profilePicture instanceof File) {
         profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
       }
 
-      // Préparer le payload avec l'URL finale
+      // préparer un payload complet, avec fallback sur l'état actuel du prestataire
       const payload = {
-        nom: formData.nom,
-        prenom: formData.prenom,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        profilePicture: profilePictureUrl,
+        nom: formData.nom || prestataire.nom,
+        prenom: formData.prenom || prestataire.prenom,
+        email: formData.email || prestataire.email,
+        phone: formData.phone || prestataire.phone || '',
+        address: formData.address || prestataire.address || '',
+        profilePicture: profilePictureUrl || prestataire.profilePicture || '',
+        // pour l'instant on ignore le password
       };
 
-      // Si mot de passe rempli → ajouter au payload
-      if (formData.password && formData.password.trim() !== '') {
-        payload.password = formData.password;
-      }
+      console.log('Payload envoyé au backend:', payload);
 
       const res = await axios.put(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataireId}`,
@@ -108,12 +104,15 @@ const ProfilPresta = () => {
         }
       );
 
-      setPrestataire(res.data.prestataire); // mettre à jour l'état local
-      setFormData(res.data.prestataire); // préremplir le formulaire avec les nouvelles valeurs
+      setPrestataire(res.data.prestataire);
+      setFormData(res.data.prestataire);
       setIsEditing(false);
       alert('✅ Informations mises à jour avec succès !');
     } catch (err) {
-      console.error('Erreur lors de la mise à jour :', err);
+      console.error(
+        'Erreur lors de la mise à jour :',
+        err.response?.data || err
+      );
       alert('❌ Impossible de mettre à jour votre profil.');
     }
   };

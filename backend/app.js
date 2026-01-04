@@ -83,9 +83,13 @@ app.use(
 
 
 // Github pages
+// const allowedOrigins = [
+//   "https://natty20.github.io",
+//   "https://natty20.github.io/GoFind",
+// ];
+
 const allowedOrigins = [
-  "https://natty20.github.io",
-  "https://natty20.github.io/GoFind",
+  "https://gofind-v9ee.onrender.com",
 ];
 
 app.use(

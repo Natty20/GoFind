@@ -8,6 +8,7 @@ const stripe = require("stripe")(
 // ============================
 // CREATE CHECKOUT SESSION
 // ============================
+const frontendURL = "https://gofind-v9ee.onrender.com";
 router.post("/create-checkout-session", async (req, res) => {
   const {
     montant,
@@ -32,11 +33,8 @@ router.post("/create-checkout-session", async (req, res) => {
         quantity: 1,
       },
     ],
-    success_url:
-      "https://gofind-v9ee.onrender.com/api/stripe/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url:
-      "https://natty20.github.io/GoFind/#/cancel",
-
+    success_url: `${frontendURL}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${frontendURL}/#/cancel`, // ou simplement /cancel si tu gères via React Router
     metadata: {
       clientId: client._id,
       prestataireId: prestataire._id,
@@ -47,6 +45,7 @@ router.post("/create-checkout-session", async (req, res) => {
     },
   });
 
+
   res.json({ id: session.id });
 });
 
@@ -56,11 +55,10 @@ router.post("/create-checkout-session", async (req, res) => {
 router.get("/success", async (req, res) => {
   try {
     const sessionId = req.query.session_id;
-
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status !== "paid") {
-      return res.redirect("https://natty20.github.io/GoFind/#/cancel");
+      return res.redirect(`${frontendURL}/#/cancel`);
     }
 
     const prestations = JSON.parse(session.metadata.prestations);
@@ -81,16 +79,12 @@ router.get("/success", async (req, res) => {
       modePaiement: "Carte via Stripe",
     });
 
-    // ✅ REDIRECTION FINALE CLIENT
-    return res.redirect(
-      "https://natty20.github.io/GoFind/#/success"
-    );
+    return res.redirect(`${frontendURL}/#/success`);
   } catch (err) {
     console.error(err);
-    return res.redirect(
-      "https://natty20.github.io/GoFind/#/cancel"
-    );
+    return res.redirect(`${frontendURL}/#/cancel`);
   }
 });
+
 
 module.exports = router;
