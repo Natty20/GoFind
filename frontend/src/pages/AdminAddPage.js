@@ -24,16 +24,15 @@ const AdminAddPage = () => {
   const { entity } = useParams();
   const navigate = useNavigate();
 
-  const token = sessionStorage.getItem("token");
-  const admin = JSON.parse(sessionStorage.getItem("admin"));
+  const token = sessionStorage.getItem('token');
+  const admin = JSON.parse(sessionStorage.getItem('admin'));
 
   useEffect(() => {
-    if (!token || !admin || admin.role !== "admin") {
-      alert("Accès interdit");
-      navigate("/login_admin");
+    if (!token || !admin || admin.role !== 'admin') {
+      alert('Accès interdit');
+      navigate('/login_admin');
     }
   }, [token, admin, navigate]);
-
 
   return (
     <main className="adminaddpage">
