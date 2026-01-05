@@ -24,8 +24,7 @@ function AdminLogin() {
       const { token, admin } = response.data;
 
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('adminId', admin._id);
-      sessionStorage.setItem('role', admin.role)
+      // sessionStorage.setItem('adminId', admin._id);
       sessionStorage.setItem('admin', JSON.stringify(admin));
       setAdmin(admin);
 
