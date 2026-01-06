@@ -33,7 +33,7 @@ router.post("/create-checkout-session", async (req, res) => {
         quantity: 1,
       },
     ],
-    success_url: `${frontendURL}/api/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${frontendURL}/#/success`,
     cancel_url: `${frontendURL}/#/cancel`, // ou simplement /cancel si tu gères via React Router
     metadata: {
       clientId: client._id,

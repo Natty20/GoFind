@@ -1,5 +1,6 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import '../styles/Admin/Edit.css';
 
 const AdminEditPage = () => {
   const { entity, id } = useParams();
@@ -28,12 +29,12 @@ const AdminEditPage = () => {
     'overlayImage',
   ];
 
-  const reservationEditableFields = [
+  const reservationAllowedFields = [
     'date',
     'heure',
     'etat',
-    'description',
     'modePaiement',
+    'description',
     'prestataire',
   ];
 
@@ -79,7 +80,6 @@ const AdminEditPage = () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
-
         if (!endpoint) throw new Error('Entité inconnue');
 
         const res = await fetch(
@@ -95,8 +95,15 @@ const AdminEditPage = () => {
         );
 
         const rawData = dataKey ? data[dataKey] : data;
-        setFormData(flattenObject(rawData));
 
+        // 🔹 PAS de flatten pour prestataires & reservations
+        if (entity === 'prestataires' || entity === 'reservations') {
+          setFormData(rawData);
+        } else {
+          setFormData(flattenObject(rawData));
+        }
+
+        // 🔹 Charger prestataires pour les réservations
         if (entity === 'reservations') {
           const pRes = await fetch(
             'https://gofind-v9ee.onrender.com/api/prestataires',
@@ -150,7 +157,11 @@ const AdminEditPage = () => {
     try {
       const token = sessionStorage.getItem('token');
       const endpoint = entityToEndpoint[entity];
-      let payload = unflattenObject(formData);
+
+      let payload =
+        entity === 'prestataires' || entity === 'reservations'
+          ? { ...formData }
+          : unflattenObject(formData);
 
       // 🔹 Upload images
       for (const field of imageFields) {
@@ -172,10 +183,10 @@ const AdminEditPage = () => {
         }
       }
 
-      // 🔹 Cas réservation
+      // 🔹 Réservations : champs autorisés UNIQUEMENT
       if (entity === 'reservations') {
         const filtered = {};
-        reservationEditableFields.forEach((f) => {
+        reservationAllowedFields.forEach((f) => {
           if (payload[f] !== undefined) filtered[f] = payload[f];
         });
 
@@ -243,16 +254,30 @@ const AdminEditPage = () => {
             <option value="déclinée">Déclinée</option>
           </select>
 
+          <label>Mode de paiement</label>
+          <select
+            name="modePaiement"
+            value={formData.modePaiement || ''}
+            onChange={handleChange}
+          >
+            <option value="virement bancaire">Virement bancaire</option>
+            <option value="paypal">PayPal</option>
+          </select>
+
           <label>Prestataire</label>
           <select
             name="prestataire"
-            value={formData.prestataire?._id || ''}
+            value={
+              typeof formData.prestataire === 'string'
+                ? formData.prestataire
+                : formData.prestataire?._id || ''
+            }
             onChange={handleChange}
           >
             <option value="">— Choisir —</option>
             {prestataires.map((p) => (
               <option key={p._id} value={p._id}>
-                {p.nom}
+                {p.nom} {p.prenom}
               </option>
             ))}
           </select>
