@@ -72,16 +72,21 @@ const ClientForm = () => {
   });
 
   useEffect(() => {
-    axios.get(`${API}/cities`, axiosConfig)
-      .then(res => setCities(res.data.cities))
-      .catch(err => console.error(err));
+    axios
+      .get(`${API}/cities`, axiosConfig)
+      .then((res) => setCities(res.data.cities))
+      .catch((err) => console.error(err));
   }, []);
 
   const submit = async (e) => {
     e.preventDefault();
     try {
       const image = await uploadImage(data.profilePicture);
-      await axios.post(`${API}/auth/register`, { ...data, profilePicture: image }, axiosConfig);
+      await axios.post(
+        `${API}/auth/register`,
+        { ...data, profilePicture: image },
+        axiosConfig
+      );
       alert('Client créé');
       navigate('/dashboard');
     } catch (err) {
@@ -91,32 +96,65 @@ const ClientForm = () => {
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Nom:</label>
-      <input required onChange={(e) => setData({ ...data, nom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, nom: e.target.value })}
+      />
 
       <label>Prénom:</label>
-      <input required onChange={(e) => setData({ ...data, prenom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, prenom: e.target.value })}
+      />
 
       <label>Email:</label>
-      <input required type="email" onChange={(e) => setData({ ...data, email: e.target.value })} />
+      <input
+        required
+        type="email"
+        onChange={(e) => setData({ ...data, email: e.target.value })}
+      />
 
       <label>Mot de passe:</label>
-      <input required type="password" onChange={(e) => setData({ ...data, password: e.target.value })} />
+      <input
+        required
+        type="password"
+        onChange={(e) => setData({ ...data, password: e.target.value })}
+      />
 
       <label>Téléphone:</label>
-      <input required onChange={(e) => setData({ ...data, phone: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, phone: e.target.value })}
+      />
 
       <label>Ville:</label>
-      <select required value={data.ville} onChange={(e) => setData({ ...data, ville: e.target.value })}>
+      <select
+        required
+        value={data.ville}
+        onChange={(e) => setData({ ...data, ville: e.target.value })}
+      >
         <option value="">Choisir une ville</option>
-        {cities?.map(city => <option key={city._id} value={city._id}>{city.nom}</option>)}
+        {cities?.map((city) => (
+          <option key={city._id} value={city._id}>
+            {city.nom}
+          </option>
+        ))}
       </select>
 
       <label>Photo de profil:</label>
-      <input required type="file" onChange={(e) => setData({ ...data, profilePicture: e.target.files[0] })} />
+      <input
+        required
+        type="file"
+        onChange={(e) =>
+          setData({ ...data, profilePicture: e.target.files[0] })
+        }
+      />
 
-      <button className='btn-secondary' type="submit">Créer client</button>
+      <button className="btn-secondary" type="submit">
+        Créer client
+      </button>
     </form>
   );
 };
@@ -148,18 +186,37 @@ const AdminForm = () => {
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Nom:</label>
-      <input required onChange={(e) => setData({ ...data, nom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, nom: e.target.value })}
+      />
       <label>Prénom:</label>
-      <input required onChange={(e) => setData({ ...data, prenom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, prenom: e.target.value })}
+      />
       <label>Email:</label>
-      <input required type="email" onChange={(e) => setData({ ...data, email: e.target.value })} />
+      <input
+        required
+        type="email"
+        onChange={(e) => setData({ ...data, email: e.target.value })}
+      />
       <label>Mot de passe:</label>
-      <input required type="password" onChange={(e) => setData({ ...data, password: e.target.value })} />
+      <input
+        required
+        type="password"
+        onChange={(e) => setData({ ...data, password: e.target.value })}
+      />
       <label>Téléphone:</label>
-      <input required onChange={(e) => setData({ ...data, phone: e.target.value })} />
-      <button className='btn-secondary' type="submit">Créer admin</button>
+      <input
+        required
+        onChange={(e) => setData({ ...data, phone: e.target.value })}
+      />
+      <button className="btn-secondary" type="submit">
+        Créer admin
+      </button>
     </form>
   );
 };
@@ -187,14 +244,22 @@ const PrestataireForm = () => {
   });
 
   useEffect(() => {
-    axios.get(`${API}/cities`, axiosConfig).then(res => setCities(res.data.cities));
-    axios.get(`${API}/prestations`, axiosConfig).then(res => setPrestations(res.data.prestations));
+    axios
+      .get(`${API}/cities`, axiosConfig)
+      .then((res) => setCities(res.data.cities));
+    axios
+      .get(`${API}/prestations`, axiosConfig)
+      .then((res) => setPrestations(res.data.prestations));
   }, []);
 
   useEffect(() => {
     if (!data.prestationId) return;
-    axios.get(`${API}/sousprestations/prestation/${data.prestationId}`, axiosConfig)
-      .then(res => setSousPrestations(res.data.sousPrestations));
+    axios
+      .get(
+        `${API}/sousprestations/prestation/${data.prestationId}`,
+        axiosConfig
+      )
+      .then((res) => setSousPrestations(res.data.sousPrestations));
   }, [data.prestationId]);
 
   const submit = async (e) => {
@@ -205,7 +270,10 @@ const PrestataireForm = () => {
         ...data,
         profilePicture: imageUrl,
         selectedPrestations: [
-          { prestationId: data.prestationId, selectedSousPrestations: data.selectedSousPrestations },
+          {
+            prestationId: data.prestationId,
+            selectedSousPrestations: data.selectedSousPrestations,
+          },
         ],
       };
       await axios.post(`${API}/prestataires/register`, payload, axiosConfig);
@@ -218,38 +286,94 @@ const PrestataireForm = () => {
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Nom:</label>
-      <input required onChange={e => setData({ ...data, nom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, nom: e.target.value })}
+      />
       <label>Prénom:</label>
-      <input required onChange={e => setData({ ...data, prenom: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, prenom: e.target.value })}
+      />
       <label>Email:</label>
-      <input required type="email" onChange={e => setData({ ...data, email: e.target.value })} />
+      <input
+        required
+        type="email"
+        onChange={(e) => setData({ ...data, email: e.target.value })}
+      />
       <label>Mot de passe:</label>
-      <input required type="password" onChange={e => setData({ ...data, password: e.target.value })} />
+      <input
+        required
+        type="password"
+        onChange={(e) => setData({ ...data, password: e.target.value })}
+      />
       <label>Téléphone:</label>
-      <input required onChange={e => setData({ ...data, phone: e.target.value })} />
+      <input
+        required
+        onChange={(e) => setData({ ...data, phone: e.target.value })}
+      />
       <label>Ville:</label>
-      <select required value={data.ville} onChange={e => setData({ ...data, ville: e.target.value })}>
+      <select
+        required
+        value={data.ville}
+        onChange={(e) => setData({ ...data, ville: e.target.value })}
+      >
         <option value="">Choisir une ville</option>
-        {cities?.map(city => <option key={city._id} value={city._id}>{city.nom}</option>)}
+        {cities?.map((city) => (
+          <option key={city._id} value={city._id}>
+            {city.nom}
+          </option>
+        ))}
       </select>
 
       <label>Photo de profil:</label>
-      <input required type="file" onChange={e => setData({ ...data, profilePicture: e.target.files[0] })} />
+      <input
+        required
+        type="file"
+        onChange={(e) =>
+          setData({ ...data, profilePicture: e.target.files[0] })
+        }
+      />
 
       <label>Prestation:</label>
-      <select required onChange={e => setData({ ...data, prestationId: e.target.value })}>
+      <select
+        required
+        onChange={(e) => setData({ ...data, prestationId: e.target.value })}
+      >
         <option value="">Choisir</option>
-        {prestations?.map(p => <option key={p._id} value={p._id}>{p.nom}</option>)}
+        {prestations?.map((p) => (
+          <option key={p._id} value={p._id}>
+            {p.nom}
+          </option>
+        ))}
       </select>
 
       <label>Sous-prestations:</label>
-      <select multiple required onChange={e => setData({ ...data, selectedSousPrestations: Array.from(e.target.selectedOptions, o => o.value) })}>
-        {sousPrestations?.map(sp => <option key={sp._id} value={sp._id}>{sp.nom}</option>)}
+      <select
+        multiple
+        required
+        onChange={(e) =>
+          setData({
+            ...data,
+            selectedSousPrestations: Array.from(
+              e.target.selectedOptions,
+              (o) => o.value
+            ),
+          })
+        }
+      >
+        {sousPrestations?.map((sp) => (
+          <option key={sp._id} value={sp._id}>
+            {sp.nom}
+          </option>
+        ))}
       </select>
 
-      <button className='btn-secondary' type="submit">Créer prestataire</button>
+      <button className="btn-secondary" type="submit">
+        Créer prestataire
+      </button>
     </form>
   );
 };
@@ -259,7 +383,6 @@ const PrestationForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
   const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
-
 
   const [data, setData] = useState({
     nom: '',
@@ -320,7 +443,7 @@ const PrestationForm = () => {
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Nom de la prestation</label>
       <input
         required
@@ -422,11 +545,13 @@ const PrestationForm = () => {
         </div>
       ))}
 
-      <button className='btn-primary' type="button" onClick={addSousPrestation}>
+      <button className="btn-primary" type="button" onClick={addSousPrestation}>
         ➕ Ajouter sous-prestation
       </button>
 
-      <button className='btn-secondary' type="submit">Créer prestation</button>
+      <button className="btn-secondary" type="submit">
+        Créer prestation
+      </button>
     </form>
   );
 };
@@ -467,14 +592,18 @@ const SousPrestationForm = () => {
       backgroundImage: await uploadImage(data.backgroundImage),
     };
 
-    await axios.post(`${API}/sousprestations/${data.prestationId}`, payload, axiosConfig);
+    await axios.post(
+      `${API}/sousprestations/${data.prestationId}`,
+      payload,
+      axiosConfig
+    );
 
     alert('Sous-prestation créée');
     navigate('/dashboard');
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Nom</label>
       <input
         required
@@ -535,7 +664,9 @@ const SousPrestationForm = () => {
         }
       />
 
-      <button className='btn-secondary' type="submit">Créer sous-prestation</button>
+      <button className="btn-secondary" type="submit">
+        Créer sous-prestation
+      </button>
     </form>
   );
 };
@@ -545,7 +676,6 @@ const ReservationForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
   const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
-
 
   const [clients, setClients] = useState([]);
   const [prestations, setPrestations] = useState([]);
@@ -574,14 +704,20 @@ const ReservationForm = () => {
   useEffect(() => {
     if (!data.prestationId) return;
     axios
-      .get(`${API}/sousprestations/prestation/${data.prestationId}`, axiosConfig)
+      .get(
+        `${API}/sousprestations/prestation/${data.prestationId}`,
+        axiosConfig
+      )
       .then((res) => setSousPrestations(res.data.sousPrestations));
   }, [data.prestationId]);
 
   useEffect(() => {
     if (!data.sousPrestationId) return;
     axios
-      .get(`${API}/sousprestations/${data.sousPrestationId}/prestataires`, axiosConfig)
+      .get(
+        `${API}/sousprestations/${data.sousPrestationId}/prestataires`,
+        axiosConfig
+      )
       .then((res) => setPrestataires(res.data.prestataires));
   }, [data.sousPrestationId]);
 
@@ -612,7 +748,7 @@ const ReservationForm = () => {
   };
 
   return (
-    <form className='champs' onSubmit={submit}>
+    <form className="champs" onSubmit={submit}>
       <label>Client</label>
       <select
         required
@@ -684,7 +820,9 @@ const ReservationForm = () => {
         onChange={(e) => setData({ ...data, description: e.target.value })}
       />
 
-      <button className='btn-secondary' type="submit">Créer réservation</button>
+      <button className="btn-secondary" type="submit">
+        Créer réservation
+      </button>
     </form>
   );
 };
