@@ -21,6 +21,86 @@ const uploadImage = async (file) => {
   return data.url;
 };
 
+const CityInput = ({ value, onChange }) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [query, setQuery] = useState(value || '');
+
+  const handleInputChange = async (e) => {
+    const val = e.target.value;
+    setQuery(val);
+    onChange(val);
+
+    if (val.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+      );
+      const data = await res.json();
+      setSuggestions(data.features.map((f) => f.properties.city));
+    } catch (err) {
+      console.error('Erreur autocomplete villes', err);
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelect = (city) => {
+    setQuery(city);
+    onChange(city);
+    setSuggestions([]);
+  };
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        type="text"
+        value={query}
+        onChange={handleInputChange}
+        placeholder="Choisissez votre ville"
+        required
+        style={{ width: '100%', padding: '8px' }}
+      />
+      {suggestions.length > 0 && (
+        <ul
+          style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: 'white',
+            border: '1px solid #ccc',
+            maxHeight: '150px',
+            overflowY: 'auto',
+            zIndex: 10,
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+          }}
+        >
+          {suggestions.map((city, i) => (
+            <li
+              key={i}
+              onClick={() => handleSelect(city)}
+              style={{ padding: '8px', cursor: 'pointer' }}
+              onMouseDown={(e) => e.preventDefault()}
+            >
+              {city}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+CityInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+};
+
 // la page
 const AdminAddPage = () => {
   const { entity } = useParams();
@@ -130,18 +210,10 @@ const ClientForm = () => {
       />
 
       <label>Ville:</label>
-      <select
-        required
+      <CityInput
         value={data.ville}
-        onChange={(e) => setData({ ...data, ville: e.target.value })}
-      >
-        <option value="">Choisir une ville</option>
-        {cities?.map((city) => (
-          <option key={city._id} value={city._id}>
-            {city.nom}
-          </option>
-        ))}
-      </select>
+        onChange={(val) => setData({ ...data, ville: val })}
+      />
 
       <label>Photo de profil:</label>
       <input
@@ -315,18 +387,10 @@ const PrestataireForm = () => {
         onChange={(e) => setData({ ...data, phone: e.target.value })}
       />
       <label>Ville:</label>
-      <select
-        required
+      <CityInput
         value={data.ville}
-        onChange={(e) => setData({ ...data, ville: e.target.value })}
-      >
-        <option value="">Choisir une ville</option>
-        {cities?.map((city) => (
-          <option key={city._id} value={city._id}>
-            {city.nom}
-          </option>
-        ))}
-      </select>
+        onChange={(val) => setData({ ...data, ville: val })}
+      />
 
       <label>Photo de profil:</label>
       <input
@@ -794,7 +858,7 @@ const ReservationForm = () => {
         onChange={(e) => setData({ ...data, prestataire: e.target.value })}
       >
         <option value="">Choisir</option>
-        {prestataires.map((p) => (
+        {prestataires?.map((p) => (
           <option key={p._id} value={p._id}>
             {p.nom} {p.prenom}
           </option>
