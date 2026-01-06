@@ -8,7 +8,7 @@
   max-width: 800;
 }
 
-.champs-reserva {
+.champs {
   width: 100%;
   padding: 0.7rem;
   margin-bottom: 1rem;
@@ -20,9 +20,9 @@
   background: #fff;
 }
 
-.champs-reserva input:focus,
-.champs-reserva select:focus,
-.champs-reserva textarea:focus {
+.champs input:focus,
+.champs select:focus,
+.champs textarea:focus {
   border-color: var(--main-color);
   box-shadow: 0 0 5px var(--secondary-color);
 }
@@ -36,7 +36,7 @@
   font-size: 1rem;
 }
 
-.champs-reserva select,
+.champs select,
 .sous-prestations-select {
   width: 100%;
   padding: 0.6rem;
