@@ -80,26 +80,18 @@ app.use(
   })
 );
 
-// ⚠️ OBLIGATOIRE pour login / register / upload
 app.options("*", cors());
 
-/* =======================
-   BODY PARSER
-======================= */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* =======================
-   LOGS
-======================= */
+
 app.use((req, res, next) => {
   console.log(`📥 ${req.method} ${req.url}`);
   next();
 });
 
-/* =======================
-   ROUTES API
-======================= */
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/prestataires", prestataireRoutes);
@@ -111,9 +103,7 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/cities", citiesRoutes);
 app.use("/api/search", searchRoutes);
 
-/* =======================
-   UPLOAD ERRORS
-======================= */
+
 app.use((err, req, res, next) => {
   if (err.code === "LIMIT_FILE_SIZE") {
     return res.status(400).json({

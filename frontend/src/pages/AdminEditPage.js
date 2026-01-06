@@ -190,7 +190,7 @@ const AdminEditPage = () => {
           if (payload[f] !== undefined) filtered[f] = payload[f];
         });
 
-        if (typeof filtered.prestataire === 'object') {
+        if (filtered.prestataire && typeof filtered.prestataire === 'object') {
           filtered.prestataire = filtered.prestataire._id;
         }
 
@@ -267,17 +267,13 @@ const AdminEditPage = () => {
           <label>Prestataire</label>
           <select
             name="prestataire"
-            value={
-              typeof formData.prestataire === 'string'
-                ? formData.prestataire
-                : formData.prestataire?._id || ''
-            }
+            value={formData.prestataire || ''}
             onChange={handleChange}
           >
             <option value="">— Choisir —</option>
             {prestataires.map((p) => (
               <option key={p._id} value={p._id}>
-                {p.nom} {p.prenom}
+                {p.nom}
               </option>
             ))}
           </select>
