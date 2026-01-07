@@ -41,7 +41,7 @@ const SuccessPage = () => {
             Voir Nos Prestations
           </button>
           <button className="btn-secondary" onClick={() => navigate('/')}>
-            Retour à l'accueil
+            Retour à l&apos;accueil
           </button>
         </div>
       </div>
