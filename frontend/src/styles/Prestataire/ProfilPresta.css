@@ -2,149 +2,104 @@
   margin: 6rem 0 0 0;
 }
 
-.info,
-.service-table {
-  margin: 1rem;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 10px rgb(101, 99, 99);
-}
-
 .info-presta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--secondary-text-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-presta img {
   width: 25%;
-  height: 20%;
+  height: auto;
   border-radius: 3.5rem;
   padding: 2rem;
   object-fit: cover;
 }
 
 .presta-names {
-  /* padding: 2rem; */
-  margin: 5rem 4rem;
-}
-
-h1 {
-  color: black;
-  margin-bottom: 20px;
+  margin: 2rem;
+  flex: 1;
+  min-width: 250px;
 }
 
 .presta-names h1 {
   font-size: 2.5rem;
-}
-
-.presta-names h2,
-.presta-names p,
-.description p,
-.description {
-  text-align: center;
+  margin-bottom: 1rem;
+  color: black;
 }
 
 .presta-names h2 {
   font-size: 1.5rem;
   color: var(--main-color);
   text-transform: uppercase;
-  margin: 1rem;
+  margin: 1rem 0;
+  text-align: center;
 }
 
 .presta-names p {
   font-size: 1.2rem;
-  margin: 1rem;
-  margin-bottom: 0;
-}
-
-.description h3,
-.services-header h1,
-.realisation-header h4,
-.clients-avis h2 {
+  margin: 0.5rem 0;
   text-align: center;
-  font-size: 2rem;
-  text-transform: uppercase;
 }
 
-.description p {
-  /* width: 80%; */
-  margin: 1rem 5rem;
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--third-text-color);
+  font-size: 14px;
 }
 
-.services-header button,
-.realisation-header button {
-  margin: 1rem;
-  width: 20%;
-  padding: 15px;
-  font-size: 15px;
-  background-color: var(--main-color);
-  color: var(--secondary-text-color);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.form-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-.services-header {
-  text-align: center;
-  margin: 2rem;
-}
-
-.service-table {
-  /* width: 70rem; */
-  margin: 0 9rem;
-  /* overflow: hidden; */
-}
-
-td,
-th {
+.form-edit input[type='text'],
+.form-edit input[type='email'],
+.form-edit input[type='file'] {
   padding: 10px;
-  border-bottom: 2px solid var(--bg-color);
-  border-right: 2px solid var(--bg-color);
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
 }
 
-thead th {
-  padding: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-bottom: 2px solid var(--bg-color);
+.form-edit img {
+  display: block;
+  width: 50px;
+  margin-top: 10px;
+  border-radius: 30px;
 }
 
-tbody tr {
-  border: 1px solid black;
-}
-
-.actions {
-  text-align: center;
-}
-
-.actions button {
-  padding: 0.5rem 1rem;
-  margin: 2px;
+.form-edit button {
+  padding: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 0.6rem;
-}
-
-.edit-btn {
-  background-color: var(--secondary-color) !important;
-  color: var(--main-color) !important;
-}
-
-.edit-btn:hover {
-  background-color: var(--main-color) !important;
-  color: white !important;
+  margin-top: 0.5rem;
 }
 
 .realisations-container {
-  margin-top: 30px;
+  margin: 2rem 1rem;
 }
 
 .add-realisation {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .images-grid {
@@ -161,112 +116,27 @@ tbody tr {
   border: 1px solid #ddd;
 }
 
-.delete-btn {
-  padding: 5px 10px;
-  background-color: var(--main-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .info-presta {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.delete-btn:hover {
-  background-color: var(--main-color);
-}
-
-.realisation-header {
-  text-align: center;
-  margin: 2rem;
-}
-
-.clients-avis {
-  margin: 3rem;
-}
-
-.provider-reviews button {
-  margin-top: 1rem;
-  background-color: var(--error);
-  padding: 0.5rem;
-  color: white;
-  border: none;
-  border-radius: 0.2rem;
-}
-
-.todo-container {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  margin: 50px auto;
-  text-align: center;
-}
-
-.todo-input {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-input[type='text'] {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid var(--bg-color);
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.todo-input button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--main-color);
-  color: var(--secondary-text-color);
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: var(--secondary-color);
-  color: var(--main-color);
-}
-
-.todo-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 20px 0 0;
-}
-
-.todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  background-color: var(--bg-color);
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.todo-item span {
-  font-size: 16px;
-  color: black;
-}
-
-@media (max-width: 768px) {
   .info-presta img {
-    width: 400px;
-    height: 250px;
-    margin: 0 auto;
+    width: 50%;
     padding: 1rem;
   }
 
   .presta-names {
-    margin: 0 2rem;
+    margin: 1rem;
     text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-presta img {
+    width: 60%;
   }
 
   .presta-names h1 {
@@ -275,105 +145,52 @@ button:hover {
 
   .presta-names h2 {
     font-size: 1.2rem;
-    margin: 0.5rem 0;
   }
 
-  .description p {
-    margin: 0 1rem;
-    font-size: 1rem;
+  .form-edit {
+    max-width: 100%;
+    padding: 0.5rem;
   }
 
-  .description button,
-  .services-header button,
-  .realisation-header button {
-    width: 40%;
-    font-size: 0.9rem;
-  }
-
-  .service-table {
-    margin: 1rem;
-    overflow-x: auto;
-  }
-
-  td,
-  th {
-    padding: 6px;
-    font-size: 0.9rem;
+  .form-edit input {
+    font-size: 0.95rem;
   }
 
   .form-edit button {
-    width: 70%;
-    font-size: 0.9rem;
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }
 
 @media (max-width: 480px) {
   .info-presta img {
-    width: 40%;
-    /* height: auto; */
-    /* padding: 0.5rem;
-    border-radius: 2rem; */
-  }
-
-  .presta-names {
-    margin: 0 3rem;
+    width: 70%;
+    padding: 0.5rem;
   }
 
   .presta-names h1 {
-    font-size: 2rem;
-  }
-
-  .description h3 {
-    font-size: 1rem;
-    margin: 1rem;
+    font-size: 1.8rem;
   }
 
   .presta-names h2 {
     font-size: 1rem;
-    margin: 0.3rem 0;
-    text-transform: none;
   }
 
-  .description p {
-    margin: 0.5rem;
+  .form-edit input {
     font-size: 0.9rem;
   }
 
-  .description button,
-  .services-header button,
-  .realisation-header button {
-    width: 80%;
-    font-size: 0.85rem;
-    padding: 10px;
-  }
-
-  .description button {
-    margin: 1rem;
-  }
-
-  .service-table {
-    margin: 0.5rem;
-    overflow-x: auto;
-    font-size: 0.8rem;
-  }
-
-  td,
-  th {
-    padding: 4px;
-    font-size: 0.75rem;
-  }
-
-  .form-edit {
-    margin: 1rem;
-  }
-
   .form-edit button {
-    width: 90%;
-    font-size: 0.85rem;
-    margin: 1rem;
+    font-size: 0.9rem;
+    padding: 8px;
   }
 
-  .onrdv {
-    width: 90%;
+  .images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
   }
 }

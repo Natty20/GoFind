@@ -5,7 +5,6 @@ import '../styles/Client/ProfilClient.css';
 
 const ClientProfile = () => {
   const [client, setClient] = useState(null);
-  const [rdvs, setRdvs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -23,21 +22,13 @@ const ClientProfile = () => {
       }
 
       try {
-        const [clientRes, rdvRes] = await Promise.all([
-          axios.get(`https://gofind-v9ee.onrender.com/api/auth/${clientId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(
-            `https://gofind-v9ee.onrender.com/api/reservations/client/${clientId}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          ),
-        ]);
+        const res = await axios.get(
+          `https://gofind-v9ee.onrender.com/api/auth/${clientId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
-        setClient(clientRes.data.client);
-        setFormData(clientRes.data.client); // Préremplir formulaire
-        setRdvs(rdvRes.data || []);
+        setClient(res.data.client);
+        setFormData(res.data.client); // Préremplir formulaire
       } catch (err) {
         console.error(err);
         setError('Erreur lors du chargement des informations.');
@@ -49,27 +40,24 @@ const ClientProfile = () => {
     fetchClientData();
   }, [clientId, token]);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData({ ...formData, profilePicture: file });
-    }
+    if (file) setFormData({ ...formData, profilePicture: file });
   };
 
   const uploadImageToBackend = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
-
     const res = await axios.post(
       'https://gofind-v9ee.onrender.com/api/upload/image',
       formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
     );
-
     return res.data.url;
   };
 
@@ -100,47 +88,10 @@ const ClientProfile = () => {
   };
 
   if (loading) return <p>Chargement des informations...</p>;
-  if (error)
-    return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
-
-  // Fonction pour normaliser les états (enlever accents et minuscules)
-  const normalize = (str) =>
-    str
-      ?.toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-
-  const now = new Date();
-
-  // 🔵 À venir : date future + acceptée
-  const rdvAVenir = rdvs.filter(
-    (r) => new Date(r.date) > now && normalize(r.etat) === 'acceptee'
-  );
-
-  // 🟢 En attente : date future + en attente
-  const rdvPending = rdvs.filter(
-    (r) => new Date(r.date) > now && normalize(r.etat) === 'en attente'
-  );
-
-  // 🔴 Annulés : uniquement déclinée
-  const rdvAnnules = rdvs.filter((r) => normalize(r.etat) === 'declinee');
-
-  // 🟡 Terminés : date passée + pas déclinée
-  const rdvTermines = rdvs.filter(
-    (r) => new Date(r.date) <= now && normalize(r.etat) !== 'declinee'
-  );
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('fr-FR', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    });
-  };
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
     <div className="profilclient-container">
-      {/* Profil client */}
       <div className="profile-card">
         <div className="settings-icon" onClick={() => setIsEditing(!isEditing)}>
           <FaCog />
@@ -169,54 +120,39 @@ const ClientProfile = () => {
           <div className="form-edit">
             <p className="label">Nom: </p>
             <input
-              id="nom"
               type="text"
               name="nom"
               value={formData.nom || ''}
               onChange={handleChange}
-              placeholder="Nom"
             />
-
             <p className="label">Prénom: </p>
             <input
-              id="prenom"
               type="text"
               name="prenom"
               value={formData.prenom || ''}
               onChange={handleChange}
-              placeholder="Prénom"
             />
-
             <p className="label">Email: </p>
             <input
-              id="email"
               type="email"
               name="email"
               value={formData.email || ''}
               onChange={handleChange}
-              placeholder="Email"
             />
-
             <p className="label">Téléphone: </p>
             <input
-              id="phone"
               type="number"
               name="phone"
               value={formData.phone || ''}
               onChange={handleChange}
-              placeholder="Téléphone"
             />
-
             <p className="label">Adresse: </p>
             <input
-              id="address"
               type="text"
               name="address"
               value={formData.address || ''}
               onChange={handleChange}
-              placeholder="Adresse"
             />
-
             <p className="label">Photo de profile: </p>
             <input
               type="file"
@@ -224,7 +160,6 @@ const ClientProfile = () => {
               onChange={handleFileChange}
               accept="image/*"
             />
-
             {formData.profilePicture && (
               <img
                 src={
@@ -240,10 +175,8 @@ const ClientProfile = () => {
                 }}
               />
             )}
-
             <p className="label">Mot de passe: </p>
             <input
-              id="mdp"
               type="password"
               name="password"
               value={formData.password || ''}
@@ -259,189 +192,6 @@ const ClientProfile = () => {
           </div>
         )}
       </div>
-
-      <h2 className="section-title">Vos Rendez-Vous</h2>
-      <div className="appointments">
-        <div className="appointment">
-          <span className="number green">{rdvAVenir.length}</span>
-          <p className="gray-text">À Venir</p>
-        </div>
-        <div className="appointment">
-          <span className="number blue">{rdvTermines.length}</span>
-          <p>Terminés</p>
-        </div>
-        <div className="appointment">
-          <span className="number green">{rdvPending.length}</span>
-          <p>En Attente</p>
-        </div>
-        <div className="appointment">
-          <span className="number red">{rdvAnnules.length}</span>
-          <p>Annulés</p>
-        </div>
-      </div>
-
-      {/* Sections des RDVs */}
-      {rdvAVenir.length > 0 && (
-        <div className="rdv-section">
-          <h3 className="rdv-title">À venir</h3>
-          {rdvAVenir.map((r) => (
-            <div key={r._id} className="rdv-card avenir">
-              <div className="coordonees-details">
-                <img
-                  src={
-                    r.prestataire?.profilePicture ||
-                    'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
-                  }
-                  alt={r.prestataire?.nom || 'Prestataire'}
-                />
-                <p>
-                  <strong>Prestataire :</strong>{' '}
-                  {r.prestataire
-                    ? `${r.prestataire.nom} ${r.prestataire.prenom}`
-                    : 'N/A'}
-                </p>
-              </div>
-
-              <p>
-                <strong>Date :</strong> {formatDate(r.date)}
-              </p>
-              <p>
-                <strong>Heure :</strong> {r.heure || 'N/A'}
-              </p>
-              <p>
-                <strong>Description :</strong>{' '}
-                {r.description || 'Aucune description'}
-              </p>
-
-              <div className="prestation-detail">
-                <strong>Prestations :</strong>
-                <ul>
-                  {r.prestations?.map((p) => (
-                    <li key={p._id}>
-                      {p.prestationId?.nom}
-                      {p.sousPrestations && p.sousPrestations.length > 0 && (
-                        <ul>
-                          {p.sousPrestations.map((sp) => (
-                            <li key={sp._id}>{sp.nom}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {rdvTermines.length > 0 && (
-        <div className="rdv-section">
-          <h3 className="rdv-title">Terminés</h3>
-          {rdvTermines.map((r) => (
-            <div key={r._id} className="rdv-card termine">
-              <p>
-                <strong>Prestataire :</strong>{' '}
-                {r.prestataire
-                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
-                  : 'N/A'}
-              </p>
-              <p>
-                <strong>Date :</strong> {formatDate(r.date)}
-              </p>
-              <div className="prestation-detail">
-                <strong>Prestations :</strong>
-                <ul>
-                  {r.prestations?.map((p) => (
-                    <li key={p._id}>
-                      {p.prestationId?.nom}
-                      {p.sousPrestations && p.sousPrestations.length > 0 && (
-                        <ul>
-                          {p.sousPrestations.map((sp) => (
-                            <li key={sp._id}>{sp.nom}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {rdvPending.length > 0 && (
-        <div className="rdv-section">
-          <h3 className="rdv-title">En Attente</h3>
-          {rdvPending.map((r) => (
-            <div key={r._id} className="rdv-card pending">
-              <p>
-                <strong>Prestataire :</strong>{' '}
-                {r.prestataire
-                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
-                  : 'N/A'}
-              </p>
-              <p>
-                <strong>Date :</strong> {formatDate(r.date)}
-              </p>
-              <div className="prestation-detail">
-                <strong>Prestations :</strong>
-                <ul>
-                  {r.prestations?.map((p) => (
-                    <li key={p._id}>
-                      {p.prestationId?.nom}
-                      {p.sousPrestations && p.sousPrestations.length > 0 && (
-                        <ul>
-                          {p.sousPrestations.map((sp) => (
-                            <li key={sp._id}>{sp.nom}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {rdvAnnules.length > 0 && (
-        <div className="rdv-section">
-          <h3 className="rdv-title">Annulés</h3>
-          {rdvAnnules.map((r) => (
-            <div key={r._id} className="rdv-card annule">
-              <p>
-                <strong>Prestataire :</strong>{' '}
-                {r.prestataire
-                  ? `${r.prestataire.nom} ${r.prestataire.prenom}`
-                  : 'N/A'}
-              </p>
-              <p>
-                <strong>Date :</strong> {formatDate(r.date)}
-              </p>
-              <div className="prestation-detail">
-                <strong>Prestations :</strong>
-                <ul>
-                  {r.prestations?.map((p) => (
-                    <li key={p._id}>
-                      {p.prestationId?.nom}
-                      {p.sousPrestations && p.sousPrestations.length > 0 && (
-                        <ul>
-                          {p.sousPrestations.map((sp) => (
-                            <li key={sp._id}>{sp.nom}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

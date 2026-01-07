@@ -13,11 +13,13 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
+  position: relative;
 }
+
 .settings-icon {
   position: absolute;
-  /* top: 10px; */
-  /* right: 10px; */
+  top: 10px;
+  right: 10px;
   color: var(--error);
   font-size: 20px;
   cursor: pointer;
@@ -38,137 +40,19 @@
   font-size: 14px;
 }
 
-.appointments {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  border-top: 1px solid var(--bg-color);
-  padding-top: 10px;
-}
-
-.appointment {
-  text-align: center;
-}
-
-.number {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.red {
-  color: var(--error);
-}
-
-.gray {
-  color: var(--third-text-color);
-}
-
-.gray-text {
-  color: var(--third-text-color);
-}
-
-.section-title {
-  text-align: center;
-  margin-top: 40px;
-  color: var(--error);
-  font-weight: bold;
-}
-
-.rdv-list {
-  margin-top: 10px;
-  padding-left: 0;
-  list-style: none;
-  font-size: 14px;
-  color: var(--third-text-color);
-}
-
-.rdv-list li {
-  margin: 4px 0;
-  background: var(--bg-color);
-  padding: 6px 10px;
-  border-radius: 6px;
+.form-edit {
   text-align: left;
 }
 
-.rdv-list li strong {
-  color: var(--primary-text-color);
-}
-
-.no-rdv {
-  font-size: 13px;
-  color: var(--third-text-color);
-  margin-top: 6px;
-}
-
-.container {
+.form-edit input {
   width: 100%;
-  min-height: 100vh;
-  background-color: var(--bg-color);
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-.green {
-  color: var(--success);
-}
-
-.blue {
-  color: blue;
-}
-
-.gray-text {
-  color: var(--third-text-color);
-}
-
-.section-title {
-  text-align: center;
-  margin-top: 40px;
-  color: var(--main-color);
-  font-weight: bold;
-}
-
-/* RDV détails */
-
-.rdv-section {
-  margin: 2rem auto;
-  max-width: 600px;
-}
-
-.rdv-title {
-  color: var(--main-color);
-  text-align: center;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-
-.rdv-card {
-  background: var(--secondary-text-color);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-}
-
-.rdv-card p {
-  margin: 0.4rem 0;
-}
-
-.etat {
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.etat-acceptée {
-  color: var(--success);
-  background-color: var(--bg-color);
-}
-
-.etat-declinee {
-  color: var(--success);
-  background-color: var(--bg-color);
-}
-
-.etat-termine {
-  color: var(--third-text-color);
-  background-color: var(--bg-color);
+.form-edit img {
+  display: block;
+  margin-top: 10px;
 }

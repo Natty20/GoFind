@@ -1,0 +1,89 @@
+.rdvclient-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  margin: 6rem 0 2rem 0;
+  padding: 0 1rem;
+}
+
+.appointments-summary {
+  display: flex;
+  justify-content: space-between;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  padding: 10px 0;
+  border-top: 1px solid var(--bg-color);
+  border-bottom: 1px solid var(--bg-color);
+}
+
+.appointment {
+  text-align: center;
+}
+
+.number {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.green {
+  color: var(--success);
+}
+
+.blue {
+  color: blue;
+}
+
+.orange {
+  color: orange;
+}
+
+.red {
+  color: var(--error);
+}
+
+.rdv-section {
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.rdv-title {
+  color: var(--main-color);
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.rdv-card {
+  background: var(--secondary-text-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.rdv-card p {
+  margin: 0.4rem 0;
+}
+
+.prestation-detail ul {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+}
+
+.prestation-detail ul ul {
+  padding-left: 1rem;
+}
+
+.rdv-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.coordonees-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}

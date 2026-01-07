@@ -8,7 +8,6 @@ const AdminEditPage = () => {
   const location = useLocation();
 
   const [formData, setFormData] = useState({});
-  const [prestataires, setPrestataires] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const from = location.state?.from || '/dashboard';
@@ -35,44 +34,17 @@ const AdminEditPage = () => {
     'etat',
     'modePaiement',
     'description',
-    'prestataire',
   ];
 
-  /* =======================
-      UTILS
-  ======================= */
-
-  const flattenObject = (obj, parentKey = '', res = {}) => {
-    for (let key in obj) {
-      const propName = parentKey ? `${parentKey}.${key}` : key;
-      if (
-        typeof obj[key] === 'object' &&
-        obj[key] !== null &&
-        !Array.isArray(obj[key])
-      ) {
-        flattenObject(obj[key], propName, res);
-      } else {
-        res[propName] = obj[key];
-      }
-    }
-    return res;
-  };
-
-  const unflattenObject = (flatObj) => {
-    const result = {};
-    for (let key in flatObj) {
-      const keys = key.split('.');
-      keys.reduce((acc, k, i) => {
-        if (i === keys.length - 1) acc[k] = flatObj[key];
-        else acc[k] = acc[k] || {};
-        return acc[k];
-      }, result);
-    }
-    return result;
+  /* 🔒 Champs RELATIONS en lecture seule par entité */
+  const readOnlyFieldsByEntity = {
+    prestataires: ['selectedPrestations', 'realisations'],
+    prestations: ['sousPrestations'],
+    sousprestations: ['prestation', 'prestataires'],
   };
 
   /* =======================
-      FETCH DATA
+      FETCH
   ======================= */
 
   useEffect(() => {
@@ -80,7 +52,6 @@ const AdminEditPage = () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
-        if (!endpoint) throw new Error('Entité inconnue');
 
         const res = await fetch(
           `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
@@ -94,27 +65,7 @@ const AdminEditPage = () => {
           (key) => typeof data[key] === 'object'
         );
 
-        const rawData = dataKey ? data[dataKey] : data;
-
-        // 🔹 PAS de flatten pour prestataires & reservations
-        if (entity === 'prestataires' || entity === 'reservations') {
-          setFormData(rawData);
-        } else {
-          setFormData(flattenObject(rawData));
-        }
-
-        // 🔹 Charger prestataires pour les réservations
-        if (entity === 'reservations') {
-          const pRes = await fetch(
-            'https://gofind-v9ee.onrender.com/api/prestataires',
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-
-          if (pRes.ok) {
-            const pData = await pRes.json();
-            setPrestataires(pData.prestataires || []);
-          }
-        }
+        setFormData(dataKey ? data[dataKey] : data);
       } catch (err) {
         console.error(err);
         alert('Erreur lors du chargement');
@@ -131,25 +82,14 @@ const AdminEditPage = () => {
   ======================= */
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    let val = value;
-
-    if (type === 'number') val = Number(value);
-    if (type === 'checkbox') val = checked;
-
-    setFormData((prev) => ({ ...prev, [name]: val }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e, field) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, [field]: file }));
-    }
+    if (file) setFormData((prev) => ({ ...prev, [field]: file }));
   };
-
-  /* =======================
-      SUBMIT
-  ======================= */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -157,44 +97,35 @@ const AdminEditPage = () => {
     try {
       const token = sessionStorage.getItem('token');
       const endpoint = entityToEndpoint[entity];
+      let payload = {};
 
-      let payload =
-        entity === 'prestataires' || entity === 'reservations'
-          ? { ...formData }
-          : unflattenObject(formData);
+      /* 🔹 RESERVATIONS : champs autorisés uniquement */
+      if (entity === 'reservations') {
+        reservationAllowedFields.forEach((f) => {
+          if (formData[f] !== undefined) payload[f] = formData[f];
+        });
+      } else {
+        payload = { ...formData };
+      }
 
-      // 🔹 Upload images
+      /* 🔒 Suppression des champs read-only */
+      const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
+      readOnlyFields.forEach((field) => delete payload[field]);
+
+      /* 🔹 Upload images */
       for (const field of imageFields) {
         if (payload[field] instanceof File) {
-          const formImg = new FormData();
-          formImg.append('image', payload[field]);
+          const imgData = new FormData();
+          imgData.append('image', payload[field]);
 
           const uploadRes = await fetch(
             'https://gofind-v9ee.onrender.com/api/upload/image',
-            {
-              method: 'POST',
-              body: formImg,
-            }
+            { method: 'POST', body: imgData }
           );
 
-          if (!uploadRes.ok) throw new Error(`Upload ${field} échoué`);
-          const uploadData = await uploadRes.json();
-          payload[field] = uploadData.url;
+          const uploadJson = await uploadRes.json();
+          payload[field] = uploadJson.url;
         }
-      }
-
-      // 🔹 Réservations : champs autorisés UNIQUEMENT
-      if (entity === 'reservations') {
-        const filtered = {};
-        reservationAllowedFields.forEach((f) => {
-          if (payload[f] !== undefined) filtered[f] = payload[f];
-        });
-
-        if (filtered.prestataire && typeof filtered.prestataire === 'object') {
-          filtered.prestataire = filtered.prestataire._id;
-        }
-
-        payload = filtered;
       }
 
       const res = await fetch(
@@ -220,10 +151,13 @@ const AdminEditPage = () => {
   };
 
   /* =======================
-      RENDER FORM
+      UI
   ======================= */
 
   const renderFormFields = () => {
+    const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
+
+    /* 🔹 CAS RÉSERVATION */
     if (entity === 'reservations') {
       return (
         <>
@@ -264,26 +198,19 @@ const AdminEditPage = () => {
             <option value="paypal">PayPal</option>
           </select>
 
-          <label>Prestataire</label>
-          <select
-            name="prestataire"
-            value={formData.prestataire || ''}
-            onChange={handleChange}
-          >
-            <option value="">— Choisir —</option>
-            {prestataires.map((p) => (
-              <option key={p._id} value={p._id}>
-                {p.nom}
-              </option>
-            ))}
-          </select>
-
           <label>Description</label>
           <textarea
             name="description"
             value={formData.description || ''}
             onChange={handleChange}
           />
+
+          <p>
+            <strong>Client :</strong> {formData.client?.email}
+          </p>
+          <p>
+            <strong>Prestataire :</strong> {formData.prestataire?.email}
+          </p>
         </>
       );
     }
@@ -296,29 +223,30 @@ const AdminEditPage = () => {
       )
         return null;
 
+      /* 🔒 Champs relations READ-ONLY */
+      if (readOnlyFields.includes(key)) {
+        return (
+          <p key={key}>
+            <strong>{key} :</strong> information liée (non modifiable)
+          </p>
+        );
+      }
+
       if (imageFields.includes(key)) {
         return (
           <div key={key}>
             <label>{key}</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleFileChange(e, key)}
-            />
-            {value && (
-              <img
-                src={value instanceof File ? URL.createObjectURL(value) : value}
-                alt={key}
-                style={{
-                  width: 80,
-                  height: 80,
-                  objectFit: 'cover',
-                  marginTop: 8,
-                  borderRadius: 8,
-                }}
-              />
-            )}
+            <input type="file" onChange={(e) => handleFileChange(e, key)} />
+            {value && <img src={value} alt={key} width={80} />}
           </div>
+        );
+      }
+
+      if (typeof value === 'object') {
+        return (
+          <p key={key}>
+            <strong>{key} :</strong> information liée
+          </p>
         );
       }
 

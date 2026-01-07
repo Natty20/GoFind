@@ -15,7 +15,7 @@ const {
 
 const { authenticateUser, authorizeAdmin } = require("../middlewares/authMiddleware");
 
-const { upload } = require("../middlewares/upload"); 
+const { upload } = require("../middlewares/uploads"); 
 
 // login registr ...
 router.post("/register", register);

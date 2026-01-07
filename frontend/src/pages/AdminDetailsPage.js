@@ -8,10 +8,22 @@ const AdminDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // 🔒 Champs sensibles à masquer
+  const hiddenFields = [
+    'password',
+    '__v',
+    'resetToken',
+    'resetPasswordToken',
+    'resetPasswordExpires',
+    'createdAt',
+    'updatedAt',
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
+
         const entityToEndpoint = {
           clients: 'auth',
           admins: 'admin',
@@ -21,6 +33,7 @@ const AdminDetailsPage = () => {
         };
 
         const endpoint = entityToEndpoint[entity] || entity;
+
         const response = await fetch(
           `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
           {
@@ -31,12 +44,14 @@ const AdminDetailsPage = () => {
         );
 
         if (!response.ok) throw new Error('Erreur de récupération');
+
         const result = await response.json();
 
         // Trouver l'objet principal
         const dataKey = Object.keys(result).find(
           (key) => typeof result[key] === 'object'
         );
+
         setData(dataKey ? result[dataKey] : result);
       } catch (error) {
         console.error(error);
@@ -52,7 +67,27 @@ const AdminDetailsPage = () => {
   if (loading) return <p>Chargement...</p>;
   if (!data) return <p>Aucune donnée trouvée.</p>;
 
-  // Fonction récursive pour afficher les objets et tableaux
+  // 🧹 Nettoyage récursif des champs interdits
+  const sanitizeObject = (obj) => {
+    if (Array.isArray(obj)) {
+      return obj.map(sanitizeObject);
+    }
+
+    if (typeof obj === 'object' && obj !== null) {
+      return Object.entries(obj).reduce((acc, [key, value]) => {
+        if (!hiddenFields.includes(key)) {
+          acc[key] = sanitizeObject(value);
+        }
+        return acc;
+      }, {});
+    }
+
+    return obj;
+  };
+
+  const cleanData = sanitizeObject(data);
+
+  // 🧠 Rendu récursif
   const renderValue = (value) => {
     if (Array.isArray(value)) {
       return (
@@ -63,6 +98,7 @@ const AdminDetailsPage = () => {
         </ul>
       );
     }
+
     if (typeof value === 'object' && value !== null) {
       return (
         <div
@@ -74,22 +110,24 @@ const AdminDetailsPage = () => {
         >
           {Object.entries(value).map(([k, v]) => (
             <div key={k} style={{ marginBottom: '5px' }}>
-              <strong>{k}:</strong> {renderValue(v)}
+              <strong>{k} :</strong> {renderValue(v)}
             </div>
           ))}
         </div>
       );
     }
+
     return String(value);
   };
 
   return (
     <div className="details-page">
       <h1>
-        Détails - {entity} : {id}
+        Détails – {entity} : {id}
       </h1>
+
       <div className="admin-details-card">
-        {Object.entries(data).map(([key, value]) => (
+        {Object.entries(cleanData).map(([key, value]) => (
           <div key={key} className="details-field">
             <strong>{key} :</strong> {renderValue(value)}
           </div>

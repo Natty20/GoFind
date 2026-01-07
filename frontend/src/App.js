@@ -36,6 +36,7 @@ import MentionsLegales from './pages/MentionsPage';
 import Contact from './pages/ContactPage';
 import FAQ from './pages/FAQPage';
 import About from './pages/AboutPage';
+import RdvClient from './pages/RdvClient';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
             <Route path="/mentions-legales" element={<MentionsLegales />} />
             <Route path="/choix_compte" element={<ChoixCompte />} />
             <Route path="/reservations" element={<Reservation />} />
+            <Route path="/rdv-client" element={<RdvClient />} />
             <Route path="/mon-profil" element={<MonProfilRouter />} />
             <Route path="/profil-client" element={<ProfilClient />} />
             <Route path="/profil-prestataire" element={<ProfilPresta />} />

@@ -1,39 +1,105 @@
 .admineditpage {
-  margin: 6rem 0 0 0;
+  margin: 6rem auto;
+  max-width: 900px;
+  padding: 0 1rem;
 }
 
+/* ===== TITRE ===== */
 .admineditpage h1 {
   font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: var(--main-color);
   text-align: center;
 }
 
-.form-card {
-  background: var(--secondary-color) !important;
-  color: var(--main-color) !important;
+/* ===== FORM CARD ===== */
+.admineditpage form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== CHAMPS ===== */
+.admineditpage label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+  color: var(--main-color);
+}
+
+.admineditpage input,
+.admineditpage select,
+.admineditpage textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.admineditpage textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.admineditpage input:focus,
+.admineditpage select:focus,
+.admineditpage textarea:focus {
+  outline: none;
+  border-color: var(--main-color);
+}
+
+/* ===== READ ONLY INFO ===== */
+.admineditpage p {
+  background: #f5f5f5;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.admineditpage p strong {
+  color: var(--main-color);
+}
+
+/* ===== IMAGES PREVIEW ===== */
+.admineditpage img {
+  margin-top: 0.5rem;
+  border-radius: 0.6rem;
+  object-fit: cover;
+}
+
+/* ===== BOUTONS ===== */
+.admin-edit-btn {
   display: flex;
-  align-items: center;
-  border-radius: 0 2rem 2rem 0;
   justify-content: center;
-  text-align: center;
-  padding: 1rem;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .admin-edit-btn button {
-  width: 70% !important;
+  width: 220px;
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .admin-edit-btn button {
-    width: 60% !important;
-    margin: 1rem 5rem !important;
-  }
-}
-
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+  .admineditpage {
+    margin-top: 4rem;
+  }
+
+  .admin-edit-btn {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .admin-edit-btn button {
-    width: 60% !important;
-    margin: 1rem 5rem !important;
+    width: 100%;
   }
 }

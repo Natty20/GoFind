@@ -71,18 +71,22 @@ const Navbar = () => {
           {/* Navbar gauche */}
           <div className="navbar-left">
             {role === 'prestataire' && (
-              <>
-                <Link to="/reservations" onClick={closeMenu}>
-                  Réservations
-                </Link>
-              </>
+              <Link to="/reservations" onClick={closeMenu}>
+                Réservations
+              </Link>
             )}
             {role === 'admin' && (
               <Link to="/dashboard" onClick={closeMenu}>
                 Tableau de Bord
               </Link>
             )}
+            {role === 'client' && (
+              <Link to="/rdv-client" onClick={closeMenu}>
+                Mes rendez-vous
+              </Link>
+            )}
           </div>
+
           {/* Navbar droite */}
           <div className="navbar-right">
             {role !== 'admin' && (
@@ -117,15 +121,18 @@ const Navbar = () => {
           {menuOpen && (
             <div className="navbar-mobile-links">
               {role === 'prestataire' && (
-                <>
-                  <Link to="/reservations" onClick={closeMenu}>
-                    Réservations
-                  </Link>
-                </>
+                <Link to="/reservations" onClick={closeMenu}>
+                  Réservations
+                </Link>
               )}
               {role === 'admin' && (
                 <Link to="/dashboard" onClick={closeMenu}>
                   Tableau de Bord
+                </Link>
+              )}
+              {role === 'client' && (
+                <Link to="/mes-rendez-vous" onClick={closeMenu}>
+                  Mes rendez-vous
                 </Link>
               )}
               {role !== 'admin' && (
