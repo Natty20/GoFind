@@ -36,16 +36,12 @@ const AdminEditPage = () => {
     'description',
   ];
 
-  /* 🔒 Champs RELATIONS en lecture seule par entité */
+  /* Champs non modifiables */
   const readOnlyFieldsByEntity = {
     prestataires: ['selectedPrestations', 'realisations'],
     prestations: ['sousPrestations'],
     sousprestations: ['prestation', 'prestataires'],
   };
-
-  /* =======================
-      FETCH
-  ======================= */
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,10 +73,6 @@ const AdminEditPage = () => {
     fetchData();
   }, [entity, id]);
 
-  /* =======================
-      HANDLERS
-  ======================= */
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -99,7 +91,7 @@ const AdminEditPage = () => {
       const endpoint = entityToEndpoint[entity];
       let payload = {};
 
-      /* 🔹 RESERVATIONS : champs autorisés uniquement */
+      // Cas spécifique réservations
       if (entity === 'reservations') {
         reservationAllowedFields.forEach((f) => {
           if (formData[f] !== undefined) payload[f] = formData[f];
@@ -108,11 +100,11 @@ const AdminEditPage = () => {
         payload = { ...formData };
       }
 
-      /* 🔒 Suppression des champs read-only */
+      // Suppression champs read-only
       const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
       readOnlyFields.forEach((field) => delete payload[field]);
 
-      /* 🔹 Upload images */
+      // Upload images
       for (const field of imageFields) {
         if (payload[field] instanceof File) {
           const imgData = new FormData();
@@ -150,14 +142,10 @@ const AdminEditPage = () => {
     }
   };
 
-  /* =======================
-      UI
-  ======================= */
-
   const renderFormFields = () => {
     const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
 
-    /* 🔹 CAS RÉSERVATION */
+    /* Cas réservation */
     if (entity === 'reservations') {
       return (
         <>
@@ -196,6 +184,7 @@ const AdminEditPage = () => {
           >
             <option value="virement bancaire">Virement bancaire</option>
             <option value="paypal">PayPal</option>
+            <option value="Carte via Stripe">Carte via Stripe</option>
           </select>
 
           <label>Description</label>
@@ -223,15 +212,34 @@ const AdminEditPage = () => {
       )
         return null;
 
-      /* 🔒 Champs relations READ-ONLY */
+      // Champs read-only affichés
       if (readOnlyFields.includes(key)) {
         return (
-          <p key={key}>
-            <strong>{key} :</strong> information liée (non modifiable)
-          </p>
+          <div key={key} className="readonly-field">
+            <label>{key}</label>
+
+            {Array.isArray(value) && value.length > 0 ? (
+              <ul>
+                {value.map((item, index) => (
+                  <li key={index}>
+                    {item.nom || item.title || item.email || item._id}
+                  </li>
+                ))}
+              </ul>
+            ) : typeof value === 'object' && value !== null ? (
+              <p>{value.nom || value.email || value._id}</p>
+            ) : (
+              <p style={{ fontStyle: 'italic', opacity: 0.7 }}>
+                Aucune information liée
+              </p>
+            )}
+
+            <small style={{ opacity: 0.6 }}>Champ non modifiable</small>
+          </div>
         );
       }
 
+      // Images
       if (imageFields.includes(key)) {
         return (
           <div key={key}>
@@ -242,6 +250,7 @@ const AdminEditPage = () => {
         );
       }
 
+      // Objets génériques
       if (typeof value === 'object') {
         return (
           <p key={key}>

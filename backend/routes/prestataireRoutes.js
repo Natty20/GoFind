@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const {
   register,
   login,
@@ -14,8 +13,7 @@ const {
 } = require("../controllers/prestataireController");
 
 const { authenticateUser, authorizeAdmin } = require("../middlewares/authMiddleware");
-
-const { upload } = require("../middlewares/uploads"); 
+const upload = require("../middlewares/uploads"); 
 
 // login registr ...
 router.post("/register", register);
@@ -49,6 +47,7 @@ router.post(
   upload.single("image"),
   addRealisation
 );
+
 
 router.delete(
   "/prestataire/:id/realisations/:realisationId",

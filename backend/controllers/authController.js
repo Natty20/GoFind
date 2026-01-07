@@ -39,6 +39,22 @@ const register = async (req, res) => {
       });
     }
 
+    const normalizePhone = (phone) => {
+      return phone
+        .replace(/\s+/g, "")
+        .replace(/^(\+33|0033)/, "0");
+    };
+
+    const normalizedPhone = normalizePhone(phone);
+    const phoneRegex = /^(06|07)\d{8}$/;
+
+    if (!phoneRegex.test(normalizedPhone)) {
+      return res.status(400).json({
+        message:
+          "Veuillez entrer un numéro de téléphone mobile valide (06 ou 07, 10 chiffres).",
+      });
+    }
+
     // Hashage du mot de passe avec bcryptjs
     bcrypt.setRandomFallback((len) => crypto.randomBytes(len));
     const salt = await bcrypt.genSalt(10);

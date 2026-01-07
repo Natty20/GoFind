@@ -8,9 +8,10 @@
   justify-content: center;
   align-items: flex-start;
   background: var(--secondary-text-color);
+  border: 1px solid var(--main-color);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px var(--secondary-color);
 }
 
 .info-presta img {
@@ -19,6 +20,7 @@
   border-radius: 3.5rem;
   padding: 2rem;
   object-fit: cover;
+  border: none;
 }
 
 .presta-names {
@@ -30,12 +32,13 @@
 .presta-names h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: black;
+  color: var(--main-color);
+  text-align: center;
 }
 
 .presta-names h2 {
-  font-size: 1.5rem;
-  color: var(--main-color);
+  font-size: 1rem;
+  color: black;
   text-transform: uppercase;
   margin: 1rem 0;
   text-align: center;
@@ -47,6 +50,10 @@
   text-align: center;
 }
 
+.presta-names button {
+  margin: 0;
+  width: 100%;
+}
 .location {
   display: flex;
   align-items: center;
@@ -83,16 +90,31 @@
 }
 
 .form-edit button {
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
   margin-top: 0.5rem;
+}
+
+.presta-description {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--secondary-text-color);
+  border: 1px solid var(--main-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px var(--secondary-color);
+}
+
+.presta-description p {
+  line-height: 1.6;
+  color: var(--primary-text-color);
 }
 
 .realisations-container {
   margin: 2rem 1rem;
+  background: var(--secondary-text-color);
+  border: 1px solid var(--main-color);
+  padding: 1.5rem;
 }
 
 .add-realisation {
@@ -135,8 +157,14 @@
 }
 
 @media (max-width: 768px) {
+  .info {
+    padding: 2rem;
+  }
+  .info-presta {
+    flex-direction: row;
+  }
   .info-presta img {
-    width: 60%;
+    width: 30%;
   }
 
   .presta-names h1 {
@@ -146,7 +174,10 @@
   .presta-names h2 {
     font-size: 1.2rem;
   }
-
+  .presta-names button {
+    margin: 0;
+    width: 100%;
+  }
   .form-edit {
     max-width: 100%;
     padding: 0.5rem;
@@ -168,7 +199,7 @@
 
 @media (max-width: 480px) {
   .info-presta img {
-    width: 70%;
+    width: 35%;
     padding: 0.5rem;
   }
 
@@ -179,14 +210,19 @@
   .presta-names h2 {
     font-size: 1rem;
   }
-
+  .presta-names button {
+    margin: 0;
+    width: 100%;
+  }
+  .form-edit {
+    width: 70%;
+  }
   .form-edit input {
     font-size: 0.9rem;
   }
 
   .form-edit button {
     font-size: 0.9rem;
-    padding: 8px;
   }
 
   .images-grid {

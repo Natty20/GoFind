@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Reservation = require("../models/Reservation");
-const stripe = require("stripe")(
-  process.env.STRIPE_PRIVATE_KEY || "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
+const stripe = require("stripe")( "sk_test_51R7Ik7P4Z6DHCQ7I5Pw29lolF97FzMkWeBYDj1FL9XwoVmbHmRXWiPAunHOkZcf0hjWKEEwFJ1fH8d1odZXOeHfK00u6T1CsJI"
 );
 
 const frontendURL = "https://go-find.vercel.app";
@@ -57,40 +56,43 @@ router.post("/create-checkout-session", async (req, res) => {
 // ============================
 // SUCCESS → SAVE RESERVATION
 // ============================
-router.get("/success", async (req, res) => {
+router.post('/confirm', async (req, res) => {
   try {
-    const sessionId = req.query.session_id;
-    if (!sessionId) return res.redirect(`${frontendURL}/#/cancel`);
+    const { sessionId } = req.body;
+
+    if (!sessionId)
+      return res.status(400).json({ message: 'Session ID manquant' });
 
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    if (session.payment_status !== "paid") {
-      return res.redirect(`${frontendURL}/#/cancel`);
+    if (session.payment_status !== 'paid') {
+      return res.status(400).json({ message: 'Paiement non validé' });
     }
 
-    const prestations = JSON.parse(session.metadata.prestations || "[]");
+    const prestations = JSON.parse(session.metadata.prestations || '[]');
 
-    // Créer la réservation
     await Reservation.create({
       client: session.metadata.clientId,
       prestataire: session.metadata.prestataireId,
       prestations: prestations.map((p) => ({
         prestationId: p.prestationId,
-        sousPrestations: p.selectedSousPrestations.map((sp) => sp.sousPrestationId),
+        sousPrestations: p.selectedSousPrestations.map(
+          (sp) => sp.sousPrestationId
+        ),
       })),
       date: session.metadata.date,
       heure: session.metadata.heure,
       description: session.metadata.description,
-      etat: "en attente",
-      modePaiement: "Carte via Stripe",
+      etat: 'en attente',
+      modePaiement: 'Carte via Stripe',
     });
 
-    // Redirection frontend
-    return res.redirect(`${frontendURL}/#/success`);
+    res.json({ success: true });
   } catch (err) {
-    console.error("Erreur lors du success Stripe:", err);
-    return res.redirect(`${frontendURL}/#/cancel`);
+    console.error('Erreur confirmation Stripe:', err);
+    res.status(500).json({ message: 'Erreur serveur Stripe' });
   }
 });
+
 
 module.exports = router;

@@ -72,33 +72,23 @@ const ProfilPresta = () => {
         return;
       }
 
-      // 1️⃣ Upload sur Cloudinary via ton endpoint existant
-      const formData = new FormData();
-      formData.append('image', file);
+      const formDataUpload = new FormData();
+      formDataUpload.append('image', file);
 
+      // Upload sur backend
       const uploadRes = await axios.post(
-        'https://gofind-v9ee.onrender.com/api/upload/image',
-        formData,
+        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations`,
+        formDataUpload,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      const imageUrl = uploadRes.data.url;
-
-      // 2️⃣ Envoyer l'URL au backend pour l'ajouter aux réalisations
-      const res = await axios.post(
-        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations`,
-        { imageUrl }, // backend attend { imageUrl }
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // 3️⃣ Mettre à jour le state avec la nouvelle réalisation
-      setPrestataire(res.data.prestataire);
-
-      // 4️⃣ Réinitialiser le fichier sélectionné
+      setPrestataire(uploadRes.data.prestataire);
       setFile(null);
-
       alert('✅ Réalisation ajoutée avec succès !');
     } catch (err) {
       console.error(
@@ -106,6 +96,24 @@ const ProfilPresta = () => {
         err.response?.data || err
       );
       alert("❌ Impossible d'ajouter la réalisation. Réessayez.");
+    }
+  };
+
+  // Supprimer une réalisation
+  const handleDeleteRea = async (imageUrl) => {
+    try {
+      const res = await axios.delete(
+        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPrestataire(res.data.prestataire);
+      alert('✅ Réalisation supprimée !');
+    } catch (err) {
+      console.error(
+        'Erreur lors de la suppression :',
+        err.response?.data || err
+      );
+      alert('❌ Impossible de supprimer la réalisation.');
     }
   };
 
@@ -123,6 +131,7 @@ const ProfilPresta = () => {
         email: formData.email || prestataire.email,
         phone: formData.phone || prestataire.phone || '',
         address: formData.address || prestataire.address || '',
+        description: formData.description || prestataire.description || '',
         profilePicture: profilePictureUrl || prestataire.profilePicture || '',
       };
 
@@ -178,17 +187,19 @@ const ProfilPresta = () => {
                   .filter(Boolean)
                   .join(' • ')}
               </h2>
-              <p className="span">
-                {prestataire.realisations?.length || 0} Réalisations
-              </p>
-              <p className="location">
-                <FaMapMarkerAlt />{' '}
-                {prestataire.address || 'Adresse non renseignée'}
-              </p>
               <p>
                 <strong>Email : {prestataire.email}</strong>
               </p>
               <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
+
+              <p className="location">
+                <FaMapMarkerAlt />{' '}
+                {prestataire.address || 'Adresse non renseignée'}
+              </p>
+              <p className="span">
+                {prestataire.realisations?.length || 0} Réalisations
+              </p>
+
               <button
                 className="btn-secondary"
                 onClick={() => setIsEditing(true)}
@@ -228,6 +239,15 @@ const ProfilPresta = () => {
                 onChange={handleInputChange}
                 placeholder="Adresse"
               />
+              <textarea
+                name="description"
+                value={formData.description || ''}
+                onChange={handleInputChange}
+                placeholder="Présentez votre activité, votre expérience, vos spécialités..."
+                rows={5}
+                maxLength={1500}
+              />
+
               <input
                 type="file"
                 name="profilePicture"
@@ -262,10 +282,15 @@ const ProfilPresta = () => {
           )}
         </div>
       </section>
+      {prestataire?.description?.length > 0 && (
+        <section className="presta-description">
+          <h2 className="tittles">À propos</h2>
+          <p>{prestataire.description}</p>
+        </section>
+      )}
 
-      {/* -- Ajouter Réalisation -- */}
       <div className="realisations-container">
-        <h3>Mes Réalisations</h3>
+        <h3 className="tittles">Mes Réalisations</h3>
 
         {/* Upload d'une nouvelle réalisation */}
         <div className="add-realisation">
@@ -274,7 +299,9 @@ const ProfilPresta = () => {
             accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <button onClick={handleUploadRea}>Ajouter</button>
+          <button className="btn-secondary" onClick={handleUploadRea}>
+            Ajouter
+          </button>
         </div>
 
         {/* Grille des réalisations existantes */}
@@ -287,6 +314,12 @@ const ProfilPresta = () => {
                   alt={`Réalisation ${index + 1}`}
                   className="realisation-img"
                 />
+                <button
+                  className="btn-primary"
+                  onClick={() => handleDeleteRea(imgUrl)}
+                >
+                  Supprimer
+                </button>
               </div>
             ))}
           </div>

@@ -44,6 +44,22 @@ const register = async (req, res) => {
       });
     }
 
+    const normalizePhone = (phone) => {
+      return phone
+        .replace(/\s+/g, "")
+        .replace(/^(\+33|0033)/, "0");
+    };
+
+    const normalizedPhone = normalizePhone(phone);
+    const phoneRegex = /^(06|07)\d{8}$/;
+
+    if (!phoneRegex.test(normalizedPhone)) {
+      return res.status(400).json({
+        message:
+          "Veuillez entrer un numéro de téléphone mobile valide (06 ou 07, 10 chiffres).",
+      });
+    }
+
     bcrypt.setRandomFallback((len) => crypto.randomBytes(len));
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -182,9 +198,13 @@ const getPrestataireById = async (req, res) => {
 const updatePrestataire = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nom, prenom, email, password, phone, address, profilePicture } =
+    const { nom, prenom, email, password, phone, address, profilePicture, description } =
       req.body;
-    let updatedFields = { nom, prenom, email, phone, address, profilePicture };
+    let updatedFields = { nom, prenom, email, phone, address, profilePicture, description };
+
+    Object.keys(updatedFields).forEach(
+      (key) => updatedFields[key] === undefined && delete updatedFields[key]
+    );
 
     if (password) {
       updatedFields.password = await bcrypt.hash(password, 10);
@@ -192,8 +212,8 @@ const updatePrestataire = async (req, res) => {
 
     const updatedPrestataire = await Prestataire.findByIdAndUpdate(
       id,
-      updatedFields,
-      { new: true },
+      { $set: updatedFields },
+      { new: true }
     ).select("-password");
     if (!updatedPrestataire) {
       return res.status(404).json({ message: "Prestataire non trouvé" });
@@ -323,7 +343,5 @@ module.exports = {
   deletePrestataire,
   addRealisation,
   deleteRealisation,
-  // upload,
-  // uploadRealisation,
   getMultiplePrestataires,
 };

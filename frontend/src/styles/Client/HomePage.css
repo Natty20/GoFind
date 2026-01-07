@@ -89,6 +89,7 @@ h3 {
 .photographie-image {
   width: 100%;
   max-width: 30rem;
+  max-height: 20rem;
   height: auto;
   margin: 1rem auto;
   object-fit: cover;
@@ -99,7 +100,7 @@ h3 {
 
 .exeption-container {
   display: flex;
-  gap: 1rem;
+  /* gap: 1rem; */
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -113,7 +114,6 @@ h3 {
   text-align: center;
   padding: 1rem;
   background-color: #f5f5f5;
-  border-radius: 8px;
 }
 
 .artisanat-photographie-right {
@@ -124,7 +124,6 @@ h3 {
   background-size: cover;
   background-position: center;
   min-height: 250px;
-  border-radius: 8px;
   position: relative;
 }
 
@@ -218,7 +217,7 @@ h3 {
   color: black;
   background-color: white;
   padding: 0.5rem;
-  border: 1px solid var(--secondary-color);
+  border: 2px solid var(--secondary-color);
   border-radius: 8px;
   cursor: pointer;
   max-width: 100%;
@@ -327,7 +326,7 @@ h3 {
 
   .category .buttons button,
   .reserve button {
-    width: 80%;
+    /* width: 80%; */
     font-size: 0.75rem;
   }
 
@@ -337,7 +336,7 @@ h3 {
   }
 
   .steps-container {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .step-number {

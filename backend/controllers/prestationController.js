@@ -124,19 +124,32 @@ const updatePrestation = async (req, res) => {
 const deletePrestation = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletePrestation = await Prestation.findByIdAndDelete(id);
-    if (!deletePrestation) {
+
+    // 1️⃣ Vérifier l'existence de la prestation
+    const prestation = await Prestation.findById(id);
+    if (!prestation) {
       return res.status(404).json({ message: "Prestation not found" });
     }
+
+    // 2️⃣ Supprimer les sous-prestations liées
+    const deletedSousPrestations = await SousPrestation.deleteMany({
+      prestation: id,
+    });
+
+    // 3️⃣ Supprimer la prestation
+    await Prestation.findByIdAndDelete(id);
+
     res.status(200).json({
-      message: "Prestation deleted successfully",
-      prestation: deletePrestation,
+      message: "Prestation et ses sous-prestations supprimées avec succès",
+      prestationId: id,
+      sousPrestationsSupprimees: deletedSousPrestations.deletedCount,
     });
   } catch (error) {
-    console.error(error);
+    console.error("❌ Erreur suppression prestation :", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
+
 
 module.exports = {
   createPrestation,

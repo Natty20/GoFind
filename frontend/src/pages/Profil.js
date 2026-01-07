@@ -95,7 +95,7 @@ const ProfilePage = () => {
             <p>Téléphone : {prestataire.phone || 'Non renseigné'}</p>
           </div>
         </div>
-        <div className="provider-calendar">
+        <div className="presta-provider-calendar">
           <h2 className="tittles">Prestations proposées</h2>
           {prestataire.selectedPrestations.length > 0 ? (
             prestataire.selectedPrestations.map((prestation, index) => (
@@ -131,6 +131,13 @@ const ProfilePage = () => {
           </Link>
         </div>
       </section>
+
+      {prestataire?.description?.length > 0 && (
+        <section className="provider-description">
+          <h2 className="tittles">À propos</h2>
+          <p>{prestataire.description}</p>
+        </section>
+      )}
 
       {/* Section Réalisations - uniquement images */}
       {prestataire?.realisations?.length > 0 && (

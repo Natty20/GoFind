@@ -14,6 +14,12 @@ const PrestataireSchema = new mongoose.Schema(
       enum: ["client", "admin", "prestataire"],
       default: "prestataire",
     },
+    description: {
+      type: String,
+      required: false,
+      maxlength: 1500,
+      trim: true,
+    },
     selectedPrestations: [
       {
         prestationId: {

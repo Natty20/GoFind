@@ -66,7 +66,7 @@ const RdvClient = () => {
   const renderRdvSection = (title, rdvList, className) =>
     rdvList.length > 0 && (
       <div className="rdv-section">
-        <h3 className="rdv-title">{title}</h3>
+        <h1 className="rdv-title">{title}</h1>
         {rdvList.map((r) => (
           <div key={r._id} className={`rdv-card ${className}`}>
             <p>
@@ -109,7 +109,7 @@ const RdvClient = () => {
 
   return (
     <div className="rdvclient-container">
-      <h2>Vos Rendez-Vous</h2>
+      <h2 className="tittles">Vos Rendez-Vous</h2>
       <div className="appointments-summary">
         <div className="appointment">
           <span className="number green">{rdvAVenir.length}</span>

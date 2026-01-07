@@ -273,8 +273,9 @@ const PrestataireRegister = () => {
           <p className="label">Téléphone :</p>
           <MDBInput
             id="phone"
-            type="number"
+            type="tel"
             name="phone"
+            pattern="^(06|07)[0-9]{8}$"
             value={formData.phone}
             onChange={handleChange}
             required

@@ -1,11 +1,10 @@
-.demande-envoye {
+.success-page {
   margin: 6rem 0 0 0;
 }
 
-.demande-envoyee-container {
+.success-page-container {
   background: var(--bg-color);
   text-align: center;
-  padding: 20px;
 }
 
 .circle {
@@ -98,7 +97,11 @@
     margin: 2rem 3rem 0;
   }
 }
+
 @media (max-width: 480px) {
+  .message p {
+    font-size: 1.5rem;
+  }
   .circle {
     width: 90%;
     height: 10rem;
@@ -109,7 +112,7 @@
     font-size: 6rem;
   }
 
-  .actions button {
-    margin: 1rem 0;
+  .message button {
+    width: 70%;
   }
 }
