@@ -77,12 +77,10 @@ const ClientProfile = () => {
     try {
       let profilePictureUrl = formData.profilePicture;
 
-      // Si c'est un fichier, on upload
       if (formData.profilePicture instanceof File) {
         profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
       }
 
-      // Préparer le payload avec l'URL finale
       const payload = { ...formData, profilePicture: profilePictureUrl };
 
       const res = await axios.put(
@@ -92,7 +90,7 @@ const ClientProfile = () => {
       );
 
       setClient(res.data.client);
-      setFormData(res.data.client); // Préremplir formulaire avec les nouvelles valeurs
+      setFormData(res.data.client);
       setIsEditing(false);
       alert('✅ Informations mises à jour avec succès !');
     } catch (err) {
@@ -105,20 +103,31 @@ const ClientProfile = () => {
   if (error)
     return <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>;
 
+  // Fonction pour normaliser les états (enlever accents et minuscules)
+  const normalize = (str) =>
+    str
+      ?.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
   const now = new Date();
 
+  // 🔵 À venir : date future + acceptée
   const rdvAVenir = rdvs.filter(
-    (r) => new Date(r.date) > now && r.etat === 'acceptée'
-  );
-  const rdvTermines = rdvs.filter(
-    (r) => new Date(r.date) <= now && r.etat === 'terminé'
-  );
-  const rdvAnnules = rdvs.filter((r) =>
-    ['declinée', 'annulée'].includes(r.etat.toLowerCase())
+    (r) => new Date(r.date) > now && normalize(r.etat) === 'acceptee'
   );
 
+  // 🟢 En attente : date future + en attente
   const rdvPending = rdvs.filter(
-    (r) => new Date(r.date) > now && r.etat === 'en attente'
+    (r) => new Date(r.date) > now && normalize(r.etat) === 'en attente'
+  );
+
+  // 🔴 Annulés : uniquement déclinée
+  const rdvAnnules = rdvs.filter((r) => normalize(r.etat) === 'declinee');
+
+  // 🟡 Terminés : date passée + pas déclinée
+  const rdvTermines = rdvs.filter(
+    (r) => new Date(r.date) <= now && normalize(r.etat) !== 'declinee'
   );
 
   const formatDate = (dateString) => {
@@ -198,7 +207,7 @@ const ClientProfile = () => {
               placeholder="Téléphone"
             />
 
-            <p className="label">Address: </p>
+            <p className="label">Adresse: </p>
             <input
               id="address"
               type="text"
@@ -207,11 +216,12 @@ const ClientProfile = () => {
               onChange={handleChange}
               placeholder="Adresse"
             />
+
             <p className="label">Photo de profile: </p>
             <input
               type="file"
               name="profilePicture"
-              onChange={handleFileChange} // <-- ici, pas handleChange
+              onChange={handleFileChange}
               accept="image/*"
             />
 
@@ -262,7 +272,7 @@ const ClientProfile = () => {
         </div>
         <div className="appointment">
           <span className="number green">{rdvPending.length}</span>
-          <p>Pending</p>
+          <p>En Attente</p>
         </div>
         <div className="appointment">
           <span className="number red">{rdvAnnules.length}</span>
@@ -270,6 +280,7 @@ const ClientProfile = () => {
         </div>
       </div>
 
+      {/* Sections des RDVs */}
       {rdvAVenir.length > 0 && (
         <div className="rdv-section">
           <h3 className="rdv-title">À venir</h3>

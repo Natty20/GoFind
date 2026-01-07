@@ -1,4 +1,6 @@
 const express = require("express");
+const router = express.Router();
+
 const {
   register,
   login,
@@ -7,24 +9,25 @@ const {
   deletePrestataire,
   getMultiplePrestataires,
   getPrestataireById,
+  addRealisation,
+  deleteRealisation,
 } = require("../controllers/prestataireController");
-// const { upload } = require("../controllers/prestataireController");
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
-const {
-  authenticateUser,
-  authorizeAdmin,
-} = require("../middlewares/authMiddleware");
-const router = express.Router();
 
+const { authenticateUser, authorizeAdmin } = require("../middlewares/authMiddleware");
+
+const { upload } = require("../middlewares/upload"); 
+
+// login registr ...
 router.post("/register", register);
 router.post("/login", login);
 router.get("/", getAllPrestataires);
 router.get("/:id", getPrestataireById);
+
 router.put(
   "/:id",
   authenticateUser,
   (req, res, next) => {
+    // Seul le prestataire lui-même ou l'admin peut modifier
     if (req.user.role === "admin" || req.user.id === req.params.id) {
       next();
     } else {
@@ -33,17 +36,24 @@ router.put(
         .json({ message: "Accès interdit pour la modification!" });
     }
   },
-  updatePrestataire,
-); //seul le prestataire et l'admin peut modifier son compte
+  updatePrestataire
+);
+
 router.delete("/:id", authenticateUser, authorizeAdmin, deletePrestataire);
 router.post("/multiple", getMultiplePrestataires);
 
+// pour les reas
+router.post(
+  "/prestataire/:id/realisations",
+  authenticateUser,
+  upload.single("image"),
+  addRealisation
+);
 
-// router.post("/:id/realisations", addRealisation);
-// router.delete("/:id/realisations/:realisationId", deleteRealisation);
-// router.post(
-//   "/:id/realisations/upload",
-//   uploadRealisation,
-// );
+router.delete(
+  "/prestataire/:id/realisations/:realisationId",
+  authenticateUser,
+  deleteRealisation
+);
 
 module.exports = router;

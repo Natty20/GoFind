@@ -8,6 +8,7 @@
   color: var(--main-color);
   text-align: center;
 }
+
 .form-card {
   background: var(--secondary-color) !important;
   color: var(--main-color) !important;

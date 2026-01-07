@@ -132,66 +132,22 @@ const ProfilePage = () => {
         </div>
       </section>
 
-      {/* Section Réalisations */}
-
-      {/* <div className="realisation-section">
-        <h3>Réalisations</h3>
-        <div className="tabs">
-          <button
-            className={activeTab === 'images' ? 'active' : ''}
-            onClick={() => setActiveTab('images')}
-          >
-            IMAGES
-          </button>
-          <button
-            className={activeTab === 'videos' ? 'active' : ''}
-            onClick={() => setActiveTab('videos')}
-          >
-            VIDÉOS
-          </button>
+      {/* Section Réalisations - uniquement images */}
+      {prestataire?.realisations?.length > 0 && (
+        <div className="realisation-section">
+          <h3>Réalisations</h3>
+          <div className="images-grid">
+            {prestataire.realisations.map((imgUrl, index) => (
+              <img
+                key={index}
+                src={imgUrl}
+                alt={`Réalisation ${index + 1}`}
+                className="realisation-img"
+              />
+            ))}
+          </div>
         </div>
-
-        <div className="content">
-          {activeTab === 'images' && (
-            <div className="images-grid">
-              <img src="/images/brush.jpeg" alt=" 1" />
-              <img src="/images/champagne.jpeg" alt=" 2" />
-              <img src="/images/decor-violet.jpeg" alt=" 3" />
-              <img src="/images/evenementielle.jpg" alt=" 4" />
-              <img src="/images/decor-marron-vert.jpeg" alt=" 5" />
-            </div>
-          )}
-
-          {activeTab === 'videos' && (
-            <div className="videos-grid">
-              <video controls>
-                <source
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                  type="video/mp4"
-                />
-              </video>
-              <video controls>
-                <source
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                  type="video/mp4"
-                />
-              </video>
-              <video controls>
-                <source
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                  type="video/mp4"
-                />
-              </video>
-              <video controls>
-                <source
-                  src="https://www.w3schools.com/html/mov_bbb.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          )}
-        </div>
-      </div> */}
+      )}
     </div>
   );
 };

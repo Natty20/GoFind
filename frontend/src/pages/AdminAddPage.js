@@ -826,21 +826,18 @@ const ReservationForm = () => {
     e.preventDefault();
 
     const payload = {
-      client: data.client,
-      prestataire: data.prestataire,
-      date: new Date(data.date),
-      heure: data.heure,
-      description: data.description,
-
-      modePaiement: 'Virement Bancaire',
-      etat: 'en attente',
-
+      clientId: data.client,
+      prestataireId: data.prestataire,
       prestations: [
         {
           prestationId: data.prestationId,
           sousPrestations: [data.sousPrestationId],
         },
       ],
+      date: data.date,
+      heure: data.heure,
+      modePaiement: 'Virement Bancaire',
+      description: data.description,
     };
 
     await axios.post(`${API}/reservations/new`, payload, axiosConfig);

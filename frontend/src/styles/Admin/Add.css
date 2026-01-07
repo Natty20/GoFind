@@ -1,59 +1,143 @@
+/* ===========================
+   CONTAINER PAGE
+=========================== */
+
 .adminaddpage {
-  margin: 6rem 0 0 0;
-  padding: 2rem;
-  overflow: hidden;
+  margin: 6rem auto 0 auto;
+  padding: 2.5rem;
+  max-width: 800px;
+  /* ✅ correction */
+  background: #fff;
   border-radius: 2rem;
   border: 1px solid var(--main-color);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
-  max-width: 800;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* ===========================
+   FORM
+=========================== */
+
 .champs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   width: 100%;
-  padding: 0.7rem;
-  margin-bottom: 1rem;
-  border-radius: 30px;
+}
+
+/* ===========================
+   LABELS
+=========================== */
+
+.champs label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-left: 0.5rem;
+}
+
+/* ===========================
+   INPUTS / SELECTS / TEXTAREA
+=========================== */
+
+.champs input,
+.champs select,
+.champs textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 2rem;
   border: 2px solid var(--secondary-color);
   outline: none;
   font-size: 1rem;
-  transition: all 0.3s ease;
   background: #fff;
+  transition: all 0.25s ease;
 }
 
+/* Placeholder */
+.champs input::placeholder,
+.champs textarea::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Focus UX */
 .champs input:focus,
 .champs select:focus,
 .champs textarea:focus {
   border-color: var(--main-color);
-  box-shadow: 0 0 5px var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
-.textarea,
-.time,
-.date,
-.presta {
-  padding: 0.6rem;
-  border-radius: 2rem;
-  font-size: 1rem;
+/* Textarea */
+.champs textarea {
+  resize: vertical;
+  min-height: 120px;
+  border-radius: 1.5rem;
 }
 
-.champs select,
-.sous-prestations-select {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid var(--third-text-color);
+/* ===========================
+   SELECTS
+=========================== */
+
+.champs select {
   cursor: pointer;
-  outline: none;
-  background: var(--secondary-text-color);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  background-size: 14px;
+}
+
+/* ===========================
+   DATE & TIME
+=========================== */
+
+.champs input[type='date'],
+.champs input[type='time'] {
+  padding-right: 1.2rem;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.champs button {
+  margin: 2rem auto 0 auto;
+  width: 70%;
+  padding: 0.9rem;
+  border-radius: 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: var(--main-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.prestations-select:hover,
-.sous-prestations-select:hover {
-  border-color: var(--main-color);
+/* Hover */
+.champs button:hover {
+  background: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
-.admin-add-page button {
-  width: 70% !important;
+/* Active */
+.champs button:active {
+  transform: scale(0.98);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width: 768px) {
+  .adminaddpage {
+    padding: 1.8rem;
+    border-radius: 1.5rem;
+  }
+
+  .champs button {
+    width: 100%;
+  }
 }

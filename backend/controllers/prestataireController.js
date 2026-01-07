@@ -4,7 +4,7 @@ const SousPrestation = require("../models/SousPrestation");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
+const { uploadImageToCloudinary } = require("../config/cloudinary");
 const path = require("path");
 require("dotenv").config();
 
@@ -36,11 +36,11 @@ const register = async (req, res) => {
         .json({ message: "Veuillez entrer un email valide." });
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{12,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         message:
-          "Le mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule et un caractère spécial.",
+          "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule et un caractère spécial.",
       });
     }
 
@@ -256,114 +256,63 @@ const getMultiplePrestataires = async (req, res) => {
   }
 };
 
-// à revoir et tester ce code en bas
+// Ajouter une réalisation image à un prestataire
+const addRealisation = async (req, res) => {
+  try {
+    const prestataireId = req.params.id;
 
-// Ajouter une réalisation (image/vidéo) à un prestataire
-// const addRealisation = async (req, res) => {
-//   try {
-//     const { id } = req.params; // ID du prestataire
-//     const { realisationUrl } = req.body; // URL de l'image ou vidéo
+    if (!req.file) {
+      return res.status(400).json({ message: "Aucun fichier envoyé" });
+    }
 
-//     const prestataire = await Prestataire.findById(id);
-//     if (!prestataire) {
-//       return res.status(404).json({ message: "Prestataire non trouvé" });
-//     }
+    // Upload sur Cloudinary via ta fonction
+    const imageUrl = await uploadImageToCloudinary(req.file); // tu passes le fichier direct
 
-//     prestataire.realisations.push(realisationUrl);
-//     await prestataire.save();
+    // Récupérer le prestataire
+    const prestataire = await Prestataire.findById(prestataireId);
+    if (!prestataire) {
+      return res.status(404).json({ message: "Prestataire non trouvé" });
+    }
 
-//     res
-//       .status(200)
-//       .json({ message: "Réalisation ajoutée avec succès", prestataire });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Erreur serveur" });
-//   }
-// };
+    // Ajouter l'URL au tableau realisations
+    prestataire.realisations.push(imageUrl);
+    await prestataire.save();
+
+    res.status(200).json({
+      message: "Réalisation ajoutée avec succès",
+      prestataire,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
+
 
 // Supprimer une réalisation d'un prestataire
-// const deleteRealisation = async (req, res) => {
-//   try {
-//     const { id, realisationId } = req.params;
+const deleteRealisation = async (req, res) => {
+  try {
+    const { id, realisationId } = req.params;
 
-//     const prestataire = await Prestataire.findById(id);
-//     if (!prestataire) {
-//       return res.status(404).json({ message: "Prestataire non trouvé" });
-//     }
+    const prestataire = await Prestataire.findById(id);
+    if (!prestataire) {
+      return res.status(404).json({ message: "Prestataire non trouvé" });
+    }
 
-//     // Supprime la réalisation par son URL
-//     prestataire.realisations = prestataire.realisations.filter(
-//       (realisation) => realisation !== realisationId,
-//     );
-//     await prestataire.save();
+    // Supprime la réalisation par son URL
+    prestataire.realisations = prestataire.realisations.filter(
+      (realisation) => realisation !== realisationId,
+    );
+    await prestataire.save();
 
-//     res
-//       .status(200)
-//       .json({ message: "Réalisation supprimée avec succès", prestataire });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Erreur serveur" });
-//   }
-// };
-
-// Configuration de Multer
-// const fileFilter = (req, file, cb) => {
-//   const allowedTypes = [
-//     "image/jpeg",
-//     "image/jpg",
-//     "image/png",
-//     "image/gif",
-//     "video/mp4",
-//     "video/mpeg",
-//   ];
-//   if (allowedTypes.includes(file.mimetype)) {
-//     cb(null, true);
-//   } else {
-//     cb(
-//       new Error(
-//         "Format de fichier non pris en charge (JPEG, JPG, PNG, GIF, MP4 uniquement)",
-//       ),
-//       false,
-//     );
-//   }
-// };
-
-// Configuration de Multer pour le stockage des fichiers
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/"); // Dossier où stocker les fichiers
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + path.extname(file.originalname)); // Générer un nom unique
-//   },
-// });
-
-// const upload = multer({
-//   storage,
-//   fileFilter,
-//   limits: { fileSize: 5 * 1024 * 1024 }, // limite: 5MB max
-// });
-
-// Route pour ajouter une image/vidéo
-// const uploadRealisation = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const fileUrl = `/uploads/${req.file.filename}`; // Chemin du fichier
-
-//     const prestataire = await Prestataire.findById(id);
-//     if (!prestataire) {
-//       return res.status(404).json({ message: "Prestataire non trouvé" });
-//     }
-
-//     prestataire.realisations.push(fileUrl);
-//     await prestataire.save();
-
-//     res.status(200).json({ message: "Fichier uploadé avec succès", fileUrl });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Erreur serveur" });
-//   }
-// };
+    res
+      .status(200)
+      .json({ message: "Réalisation supprimée avec succès", prestataire });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
 
 module.exports = {
   register,
@@ -372,8 +321,8 @@ module.exports = {
   getPrestataireById,
   updatePrestataire,
   deletePrestataire,
-  // addRealisation,
-  // deleteRealisation,
+  addRealisation,
+  deleteRealisation,
   // upload,
   // uploadRealisation,
   getMultiplePrestataires,
