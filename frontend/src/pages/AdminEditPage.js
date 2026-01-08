@@ -2,6 +2,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../styles/Admin/Edit.css';
 
+const API = 'https://gofind-v9ee.onrender.com/api';
+
 const AdminEditPage = () => {
   const { entity, id } = useParams();
   const navigate = useNavigate();
@@ -9,6 +11,9 @@ const AdminEditPage = () => {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const [allPrestations, setAllPrestations] = useState([]);
+  const [allSousPrestations, setAllSousPrestations] = useState([]);
 
   const from = location.state?.from || '/dashboard';
 
@@ -36,32 +41,44 @@ const AdminEditPage = () => {
     'description',
   ];
 
-  /* Champs non modifiables */
   const readOnlyFieldsByEntity = {
     prestataires: ['selectedPrestations', 'realisations'],
     prestations: ['sousPrestations'],
     sousprestations: ['prestation', 'prestataires'],
   };
 
+  /* ===================== FETCH DATA ===================== */
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
 
-        const res = await fetch(
-          `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
+        // Fetch main entity
+        const res = await fetch(`${API}/${endpoint}/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!res.ok) throw new Error('Erreur chargement');
-
         const data = await res.json();
         const dataKey = Object.keys(data).find(
           (key) => typeof data[key] === 'object'
         );
-
         setFormData(dataKey ? data[dataKey] : data);
+
+        // Fetch all prestations / sous-prestations pour affichage lisible
+        if (entity === 'prestataires' || entity === 'prestations') {
+          const prestationsRes = await fetch(`${API}/prestations`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const prestationsData = await prestationsRes.json();
+          setAllPrestations(prestationsData.prestations || []);
+
+          const sousPrestationsRes = await fetch(`${API}/sousprestations`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const sousPrestationsData = await sousPrestationsRes.json();
+          setAllSousPrestations(sousPrestationsData.sousPrestations || []);
+        }
       } catch (err) {
         console.error(err);
         alert('Erreur lors du chargement');
@@ -73,6 +90,7 @@ const AdminEditPage = () => {
     fetchData();
   }, [entity, id]);
 
+  /* ===================== HANDLERS ===================== */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -91,7 +109,7 @@ const AdminEditPage = () => {
       const endpoint = entityToEndpoint[entity];
       let payload = {};
 
-      // Cas spécifique réservations
+      // Cas réservation → champs autorisés uniquement
       if (entity === 'reservations') {
         reservationAllowedFields.forEach((f) => {
           if (formData[f] !== undefined) payload[f] = formData[f];
@@ -100,9 +118,12 @@ const AdminEditPage = () => {
         payload = { ...formData };
       }
 
-      // Suppression champs read-only
+      // Supprimer uniquement les vrais champs non modifiables
       const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
-      readOnlyFields.forEach((field) => delete payload[field]);
+      readOnlyFields.forEach((field) => {
+        if (field !== 'selectedPrestations') delete payload[field];
+        // selectedPrestations doit rester pour prestataires
+      });
 
       // Upload images
       for (const field of imageFields) {
@@ -110,27 +131,23 @@ const AdminEditPage = () => {
           const imgData = new FormData();
           imgData.append('image', payload[field]);
 
-          const uploadRes = await fetch(
-            'https://gofind-v9ee.onrender.com/api/upload/image',
-            { method: 'POST', body: imgData }
-          );
-
+          const uploadRes = await fetch(`${API}/upload/image`, {
+            method: 'POST',
+            body: imgData,
+          });
           const uploadJson = await uploadRes.json();
           payload[field] = uploadJson.url;
         }
       }
 
-      const res = await fetch(
-        `https://gofind-v9ee.onrender.com/api/${endpoint}/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch(`${API}/${endpoint}/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) throw new Error('Update failed');
 
@@ -142,10 +159,11 @@ const AdminEditPage = () => {
     }
   };
 
+  /* ===================== RENDER FIELDS ===================== */
   const renderFormFields = () => {
     const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
 
-    /* Cas réservation */
+    // Cas réservations
     if (entity === 'reservations') {
       return (
         <>
@@ -195,15 +213,18 @@ const AdminEditPage = () => {
           />
 
           <p>
-            <strong>Client :</strong> {formData.client?.email}
+            <strong>Client :</strong>{' '}
+            {formData.client?.email || 'Non renseigné'}
           </p>
           <p>
-            <strong>Prestataire :</strong> {formData.prestataire?.email}
+            <strong>Prestataire :</strong>{' '}
+            {formData.prestataire?.email || 'Non renseigné'}
           </p>
         </>
       );
     }
 
+    // Champs génériques
     return Object.entries(formData).map(([key, value]) => {
       if (
         ['_id', '__v', 'password', 'role', 'createdAt', 'updatedAt'].includes(
@@ -212,29 +233,72 @@ const AdminEditPage = () => {
       )
         return null;
 
-      // Champs read-only affichés
+      // Champs read-only
       if (readOnlyFields.includes(key)) {
-        return (
-          <div key={key} className="readonly-field">
-            <label>{key}</label>
-
-            {Array.isArray(value) && value.length > 0 ? (
+        // Prestataire → noms des prestations
+        if (key === 'selectedPrestations' && Array.isArray(value)) {
+          return (
+            <div key={key} className="readonly-field">
+              <label>Prestations</label>
               <ul>
-                {value.map((item, index) => (
-                  <li key={index}>
+                {value.map((prestationItem) => {
+                  const prestation = allPrestations.find(
+                    (p) => p._id === prestationItem.prestationId
+                  );
+                  return (
+                    <li key={prestationItem.prestationId}>
+                      {prestation?.nom || 'Nom inconnu'} :{' '}
+                      {prestationItem.selectedSousPrestations
+                        .map((sId) => {
+                          const sous = allSousPrestations.find(
+                            (sp) => sp._id === sId
+                          );
+                          return sous?.title || 'Sous-prestation inconnue';
+                        })
+                        .join(' • ')}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        }
+
+        // Autres read-only
+        if (Array.isArray(value) && value.length > 0) {
+          return (
+            <div key={key} className="readonly-field">
+              <label>{key}</label>
+              <ul>
+                {value.map((item, i) => (
+                  <li key={i}>
                     {item.nom || item.title || item.email || item._id}
                   </li>
                 ))}
               </ul>
-            ) : typeof value === 'object' && value !== null ? (
-              <p>{value.nom || value.email || value._id}</p>
-            ) : (
-              <p style={{ fontStyle: 'italic', opacity: 0.7 }}>
-                Aucune information liée
-              </p>
-            )}
+            </div>
+          );
+        }
 
-            <small style={{ opacity: 0.6 }}>Champ non modifiable</small>
+        if (typeof value === 'object' && value !== null) {
+          return (
+            <div key={key} className="readonly-field">
+              <label>{key}</label>
+              <p>
+                {value.nom ||
+                  value.title ||
+                  value.email ||
+                  value._id ||
+                  'Aucune info'}
+              </p>
+            </div>
+          );
+        }
+
+        return (
+          <div key={key} className="readonly-field">
+            <label>{key}</label>
+            <p>{value ?? 'Aucune info'}</p>
           </div>
         );
       }
@@ -245,13 +309,15 @@ const AdminEditPage = () => {
           <div key={key}>
             <label>{key}</label>
             <input type="file" onChange={(e) => handleFileChange(e, key)} />
-            {value && <img src={value} alt={key} width={80} />}
+            {typeof value === 'string' && (
+              <img src={value} alt={key} width={80} />
+            )}
           </div>
         );
       }
 
-      // Objets génériques
-      if (typeof value === 'object') {
+      // Objets simples
+      if (typeof value === 'object' && value !== null) {
         return (
           <p key={key}>
             <strong>{key} :</strong> information liée
@@ -259,6 +325,7 @@ const AdminEditPage = () => {
         );
       }
 
+      // Champs normaux
       return (
         <div key={key}>
           <label>{key}</label>

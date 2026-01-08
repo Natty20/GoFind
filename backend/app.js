@@ -80,10 +80,6 @@ app.use(
   })
 );
 
-app.use(
-  "/api/stripe/webhook",
-  express.raw({ type: "application/json" })
-);
 
 app.options("*", cors());
 

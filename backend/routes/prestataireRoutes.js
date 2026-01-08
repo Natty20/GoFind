@@ -41,18 +41,9 @@ router.delete("/:id", authenticateUser, authorizeAdmin, deletePrestataire);
 router.post("/multiple", getMultiplePrestataires);
 
 // pour les reas
-router.post(
-  "/prestataire/:id/realisations",
-  authenticateUser,
-  upload.single("image"),
-  addRealisation
-);
+router.post("/:id/realisations", authenticateUser, upload.single("image"), addRealisation);
 
+router.delete("/:id/realisations/:realisationId", authenticateUser, deleteRealisation);
 
-router.delete(
-  "/prestataire/:id/realisations/:realisationId",
-  authenticateUser,
-  deleteRealisation
-);
 
 module.exports = router;
