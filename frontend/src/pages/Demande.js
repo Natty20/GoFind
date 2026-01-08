@@ -48,20 +48,7 @@ const ProfilPresta = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) setFormData({ ...formData, profilePicture: file });
-  };
-
-  const uploadImageToBackend = async (file) => {
-    const formData = new FormData();
-    formData.append('image', file);
-
-    const res = await axios.post(
-      'https://gofind-v9ee.onrender.com/api/upload/image',
-      formData,
-      { headers: { 'Content-Type': 'multipart/form-data' } }
-    );
-
-    return res.data.url;
+    if (file) setFile(file);
   };
 
   // Upload Réalisation
@@ -75,14 +62,13 @@ const ProfilPresta = () => {
       const formDataUpload = new FormData();
       formDataUpload.append('image', file);
 
-      // Upload sur backend
       const uploadRes = await axios.post(
-        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations`,
+        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations`,
         formDataUpload,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
@@ -103,9 +89,10 @@ const ProfilPresta = () => {
   const handleDeleteRea = async (imageUrl) => {
     try {
       const res = await axios.delete(
-        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
+        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setPrestataire(res.data.prestataire);
       alert('✅ Réalisation supprimée !');
     } catch (err) {
@@ -121,9 +108,6 @@ const ProfilPresta = () => {
   const handleSave = async () => {
     try {
       let profilePictureUrl = formData.profilePicture;
-      if (formData.profilePicture instanceof File) {
-        profilePictureUrl = await uploadImageToBackend(formData.profilePicture);
-      }
 
       const payload = {
         nom: formData.nom || prestataire.nom,
@@ -241,10 +225,11 @@ const ProfilPresta = () => {
                 name="description"
                 value={formData.description || ''}
                 onChange={handleInputChange}
-                placeholder="Présentez votre activité, votre expérience, vos spécialités..."
+                placeholder="Présentation..."
                 rows={5}
                 maxLength={1500}
               />
+
               <input
                 type="file"
                 name="profilePicture"
@@ -313,7 +298,7 @@ const ProfilPresta = () => {
                   className="realisation-img"
                 />
                 <button
-                  className="btn-primary delete-btn"
+                  className="btn-primary"
                   onClick={() => handleDeleteRea(imgUrl)}
                 >
                   Supprimer

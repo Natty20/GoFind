@@ -286,7 +286,7 @@ const addRealisation = async (req, res) => {
     }
 
     // Upload sur Cloudinary via ta fonction
-    const imageUrl = await uploadImageToCloudinary(req.file); // tu passes le fichier direct
+    const imageUrl = await uploadImageToCloudinary(req.file.path); // utilise .path pour multer
 
     // Récupérer le prestataire
     const prestataire = await Prestataire.findById(prestataireId);
@@ -303,11 +303,10 @@ const addRealisation = async (req, res) => {
       prestataire,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erreur serveur" });
+    console.error("Erreur addRealisation:", err);
+    res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
 
 // Supprimer une réalisation d'un prestataire
 const deleteRealisation = async (req, res) => {
@@ -321,18 +320,21 @@ const deleteRealisation = async (req, res) => {
 
     // Supprime la réalisation par son URL
     prestataire.realisations = prestataire.realisations.filter(
-      (realisation) => realisation !== realisationId,
+      (realisation) => realisation !== realisationId
     );
+
     await prestataire.save();
 
-    res
-      .status(200)
-      .json({ message: "Réalisation supprimée avec succès", prestataire });
+    res.status(200).json({
+      message: "Réalisation supprimée avec succès",
+      prestataire,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur serveur" });
+    console.error("Erreur deleteRealisation:", error);
+    res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };
+
 
 module.exports = {
   register,

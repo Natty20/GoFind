@@ -40,7 +40,7 @@ const ProfilPresta = () => {
       }
     };
     fetchPrestataireData();
-  }, [prestataireId]);
+  }, [prestataireId, token]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -75,13 +75,13 @@ const ProfilPresta = () => {
       const formDataUpload = new FormData();
       formDataUpload.append('image', file);
 
-      // Upload sur backend
       const uploadRes = await axios.post(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations`,
         formDataUpload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
           },
         }
       );

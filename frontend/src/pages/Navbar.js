@@ -7,15 +7,13 @@ import '../styles/All/Navbar.css';
 const Navbar = () => {
   const { client, prestataire, admin, setClient, setPrestataire, setAdmin } =
     useContext(AuthContext);
+
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('client');
-    sessionStorage.removeItem('prestataire');
-    sessionStorage.removeItem('admin');
+    sessionStorage.clear();
     setClient(null);
     setPrestataire(null);
     setAdmin(null);
@@ -31,6 +29,7 @@ const Navbar = () => {
 
   let user = null;
   let role = '';
+
   if (client) {
     user = client;
     role = 'client';
@@ -42,113 +41,106 @@ const Navbar = () => {
     role = 'admin';
   }
 
-  const renderLinks = (isMobile = false) => (
+  const renderRoleLinks = () => (
     <>
       {role === 'prestataire' && (
         <Link to="/reservations" onClick={closeMenu}>
           Réservations
         </Link>
       )}
+
       {role === 'admin' && (
         <Link to="/dashboard" onClick={closeMenu}>
-          Tableau de Bord
+          Tableau de bord
         </Link>
       )}
+
       {role === 'client' && (
-        <Link
-          to={isMobile ? '/mes-rendez-vous' : '/rdv-client'}
-          onClick={closeMenu}
-        >
+        <Link to="/rdv-client" onClick={closeMenu}>
           Mes rendez-vous
-        </Link>
-      )}
-      {role !== 'admin' && (
-        <Link to="/prestation" onClick={closeMenu}>
-          Prestations
         </Link>
       )}
     </>
   );
 
   return (
-    <div className="navpage">
-      <nav className="navbar">
-        <div className="navbar-container">
-          {/* Logo */}
-          <div className="navbar-logo">
-            <Link to="/" onClick={closeMenu}>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
-                alt="GoFind"
-              />
-            </Link>
-          </div>
+    <nav className="navbar">
+      <div className="navbar-container">
+        {/* Logo */}
+        <div className="navbar-logo">
+          <Link to="/" onClick={closeMenu}>
+            <img src="/images/GF-logo.png" alt="GoFind" />
+          </Link>
+        </div>
 
-          {/* Hamburger */}
-          <div
-            className={`hamburger ${menuOpen ? 'active' : ''}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+        {/* Hamburger */}
+        <div
+          className={`hamburger ${menuOpen ? 'active' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span />
+          <span />
+          <span />
+        </div>
 
-          {/* Navbar gauche */}
-          <div className="navbar-left">{renderLinks()}</div>
+        {/* Desktop left */}
+        <div className="navbar-left">{renderRoleLinks()}</div>
 
-          {/* Navbar droite */}
-          <div className="navbar-right">
-            {!admin && (
-              <Link to="/prestation" onClick={closeMenu}>
-                Prestations
-              </Link>
-            )}
+        {/* Desktop right */}
+        <div className="navbar-right">
+          {/* Prestations visible pour TOUS */}
+          <Link to="/prestation" onClick={closeMenu}>
+            Prestations
+          </Link>
 
-            {user ? (
-              <div className="dropdown">
-                <button
-                  className="dropbtn"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                >
-                  <Users size={20} /> {user.nom}
-                </button>
-                {dropdownOpen && (
-                  <div className="dropdown-content">
-                    <Link to="/mon-profil" onClick={closeMenu}>
-                      Mon Profil
-                    </Link>
-                    <button onClick={handleLogout}>Déconnexion</button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link to="/choix_compte">Compte</Link>
-            )}
-          </div>
+          {user ? (
+            <div className="dropdown">
+              <button
+                className="dropbtn"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <Users size={18} /> {user.nom}
+              </button>
 
-          {/* Mobile menu */}
-          {menuOpen && (
-            <div className="navbar-mobile-links">
-              {renderLinks(true)}
-
-              {user ? (
-                <>
+              {dropdownOpen && (
+                <div className="dropdown-content show">
                   <Link to="/mon-profil" onClick={closeMenu}>
-                    Mon Profil
+                    Mon profil
                   </Link>
                   <button onClick={handleLogout}>Déconnexion</button>
-                </>
-              ) : (
-                <Link to="/choix_compte" onClick={closeMenu}>
-                  Compte
-                </Link>
+                </div>
               )}
             </div>
+          ) : (
+            <Link to="/choix_compte" onClick={closeMenu}>
+              Compte
+            </Link>
           )}
         </div>
-      </nav>
-    </div>
+      </div>
+
+      {/* ✅ MOBILE MENU (toujours rendu) */}
+      <div className={`navbar-mobile-links ${menuOpen ? 'active' : ''}`}>
+        {renderRoleLinks()}
+
+        <Link to="/prestation" onClick={closeMenu}>
+          Prestations
+        </Link>
+
+        {user ? (
+          <>
+            <Link to="/mon-profil" onClick={closeMenu}>
+              Mon profil
+            </Link>
+            <button onClick={handleLogout}>Déconnexion</button>
+          </>
+        ) : (
+          <Link to="/choix_compte" onClick={closeMenu}>
+            Compte
+          </Link>
+        )}
+      </div>
+    </nav>
   );
 };
 

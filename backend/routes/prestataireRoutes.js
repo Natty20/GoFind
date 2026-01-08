@@ -41,9 +41,27 @@ router.delete("/:id", authenticateUser, authorizeAdmin, deletePrestataire);
 router.post("/multiple", getMultiplePrestataires);
 
 // pour les reas
-router.post("/:id/realisations", authenticateUser, upload.single("image"), addRealisation);
+router.post(
+  "/:id/realisations",
+  authenticateUser,
+  upload.single("image"),
+  addRealisation
+);
 
-router.delete("/:id/realisations/:realisationId", authenticateUser, deleteRealisation);
+router.delete(
+  "/:id/realisations/:realisationId",
+  authenticateUser,
+  (req, res, next) => {
+    if (req.user.role === "admin" || req.user.id === req.params.id) {
+      next();
+    } else {
+      return res
+        .status(403)
+        .json({ message: "Accès interdit pour la suppression!" });
+    }
+  },
+  deleteRealisation
+);
 
 
 module.exports = router;
