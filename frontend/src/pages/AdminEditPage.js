@@ -47,37 +47,48 @@ const AdminEditPage = () => {
     sousprestations: ['prestation', 'prestataires'],
   };
 
-  /* ===================== FETCH DATA ===================== */
+  const allowedPrestataireFields = [
+    'nom',
+    'prenom',
+    'email',
+    'password',
+    'phone',
+    'address',
+    'profilePicture',
+    'description',
+  ];
+
+  /* ===================== FETCH ===================== */
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
         const endpoint = entityToEndpoint[entity];
 
-        // Fetch main entity
         const res = await fetch(`${API}/${endpoint}/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Erreur chargement');
+
         const data = await res.json();
-        const dataKey = Object.keys(data).find(
-          (key) => typeof data[key] === 'object'
-        );
-        setFormData(dataKey ? data[dataKey] : data);
+        const key = Object.keys(data).find((k) => typeof data[k] === 'object');
+        setFormData(key ? data[key] : data);
 
-        // Fetch all prestations / sous-prestations pour affichage lisible
-        if (entity === 'prestataires' || entity === 'prestations') {
-          const prestationsRes = await fetch(`${API}/prestations`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          const prestationsData = await prestationsRes.json();
-          setAllPrestations(prestationsData.prestations || []);
+        if (['prestataires', 'prestations', 'reservations'].includes(entity)) {
+          const [pRes, spRes] = await Promise.all([
+            fetch(`${API}/prestations`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            fetch(`${API}/sousprestations`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+          ]);
 
-          const sousPrestationsRes = await fetch(`${API}/sousprestations`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          const sousPrestationsData = await sousPrestationsRes.json();
-          setAllSousPrestations(sousPrestationsData.sousPrestations || []);
+          const pData = await pRes.json();
+          const spData = await spRes.json();
+
+          setAllPrestations(pData.prestations || []);
+          setAllSousPrestations(spData.sousPrestations || []);
         }
       } catch (err) {
         console.error(err);
@@ -101,6 +112,7 @@ const AdminEditPage = () => {
     if (file) setFormData((prev) => ({ ...prev, [field]: file }));
   };
 
+  /* ===================== SUBMIT ===================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -109,7 +121,6 @@ const AdminEditPage = () => {
       const endpoint = entityToEndpoint[entity];
       let payload = {};
 
-      // Cas réservation → champs autorisés uniquement
       if (entity === 'reservations') {
         reservationAllowedFields.forEach((f) => {
           if (formData[f] !== undefined) payload[f] = formData[f];
@@ -118,12 +129,12 @@ const AdminEditPage = () => {
         payload = { ...formData };
       }
 
-      // Supprimer uniquement les vrais champs non modifiables
-      const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
-      readOnlyFields.forEach((field) => {
-        if (field !== 'selectedPrestations') delete payload[field];
-        // selectedPrestations doit rester pour prestataires
-      });
+      if (entity === 'prestataires') {
+        payload = allowedPrestataireFields.reduce((acc, key) => {
+          if (payload[key] !== undefined) acc[key] = payload[key];
+          return acc;
+        }, {});
+      }
 
       // Upload images
       for (const field of imageFields) {
@@ -135,6 +146,7 @@ const AdminEditPage = () => {
             method: 'POST',
             body: imgData,
           });
+
           const uploadJson = await uploadRes.json();
           payload[field] = uploadJson.url;
         }
@@ -159,72 +171,10 @@ const AdminEditPage = () => {
     }
   };
 
-  /* ===================== RENDER FIELDS ===================== */
+  /* ===================== RENDER ===================== */
   const renderFormFields = () => {
     const readOnlyFields = readOnlyFieldsByEntity[entity] || [];
 
-    // Cas réservations
-    if (entity === 'reservations') {
-      return (
-        <>
-          <label>Date</label>
-          <input
-            type="date"
-            name="date"
-            value={formData.date?.slice(0, 10) || ''}
-            onChange={handleChange}
-          />
-
-          <label>Heure</label>
-          <input
-            type="time"
-            name="heure"
-            value={formData.heure || ''}
-            onChange={handleChange}
-          />
-
-          <label>État</label>
-          <select
-            name="etat"
-            value={formData.etat || ''}
-            onChange={handleChange}
-          >
-            <option value="en attente">En attente</option>
-            <option value="acceptée">Acceptée</option>
-            <option value="déclinée">Déclinée</option>
-          </select>
-
-          <label>Mode de paiement</label>
-          <select
-            name="modePaiement"
-            value={formData.modePaiement || ''}
-            onChange={handleChange}
-          >
-            <option value="virement bancaire">Virement bancaire</option>
-            <option value="paypal">PayPal</option>
-            <option value="Carte via Stripe">Carte via Stripe</option>
-          </select>
-
-          <label>Description</label>
-          <textarea
-            name="description"
-            value={formData.description || ''}
-            onChange={handleChange}
-          />
-
-          <p>
-            <strong>Client :</strong>{' '}
-            {formData.client?.email || 'Non renseigné'}
-          </p>
-          <p>
-            <strong>Prestataire :</strong>{' '}
-            {formData.prestataire?.email || 'Non renseigné'}
-          </p>
-        </>
-      );
-    }
-
-    // Champs génériques
     return Object.entries(formData).map(([key, value]) => {
       if (
         ['_id', '__v', 'password', 'role', 'createdAt', 'updatedAt'].includes(
@@ -233,27 +183,29 @@ const AdminEditPage = () => {
       )
         return null;
 
-      // Champs read-only
+      /* ---------- READ ONLY ---------- */
       if (readOnlyFields.includes(key)) {
-        // Prestataire → noms des prestations
+        // Prestataire → selectedPrestations
         if (key === 'selectedPrestations' && Array.isArray(value)) {
           return (
             <div key={key} className="readonly-field">
               <label>Prestations</label>
               <ul>
-                {value.map((prestationItem) => {
+                {value.map((item) => {
                   const prestation = allPrestations.find(
-                    (p) => p._id === prestationItem.prestationId
+                    (p) =>
+                      p._id === item.prestationId?.$oid ||
+                      p._id === item.prestationId
                   );
                   return (
-                    <li key={prestationItem.prestationId}>
+                    <li key={item._id}>
                       {prestation?.nom || 'Nom inconnu'} :{' '}
-                      {prestationItem.selectedSousPrestations
+                      {item.selectedSousPrestations
                         .map((sId) => {
                           const sous = allSousPrestations.find(
-                            (sp) => sp._id === sId
+                            (sp) => sp._id === sId?.$oid || sp._id === sId
                           );
-                          return sous?.title || 'Sous-prestation inconnue';
+                          return sous?.nom || 'Sous-prestation inconnue';
                         })
                         .join(' • ')}
                     </li>
@@ -264,46 +216,50 @@ const AdminEditPage = () => {
           );
         }
 
-        // Autres read-only
-        if (Array.isArray(value) && value.length > 0) {
+        // Prestation → sousPrestations
+        if (key === 'sousPrestations' && Array.isArray(value)) {
           return (
             <div key={key} className="readonly-field">
-              <label>{key}</label>
+              <label>Sous-prestations</label>
               <ul>
-                {value.map((item, i) => (
-                  <li key={i}>
-                    {item.nom || item.title || item.email || item._id}
-                  </li>
-                ))}
+                {value.map((id) => {
+                  const sous = allSousPrestations.find(
+                    (sp) => sp._id === id?.$oid || sp._id === id
+                  );
+                  return (
+                    <li key={id}>{sous?.nom || 'Sous-prestation inconnue'}</li>
+                  );
+                })}
               </ul>
             </div>
           );
         }
 
-        if (typeof value === 'object' && value !== null) {
+        // Sous-prestation → prestation
+        if (key === 'prestation') {
+          const prestation = allPrestations.find(
+            (p) => p._id === value?.$oid || p._id === value
+          );
           return (
             <div key={key} className="readonly-field">
-              <label>{key}</label>
-              <p>
-                {value.nom ||
-                  value.title ||
-                  value.email ||
-                  value._id ||
-                  'Aucune info'}
-              </p>
+              <label>Prestation</label>
+              <p>{prestation?.nom || 'Nom inconnu'}</p>
             </div>
           );
         }
 
+        // Générique
         return (
           <div key={key} className="readonly-field">
             <label>{key}</label>
-            <p>{value ?? 'Aucune info'}</p>
+            <p>
+              {Array.isArray(value) ? value.length : value || 'Aucune info'}
+            </p>
           </div>
         );
       }
 
-      // Images
+      /* ---------- IMAGES ---------- */
       if (imageFields.includes(key)) {
         return (
           <div key={key}>
@@ -316,7 +272,7 @@ const AdminEditPage = () => {
         );
       }
 
-      // Objets simples
+      /* ---------- OBJETS ---------- */
       if (typeof value === 'object' && value !== null) {
         return (
           <p key={key}>
@@ -325,7 +281,7 @@ const AdminEditPage = () => {
         );
       }
 
-      // Champs normaux
+      /* ---------- INPUT ---------- */
       return (
         <div key={key}>
           <label>{key}</label>

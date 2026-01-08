@@ -11,11 +11,6 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // === Recherche ===
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
   const handleLogout = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('client');
@@ -26,11 +21,14 @@ const Navbar = () => {
     setAdmin(null);
     navigate('/');
     setMenuOpen(false);
+    setDropdownOpen(false);
   };
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  };
 
-  // Détermination de l’utilisateur et rôle
   let user = null;
   let role = '';
   if (client) {
@@ -43,6 +41,34 @@ const Navbar = () => {
     user = admin;
     role = 'admin';
   }
+
+  const renderLinks = (isMobile = false) => (
+    <>
+      {role === 'prestataire' && (
+        <Link to="/reservations" onClick={closeMenu}>
+          Réservations
+        </Link>
+      )}
+      {role === 'admin' && (
+        <Link to="/dashboard" onClick={closeMenu}>
+          Tableau de Bord
+        </Link>
+      )}
+      {role === 'client' && (
+        <Link
+          to={isMobile ? '/mes-rendez-vous' : '/rdv-client'}
+          onClick={closeMenu}
+        >
+          Mes rendez-vous
+        </Link>
+      )}
+      {role !== 'admin' && (
+        <Link to="/prestation" onClick={closeMenu}>
+          Prestations
+        </Link>
+      )}
+    </>
+  );
 
   return (
     <div className="navpage">
@@ -69,27 +95,11 @@ const Navbar = () => {
           </div>
 
           {/* Navbar gauche */}
-          <div className="navbar-left">
-            {role === 'prestataire' && (
-              <Link to="/reservations" onClick={closeMenu}>
-                Réservations
-              </Link>
-            )}
-            {role === 'admin' && (
-              <Link to="/dashboard" onClick={closeMenu}>
-                Tableau de Bord
-              </Link>
-            )}
-            {role === 'client' && (
-              <Link to="/rdv-client" onClick={closeMenu}>
-                Mes rendez-vous
-              </Link>
-            )}
-          </div>
+          <div className="navbar-left">{renderLinks()}</div>
 
           {/* Navbar droite */}
           <div className="navbar-right">
-            {role !== 'admin' && (
+            {!admin && (
               <Link to="/prestation" onClick={closeMenu}>
                 Prestations
               </Link>
@@ -103,14 +113,14 @@ const Navbar = () => {
                 >
                   <Users size={20} /> {user.nom}
                 </button>
-                <div
-                  className={`dropdown-content ${dropdownOpen ? 'show' : ''}`}
-                >
-                  <Link to="/mon-profil" onClick={closeMenu}>
-                    Mon Profil
-                  </Link>
-                  <button onClick={handleLogout}>Déconnexion</button>
-                </div>
+                {dropdownOpen && (
+                  <div className="dropdown-content">
+                    <Link to="/mon-profil" onClick={closeMenu}>
+                      Mon Profil
+                    </Link>
+                    <button onClick={handleLogout}>Déconnexion</button>
+                  </div>
+                )}
               </div>
             ) : (
               <Link to="/choix_compte">Compte</Link>
@@ -118,41 +128,24 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu */}
-          <div className={`navbar-mobile-links ${menuOpen ? 'active' : ''}`}>
-            {role === 'prestataire' && (
-              <Link to="/reservations" onClick={closeMenu}>
-                Réservations
-              </Link>
-            )}
-            {role === 'admin' && (
-              <Link to="/dashboard" onClick={closeMenu}>
-                Tableau de Bord
-              </Link>
-            )}
-            {role === 'client' && (
-              <Link to="/mes-rendez-vous" onClick={closeMenu}>
-                Mes rendez-vous
-              </Link>
-            )}
-            {role !== 'admin' && (
-              <Link to="/prestation" onClick={closeMenu}>
-                Prestations
-              </Link>
-            )}
+          {menuOpen && (
+            <div className="navbar-mobile-links">
+              {renderLinks(true)}
 
-            {user ? (
-              <>
-                <Link to="/mon-profil" onClick={closeMenu}>
-                  Mon Profil
+              {user ? (
+                <>
+                  <Link to="/mon-profil" onClick={closeMenu}>
+                    Mon Profil
+                  </Link>
+                  <button onClick={handleLogout}>Déconnexion</button>
+                </>
+              ) : (
+                <Link to="/choix_compte" onClick={closeMenu}>
+                  Compte
                 </Link>
-                <button onClick={handleLogout}>Déconnexion</button>
-              </>
-            ) : (
-              <Link to="/choix_compte" onClick={closeMenu}>
-                Compte
-              </Link>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       </nav>
     </div>

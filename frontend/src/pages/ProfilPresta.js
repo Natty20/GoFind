@@ -77,11 +77,10 @@ const ProfilPresta = () => {
 
       // Upload sur backend
       const uploadRes = await axios.post(
-        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations`,
+        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations`,
         formDataUpload,
         {
           headers: {
-            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${token}`,
           },
         }
@@ -103,9 +102,12 @@ const ProfilPresta = () => {
   const handleDeleteRea = async (imageUrl) => {
     try {
       const res = await axios.delete(
-        `https://gofind-v9ee.onrender.com/api/prestataire/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
+
       setPrestataire(res.data.prestataire);
       alert('✅ Réalisation supprimée !');
     } catch (err) {
