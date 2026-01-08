@@ -34,7 +34,6 @@ const AdminEditPage = () => {
     'overlayImage',
   ];
 
-  /* ===================== FETCH ===================== */
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,7 +70,6 @@ const AdminEditPage = () => {
     fetchData();
   }, [entity, id]);
 
-  /* ===================== HANDLERS ===================== */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -81,14 +79,12 @@ const AdminEditPage = () => {
     if (file) setFormData({ ...formData, [field]: file });
   };
 
-  /* ===================== SUBMIT ===================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       let payload = {};
 
-      /* ==== RÉSERVATION ==== */
       if (entity === 'reservations') {
         ['date', 'heure', 'etat', 'modePaiement', 'description'].forEach(
           (f) => {
@@ -100,8 +96,6 @@ const AdminEditPage = () => {
           return alert('❌ Date passée interdite');
         }
       } else if (entity === 'prestataires') {
-
-      /* ==== PRESTATAIRE ==== */
         [
           'nom',
           'prenom',
@@ -114,8 +108,6 @@ const AdminEditPage = () => {
           if (formData[f] !== undefined) payload[f] = formData[f];
         });
       } else if (entity === 'clients') {
-
-      /* ==== CLIENT ==== */
         Object.entries(formData).forEach(([k, v]) => {
           if (
             ![
@@ -131,14 +123,11 @@ const AdminEditPage = () => {
           }
         });
       } else {
-
-      /* ==== AUTRES ==== */
         payload = { ...formData };
         delete payload.password;
         delete payload.role;
       }
 
-      /* ==== UPLOAD IMAGES ==== */
       for (const field of imageFields) {
         if (payload[field] instanceof File) {
           const fd = new FormData();
@@ -172,7 +161,6 @@ const AdminEditPage = () => {
     }
   };
 
-  /* ===================== RENDER ===================== */
   if (loading) return <p>Chargement...</p>;
 
   return (
@@ -193,7 +181,6 @@ const AdminEditPage = () => {
           )
             return null;
 
-          /* ==== READONLY RELATIONS ==== */
           if (
             (entity === 'prestataires' &&
               ['selectedPrestations', 'realisations'].includes(key)) ||
@@ -211,7 +198,6 @@ const AdminEditPage = () => {
             );
           }
 
-          /* ==== IMAGES ==== */
           if (imageFields.includes(key)) {
             return (
               <div key={key}>
@@ -224,7 +210,6 @@ const AdminEditPage = () => {
             );
           }
 
-          /* ==== INPUT ==== */
           return (
             <div key={key}>
               <label>{key}</label>
