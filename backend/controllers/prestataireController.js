@@ -4,7 +4,7 @@ const SousPrestation = require("../models/SousPrestation");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const { uploadImageToCloudinary } = require("../config/cloudinary");
+const cloudinary = require("../config/cloudinary");
 const path = require("path");
 require("dotenv").config();
 
@@ -286,7 +286,7 @@ const addRealisation = async (req, res) => {
     }
 
     // Upload sur Cloudinary via ta fonction
-    const imageUrl = await uploadImageToCloudinary(req.file.path); // utilise .path pour multer
+    const imageUrl = await cloudinary.uploader.upload(req.file.path);
 
     // Récupérer le prestataire
     const prestataire = await Prestataire.findById(prestataireId);
@@ -295,7 +295,7 @@ const addRealisation = async (req, res) => {
     }
 
     // Ajouter l'URL au tableau realisations
-    prestataire.realisations.push(imageUrl);
+    prestataire.realisations.push(imageUrl.secure_url);
     await prestataire.save();
 
     res.status(200).json({

@@ -161,6 +161,21 @@ const AdminEditPage = () => {
     }
   };
 
+  const renderReadableValue = (value, key) => {
+    if (Array.isArray(value)) {
+      if (value.length === 0) return '[]';
+      if (typeof value[0] === 'object') return `[${value.length}]`; // tableau d'objets
+      return `[${value.join(', ')}]`; // tableau simple
+    } else if (value && typeof value === 'object') {
+      // si l'objet contient un nom ou titre, l'afficher
+      if (value.nom) return value.nom;
+      if (value.prenom) return value.prenom;
+      if (value.email) return value.email;
+      return '{…}';
+    }
+    return value?.toString() ?? '';
+  };
+
   if (loading) return <p>Chargement...</p>;
 
   return (
@@ -193,7 +208,7 @@ const AdminEditPage = () => {
             return (
               <div key={key} className="readonly-field">
                 <label>{key}</label>
-                <pre>{JSON.stringify(value, null, 2)}</pre>
+                <pre>{renderReadableValue(value, key)}</pre>
               </div>
             );
           }
@@ -206,6 +221,111 @@ const AdminEditPage = () => {
                 {typeof value === 'string' && (
                   <img src={value} alt="" width={80} />
                 )}
+              </div>
+            );
+          }
+
+          if (entity === 'reservations') {
+            if (key === 'date') {
+              const today = new Date().toISOString().split('T')[0];
+              return (
+                <div key={key}>
+                  <label>{key}</label>
+                  <input
+                    type="date"
+                    name="date"
+                    value={value?.split('T')[0] ?? ''}
+                    min={today}
+                    onChange={handleChange}
+                  />
+                </div>
+              );
+            }
+
+            if (key === 'heure') {
+              const hours = [
+                '08:00',
+                '09:00',
+                '10:00',
+                '11:00',
+                '12:00',
+                '13:00',
+                '14:00',
+                '15:00',
+                '16:00',
+                '17:00',
+                '18:00',
+                '19:00',
+              ];
+              return (
+                <div key={key}>
+                  <label>{key}</label>
+                  <select
+                    name="heure"
+                    value={value ?? ''}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Choisir une heure --</option>
+                    {hours.map((h) => (
+                      <option key={h} value={h}>
+                        {h}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            }
+
+            if (key === 'etat') {
+              const etats = ['en attente', 'acceptée', 'déclinée'];
+              return (
+                <div key={key}>
+                  <label>{key}</label>
+                  <select
+                    name="etat"
+                    value={value ?? ''}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Choisir un état --</option>
+                    {etats.map((e) => (
+                      <option key={e} value={e}>
+                        {e}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            }
+            if (key === 'modePaiement') {
+              const modes = [
+                'Espèces',
+                'Carte via Stripe',
+                'PayPal',
+                'Virement Bancaire',
+              ];
+              return (
+                <div key={key}>
+                  <label>{key}</label>
+                  <select
+                    name="modePaiement"
+                    value={value ?? ''}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Choisir un mode de paiement --</option>
+                    {modes.map((m) => (
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              );
+            }
+
+            return (
+              <div key={key}>
+                <label>{key}</label>
+                <input name={key} value={value ?? ''} onChange={handleChange} />
               </div>
             );
           }
