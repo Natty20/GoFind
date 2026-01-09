@@ -19,7 +19,7 @@ function Crenaux() {
   const [selectedHour, setSelectedHour] = useState('');
   const [client, setClient] = useState(null);
 
-  // Récupération client
+  // Récupération client depuis sessionStorage
   useEffect(() => {
     const storedClient = JSON.parse(sessionStorage.getItem('client'));
     if (storedClient) setClient(storedClient);
@@ -42,19 +42,21 @@ function Crenaux() {
     }
   }, [id, prestataire]);
 
-  // Génère les créneaux horaires toutes les 2h
+  // Génère les créneaux horaires toutes les 2h en format HH:mm
   const getAvailableHours = (date) => {
     const hours = [];
-    const start = 7; // 07h
-    const end = 22; // 22h
+    const start = 8; // 08:00
+    const end = 20; // 20:00
     const now = new Date();
 
-    for (let h = start; h < end; h += 2) {
+    for (let h = start; h <= end; h += 2) {
+      // Ignorer les créneaux passés si c'est aujourd'hui
       if (date.toDateString() === now.toDateString() && h <= now.getHours())
         continue;
-      hours.push(`${h}h-${h + 2}h`);
-    }
 
+      const hourStr = h.toString().padStart(2, '0') + ':00';
+      hours.push(hourStr);
+    }
     return hours;
   };
 
@@ -69,7 +71,9 @@ function Crenaux() {
   // Confirmer la réservation
   const handleConfirmHour = () => {
     if (!client) {
-      alert('Vous devez être connecté pour prendre un rendez-vous.');
+      alert(
+        'Vous devez être connecté en tant que pour prendre un rendez-vous.'
+      );
       navigate('/login', { state: { from: location.pathname } });
       return;
     }
@@ -79,13 +83,23 @@ function Crenaux() {
       return;
     }
 
+    if (!selectedDate || !selectedHour) {
+      alert('Veuillez sélectionner une date et une heure.');
+      return;
+    }
+
+    // Combiner date + heure
+    const [hours, minutes] = selectedHour.split(':').map(Number);
+    const reservationDate = new Date(selectedDate);
+    reservationDate.setHours(hours, minutes, 0, 0);
+
     navigate('/confirmation', {
       state: {
         prestataire,
         client,
         prestations,
         sousPrestations,
-        selectedDate: selectedDate.toISOString().split('T')[0],
+        selectedDate: reservationDate.toISOString(),
         selectedHour,
       },
     });
@@ -131,7 +145,7 @@ function Crenaux() {
 
       {/* Sélection date et heure */}
       <div className="date-picker">
-        <h2 className="tittles">Sélectionner Une Date</h2>
+        <h2 className="tittles">Sélectionner une Date</h2>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
@@ -141,17 +155,17 @@ function Crenaux() {
         />
 
         <h3 className="tittles">Sélectionner Une Heure</h3>
-        <div className="time-slots">
+        <select
+          value={selectedHour}
+          onChange={(e) => setSelectedHour(e.target.value)}
+          className="custom-hour-select"
+        >
           {getAvailableHours(selectedDate).map((hour, index) => (
-            <button
-              key={index}
-              className={selectedHour === hour ? 'hour selected' : 'hour'}
-              onClick={() => setSelectedHour(hour)}
-            >
+            <option key={index} value={hour}>
               {hour}
-            </button>
+            </option>
           ))}
-        </div>
+        </select>
 
         <button className="crenaux btn-secondary" onClick={handleConfirmHour}>
           Choisissez l&#39;horaire
