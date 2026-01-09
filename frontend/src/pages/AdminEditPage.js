@@ -261,6 +261,9 @@ const AdminEditPage = () => {
           if (entity === 'reservations') {
             if (key === 'date') {
               const today = new Date().toISOString().split('T')[0];
+              // Vérifier si la date actuelle est dans le passé
+              const isPastDate = value ? value.split('T')[0] < today : false;
+
               return (
                 <div key={key}>
                   <label>{key}</label>
@@ -268,7 +271,8 @@ const AdminEditPage = () => {
                     type="date"
                     name="date"
                     value={value?.split('T')[0] ?? ''}
-                    min={today}
+                    // si la date actuelle est passée, ne pas appliquer de min
+                    min={isPastDate ? undefined : today}
                     onChange={handleChange}
                   />
                 </div>
