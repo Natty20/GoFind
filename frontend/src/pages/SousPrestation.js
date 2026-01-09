@@ -40,7 +40,7 @@ const SousPrestation = () => {
         const prestationId =
           sousPrestationData.prestation._id || sousPrestationData.prestation;
         const toutesResponse = await axios.get(
-          `https://gofind-v9ee.onrender.com/api/prestations/${prestationId}/sousprestations`
+          `https://gofind-v9ee.onrender.com/api/sousprestations/prestation/${prestationId}`
         );
         const toutesLesSousPrestations = toutesResponse.data.sousPrestations;
 
