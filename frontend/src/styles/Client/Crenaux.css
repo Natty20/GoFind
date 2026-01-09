@@ -77,6 +77,34 @@ h3 {
   cursor: pointer;
 }
 
+/* Select pour les heures */
+.custom-hour-select {
+  width: 50%;
+  /* ou 100% selon le layout */
+  padding: 0.8rem 1rem;
+  margin: 1rem auto;
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  background-color: var(--bg-color);
+  color: var(--main-color);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-hour-select:hover {
+  background-color: var(--main-color);
+  color: var(--secondary-text-color);
+  border-color: var(--secondary-text-color);
+}
+
+.custom-hour-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
 /* .choose-time {
   display: block;
   margin: 2rem auto;
