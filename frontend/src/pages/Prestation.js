@@ -121,7 +121,10 @@ const Prestation = () => {
 
                 {sousPrestationsActive.length > 0 ? (
                   sousPrestationsActive.map((sous, index) => (
-                    <Link to={`/sous-prestation/${sous.sousPrestationId || sous._id}`} key={sous._id}>
+                    <Link
+                      to={`/sous-prestation/${sous.sousPrestationId || sous._id}`}
+                      key={sous._id}
+                    >
                       <div
                         className={`service-row ${index % 2 !== 0 ? 'reverse' : ''}`}
                       >
