@@ -179,7 +179,9 @@ const getAllPrestataires = async (req, res) => {
 const getPrestataireById = async (req, res) => {
   try {
     const { id } = req.params;
-    const prestataire = await Prestataire.findById(id);
+    const prestataire = await Prestataire.findById(id)
+      .populate('selectedPrestations.prestationId', 'nom') // ne prend que le nom
+      .populate('selectedPrestations.selectedSousPrestations', 'nom'); // pareil
 
     if (!prestataire) {
       return res.status(404).json({ message: "Prestataires non trouvée" });
@@ -285,17 +287,22 @@ const addRealisation = async (req, res) => {
       return res.status(400).json({ message: "Aucun fichier envoyé" });
     }
 
-    // Upload sur Cloudinary via ta fonction
-    const imageUrl = await cloudinary.uploader.upload(req.file.path);
+    // Upload Cloudinary depuis le buffer
+    const uploadResult = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream({ folder: "realisations" }, (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        })
+        .end(req.file.buffer);
+    });
 
-    // Récupérer le prestataire
     const prestataire = await Prestataire.findById(prestataireId);
     if (!prestataire) {
       return res.status(404).json({ message: "Prestataire non trouvé" });
     }
 
-    // Ajouter l'URL au tableau realisations
-    prestataire.realisations.push(imageUrl.secure_url);
+    prestataire.realisations.push(uploadResult.secure_url);
     await prestataire.save();
 
     res.status(200).json({
@@ -307,6 +314,7 @@ const addRealisation = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
+
 
 // Supprimer une réalisation d'un prestataire
 const deleteRealisation = async (req, res) => {

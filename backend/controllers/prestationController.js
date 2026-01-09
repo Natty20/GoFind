@@ -65,7 +65,9 @@ const getAllPrestations = async (req, res) => {
 const getPrestationById = async (req, res) => {
   try {
     const { id } = req.params;
-    const prestation = await Prestation.findById(id);
+    const prestation = await Prestation.findById(id)
+      .populate('sousPrestations', 'nom');
+
 
     if (!prestation) {
       return res.status(404).json({ message: "Prestation non trouvée" });

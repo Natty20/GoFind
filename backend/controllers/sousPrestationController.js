@@ -20,8 +20,15 @@ const getAllSousPrestations = async (req, res) => {
 const getSousPrestationById = async (req, res) => {
   try {
     const { id } = req.params;
-    const sousPrestation =
-      await SousPrestation.findById(id).populate("prestataires");
+    const sousPrestation = await SousPrestation.findById(id)
+      .populate({
+        path: 'prestation',
+        select: 'nom',
+      })
+      .populate({
+        path: 'prestataires',
+        select: 'nom prenom email',
+      });
 
     if (!sousPrestation) {
       return res.status(404).json({ message: "Sous-prestation non trouvée" });

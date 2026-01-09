@@ -161,19 +161,46 @@ const AdminEditPage = () => {
     }
   };
 
-  const renderReadableValue = (value, key) => {
+  const renderReadableValue = (value) => {
+    if (!value) return '';
+
     if (Array.isArray(value)) {
-      if (value.length === 0) return '[]';
-      if (typeof value[0] === 'object') return `[${value.length}]`; // tableau d'objets
-      return `[${value.join(', ')}]`; // tableau simple
-    } else if (value && typeof value === 'object') {
-      // si l'objet contient un nom ou titre, l'afficher
+      if (value.length === 0) return '—';
+
+      if (typeof value[0] !== 'object') {
+        return value.join(' • ');
+      }
+
+      if (value[0]?.nom) {
+        return value
+          .map((v) => `${v.nom}${v.prenom ? ` ${v.prenom}` : ''}`)
+          .join(' • ');
+      }
+
+      if (value[0]?.prestationId) {
+        return value
+          .map((p) => {
+            const prestation = p.prestationId?.nom ?? '—';
+            const sous = p.sousPrestations?.length
+              ? p.sousPrestations.map((sp) => sp.nom).join(', ')
+              : '—';
+            return `${prestation} (${sous})`;
+          })
+          .join(' | ');
+      }
+
+      return `[${value.length}]`;
+    }
+
+    if (typeof value === 'object') {
       if (value.nom) return value.nom;
       if (value.prenom) return value.prenom;
       if (value.email) return value.email;
-      return '{…}';
+      if (value.title) return value.title;
+      return '—';
     }
-    return value?.toString() ?? '';
+
+    return value.toString();
   };
 
   if (loading) return <p>Chargement...</p>;
