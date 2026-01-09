@@ -28,23 +28,40 @@ const SousPrestation = () => {
         const sousPrestationData = response.data.sousPrestation;
         setSousPrestation(sousPrestationData);
 
-        // verifier la presence de prestataire puis recup les presta lies a cette souspresta
+        // Récupérer les prestataires liés
         if (
           Array.isArray(sousPrestationData.prestataires) &&
           sousPrestationData.prestataires.length > 0
         ) {
-          // console.log("prestataire trouvés:", sousPrestationData.prestataires);
-          fetchPrestataires(sousPrestationData.prestataires);
-        } else {
-          console.log('aucune prestataire disponible');
+          await fetchPrestataires(sousPrestationData.prestataires);
         }
 
-        fetchAutresSousPrestations(response.data.sousPrestation.prestation);
-      } catch (err) {
-        console.error(
-          'Erruer lors du chargement de la sous-prestation  : ',
-          err
+        // Récupérer toutes les sous-prestations de la prestation parent
+        const prestationId =
+          sousPrestationData.prestation._id || sousPrestationData.prestation;
+        const toutesResponse = await axios.get(
+          `https://gofind-v9ee.onrender.com/api/prestations/${prestationId}/sousprestations`
         );
+        const toutesLesSousPrestations = toutesResponse.data.sousPrestations;
+
+        // Filtrer celles déjà sélectionnées par des prestataires
+        const autres = toutesLesSousPrestations.filter((sp) => {
+          // Exclure la sous-prestation courante
+          if (sp._id === sousPrestationData._id) return false;
+
+          // Exclure si un prestataire a déjà cette sous-prestation
+          return !sousPrestationData.prestataires.some((prestataire) =>
+            prestataire.selectedPrestations?.some((sel) =>
+              sel.selectedSousPrestations?.some(
+                (ssp) => ssp._id.toString() === sp._id.toString()
+              )
+            )
+          );
+        });
+
+        setAutresSousPrestations(autres);
+      } catch (err) {
+        console.error('Erreur lors du chargement de la sous-prestation :', err);
         setError('Erreur lors du chargement de la sous-prestation.');
       } finally {
         setLoading(false);
@@ -52,7 +69,7 @@ const SousPrestation = () => {
     };
 
     const fetchPrestataires = async (prestataireIds) => {
-      console.log("Envoi des IDs des prestataires à l'API :", prestataireIds);
+      // console.log("Envoi des IDs des prestataires à l'API :", prestataireIds);
       if (!prestataireIds || prestataireIds.length === 0) {
         console.log('aucun id de prestataire reçu!');
         return;
@@ -162,7 +179,7 @@ const SousPrestation = () => {
                       {prestataire.nom} {prestataire.prenom}
                     </h3>
                     <p>{prestataire.address}</p>
-                    <p>{prestataire.realisations}</p>
+                    <p>Réalisations : {prestataire.realisations.length}</p>
                   </div>
                 </Link>
               </div>
@@ -175,18 +192,18 @@ const SousPrestation = () => {
 
       {/* Section des autres sous-prestations de la même prestation */}
       <section className="other-categories">
-        <h3 className="tittles">Autres prestations disponible</h3>
+        <h3 className="tittles">Autres prestations disponibles</h3>
         <div className="categories-list">
-          {autresSousPrestations.length > 0 ? (
+          {autresSousPrestations && autresSousPrestations.length > 0 ? (
             autresSousPrestations.map((sousP) => (
               <div key={sousP._id} className="category-card">
                 <Link to={`/sous-prestation/${sousP._id}`}>
                   <img
                     src={sousP.profileImage || '/images/beza.jpg'}
-                    alt={sousP.shortDescription}
+                    alt={sousP.shortDescription || sousP.nom}
                     className="category-image"
                   />
-                  <p>{sousP.nom.toUpperCase()}</p>
+                  <p>{sousP.nom?.toUpperCase()}</p>
                 </Link>
               </div>
             ))

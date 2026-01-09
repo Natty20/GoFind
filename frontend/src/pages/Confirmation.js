@@ -56,7 +56,7 @@ const Confirmation = () => {
         client,
         selectedDate,
         selectedHour,
-        prestations: selectedPrestations, // ✅ Envoi des prestations sélectionnées
+        prestations: selectedPrestations,
         description,
         montant: 30,
       },
@@ -86,19 +86,21 @@ const Confirmation = () => {
 
         <div className="appointment">
           <div className="appointment-details">
-            {selectedPrestations.length > 0 ? (
-              selectedPrestations.map((prestation, index) => (
+            {prestataire.selectedPrestations.length > 0 ? (
+              prestataire.selectedPrestations.map((prestation, index) => (
                 <div key={index} className="prestation-item">
                   <p>
-                    <strong>{prestation.prestationNom}</strong>
+                    <strong>
+                      {prestation.prestationId?.nom || 'Prestation inconnue'}
+                    </strong>
                   </p>
                   {prestation.selectedSousPrestations.length > 0 && (
                     <ul>
-                      {prestation.selectedSousPrestations.map(
-                        (sousPrestation, idx) => (
-                          <li key={idx}>{sousPrestation.sousPrestationNom}</li>
-                        )
-                      )}
+                      {prestation.selectedSousPrestations.map((ssp, idx) => (
+                        <li key={idx}>
+                          {ssp?.nom || 'Sous-prestation inconnue'}
+                        </li>
+                      ))}
                     </ul>
                   )}
                 </div>
@@ -106,6 +108,7 @@ const Confirmation = () => {
             ) : (
               <p>Aucune prestation trouvée.</p>
             )}
+
             <p>
               {selectedDate} - {selectedHour}
             </p>

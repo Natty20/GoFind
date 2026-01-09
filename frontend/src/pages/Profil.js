@@ -102,20 +102,20 @@ const ProfilePage = () => {
               <div key={index} className="prestation-item">
                 <p>
                   <strong>
-                    {prestations[prestation.prestationId] ||
+                    {prestation.prestationId.nom ||
+                      prestations[prestation.prestationId._id] ||
                       'Prestation inconnue'}
                   </strong>
                 </p>
                 {prestation.selectedSousPrestations.length > 0 && (
                   <ul>
-                    {prestation.selectedSousPrestations.map(
-                      (sousPrestationId, idx) => (
-                        <li key={idx}>
-                          {sousPrestations[sousPrestationId] ||
-                            'Sous-prestation inconnue'}
-                        </li>
-                      )
-                    )}
+                    {prestation.selectedSousPrestations.map((ssp, idx) => (
+                      <li key={idx}>
+                        {ssp.nom ||
+                          sousPrestations[ssp._id] ||
+                          'Sous-prestation inconnue'}
+                      </li>
+                    ))}
                   </ul>
                 )}
               </div>
@@ -123,6 +123,7 @@ const ProfilePage = () => {
           ) : (
             <p>Aucune prestation trouvée.</p>
           )}
+
           <Link
             to={`/crenaux/${prestataire._id}`}
             state={{ prestataire, prestations, sousPrestations }}

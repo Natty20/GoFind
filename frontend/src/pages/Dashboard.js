@@ -67,7 +67,6 @@ const Dashboard = () => {
       }
 
       try {
-        console.log('🔍 Appel API:', apiUrl);
         console.log('🔐 Token utilisé:', token);
 
         const response = await fetch(apiUrl, {

@@ -9,31 +9,23 @@ function Crenaux() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
   const [prestataire, setPrestataire] = useState(
     location.state?.prestataire || null
   );
   const [prestations] = useState(location.state?.prestations || {});
   const [sousPrestations] = useState(location.state?.sousPrestations || {});
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedHour, setSelectedHour] = useState('7h-12h');
-
-  useEffect(() => {
-    const available = getAvailableHours(selectedDate);
-    if (!available.includes(selectedHour)) {
-      setSelectedHour(available[0] || ''); // Choisit la première dispo
-    }
-  }, [selectedDate]);
-
-  const hours = ['7h-12h', '12h-17h', '17h-22h'];
+  const [selectedHour, setSelectedHour] = useState('');
   const [client, setClient] = useState(null);
 
+  // Récupération client
   useEffect(() => {
     const storedClient = JSON.parse(sessionStorage.getItem('client'));
-    if (storedClient) {
-      setClient(storedClient);
-    }
+    if (storedClient) setClient(storedClient);
   }, []);
 
+  // Récupération prestataire si non passé en state
   useEffect(() => {
     if (!prestataire) {
       const fetchPrestataire = async () => {
@@ -50,6 +42,31 @@ function Crenaux() {
     }
   }, [id, prestataire]);
 
+  // Génère les créneaux horaires toutes les 2h
+  const getAvailableHours = (date) => {
+    const hours = [];
+    const start = 7; // 07h
+    const end = 22; // 22h
+    const now = new Date();
+
+    for (let h = start; h < end; h += 2) {
+      if (date.toDateString() === now.toDateString() && h <= now.getHours())
+        continue;
+      hours.push(`${h}h-${h + 2}h`);
+    }
+
+    return hours;
+  };
+
+  // Vérifie si l'heure sélectionnée est valide après changement de date
+  useEffect(() => {
+    const available = getAvailableHours(selectedDate);
+    if (!available.includes(selectedHour)) {
+      setSelectedHour(available[0] || '');
+    }
+  }, [selectedDate]);
+
+  // Confirmer la réservation
   const handleConfirmHour = () => {
     if (!client) {
       alert('Vous devez être connecté pour prendre un rendez-vous.');
@@ -74,29 +91,6 @@ function Crenaux() {
     });
   };
 
-  const getAvailableHours = (date) => {
-    const now = new Date();
-    const availableHours = [];
-
-    hours.forEach((hour) => {
-      const [startHourStr, endHourStr] = hour.split('-');
-      const startHour = parseInt(startHourStr);
-      const endHour = parseInt(endHourStr);
-
-      // Si c'est aujourd'hui et que la plage est déjà passée, on l'ignore
-      if (
-        date.toDateString() === now.toDateString() &&
-        endHour <= now.getHours()
-      ) {
-        return;
-      }
-
-      availableHours.push(hour);
-    });
-
-    return availableHours;
-  };
-
   return (
     <main className="crenaux">
       {prestataire && (
@@ -115,20 +109,16 @@ function Crenaux() {
               <div key={index} className="prestation-item">
                 <p>
                   <strong>
-                    {prestations[prestation.prestationId] ||
-                      'Prestation inconnue'}
+                    {prestation.prestationId?.nom || 'Prestation inconnue'}
                   </strong>
                 </p>
                 {prestation.selectedSousPrestations.length > 0 && (
                   <ul>
-                    {prestation.selectedSousPrestations.map(
-                      (sousPrestationId, idx) => (
-                        <li key={idx}>
-                          {sousPrestations[sousPrestationId] ||
-                            'Sous-prestation inconnue'}
-                        </li>
-                      )
-                    )}
+                    {prestation.selectedSousPrestations.map((ssp, idx) => (
+                      <li key={idx}>
+                        {ssp?.nom || 'Sous-prestation inconnue'}
+                      </li>
+                    ))}
                   </ul>
                 )}
               </div>
@@ -139,14 +129,15 @@ function Crenaux() {
         </div>
       )}
 
+      {/* Sélection date et heure */}
       <div className="date-picker">
         <h2 className="tittles">Sélectionner Une Date</h2>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           dateFormat="dd/MM/yyyy"
-          className="custom-datepicker"
           minDate={new Date()}
+          className="custom-datepicker"
         />
 
         <h3 className="tittles">Sélectionner Une Heure</h3>

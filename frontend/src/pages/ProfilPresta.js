@@ -100,6 +100,8 @@ const ProfilPresta = () => {
 
   // Supprimer une réalisation
   const handleDeleteRea = async (imageUrl) => {
+    if (!window.confirm('Voulez-vous vraiment supprimer cette réalisation?'))
+      return;
     try {
       const res = await axios.delete(
         `https://gofind-v9ee.onrender.com/api/prestataires/${prestataire._id}/realisations/${encodeURIComponent(imageUrl)}`,
@@ -180,15 +182,11 @@ const ProfilPresta = () => {
               <h2>
                 Prestation(s) :{' '}
                 {prestataire.selectedPrestations
-                  .map((item) => {
-                    const prestation = allPrestations.find(
-                      (p) => p._id === item.prestationId
-                    );
-                    return prestation ? prestation.nom : null;
-                  })
+                  .map((item) => item.prestationId?.nom)
                   .filter(Boolean)
                   .join(' • ')}
               </h2>
+
               <p>
                 <strong>Email : {prestataire.email}</strong>
               </p>

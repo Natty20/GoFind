@@ -71,9 +71,7 @@ const RdvClient = () => {
           <div key={r._id} className={`rdv-card ${className}`}>
             <p>
               <strong>Prestataire :</strong>{' '}
-              {r.prestataire
-                ? `${r.prestataire.nom} ${r.prestataire.prenom}`
-                : 'N/A'}
+              {r.prestataire ? `${r.prestataire.nom}` : 'N/A'}
             </p>
             <p>
               <strong>Date :</strong> {formatDate(r.date)}

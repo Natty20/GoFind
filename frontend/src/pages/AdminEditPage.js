@@ -161,11 +161,17 @@ const AdminEditPage = () => {
     }
   };
 
-  const renderReadableValue = (value) => {
+  const renderReadableValue = (value, key) => {
     if (!value) return '';
 
+    // Pour les tableaux
     if (Array.isArray(value)) {
       if (value.length === 0) return '—';
+
+      // Cas spécial tableaux d'images pour les réa
+      if (['realisations'].includes(key)) {
+        return `[${value.length}]`;
+      }
 
       if (typeof value[0] !== 'object') {
         return value.join(' • ');
