@@ -41,8 +41,7 @@ const MentionsLegales = () => {
           <b>Utilisateur :</b> Internaute se connectant, utilisant le site
           susnommé.
         </p>
-        <p>
-          <b>Informations personnelles :</b> « Les informations qui permettent, sous quelque forme que ce soit, directement ou non, l&lsquo;identification des personnes physiques auxquelles elles s&lsquo;appliquent » (article 4 de la loi n° 78-17 du 6 janvier 1978).
+        <p><b>Informations personnelles :</b> « Les informations qui permettent, sous quelque forme que ce soit, directement ou non, l&lsquo;identification des personnes physiques auxquelles elles s&lsquo;appliquent » (article 4 de la loi n° 78-17 du 6 janvier 1978).
         </p>
         <p>
           Les termes « données à caractère personnel », « personne concernée »,
@@ -56,8 +55,7 @@ const MentionsLegales = () => {
         <p>
           En vertu de l&lsquo;article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l&lsquo;économie numérique, il est précisé aux utilisateurs du site internet <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a> l&lsquo;identité des différents intervenants dans le cadre de sa réalisation et de son suivi:
         </p>
-        <p>
-          <strong>Forme juridique :</strong> Auto-entrepreneur
+        <p><strong>Forme juridique :</strong> Auto-entrepreneur
         </p>
         <p>
           <strong>Numéro SIRET :</strong> 99322406200014
@@ -91,9 +89,7 @@ const MentionsLegales = () => {
         <p>
           Le Site constitue une œuvre de l&apos;esprit protégée par les dispositions du Code de la Propriété Intellectuelle et des Réglementations Internationales applicables. Le Client ne peut en aucune manière réutiliser, céder ou exploiter pour son propre compte tout ou partie des éléments ou travaux du Site.
         </p>
-        <p>
-          L&apos;utilisation du site
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a> implique l’acceptation pleine et entière des conditions générales d&apos;utilisation ci-après décrites. Ces conditions d&apos;utilisation sont susceptibles d&apos;être modifiées ou complétées à tout moment, les utilisateurs du site{' '} <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>sont donc invités à les consulter de manière régulière.
+        <p> L&apos;utilisation du site <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a> implique l’acceptation pleine et entière des conditions générales d&apos;utilisation ci-après décrites. Ces conditions d&apos;utilisation sont susceptibles d&apos;être modifiées ou complétées à tout moment, les utilisateurs du site{' '} <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>sont donc invités à les consulter de manière régulière.
         </p>
         <p>
           Ce site internet est normalement accessible à tout moment auxutilisateurs. Une interruption pour raison de maintenance technique peut être toutefois décidée par <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>, qui s&apos;efforcera alors de communiquer préalablement aux utilisateurs les dates et heures de l&apos;intervention. Le site web{' '} <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '} est mis à jour régulièrement par <a href="https://go-find.vercel.app/"> https://go-find.vercel.app/</a>{' '} responsable. De la même façon, les mentions légales peuvent être modifiées à tout moment : elles s&apos;imposent néanmoins à l&apos;utilisateur qui est invité à s&apos;y référer le plus souvent possible afin d&apos;en prendre connaissance.
@@ -113,12 +109,7 @@ const MentionsLegales = () => {
           entre GoFind et les prestataires.
         </p>
         <p>
-          Le site internet
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          a pour objet de fournir une information concernant l&apos;ensemble des
-          activités de la société.
+          Le site internet <a href="https://go-find.vercel.app/"> https://go-find.vercel.app/ </a>{' '} a pour objet de fournir une information concernant l&apos;ensemble des activités de la société.
           <a href="https://go-find.vercel.app/">
             https://go-find.vercel.app/
           </a>{' '}
