@@ -124,7 +124,7 @@ const AdminAddPage = () => {
 
   return (
     <main className="adminaddpage">
-      <h1>Ajouter : {entity}</h1>
+      <h1 className="tittles">Ajouter : {entity}</h1>
 
       {entity === 'clients' && <ClientForm />}
       {entity === 'admins' && <AdminForm />}
@@ -141,8 +141,6 @@ const AdminAddPage = () => {
 };
 
 export default AdminAddPage;
-
-// ==================== ClientForm ====================
 
 const ClientForm = () => {
   const navigate = useNavigate();

@@ -12,6 +12,7 @@ const AdminEditPage = () => {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [originalDate, setOriginalDate] = useState(null);
 
   const [allPrestations, setAllPrestations] = useState([]);
   const [allSousPrestations, setAllSousPrestations] = useState([]);
@@ -47,7 +48,14 @@ const AdminEditPage = () => {
         const dataKey = Object.keys(data).find(
           (k) => typeof data[k] === 'object'
         );
-        setFormData(dataKey ? data[dataKey] : data);
+
+        const fetchedData = dataKey ? data[dataKey] : data;
+        setFormData(fetchedData);
+
+        // pour la modification de la date, si la date est déjà passé mais qu'on veut pas la changé on la keep
+        if (entity === 'reservations' && fetchedData.date) {
+          setOriginalDate(fetchedData.date.split('T')[0]);
+        }
 
         if (
           entity === 'prestataires' ||
@@ -92,8 +100,15 @@ const AdminEditPage = () => {
           }
         );
 
-        if (new Date(payload.date) < new Date()) {
-          return alert('❌ Date passée interdite');
+        const normalize = (d) => new Date(d).toISOString().split('T')[0];
+
+        if (
+          payload.date &&
+          originalDate &&
+          normalize(payload.date) !== normalize(originalDate) &&
+          new Date(payload.date) < new Date().setHours(0, 0, 0, 0)
+        ) {
+          return alert('❌ Impossible de choisir une date passée');
         }
       } else if (entity === 'prestataires') {
         [
@@ -164,7 +179,6 @@ const AdminEditPage = () => {
   const renderReadableValue = (value, key) => {
     if (!value) return '';
 
-    // Pour les tableaux
     if (Array.isArray(value)) {
       if (value.length === 0) return '—';
 
@@ -213,9 +227,9 @@ const AdminEditPage = () => {
 
   return (
     <section className="admineditpage">
-      <h1>Modifier {entity}</h1>
+      <h1 className="tittles">Modifier {entity}</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form className="champs" onSubmit={handleSubmit}>
         {Object.entries(formData).map(([key, value]) => {
           if (
             [
@@ -282,17 +296,13 @@ const AdminEditPage = () => {
             if (key === 'heure') {
               const hours = [
                 '08:00',
-                '09:00',
                 '10:00',
-                '11:00',
                 '12:00',
-                '13:00',
                 '14:00',
-                '15:00',
                 '16:00',
-                '17:00',
                 '18:00',
-                '19:00',
+                '20:00',
+                '22:00',
               ];
               return (
                 <div key={key}>

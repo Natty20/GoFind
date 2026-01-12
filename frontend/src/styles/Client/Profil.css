@@ -14,8 +14,9 @@
   background: var(--bg-color);
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(101, 99, 99);
+  border-radius: 1rem;
+  border: 1px solid var(--main-color);
+  box-shadow: 0 2px 10px var(--secondary-color);
 }
 
 .provider-details {
@@ -219,6 +220,10 @@
     padding: 10px;
   }
   .prestation-item ul li {
-    margin: 0;
+    margin: 0 !important;
+  }
+  .prestation-item button {
+    width: auto;
+    margin: 0 !important;
   }
 }

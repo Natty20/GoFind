@@ -143,7 +143,7 @@ const ProfilePage = () => {
       {/* Section Réalisations - uniquement images */}
       {prestataire?.realisations?.length > 0 && (
         <div className="realisation-section">
-          <h3>Réalisations</h3>
+          <h3 className="tittles">Réalisations</h3>
           <div className="images-grid">
             {prestataire.realisations.map((imgUrl, index) => (
               <img

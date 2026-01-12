@@ -1,8 +1,9 @@
 .aboutPage {
   display: flex;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 1rem;
   background: var(--secondary-color);
+  margin: 6rem 0 0 0;
 }
 
 .presentation {
@@ -16,7 +17,7 @@
 }
 
 .presentation img {
-  width: 120px;
+  width: 20%;
   height: auto;
   margin-bottom: 20px;
 }

@@ -2,9 +2,11 @@
   margin: 6rem auto;
   max-width: 900px;
   padding: 0 1rem;
+  background: #fff;
+  border-radius: 2rem;
+  border: 1px solid var(--main-color);
 }
 
-/* ===== TITRE ===== */
 .admineditpage h1 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
@@ -12,7 +14,52 @@
   text-align: center;
 }
 
-/* ===== FORM CARD ===== */
+.champs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.champs label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-left: 0.5rem;
+}
+
+.champs input,
+.champs select,
+.champs textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 2rem;
+  border: 2px solid var(--secondary-color);
+  outline: none;
+  font-size: 1rem;
+  background: #fff;
+  transition: all 0.25s ease;
+}
+
+.champs input::placeholder,
+.champs textarea::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.champs input:focus,
+.champs select:focus,
+.champs textarea:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.champs textarea {
+  resize: vertical;
+  min-height: 120px;
+  border-radius: 1.5rem;
+}
 .admineditpage form {
   background: #fff;
   padding: 2rem;
@@ -20,7 +67,6 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* ===== CHAMPS ===== */
 .admineditpage label {
   font-weight: 600;
   margin-bottom: 0.4rem;

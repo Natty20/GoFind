@@ -20,7 +20,7 @@
 
 /* Logo */
 .navbar-logo img {
-  width: 15%;
+  width: 13%;
 }
 
 /* Sections gauche et droite */
@@ -179,9 +179,5 @@
   .hamburger span {
     width: 20px;
     height: 2.5px;
-  }
-
-  .navbar-logo img {
-    width: 100px;
   }
 }

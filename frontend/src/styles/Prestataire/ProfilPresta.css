@@ -74,10 +74,11 @@
 
 .form-edit input[type='text'],
 .form-edit input[type='email'],
-.form-edit input[type='file'] {
+.form-edit input[type='file'],
+.form-edit input[type='number'] {
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--secondary-color);
   font-size: 1rem;
   width: 100%;
 }
@@ -111,10 +112,11 @@
 }
 
 .realisations-container {
-  margin: 2rem 1rem;
+  margin: 2rem;
   background: var(--secondary-text-color);
   border: 1px solid var(--main-color);
-  padding: 1.5rem;
+  padding: 2rem;
+  border-radius: 1rem;
 }
 
 .add-realisation {
@@ -203,6 +205,10 @@
     padding: 0.5rem;
   }
 
+  .presta-description {
+    margin: 2rem;
+  }
+
   .presta-names h1 {
     font-size: 1.8rem;
   }
@@ -222,7 +228,9 @@
   }
 
   .form-edit button {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    width: 100%;
+    margin: auto;
   }
 
   .images-grid {

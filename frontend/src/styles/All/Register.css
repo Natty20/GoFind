@@ -193,17 +193,23 @@
 }
 
 @media (max-width: 480px) {
+  .register-page {
+    margin-top: 5rem;
+  }
+  .register-input-container {
+    width: 90%;
+  }
   .register-input-container input,
   .register-input-container select,
   .register-input-container textarea {
     padding: 0.6rem;
     font-size: 0.95rem;
   }
-
+  /* 
   .register-left-panel,
   .register-right-panel {
     padding: 0;
-  }
+  } */
 
   .register-right-panel {
     margin: 1rem;

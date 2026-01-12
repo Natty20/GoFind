@@ -28,11 +28,11 @@ const register = async (req, res) => {
       });
     }
     // renforcer le mdp pour chaque inscription et hasher le mdp
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{12,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         message:
-          "Le mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule et un caractère spécial.",
+          "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule et un caractère spécial.",
       });
     }
 

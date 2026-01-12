@@ -226,6 +226,7 @@ a {
   /* Prestataires section */
   .prestataires-section h2 {
     font-size: 1rem;
+    padding: 1rem;
   }
   .prestataires-list {
     padding: 1.5rem;
@@ -236,11 +237,11 @@ a {
   }
 
   .prestataire-info h3 {
-    font-size: 14px;
+    font-size: 1.2rem;
   }
 
   .prestataire-info p {
-    font-size: 10px;
+    font-size: 1rem;
   }
 
   /* Other categories */
@@ -258,5 +259,8 @@ a {
 
   .main-image {
     max-height: 20rem;
+  }
+  .category-image {
+    height: 65%;
   }
 }
