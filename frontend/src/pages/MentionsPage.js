@@ -366,12 +366,12 @@ const MentionsLegales = () => {
         </p>
         <ul>
           <li>
-            droit d'accès (article 15 RGPD) et de rectification (article 16
+            droit d&apos;accès (article 15 RGPD) et de rectification (article 16
             RGPD), de mise à jour, de complétude des données des Utilisateurs
             droit de verrouillage ou d&apos;effacement des données des
             Utilisateurs à caractère personnel (article 17 du RGPD),
             lorsqu&apos;elles sont inexactes, incomplètes, équivoques, périmées,
-            ou dont la collecte, l'utilisation, la communication ou la
+            ou dont la collecte, l&apos;utilisation, la communication ou la
             conservation est interdite{' '}
           </li>
 
