@@ -72,7 +72,7 @@ function Crenaux() {
   const handleConfirmHour = () => {
     if (!client) {
       alert(
-        'Vous devez être connecté en tant que pour prendre un rendez-vous.'
+        'Vous devez être connecté avec votre compte client pour prendre un rendez-vous.'
       );
       navigate('/login', { state: { from: location.pathname } });
       return;

@@ -127,11 +127,11 @@ h3 {
   font-weight: 700;
   text-align: center;
   width: 50%;
-  margin: 1rem 16.5rem;
+  margin: 1rem 21rem;
 }
 .date-picker button {
   width: 70%;
-  margin: 1rem 10rem;
+  margin: 1rem 12rem;
 }
 
 /* Modal Styles */
@@ -249,7 +249,7 @@ h3 {
 @media (max-width: 480px) {
   .crenaux-profile-picture {
     height: auto;
-    margin: 0 1rem 1rem 12rem !important;
+    margin: 0 1rem 1rem 10rem !important;
     width: 20%;
   }
 
