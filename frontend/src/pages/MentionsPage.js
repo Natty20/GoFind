@@ -43,8 +43,8 @@ const MentionsLegales = () => {
         </p>
         <p>
           <b>Informations personnelles :</b> « Les informations qui permettent,
-          sous quelque forme que ce soit, directement ou non, l'identification
-          des personnes physiques auxquelles elles s'appliquent » (article 4 de
+          sous quelque forme que ce soit, directement ou non, l&lsquo;identification
+          des personnes physiques auxquelles elles s&lsquo;appliquent » (article 4 de
           la loi n° 78-17 du 6 janvier 1978).
         </p>
         <p>
@@ -57,11 +57,11 @@ const MentionsLegales = () => {
         </p>
         <h2>1️⃣ Présentation du site internet.</h2>
         <p>
-          En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la
-          confiance dans l'économie numérique, il est précisé aux utilisateurs
+          En vertu de l&lsquo;article 6 de la loi n° 2004-575 du 21 juin 2004 pour la
+          confiance dans l&lsquo;économie numérique, il est précisé aux utilisateurs
           du site internet
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>
-          l'identité des différents intervenants dans le cadre de sa réalisation
+          l&lsquo;identité des différents intervenants dans le cadre de sa réalisation
           et de son suivi:
         </p>
         <p>
@@ -89,7 +89,7 @@ const MentionsLegales = () => {
             href="https://fr.orson.io/1371/generateur-mentions-legales"
             title="générateur de mentions légales RGPD d"
           >
-            générateur de mentions légales RGPD d'Orson.io
+            générateur de mentions légales RGPD d&lsquo;Orson.io
           </a>
         </p>
         <h2>
@@ -97,47 +97,23 @@ const MentionsLegales = () => {
           proposés.
         </h2>
         <p>
-          Le Site constitue une œuvre de l&apos;esprit protégée par les dispositions
-          du Code de la Propriété Intellectuelle et des Réglementations
-          Internationales applicables. Le Client ne peut en aucune manière
-          réutiliser, céder ou exploiter pour son propre compte tout ou partie
-          des éléments ou travaux du Site.
+          Le Site constitue une œuvre de l&apos;esprit protégée par les dispositions du Code de la Propriété Intellectuelle et des Réglementations Internationales applicables. Le Client ne peut en aucune manière réutiliser, céder ou exploiter pour son propre compte tout ou partie des éléments ou travaux du Site.
         </p>
         <p>
           L&apos;utilisation du site
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>
-          implique l’acceptation pleine et entière des conditions générales
-          d&apos;utilisation ci-après décrites. Ces conditions d&apos;utilisation sont
-          susceptibles d&apos;être modifiées ou complétées à tout moment, les
-          utilisateurs du site{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>
-          sont donc invités à les consulter de manière régulière.
+          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a> implique l’acceptation pleine et entière des conditions générales d&apos;utilisation ci-après décrites. Ces conditions d&apos;utilisation sont susceptibles d&apos;être modifiées ou complétées à tout moment, les utilisateurs du site{' '} <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>sont donc invités à les consulter de manière régulière.
         </p>
         <p>
-          Ce site internet est normalement accessible à tout moment aux
-          utilisateurs. Une interruption pour raison de maintenance technique
-          peut être toutefois décidée par
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>,
-          qui s&apos;efforcera alors de communiquer préalablement aux utilisateurs
-          les dates et heures de l&apos;intervention. Le site web{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          est mis à jour régulièrement par
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          responsable. De la même façon, les mentions légales peuvent être
-          modifiées à tout moment : elles s&apos;imposent néanmoins à l&apos;utilisateur
-          qui est invité à s&apos;y référer le plus souvent possible afin d&apos;en
-          prendre connaissance.
+          Ce site internet est normalement accessible à tout moment auxutilisateurs. Une interruption pour raison de maintenance technique peut être toutefois décidée par <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>, qui s&apos;efforcera alors de communiquer préalablement aux utilisateurs les dates et heures de l&apos;intervention. Le site web{' '} <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '} est mis à jour régulièrement par <a href="https://go-find.vercel.app/"> https://go-find.vercel.app/</a>{' '} responsable. De la même façon, les mentions légales peuvent être modifiées à tout moment : elles s&apos;imposent néanmoins à l&apos;utilisateur qui est invité à s&apos;y référer le plus souvent possible afin d&apos;en prendre connaissance.
         </p>
         <h2>3️⃣ Description des services fournis.</h2>
         <p>
           GoFind facilite la mise en relation entre prestataires et
           utilisateurs. La plateforme n&apos;est pas responsable des prestations
           réalisées par les professionnels inscrits. Toute transaction est sous
-          la responsabilité de l&apos;utilisateur et du prestataire choisi. GoFind
-          n&apos;intervient pas dans les litiges, réclamations ou désaccords entre
-          les utilisateurs et les prestataires.
+          la responsabilité de l&apos;utilisateur et du prestataire choisi.
+          GoFind n&apos;intervient pas dans les litiges, réclamations ou
+          désaccords entre les utilisateurs et les prestataires.
         </p>
         <p>
           Les prestataires inscrits sur la plateforme agissent en qualité de
@@ -158,16 +134,16 @@ const MentionsLegales = () => {
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           des informations aussi précises que possible. Toutefois, il ne pourra
           être tenu responsable des oublis, des inexactitudes et des carences
-          dans la mise à jour, qu&apos;elles soient de son fait ou du fait des tiers
-          partenaires qui lui fournissent ces informations.
+          dans la mise à jour, qu&apos;elles soient de son fait ou du fait des
+          tiers partenaires qui lui fournissent ces informations.
         </p>
         <p>
           Toutes les informations indiquées sur le site
           <a href="https://go-find.vercel.app/">
             https://go-find.vercel.app/
           </a>{' '}
-          sont données à titre indicatif, et sont susceptibles d&apos;évoluer. Par
-          ailleurs, les renseignements figurant sur le site
+          sont données à titre indicatif, et sont susceptibles d&apos;évoluer.
+          Par ailleurs, les renseignements figurant sur le site
           <a href="https://go-find.vercel.app/">
             https://go-find.vercel.app/
           </a>{' '}
@@ -186,20 +162,21 @@ const MentionsLegales = () => {
         <h2>4️⃣ Limitations contractuelles sur les données techniques.</h2>
         <p>
           Le site utilise la technologie JavaScript. Le site Internet ne pourra
-          être tenu responsable de dommages matériels liés à l&apos;utilisation du
-          site. De plus, l&apos;utilisateur du site s&apos;engage à accéder au site en
-          utilisant un matériel récent, ne contenant pas de virus et avec un
-          navigateur de dernière génération mis-à-jour Le site{' '}
+          être tenu responsable de dommages matériels liés à l&apos;utilisation
+          du site. De plus, l&apos;utilisateur du site s&apos;engage à accéder
+          au site en utilisant un matériel récent, ne contenant pas de virus et
+          avec un navigateur de dernière génération mis-à-jour Le site{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           est hébergé chez un prestataire sur le territoire de l&apos;Union
           Européenne conformément aux dispositions du Règlement Général sur la
           Protection des Données (RGPD : n° 2016-679)
         </p>
         <p>
-          L&apos;objectif est d&apos;apporter une prestation qui assure le meilleur taux
-          d&apos;accessibilité. L&apos;hébergeur assure la continuité de son service 24
-          Heures sur 24, tous les jours de l&apos;année. Il se réserve néanmoins la
-          possibilité d&apos;interrompre le service d&apos;hébergement pour les durées les
+          L&apos;objectif est d&apos;apporter une prestation qui assure le
+          meilleur taux d&apos;accessibilité. L&apos;hébergeur assure la
+          continuité de son service 24 Heures sur 24, tous les jours de
+          l&apos;année. Il se réserve néanmoins la possibilité
+          d&apos;interrompre le service d&apos;hébergement pour les durées les
           plus courtes possibles notamment à des fins de maintenance,
           d&apos;amélioration de ses infrastructures, de défaillance de ses
           infrastructures ou si les Prestations et Services génèrent un trafic
@@ -209,26 +186,26 @@ const MentionsLegales = () => {
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           et l&apos;hébergeur ne pourront être tenus responsables en cas de
           dysfonctionnement du réseau Internet, des lignes téléphoniques ou du
-          matériel informatique et de téléphonie lié notamment à l&apos;encombrement
-          du réseau empêchant l&apos;accès au serveur.
+          matériel informatique et de téléphonie lié notamment à
+          l&apos;encombrement du réseau empêchant l&apos;accès au serveur.
         </p>
         <h2>5️⃣ Propriété intellectuelle et contrefaçons.</h2>
         <p>
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           est propriétaire des droits de propriété intellectuelle et détient les
-          droits d&apos;usage sur tous les éléments accessibles sur le site internet,
-          notamment les textes, images, graphismes, logos, vidéos, icônes et
-          sons. Toute reproduction, représentation, modification, publication,
-          adaptation de tout ou partie des éléments du site, quel que soit le
-          moyen ou le procédé utilisé , est interdite, sauf autorisation écrite
-          préalable de :{' '}
+          droits d&apos;usage sur tous les éléments accessibles sur le site
+          internet, notamment les textes, images, graphismes, logos, vidéos,
+          icônes et sons. Toute reproduction, représentation, modification,
+          publication, adaptation de tout ou partie des éléments du site, quel
+          que soit le moyen ou le procédé utilisé , est interdite, sauf
+          autorisation écrite préalable de :{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>.
         </p>
         <p>
-          Toute exploitation non autorisée du site ou de l&apos;un quelconque des
-          éléments qu&apos;il contient sera considérée comme constitutive d&apos;une
-          contrefaçon et poursuivie conformément aux dispositions des articles
-          L.335-2 et suivants du Code de Propriété Intellectuelle.
+          Toute exploitation non autorisée du site ou de l&apos;un quelconque
+          des éléments qu&apos;il contient sera considérée comme constitutive
+          d&apos;une contrefaçon et poursuivie conformément aux dispositions des
+          articles L.335-2 et suivants du Code de Propriété Intellectuelle.
         </p>
         <h2>6️⃣ Limitations de responsabilité.</h2>
         <p>
@@ -241,17 +218,18 @@ const MentionsLegales = () => {
         <p>
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           ne pourra être tenu responsable des dommages directs et indirects
-          causés au matériel de l&apos;utilisateur, lors de l&apos;accès au site internet{' '}
+          causés au matériel de l&apos;utilisateur, lors de l&apos;accès au site
+          internet{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>,
-          et résultant soit de l&apos;utilisation d&apos;un matériel ne répondant pas aux
-          spécifications indiquées au point 4, soit de l&apos;apparition d&apos;un bug ou
-          d&apos;une incompatibilité.
+          et résultant soit de l&apos;utilisation d&apos;un matériel ne
+          répondant pas aux spécifications indiquées au point 4, soit de
+          l&apos;apparition d&apos;un bug ou d&apos;une incompatibilité.
         </p>
         <p>
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           ne pourra également être tenu responsable des dommages indirects (tels
-          par exemple qu&apos;une perte de marché ou perte d&apos;une chance) consécutifs
-          à l&apos;utilisation du site
+          par exemple qu&apos;une perte de marché ou perte d&apos;une chance)
+          consécutifs à l&apos;utilisation du site
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>.
           Des espaces interactifs (possibilité de poser des questions dans
           l&apos;espace contact) sont à la disposition des utilisateurs.
@@ -266,18 +244,18 @@ const MentionsLegales = () => {
             https://go-find.vercel.app/
           </a>{' '}
           se réserve également la possibilité de mettre en cause la
-          responsabilité civile et/ou pénale de l&apos;utilisateur, notamment en cas
-          de message à caractère raciste, injurieux, diffamant, ou
+          responsabilité civile et/ou pénale de l&apos;utilisateur, notamment en
+          cas de message à caractère raciste, injurieux, diffamant, ou
           pornographique, quel que soit le support utilisé (texte, photographie
           …).
         </p>
         <h2>7️⃣ Gestion des données personnelles</h2>
         <p>
           Le Client est informé des réglementations concernant la communication
-          marketing, la loi du 21 Juin 2014 pour la confiance dans l&apos;Economie
-          Numérique, la Loi Informatique et Liberté du 06 Août 2004 ainsi que du
-          Règlement Général sur la Protection des Données (RGPD : n°
-          2016-679).{' '}
+          marketing, la loi du 21 Juin 2014 pour la confiance dans
+          l&apos;Economie Numérique, la Loi Informatique et Liberté du 06 Août
+          2004 ainsi que du Règlement Général sur la Protection des Données
+          (RGPD : n° 2016-679).{' '}
         </p>
         <p>
           Les données personnelles sont conservées pendant la durée strictement
@@ -287,27 +265,28 @@ const MentionsLegales = () => {
         <h3>7.1 Responsables de la collecte des données personnelles</h3>
         <p>
           Pour les Données Personnelles collectées dans le cadre de la création
-          du compte personnel de l&apos;Utilisateur et de sa navigation sur le Site,
-          le responsable du traitement des Données Personnelles est : Gihozo
-          Nathalie.{' '}
+          du compte personnel de l&apos;Utilisateur et de sa navigation sur le
+          Site, le responsable du traitement des Données Personnelles est :
+          Gihozo Nathalie.{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>
           est représenté par Gihozo, son représentant légal
         </p>
         <p>
           En tant que responsable du traitement des données qu&apos;il collecte,{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          s&apos;engage à respecter le cadre des dispositions légales en vigueur. Il
-          lui appartient notamment au Client d&apos;établir les finalités de ses
-          traitements de données, de fournir à ses prospects et clients, à
-          partir de la collecte de leurs consentements, une information complète
-          sur le traitement de leurs données personnelles et de maintenir un
-          registre des traitements conforme à la réalité. Chaque fois que{' '}
+          s&apos;engage à respecter le cadre des dispositions légales en
+          vigueur. Il lui appartient notamment au Client d&apos;établir les
+          finalités de ses traitements de données, de fournir à ses prospects et
+          clients, à partir de la collecte de leurs consentements, une
+          information complète sur le traitement de leurs données personnelles
+          et de maintenir un registre des traitements conforme à la réalité.
+          Chaque fois que{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           traite des Données Personnelles,{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          prend toutes les mesures raisonnables pour s&apos;assurer de l&apos;exactitude
-          et de la pertinence des Données Personnelles au regard des finalités
-          pour lesquelles{' '}
+          prend toutes les mesures raisonnables pour s&apos;assurer de
+          l&apos;exactitude et de la pertinence des Données Personnelles au
+          regard des finalités pour lesquelles{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           les traite.
         </p>
@@ -319,9 +298,9 @@ const MentionsLegales = () => {
         <ul>
           <li>
             pour permettre la navigation sur le Site et la gestion et la
-            traçabilité des prestations et services commandés par l&apos;utilisateur
-            : données de connexion et d&apos;utilisation du Site, facturation,
-            historique des commandes, etc.{' '}
+            traçabilité des prestations et services commandés par
+            l&apos;utilisateur : données de connexion et d&apos;utilisation du
+            Site, facturation, historique des commandes, etc.{' '}
           </li>
 
           <li>
@@ -363,11 +342,11 @@ const MentionsLegales = () => {
           <li>
             droit d'accès (article 15 RGPD) et de rectification (article 16
             RGPD), de mise à jour, de complétude des données des Utilisateurs
-            droit de verrouillage ou d&apos;effacement des données des Utilisateurs à
-            caractère personnel (article 17 du RGPD), lorsqu&apos;elles sont
-            inexactes, incomplètes, équivoques, périmées, ou dont la collecte,
-            l'utilisation, la communication ou la conservation est
-            interdite{' '}
+            droit de verrouillage ou d&apos;effacement des données des
+            Utilisateurs à caractère personnel (article 17 du RGPD),
+            lorsqu&apos;elles sont inexactes, incomplètes, équivoques, périmées,
+            ou dont la collecte, l'utilisation, la communication ou la
+            conservation est interdite{' '}
           </li>
 
           <li>
@@ -405,18 +384,18 @@ const MentionsLegales = () => {
         <p>
           Dès que{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          a connaissance du décès d&apos;un Utilisateur et à défaut d&apos;instructions de
-          sa part,{' '}
+          a connaissance du décès d&apos;un Utilisateur et à défaut
+          d&apos;instructions de sa part,{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          s&apos;engage à détruire ses données, sauf si leur conservation s&apos;avère
-          nécessaire à des fins probatoires ou pour répondre à une obligation
-          légale.
+          s&apos;engage à détruire ses données, sauf si leur conservation
+          s&apos;avère nécessaire à des fins probatoires ou pour répondre à une
+          obligation légale.
         </p>
         <p>
           Si l&apos;Utilisateur souhaite savoir comment{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          utilise ses Données Personnelles, demander à les rectifier ou s&apos;oppose
-          à leur traitement, l&apos;Utilisateur peut contacter{' '}
+          utilise ses Données Personnelles, demander à les rectifier ou
+          s&apos;oppose à leur traitement, l&apos;Utilisateur peut contacter{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           par écrit à l&apos;adresse suivante :{' '}
         </p>
@@ -426,8 +405,9 @@ const MentionsLegales = () => {
           Dans ce cas, l&apos;Utilisateur doit indiquer les Données Personnelles
           qu&apos;il souhaiterait que{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          corrige, mette à jour ou supprime, en s&apos;identifiant précisément avec
-          une copie d&apos;une pièce d&apos;identité (carte d&apos;identité ou passeport).{' '}
+          corrige, mette à jour ou supprime, en s&apos;identifiant précisément
+          avec une copie d&apos;une pièce d&apos;identité (carte d&apos;identité
+          ou passeport).{' '}
         </p>
         <p>
           Les demandes de suppression de Données Personnelles seront soumises
@@ -441,21 +421,21 @@ const MentionsLegales = () => {
         <p>
           <a href="https://go-find.vercel.app/">GoFind</a> s&apos;interdit de
           traiter, héberger ou transférer les Informations collectées sur ses
-          Clients vers un pays situé en dehors de l&apos;Union européenne ou reconnu
-          comme « non adéquat » par la Commission européenne sans en informer
-          préalablement le client. Pour autant,{' '}
+          Clients vers un pays situé en dehors de l&apos;Union européenne ou
+          reconnu comme « non adéquat » par la Commission européenne sans en
+          informer préalablement le client. Pour autant,{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           reste libre du choix de ses sous-traitants techniques et commerciaux à
-          la condition qu&apos;il présentent les garanties suffisantes au regard des
-          exigences du Règlement Général sur la Protection des Données (RGPD :
-          n° 2016-679).
+          la condition qu&apos;il présentent les garanties suffisantes au regard
+          des exigences du Règlement Général sur la Protection des Données (RGPD
+          : n° 2016-679).
         </p>
         <p>
-          GoFind s&apos;engage à prendre toutes les précautions nécessaires afin de
-          préserver la sécurité des Informations et notamment qu&apos;elles ne soient
-          pas communiquées à des personnes non autorisées. Cependant, si un
-          incident impactant l&apos;intégrité ou la confidentialité des Informations
-          du Client est portée à la connaissance de{' '}
+          GoFind s&apos;engage à prendre toutes les précautions nécessaires afin
+          de préserver la sécurité des Informations et notamment qu&apos;elles
+          ne soient pas communiquées à des personnes non autorisées. Cependant,
+          si un incident impactant l&apos;intégrité ou la confidentialité des
+          Informations du Client est portée à la connaissance de{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>,
           celle-ci devra dans les meilleurs délais informer le Client et lui
           communiquer les mesures de corrections prises. Par ailleurs{' '}
@@ -463,16 +443,16 @@ const MentionsLegales = () => {
           ne collecte aucune « données sensibles ».
         </p>
         <p>
-          Les Données Personnelles de l&apos;Utilisateur peuvent être traitées par
-          des filiales de{' '}
+          Les Données Personnelles de l&apos;Utilisateur peuvent être traitées
+          par des filiales de{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           et des sous-traitants (prestataires de services), exclusivement afin
           de réaliser les finalités de la présente politique.
         </p>
         <p>
           Dans la limite de leurs attributions respectives et pour les finalités
-          rappelées ci-dessus, les principales personnes susceptibles d&apos;avoir
-          accès aux données des Utilisateurs de{' '}
+          rappelées ci-dessus, les principales personnes susceptibles
+          d&apos;avoir accès aux données des Utilisateurs de{' '}
           <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
           sont principalement les agents de notre service client.
         </p>
