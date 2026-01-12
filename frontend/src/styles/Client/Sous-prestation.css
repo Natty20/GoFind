@@ -121,6 +121,7 @@
 
 .category-image {
   width: 100%;
+  height: 70%;
   border-radius: 8px;
   margin-bottom: 10px;
 }
@@ -194,10 +195,6 @@ a {
     margin-bottom: 20px;
   }
 
-  .category-image {
-    width: 100%;
-  }
-
   .category-card p {
     font-size: 14px;
   }
@@ -259,8 +256,5 @@ a {
 
   .main-image {
     max-height: 20rem;
-  }
-  .category-image {
-    height: 65%;
   }
 }

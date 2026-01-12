@@ -25,7 +25,6 @@
 
 .date-picker h2,
 h3 {
-  /* text-align: center; */
   margin: 2rem 0;
 }
 
@@ -77,10 +76,8 @@ h3 {
   cursor: pointer;
 }
 
-/* Select pour les heures */
 .custom-hour-select {
   width: 50%;
-  /* ou 100% selon le layout */
   padding: 0.8rem 1rem;
   margin: 1rem auto;
   display: block;
@@ -105,23 +102,6 @@ h3 {
   outline: none;
   box-shadow: 0 0 0 3px var(--secondary-color);
 }
-/* .choose-time {
-  display: block;
-  margin: 2rem auto;
-  padding: 1rem 5rem;
-  background: var(--main-color);
-  color: var(--secondary-text-color);
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.choose-time:hover {
-  background-color: var(--secondary-color);
-  color: var(--main-color);
-  border: none;
-} */
 
 .custom-datepicker {
   background: var(--bg-color);
@@ -130,7 +110,6 @@ h3 {
   font-size: 16px;
   cursor: pointer;
   text-align: center;
-  /* width: 200px; */
 }
 .custom-datepicker:hover {
   background-color: var(--main-color);
@@ -144,10 +123,11 @@ h3 {
 }
 
 .react-datepicker__input-container input {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: 700;
+  text-align: center;
+  width: 50%;
+  margin: 1rem;
 }
 .date-picker button {
   width: 70%;
@@ -201,21 +181,17 @@ h3 {
 /* Responsive */
 
 @media (max-width: 768px) {
-  .crenaux-profile {
-    margin: 6rem 0;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
+  .crenaux-profile-picture {
+    width: 30%;
   }
-
   .crenaux-profile h1 {
-    margin: 5rem 0;
+    margin: 1rem;
     font-size: 1rem;
   }
 
   .crenaux-profile p {
     font-size: 1rem;
-    margin: 5rem 0;
+    margin: 1rem;
   }
 
   .prestation-item ul {
@@ -223,7 +199,7 @@ h3 {
   }
 
   .prestation-item ul li {
-    margin: -4rem -1rem 0;
+    margin: 0;
   }
 
   .date-picker h2,
@@ -232,6 +208,9 @@ h3 {
     font-size: 1.2rem;
   }
 
+  .react-datepicker__input-container input {
+    width: 90%;
+  }
   .dates {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -262,15 +241,18 @@ h3 {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
+  .date-picker button {
+    width: 95%;
+  }
 }
 
 @media (max-width: 480px) {
   .crenaux-profile-picture {
     border-radius: 50%;
     height: auto;
+    margin: 5rem 1rem 1rem 9rem !important;
     object-fit: cover;
     width: 30%;
-    margin: 0 5rem 1rem 8rem;
   }
 
   .crenaux-profile {
@@ -328,8 +310,8 @@ h3 {
     width: 100%;
   }
   .date-picker button {
-    margin: 1rem;
-    width: 90%;
+    margin: auto 7rem auto;
+    width: auto;
   }
   .react-datepicker__input-container input {
     width: 90%;

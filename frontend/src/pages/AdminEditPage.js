@@ -229,7 +229,7 @@ const AdminEditPage = () => {
     <section className="admineditpage">
       <h1 className="tittles">Modifier {entity}</h1>
 
-      <form className="champs" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         {Object.entries(formData).map(([key, value]) => {
           if (
             [

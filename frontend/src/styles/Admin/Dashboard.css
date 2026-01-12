@@ -79,6 +79,11 @@
   color: var(--third-text-color);
 }
 
+.data-info-image {
+  border-radius: 20%;
+  object-fit: cover;
+  width: 10%;
+}
 .data-actions {
   display: flex;
   gap: 10px;
@@ -192,6 +197,9 @@
     justify-content: center;
     width: 100%;
     padding: 1rem;
+  }
+  .data-info-image {
+    width: 20%;
   }
 
   button.dashboard.btn-primary {

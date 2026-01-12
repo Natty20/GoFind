@@ -207,7 +207,7 @@ const Dashboard = () => {
                           <img
                             src={item.profilePicture}
                             alt={item.nom}
-                            className="provider-image"
+                            className="data-info-image"
                           />
                           <span>
                             <strong>Nom:</strong> {item.nom}
