@@ -1,4 +1,4 @@
-const express = require ("express");
+const express = require("express");
 const {
     createAvis,
     updateMyAvis,
@@ -18,37 +18,45 @@ const {
 
 const router = express.Router();
 
-/* CLIENT */
-router.post('/', authenticateUser, authorizeClient, createAvis);
-router.put('/:id', authenticateUser, authorizeClient, updateMyAvis);
-router.delete('/:id', authenticateUser, authorizeClient, deleteMyAvis);
+// Créer un avis
+router.post("/", authenticateUser, authorizeClient, createAvis);
 
-/* LECTURE */
-router.get('/public', authenticateUser, getAllVisibleAvis);
+// Modifier SON avis
+router.put("/:id", authenticateUser, authorizeClient, updateMyAvis);
+
+// Supprimer SON avis
+router.delete("/:id", authenticateUser, authorizeClient, deleteMyAvis);
+
+//  Avis visibles (public ou client)
+router.get("/public", getAllVisibleAvis);
+
+//  Prestataire → ses avis
 router.get(
-    '/prestataire',
+    "/prestataire",
     authenticateUser,
     authorizePrestataire,
     getAvisForPrestataire
 );
 
-/* MODÉRATION */
+// Admin ou prestataire → masquer / afficher
 router.patch(
-    '/:id/visibility',
+    "/:id/visibility",
     authenticateUser,
     (req, res, next) => {
-        if (req.user.role === 'admin') return next();
-        if (req.user.role === 'prestataire') return next();
-        return res.status(403).json({ message: 'Accès refusé' });
+        if (req.user.role === "admin" || req.user.role === "prestataire") {
+            return next();
+        }
+        return res.status(403).json({ message: "Accès refusé" });
     },
     toggleAvisVisibility
 );
 
+// Admin → suppression définitive
 router.delete(
-    '/admin/:id',
+    "/admin/:id",
     authenticateUser,
     authorizeAdmin,
     adminDeleteAvis
 );
 
-module.exports= router;
+module.exports = router;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose= require ("mongoose");
 
 const avisSchema = new mongoose.Schema(
     {
@@ -42,4 +42,4 @@ const avisSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export default mongoose.model('Avis', avisSchema);
+module.exports= mongoose.model('Avis', avisSchema);
