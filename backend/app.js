@@ -14,6 +14,7 @@ const stripeRoutes = require("./routes/stripe");
 const uploadRoutes = require("./routes/uploadRoutes");
 const citiesRoutes = require("./routes/citiesRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const avisRoutes = require ("./routes/avisRoutes");
 
 connectDB();
 
@@ -103,6 +104,7 @@ app.use("/api/stripe", stripeRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/cities", citiesRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/avis", avisRoutes);
 
 
 app.use((err, req, res, next) => {

@@ -19,7 +19,7 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-// Vérifier si l'utilisateur est: administrateur, client ou prestataire
+// Vérifier si l'utilisateur est: admin, client ou prestata
 const authorizeAdmin = (req, res, next) => {
   if (!req.user || req.user.role !== "admin") {
     return res
