@@ -1,11 +1,8 @@
-import Avis from '../models/Avis.js';
-import Client from '../models/Client.js';
-import Prestataire from '../models/Prestataire.js';
+const Avis = require("../models/Avis");
+const Client = require("../models/Client");
+const Prestataire = require("../models/Prestataire");
 
-/* ======================
-   ➕ CRÉER UN AVIS
-====================== */
-export const createAvis = async (req, res) => {
+const createAvis = async (req, res) => {
     try {
         if (req.user.role !== 'client') {
             return res.status(403).json({
@@ -39,10 +36,7 @@ export const createAvis = async (req, res) => {
     }
 };
 
-/* ======================
-   ✏️ MODIFIER SON AVIS
-====================== */
-export const updateMyAvis = async (req, res) => {
+const updateMyAvis = async (req, res) => {
     try {
         const avis = await Avis.findById(req.params.id);
 
@@ -74,10 +68,7 @@ export const updateMyAvis = async (req, res) => {
     }
 };
 
-/* ======================
-   ❌ SUPPRIMER SON AVIS
-====================== */
-export const deleteMyAvis = async (req, res) => {
+const deleteMyAvis = async (req, res) => {
     try {
         const avis = await Avis.findById(req.params.id);
 
@@ -96,10 +87,7 @@ export const deleteMyAvis = async (req, res) => {
     }
 };
 
-/* ======================
-   🌍 CLIENT → voir avis visibles
-====================== */
-export const getAllVisibleAvis = async (req, res) => {
+const getAllVisibleAvis = async (req, res) => {
     const avis = await Avis.find({ visible: true })
         .populate('auteur', 'prenom')
         .populate('prestataire', 'nom prenom')
@@ -108,10 +96,7 @@ export const getAllVisibleAvis = async (req, res) => {
     res.json({ avis });
 };
 
-/* ======================
-   🧑‍🔧 PRESTATAIRE → ses avis
-====================== */
-export const getAvisForPrestataire = async (req, res) => {
+const getAvisForPrestataire = async (req, res) => {
     const avis = await Avis.find({ prestataire: req.user.id })
         .populate('auteur', 'prenom')
         .sort({ createdAt: -1 });
@@ -119,12 +104,8 @@ export const getAvisForPrestataire = async (req, res) => {
     res.json({ avis });
 };
 
-/* ======================
-   👑 MODÉRATION
-====================== */
-
 // masquer / afficher
-export const toggleAvisVisibility = async (req, res) => {
+const toggleAvisVisibility = async (req, res) => {
     const avis = await Avis.findById(req.params.id);
 
     if (!avis) return res.status(404).json({ message: 'Avis introuvable' });
@@ -143,7 +124,17 @@ export const toggleAvisVisibility = async (req, res) => {
 };
 
 // admin delete
-export const adminDeleteAvis = async (req, res) => {
+const adminDeleteAvis = async (req, res) => {
     await Avis.findByIdAndDelete(req.params.id);
     res.json({ message: 'Avis supprimé par admin' });
+};
+
+module.exports = {
+    adminDeleteAvis,
+    toggleAvisVisibility,
+    getAvisForPrestataire,
+    getAllVisibleAvis,
+    deleteMyAvis,
+    updateMyAvis,
+    createAvis,
 };
