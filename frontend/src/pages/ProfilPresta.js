@@ -11,6 +11,8 @@ const ProfilPresta = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
+  const [avis, setAvis] = useState([]);
+  const [avisLoading, setAvisLoading] = useState(true);
 
   const prestataireId = sessionStorage.getItem('prestataireId');
   const token = sessionStorage.getItem('token');
@@ -41,6 +43,45 @@ const ProfilPresta = () => {
     };
     fetchPrestataireData();
   }, [prestataireId, token]);
+
+  useEffect(() => {
+    const fetchAvisPrestataire = async () => {
+      try {
+        const res = await axios.get(
+          'https://gofind-v9ee.onrender.com/api/avis/prestataire',
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setAvis(res.data.avis);
+      } catch (err) {
+        console.error('Erreur chargement avis', err);
+      } finally {
+        setAvisLoading(false);
+      }
+    };
+
+    fetchAvisPrestataire();
+  }, [token]);
+
+  const handleToggleVisibility = async (avisId) => {
+    try {
+      const res = await axios.patch(
+        `https://gofind-v9ee.onrender.com/api/avis/${avisId}/visibility`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setAvis((prevAvis) =>
+        prevAvis.map((a) => (a._id === avisId ? res.data.avis : a))
+      );
+    } catch (err) {
+      console.error('Erreur visibilité avis', err);
+      alert("❌ Impossible de modifier la visibilité de l'avis");
+    }
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -328,7 +369,55 @@ const ProfilPresta = () => {
         )}
       </div>
 
-      {/* <section className="clients-avis"> <main className="provider-reviews"> <h2>Avis des Clients</h2> <button>supprimer une avis</button> <section className="review"> <div className="review-info"> <img src="/images/gigi.jpg" alt="Prestataire" className="client-image" /> <h3>Gihozo Nathalie</h3> </div> <p> Hdfhu Hzygfg Behid ljfue Efjhuhg luhfhg lujf lhuhf ljju luhuh Bhbezyubyu Yzhsuyh... </p> <span>26 Janv, 2024</span> </section> <button>supprimer une avis</button> <section className="review"> <div className="review-info"> <img src="/images/gigi.jpg" alt="Prestataire" className="client-image" /> <h3>Gihozo Nathalie</h3> </div> <p> Hdfhu Hzygfg Behid ljfue Efjhuhg luhfhg lujf lhuhf ljju luhuh Bhbezyubyu Yzhsuyh... </p> <span>26 Janv, 2024</span> </section> <button>supprimer une avis</button> <section className="review"> <div className="review-info"> <img src="/images/gigi.jpg" alt="Prestataire" className="client-image" /> <h3>Gihozo Nathalie</h3> </div> <p> Hdfhu Hzygfg Behid ljfue Efjhuhg luhfhg lujf lhuhf ljju luhuh Bhbezyubyu Yzhsuyh... </p> <span>26 Janv, 2024</span> </section> <a href="/avis">Voir Tous Les Avis</a> </main> </section> */}
+      <section className="clients-avis">
+        <main className="provider-reviews">
+          <h2 className="tittles">Avis des clients</h2>
+
+          {avisLoading ? (
+            <p>Chargement des avis...</p>
+          ) : avis.length === 0 ? (
+            <p>Aucun avis pour le moment.</p>
+          ) : (
+            avis.map((item) => (
+              <section
+                key={item._id}
+                className={`review ${!item.visible ? 'review-hidden' : ''}`}
+              >
+                <div className="review-info">
+                  <img
+                    src={
+                      item.auteur?.profilePicture ||
+                      'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
+                    }
+                    alt="Client"
+                    className="client-image"
+                  />
+                  <h3>{item.auteur?.prenom || 'Client'}</h3>
+                </div>
+
+                {item.note && <p className="note">⭐ {item.note}/5</p>}
+
+                <p>{item.commentaire}</p>
+
+                <span>
+                  {new Date(item.createdAt).toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </span>
+
+                <button
+                  className="btn-secondary"
+                  onClick={() => handleToggleVisibility(item._id)}
+                >
+                  {item.visible ? 'Masquer' : 'Rendre visible'}
+                </button>
+              </section>
+            ))
+          )}
+        </main>
+      </section>
     </main>
   );
 };

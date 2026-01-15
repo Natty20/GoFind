@@ -89,7 +89,7 @@ const deleteMyAvis = async (req, res) => {
 
 const getAllVisibleAvis = async (req, res) => {
     const avis = await Avis.find({ visible: true })
-        .populate('auteur', 'prenom')
+        .populate('auteur', 'nom prenom')
         .populate('prestataire', 'nom prenom')
         .sort({ createdAt: -1 });
 

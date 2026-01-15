@@ -94,7 +94,8 @@
   margin-top: 0.5rem;
 }
 
-.presta-description {
+.presta-description,
+.clients-avis {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -138,6 +139,16 @@
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ddd;
+}
+
+.review-hidden {
+  opacity: 0.5;
+  border: 1px dashed #ccc;
+}
+
+.note {
+  font-weight: bold;
+  margin: 5px 0;
 }
 
 /* RESPONSIVE */
