@@ -35,7 +35,6 @@ function PrestaLogin() {
 
       setPrestataire(prestataire);
 
-      // ✅ REDIRECTION CORRECTE
       navigate(`/reservations`);
     } catch (error) {
       console.error(error);

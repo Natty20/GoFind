@@ -17,6 +17,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = sessionStorage.getItem('token');
+  const prestataireId = sessionStorage.getItem('prestataireId');
 
   // const [activeTab, setActiveTab] = useState('images');
 
@@ -82,7 +83,7 @@ const ProfilePage = () => {
         );
 
         const avisPresta = res.data.avis.filter(
-          (a) => a.prestataire?._id === id
+          (a) => a.prestataire?._id === prestataireId
         );
 
         setAvis(avisPresta);
@@ -91,8 +92,8 @@ const ProfilePage = () => {
       }
     };
 
-    if (id) fetchAvis();
-  }, [id]);
+    if (prestataireId) fetchAvis();
+  }, [prestataireId]);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p className="error">{error}</p>;
