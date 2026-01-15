@@ -117,6 +117,55 @@
   border-radius: 8px;
 }
 
+/* ===== ÉTOILES ===== */
+.stars,
+.stars-display {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 22px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star.filled {
+  color: #c94b4b;
+}
+
+/* ===== MODAL AVIS ===== */
+.avis-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.avis-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.avis-form textarea {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  resize: none;
+}
+
+.avis-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
 /* Responsive  */
 @media (max-width: 768px) {
   .provider-description,
@@ -133,10 +182,6 @@
   .prestation-item ul li {
     margin: 0;
   }
-
-  /* .btn-secondary {
-    width: 50%;
-  } */
 
   /* Realisation Section */
   .realisation-section {

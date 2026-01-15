@@ -95,11 +95,10 @@
   margin-top: 0.5rem;
 }
 
-.presta-description,
-.clients-avis {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.presta-description {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* justify-content: center; */
   align-items: flex-start;
   background: var(--secondary-text-color);
   border: 1px solid var(--main-color);
@@ -112,6 +111,7 @@
 .presta-description p {
   line-height: 1.6;
   color: var(--primary-text-color);
+  text-align: center;
 }
 
 .realisations-container {
@@ -147,37 +147,31 @@
    SECTION AVIS CLIENTS
 ========================= */
 
-.clients-avis {
-  background: #000;
-  padding: 60px 0;
-}
-
 .provider-reviews {
-  width: 90%;
+  /* width: 90%; */
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .provider-reviews h2 {
-  text-align: center;
-  color: #c94b4b;
-  font-size: 28px;
   margin-bottom: 40px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
 /* =========================
    CARTE AVIS
 ========================= */
 
-.review {
-  background: #fff;
-  border-radius: 8px;
+.provider-reviews .review {
   padding: 30px 40px;
   margin-bottom: 40px;
   position: relative;
-  box-shadow: 0 0 0 2px var(--secondary-color);
+
+  background: var(--bg-color);
+  border: 1px solid var(--main-color);
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px var(--secondary-color);
+  width: 70%;
+  margin: 0 10rem;
 }
 
 /* avis masqué */
@@ -247,20 +241,9 @@
 
 .review button {
   position: absolute;
-  bottom: 25px;
+  bottom: 1rem;
   right: 40px;
-  background: var(--main-color);
-  color: #fff;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
   transition: background 0.3s ease;
-}
-
-.review button:hover {
-  background: var(--main-color);
 }
 
 /* RESPONSIVE */
@@ -282,9 +265,6 @@
 }
 
 @media (max-width: 768px) {
-  .info {
-    padding: 2rem;
-  }
   .info-presta {
     flex-direction: row;
   }
@@ -320,8 +300,11 @@
   .images-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
+  .provider-reviews {
+    margin: 2rem;
+  }
 
-  .review {
+  .provider-reviews .review {
     padding: 25px;
   }
 
@@ -344,7 +327,6 @@
   .review button {
     position: static;
     margin-top: 20px;
-    width: 100%;
   }
 }
 
