@@ -16,6 +16,8 @@ const ProfilePage = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = sessionStorage.getItem('token');
+
   // const [activeTab, setActiveTab] = useState('images');
 
   useEffect(() => {
@@ -80,7 +82,7 @@ const ProfilePage = () => {
         );
 
         const avisPresta = res.data.avis.filter(
-          (a) => a.prestataire?._id === prestataireId
+          (a) => a.prestataire?._id === id
         );
 
         setAvis(avisPresta);
@@ -89,8 +91,8 @@ const ProfilePage = () => {
       }
     };
 
-    if (prestataireId) fetchAvis();
-  }, [prestataireId]);
+    if (id) fetchAvis();
+  }, [id]);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -123,7 +125,7 @@ const ProfilePage = () => {
         </div>
         <div className="presta-provider-calendar">
           <h2 className="tittles">Prestations proposées</h2>
-          {prestataire.selectedPrestations.length > 0 ? (
+          {prestataire.selectedPrestations?.length > 0 ? (
             prestataire.selectedPrestations.map((prestation, index) => (
               <div key={index} className="prestation-item">
                 <p>
@@ -133,7 +135,7 @@ const ProfilePage = () => {
                       'Prestation inconnue'}
                   </strong>
                 </p>
-                {prestation.selectedSousPrestations.length > 0 && (
+                {prestation.selectedSousPrestations?.length > 0 && (
                   <ul>
                     {prestation.selectedSousPrestations.map((ssp, idx) => (
                       <li key={idx}>
@@ -199,11 +201,13 @@ const ProfilePage = () => {
                 <div className="review-info">
                   <img
                     src={
-                      a.auteur?.profilePicture || '/images/default-avatar.png'
+                      a.auteur?.profilePicture ||
+                      'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
                     }
                     alt="Client"
                     className="client-image"
                   />
+
                   <div>
                     <h3>{a.auteur?.prenom}</h3>
 
