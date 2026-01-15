@@ -385,10 +385,7 @@ const ProfilPresta = () => {
               >
                 <div className="review-info">
                   <img
-                    src={
-                      item.auteur?.profilePicture ||
-                      'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
-                    }
+                    src={item.auteur?.profilePicture}
                     alt="Client"
                     className="client-image"
                   />
