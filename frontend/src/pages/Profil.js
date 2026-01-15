@@ -17,7 +17,6 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = sessionStorage.getItem('token');
-  const prestataireId = sessionStorage.getItem('prestataireId');
 
   // const [activeTab, setActiveTab] = useState('images');
 
@@ -83,7 +82,7 @@ const ProfilePage = () => {
         );
 
         const avisPresta = res.data.avis.filter(
-          (a) => a.prestataire?._id === prestataireId
+          (a) => a.prestataire?._id === id
         );
 
         setAvis(avisPresta);
@@ -92,8 +91,8 @@ const ProfilePage = () => {
       }
     };
 
-    if (prestataireId) fetchAvis();
-  }, [prestataireId]);
+    if (id) fetchAvis();
+  }, [id]);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -274,7 +273,7 @@ const ProfilePage = () => {
                     await axios.post(
                       `https://gofind-v9ee.onrender.com/api/avis`,
                       {
-                        prestataireId,
+                        id,
                         note,
                         commentaire,
                       },
