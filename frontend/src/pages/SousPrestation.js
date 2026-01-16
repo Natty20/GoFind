@@ -68,6 +68,7 @@ const SousPrestation = () => {
       }
     };
 
+    
     const fetchPrestataires = async (prestataireIds) => {
       // console.log("Envoi des IDs des prestataires à l'API :", prestataireIds);
       if (!prestataireIds || prestataireIds.length === 0) {
