@@ -243,6 +243,8 @@
   bottom: 1rem;
   right: 40px;
   transition: background 0.3s ease;
+  margin: 0;
+  width: auto;
 }
 
 /* RESPONSIVE */

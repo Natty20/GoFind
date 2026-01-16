@@ -204,7 +204,7 @@
   /* Realisation Section */
   .realisation-section {
     max-width: 100%;
-    margin: 0;
+    margin: 2rem;
   }
 
   /* Images Grid */
@@ -278,6 +278,8 @@
   }
   .provider-reviews .review {
     margin: 1rem;
+    padding: 1rem;
+    width: auto;
   }
   .review-info {
     display: flex;
@@ -289,5 +291,8 @@
   }
   .review-info p {
     font-size: 1rem;
+  }
+  .provider-reviews button {
+    margin: 1rem 5rem;
   }
 }
