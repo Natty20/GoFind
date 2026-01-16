@@ -1,24 +1,52 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/Client';
+import Client from '../models/Client.js';
+import Admin from '../models/Admin.js';
+import Prestataire from '../models/Prestataire.js';
 
 const optionalAuthenticateUser = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
+    // 🟢 Visiteur non connecté
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         req.user = null;
         return next();
     }
 
     try {
-        const secret = process.env.JWT_SECRET || 'gofind';
         const token = authHeader.split(' ')[1];
+        const secret = process.env.JWT_SECRET || 'gofind';
         const decoded = jwt.verify(token, secret);
 
-        const user = await User.findById(decoded.id).select('role');
-        req.user = user || null;
+        let user = null;
+        let type = null;
+
+        // 🔍 Recherche dans chaque collection
+        user = await Client.findById(decoded.id).select('role');
+        if (user) type = 'client';
+
+        if (!user) {
+            user = await Admin.findById(decoded.id).select('role');
+            if (user) type = 'admin';
+        }
+
+        if (!user) {
+            user = await Prestataire.findById(decoded.id).select('role');
+            if (user) type = 'prestataire';
+        }
+
+        if (!user) {
+            req.user = null;
+            return next();
+        }
+
+        req.user = {
+            id: user._id,
+            role: user.role,
+            type, // client | admin | prestataire
+        };
 
         next();
-    } catch (err) {
+    } catch (error) {
         req.user = null;
         next();
     }

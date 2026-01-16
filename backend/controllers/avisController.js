@@ -102,8 +102,6 @@ const getAllVisibleAvis = async (req, res) => {
     res.json({ avis });
 };
 
-
-
 const getAvisForPrestataire = async (req, res) => {
     const avis = await Avis.find({ prestataire: req.user.id })
         .populate('auteur', 'nom prenom profilePicture')

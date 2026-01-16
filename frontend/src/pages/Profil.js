@@ -78,9 +78,20 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchAvis = async () => {
+      if (!id) return;
+
+      const token = sessionStorage.getItem('token');
+      const role = sessionStorage.getItem('role');
+
+      const headers = {};
+      if (token && role !== 'prestataire') {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
       try {
         const res = await axios.get(
-          `https://gofind-v9ee.onrender.com/api/avis/public`
+          `https://gofind-v9ee.onrender.com/api/avis/public`,
+          { headers }
         );
 
         const avisPresta = res.data.avis.filter(
@@ -89,11 +100,16 @@ const ProfilePage = () => {
 
         setAvis(avisPresta);
       } catch (err) {
-        setError("Erreur lors du chargement d' avis", err);
+        if (err.response?.status === 403) {
+          // Prestataire connecté → pas d'accès aux avis
+          setAvis([]);
+        } else {
+          setError('Erreur lors du chargement des avis');
+        }
       }
     };
 
-    if (id) fetchAvis();
+    fetchAvis();
   }, [id]);
 
   if (loading) return <p>Chargement...</p>;

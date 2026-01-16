@@ -15,9 +15,8 @@ const {
     authorizePrestataire,
     authorizeAdmin,
 } = require("../middlewares/authMiddleware");
-const {
-    optionalAuthenticateUser
-} = require ("../middlewares/optionalAuthenticateUser")
+const optionalAuthenticateUser = require('../middlewares/optionalAuthenticateUser').default;
+
 
 const router = express.Router();
 
