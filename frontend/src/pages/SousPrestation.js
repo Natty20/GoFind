@@ -92,26 +92,26 @@ const SousPrestation = () => {
       }
     };
 
-    const fetchAutresSousPrestations = async (prestationId) => {
-      if (!prestationId) return;
-      try {
-        const response = await axios.get(
-          `https://gofind-v9ee.onrender.com/api/sousprestations/prestation/${prestationId}`
-        );
+    // const fetchAutresSousPrestations = async (prestationId) => {
+    //   if (!prestationId) return;
+    //   try {
+    //     const response = await axios.get(
+    //       `https://gofind-v9ee.onrender.com/api/sousprestations/prestation/${prestationId}`
+    //     );
 
-        // enlever la sous-prestation actuelle
-        const filteredPrestations = response.data.sousPrestations.filter(
-          (sp) => sp._id !== id
-        );
-        setAutresSousPrestations(filteredPrestations);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(
-          'Erreur lors du chargement des autres sous-prestations',
-          err
-        );
-      }
-    };
+    //     // enlever la sous-prestation actuelle
+    //     const filteredPrestations = response.data.sousPrestations.filter(
+    //       (sp) => sp._id !== id
+    //     );
+    //     setAutresSousPrestations(filteredPrestations);
+    //   } catch (err) {
+    //     // eslint-disable-next-line no-console
+    //     console.error(
+    //       'Erreur lors du chargement des autres sous-prestations',
+    //       err
+    //     );
+    //   }
+    // };
 
     fetchSousPrestation();
   }, [id]);
