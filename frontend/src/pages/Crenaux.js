@@ -18,8 +18,8 @@ function Crenaux() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedHour, setSelectedHour] = useState('');
   const [client, setClient] = useState(null);
+  const [setError] = useState(null);
 
-  // Récupération client depuis sessionStorage
   useEffect(() => {
     const storedClient = JSON.parse(sessionStorage.getItem('client'));
     if (storedClient) setClient(storedClient);

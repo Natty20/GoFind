@@ -3,6 +3,7 @@ import '../styles/Prestataire/ProfilPresta.css';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import axios from 'axios';
 
+import PropTypes from 'prop-types';
 const ProfilPresta = () => {
   const [prestataire, setPrestataire] = useState(null);
   const [loading, setLoading] = useState(true);

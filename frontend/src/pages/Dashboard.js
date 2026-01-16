@@ -49,7 +49,7 @@ const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-
+  const [setError] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);

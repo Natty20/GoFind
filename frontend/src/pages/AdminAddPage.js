@@ -5,6 +5,7 @@ import '../styles/Admin/Add.css';
 import PropTypes from 'prop-types';
 
 const API = 'https://gofind-v9ee.onrender.com/api';
+const [error, setError] = useState(null);
 
 // pour les images
 const uploadImage = async (file) => {
@@ -123,7 +124,7 @@ const AdminAddPage = () => {
   }, [token, admin, navigate]);
 
   return (
-    <main className="adminaddpage">
+    <main className="ad minaddpage">
       <h1 className="tittles">Ajouter : {entity}</h1>
 
       {entity === 'clients' && <ClientForm />}

@@ -5,6 +5,7 @@ import '../styles/Client/Confirmation.css';
 const Confirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [setError] = useState(null);
 
   const {
     prestataire,

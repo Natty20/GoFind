@@ -6,6 +6,7 @@ import '../styles/Client/Success.css';
 const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [setError] = useState(null);
 
   useEffect(() => {
     const sessionId = new URLSearchParams(location.search).get('session_id');

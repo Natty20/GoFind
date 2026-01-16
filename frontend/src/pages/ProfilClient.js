@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCog, FaMapMarkerAlt } from 'react-icons/fa';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import '../styles/Client/ProfilClient.css';
 
 const ClientProfile = () => {
