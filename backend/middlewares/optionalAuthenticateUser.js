@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import Client from '../models/Client.js';
-import Admin from '../models/Admin.js';
-import Prestataire from '../models/Prestataire.js';
+const jwt = require("jsonwebtoken");
+const Client = require ("../models/Client");
+const Admin = require("../models/Admin");
+const Prestataire = require("../models/Prestataire");
 
 const optionalAuthenticateUser = async (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -52,4 +52,4 @@ const optionalAuthenticateUser = async (req, res, next) => {
     }
 };
 
-export default optionalAuthenticateUser;
+module.exports = { optionalAuthenticateUser, };

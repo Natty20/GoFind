@@ -20,9 +20,6 @@ connectDB();
 
 const app = express();
 
-/* =======================
-   SECURITY (HELMET)
-======================= */
 app.use(
   helmet({
     crossOriginEmbedderPolicy: false, // Stripe
@@ -60,12 +57,13 @@ app.use(
 const allowedOrigins = [
   "https://go-find.vercel.app",
   "http://localhost:3000",
+  "https://go-find-mpnrquotj-natty20s-projects.vercel.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // autorise Postman / Render / cron
+      // autorise Postman / Render / cron et phone
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
