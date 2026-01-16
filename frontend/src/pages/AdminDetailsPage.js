@@ -6,7 +6,7 @@ const AdminDetailsPage = () => {
   const { entity, id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [setError] = useState(null);
+  const [, setError] = useState(null);
   const navigate = useNavigate();
 
   // Champs sensibles

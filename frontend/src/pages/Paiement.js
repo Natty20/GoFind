@@ -10,7 +10,7 @@ const stripePromise = loadStripe(
 
 const PaymentPage = () => {
   const location = useLocation();
-  const [setError] = useState(null);
+  const [, setError] = useState(null);
   // const navigate = useNavigate();
   const {
     prestataire,

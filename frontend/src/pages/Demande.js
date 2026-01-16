@@ -24,7 +24,6 @@ const uploadImageToBackend = async (file) => {
 const CityInput = ({ value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState(value || '');
-
   const handleInputChange = async (e) => {
     const val = e.target.value;
     setQuery(val);

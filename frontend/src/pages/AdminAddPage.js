@@ -5,7 +5,6 @@ import '../styles/Admin/Add.css';
 import PropTypes from 'prop-types';
 
 const API = 'https://gofind-v9ee.onrender.com/api';
-const [error, setError] = useState(null);
 
 // pour les images
 const uploadImage = async (file) => {
@@ -25,6 +24,7 @@ const uploadImage = async (file) => {
 const CityInput = ({ value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState(value || '');
+  const [setError] = useState(null);
 
   const handleInputChange = async (e) => {
     const val = e.target.value;
@@ -147,6 +147,7 @@ const ClientForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
   const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
+  const [, setError] = useState(null);
 
   const [data, setData] = useState({
     nom: '',
@@ -244,6 +245,7 @@ const AdminForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
   const axiosConfig = { headers: { Authorization: `Bearer ${token}` } };
+  const [, setError] = useState(null);
 
   const [data, setData] = useState({
     nom: '',
@@ -308,6 +310,7 @@ const PrestataireForm = () => {
 
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState([]);
+  const [error, setError] = useState(null);
 
   const [data, setData] = useState({
     nom: '',
@@ -765,6 +768,7 @@ const ReservationForm = () => {
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState([]);
   const [prestataires, setPrestataires] = useState([]);
+  const [, setError] = useState(null);
 
   const [data, setData] = useState({
     client: '',
