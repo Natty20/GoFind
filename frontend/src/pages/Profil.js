@@ -89,7 +89,7 @@ const ProfilePage = () => {
 
         setAvis(avisPresta);
       } catch (err) {
-        console.error('Erreur chargement avis', err);
+        setError("Erreur lors du chargement d' avis", err);
       }
     };
 
@@ -101,7 +101,7 @@ const ProfilePage = () => {
   if (!prestataire) return <p className="error">Prestataire non trouvé.</p>;
 
   return (
-    <div className="profile-page">
+    <main className="profile-page">
       <section className="provider-details">
         <div className="details">
           <img
@@ -172,7 +172,7 @@ const ProfilePage = () => {
 
       {/* Section Réalisations - uniquement images */}
       {prestataire?.realisations?.length > 0 && (
-        <div className="realisation-section">
+        <section className="realisation-section">
           <h4 className="tittles">Réalisations</h4>
           <div className="images-grid">
             {prestataire.realisations.map((imgUrl, index) => (
@@ -184,12 +184,12 @@ const ProfilePage = () => {
               />
             ))}
           </div>
-        </div>
+        </section>
       )}
       {/* sections des avis de prestataire */}
       {prestataire && isPrestataire && (
         <section className="clients-avis">
-          <main className="provider-reviews">
+          <div className="provider-reviews">
             <h5 className="tittles">Avis des Clients</h5>
 
             {avis.length === 0 && (
@@ -197,7 +197,7 @@ const ProfilePage = () => {
             )}
 
             {avis.map((a) => (
-              <section className="review" key={a._id}>
+              <article className="review" key={a._id}>
                 <span>{new Date(a.createdAt).toLocaleDateString()}</span>
 
                 <div className="review-info">
@@ -228,7 +228,7 @@ const ProfilePage = () => {
                 </div>
 
                 <p>{a.commentaire}</p>
-              </section>
+              </article>
             ))}
 
             {/* BOUTON AJOUT AVIS */}
@@ -250,7 +250,7 @@ const ProfilePage = () => {
                 prestataire.
               </h1>
             )}
-          </main>
+          </div>
         </section>
       )}
       {showAvisForm && (
@@ -317,7 +317,7 @@ const ProfilePage = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 

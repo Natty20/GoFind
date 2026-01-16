@@ -14,8 +14,8 @@ const AdminEditPage = () => {
   const [loading, setLoading] = useState(true);
   const [originalDate, setOriginalDate] = useState(null);
 
-  const [allPrestations, setAllPrestations] = useState([]);
-  const [allSousPrestations, setAllSousPrestations] = useState([]);
+  const [, setAllPrestations] = useState([]);
+  const [, setAllSousPrestations] = useState([]);
 
   const token = sessionStorage.getItem('token');
 
@@ -226,7 +226,7 @@ const AdminEditPage = () => {
   if (loading) return <p>Chargement...</p>;
 
   return (
-    <section className="admineditpage">
+    <main className="admineditpage">
       <h1 className="tittles">Modifier {entity}</h1>
 
       <form onSubmit={handleSubmit}>
@@ -398,7 +398,7 @@ const AdminEditPage = () => {
           </button>
         </div>
       </form>
-    </section>
+    </main>
   );
 };
 

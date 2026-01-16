@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/All/Login.css';
 
@@ -33,14 +33,14 @@ function LoginForm() {
 
       navigate(from, { replace: true });
     } catch (error) {
-      setError('Email ou mot de passe incorrect.');
-      console.error('Erreur de connexion :', error);
+      setError('Email ou mot de passe sont incorrect.');
+      // console.error('Erreur de connexion :', error);
     }
   };
 
   return (
     <main className="login-page">
-      <div className="login-left-panel">
+      <section className="login-left-panel">
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
@@ -89,9 +89,9 @@ function LoginForm() {
             S&#39;inscrire
           </button>
         </div>
-      </div>
+      </section>
 
-      <div className="login-right-panel">
+      <section className="login-right-panel">
         <h2>Nous sommes plus qu’une simple entreprise</h2>
         <p>
           Nous construisons des relations durables basées sur la confiance,
@@ -99,7 +99,7 @@ function LoginForm() {
           service : nous créons de la valeur pour chaque personne que nous
           accompagnons.
         </p>
-      </div>
+      </section>
     </main>
   );
 }

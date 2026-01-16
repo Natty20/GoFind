@@ -8,7 +8,7 @@ const menuItems = [
   { name: 'clients', icon: <Users size={20} />, endpoint: '/auth/clients' },
   {
     name: 'prestataires',
-    icon: <Package size={20} />,
+    icon: <Users size={20} />,
     endpoint: '/prestataires',
   },
 
@@ -27,6 +27,11 @@ const menuItems = [
     icon: <Package size={20} />,
     endpoint: '/all',
   },
+  {
+    name: 'avis',
+    icon: <Package size={20} />,
+    endpoint: '/public',
+  },
 ];
 
 const entityToEndpoint = {
@@ -36,6 +41,7 @@ const entityToEndpoint = {
   sousprestations: 'sousprestations',
   prestataires: 'prestataires',
   reservations: 'reservations',
+  avis: 'public',
 };
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -49,7 +55,7 @@ const Dashboard = () => {
       setLoading(true);
       const activeItem = menuItems.find((item) => item.name === activeTab);
       if (!activeItem) {
-        console.error('❌ Onglet actif non trouvé !');
+        setError('❌ Onglet actif non trouvé !');
         return;
       }
 
@@ -61,13 +67,13 @@ const Dashboard = () => {
       const token = sessionStorage.getItem('token');
 
       if (!token) {
-        console.error('❌ Aucun token trouvé dans sessionStorage');
+        setError('❌ Aucun token trouvé dans sessionStorage');
         setLoading(false);
         return;
       }
 
       try {
-        console.log('🔐 Token utilisé:', token);
+        // console.log('🔐 Token utilisé:', token);
 
         const response = await fetch(apiUrl, {
           method: 'GET',
@@ -104,7 +110,7 @@ const Dashboard = () => {
           setData(arrayKey ? result[arrayKey] : []);
         }
       } catch (error) {
-        console.error('❌ Erreur de récupération :', error);
+        setError('❌ Erreur lors de la récupération :', error);
         setData([]);
       } finally {
         setLoading(false);
@@ -145,14 +151,14 @@ const Dashboard = () => {
 
       setRefresh(!refresh);
     } catch (error) {
-      console.error('❌ Erreur lors de la suppression :', error);
-      alert('Erreur lors de la suppression.');
+      setError(' Erreur lors de la suppression :', error);
+      alert('❌ Erreur lors de la suppression.');
     }
   };
 
   return (
-    <div className="dashboard-container">
-      <div className="sidebar">
+    <main className="dashboard-container">
+      <section className="sidebar">
         <Home size={20} />
         <h1 className="sidebar-title">Tableau de bord</h1>
         <ul className="menu-list">
@@ -166,10 +172,10 @@ const Dashboard = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </section>
 
       {/* --- ze main Content --- */}
-      <div className="main-content">
+      <section className="main-content">
         <div className="content-card">
           <div className="content-header">
             <h2 className="content-title">{activeTab}</h2>
@@ -307,6 +313,25 @@ const Dashboard = () => {
                             <strong>Email :</strong> {item.email}
                           </span>
                         </>
+                      ) : activeTab === 'avis' ? (
+                        <>
+                          <span>
+                            <strong>Nom:</strong> {item.nom}
+                          </span>
+                          <span>
+                            <strong>Prenom :</strong> {item.prenom}
+                          </span>
+                          <span>
+                            <strong>Prestataire :</strong>{' '}
+                            {item.prestataire?.nom}
+                          </span>
+                          <span>
+                            <strong>Commentaire :</strong> {item.commentaire}
+                          </span>
+                          <span>
+                            <strong>Etat :</strong> {item.visisble}
+                          </span>
+                        </>
                       ) : (
                         <span>{JSON.stringify(item, null, 2)}</span>
                       )}
@@ -344,8 +369,8 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 export default Dashboard;

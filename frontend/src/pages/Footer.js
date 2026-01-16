@@ -11,7 +11,7 @@ import {
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="footer-container">
+      <section className="footer-container">
         <div className="footer-links">
           <Link to="/apropos">À propos</Link>
           <Link to="/prestation">Prestations</Link>
@@ -38,7 +38,7 @@ const Footer = () => {
         <div className="footer-copyright">
           <p>&copy; 2025 GoFind. Tous droits réservés.</p>
         </div>
-      </div>
+      </section>
     </footer>
   );
 };

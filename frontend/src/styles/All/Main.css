@@ -1,7 +1,6 @@
 /* css global — Styles généraux pour toute l’application */
 
 :root {
-  /* ✅ Couleurs de ta charte */
   --main-color: #d9534f;
   --secondary-color: #f3dbdd;
   --primary-text-color: black;

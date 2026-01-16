@@ -7,7 +7,7 @@ const ProfilPresta = () => {
   const [prestataire, setPrestataire] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [allPrestations, setAllPrestations] = useState([]);
+  const [, setAllPrestations] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
@@ -55,7 +55,7 @@ const ProfilPresta = () => {
         );
         setAvis(res.data.avis);
       } catch (err) {
-        console.error('Erreur chargement avis', err);
+        setError('Erreur chargement avis', err);
       } finally {
         setAvisLoading(false);
       }
@@ -78,7 +78,7 @@ const ProfilPresta = () => {
         prevAvis.map((a) => (a._id === avisId ? res.data.avis : a))
       );
     } catch (err) {
-      console.error('Erreur visibilité avis', err);
+      setError('Erreur visibilité avis', err);
       alert("❌ Impossible de modifier la visibilité de l'avis");
     }
   };
@@ -131,6 +131,7 @@ const ProfilPresta = () => {
       setFile(null);
       alert('✅ Réalisation ajoutée avec succès !');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(
         "Erreur lors de l'ajout de la réalisation :",
         err.response?.data || err
@@ -154,6 +155,7 @@ const ProfilPresta = () => {
       setPrestataire(res.data.prestataire);
       alert('✅ Réalisation supprimée !');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(
         'Erreur lors de la suppression :',
         err.response?.data || err
@@ -191,9 +193,90 @@ const ProfilPresta = () => {
       setIsEditing(false);
       alert('✅ Profil mis à jour !');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.response?.data || err);
       alert('❌ Impossible de mettre à jour le profil.');
     }
+  };
+  const CityInput = ({ value, onChange }) => {
+    const [suggestions, setSuggestions] = useState([]);
+    const [query, setQuery] = useState(value || '');
+
+    const handleInputChange = async (e) => {
+      const val = e.target.value;
+      setQuery(val);
+      onChange(val);
+
+      if (val.length < 2) {
+        setSuggestions([]);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+        );
+        const data = await res.json();
+        setSuggestions(data.features.map((f) => f.properties.city));
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Erreur autocomplete villes', err);
+      }
+    };
+
+    const handleSelect = (city) => {
+      setQuery(city);
+      onChange(city);
+      setSuggestions([]);
+    };
+
+    return (
+      <div style={{ position: 'relative' }}>
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Choisissez votre ville"
+          required
+          style={{ width: '100%', padding: '8px' }}
+        />
+        {suggestions.length > 0 && (
+          <ul
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              background: 'white',
+              border: '1px solid #ccc',
+              maxHeight: '150px',
+              overflowY: 'auto',
+              zIndex: 10,
+              margin: 0,
+              padding: 0,
+              listStyle: 'none',
+            }}
+          >
+            {suggestions.map((city, i) => (
+              <li
+                key={i}
+                onClick={() => handleSelect(city)}
+                style={{ padding: '8px', cursor: 'pointer' }}
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                {city}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  };
+
+  // Définition des props attendues
+  CityInput.propTypes = {
+    value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
   };
 
   if (loading) return <p>Chargement des informations...</p>;
@@ -274,12 +357,13 @@ const ProfilPresta = () => {
                 onChange={handleInputChange}
                 placeholder="Téléphone"
               />
-              <input
+              <CityInput
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
                 placeholder="Adresse"
               />
+              <input />
               <textarea
                 name="description"
                 value={formData.description || ''}
@@ -330,7 +414,7 @@ const ProfilPresta = () => {
         </section>
       )}
 
-      <div className="realisations-container">
+      <section className="realisations-container">
         <h3 className="tittles">Mes Réalisations</h3>
 
         {/* Upload d'une nouvelle réalisation */}
@@ -367,10 +451,10 @@ const ProfilPresta = () => {
         ) : (
           <p>Aucune réalisation pour le moment.</p>
         )}
-      </div>
+      </section>
 
       <section className="clients-avis">
-        <main className="provider-reviews">
+        <div className="provider-reviews">
           <h2 className="tittles">Avis des clients</h2>
 
           {avisLoading ? (
@@ -379,7 +463,7 @@ const ProfilPresta = () => {
             <p>Aucun avis pour le moment.</p>
           ) : (
             avis.map((item) => (
-              <section
+              <article
                 key={item._id}
                 className={`review ${!item.visible ? 'review-hidden' : ''}`}
               >
@@ -410,10 +494,10 @@ const ProfilPresta = () => {
                 >
                   {item.visible ? 'Masquer' : 'Rendre visible'}
                 </button>
-              </section>
+              </article>
             ))
           )}
-        </main>
+        </div>
       </section>
     </main>
   );

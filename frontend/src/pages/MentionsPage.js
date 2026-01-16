@@ -5,7 +5,7 @@ import '../styles/All/Mention.css';
 
 const MentionsLegales = () => {
   return (
-    <div className="mentions-page">
+    <main className="mentions-page">
       <Helmet>
         <title>Mentions Légales - GoFind</title>
         <meta
@@ -22,8 +22,8 @@ const MentionsLegales = () => {
           sens des articles 1123 et suivants du Code civil, ou personne morale,
           qui visite le Site objet des présentes conditions générales.
           <b>Prestations et Services :</b>{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          met à disposition des Clients :
+          <a href="https://go-find.vercel.app/">GoFind</a> met à disposition des
+          Clients :
         </p>
         <p>
           <b>Contenu :</b> Ensemble des éléments constituants l&apos;information
@@ -33,9 +33,9 @@ const MentionsLegales = () => {
           <b>Informations clients :</b> Ci après dénommé « Information (s) » qui
           correspondent à l&apos;ensemble des données personnelles susceptibles
           d&apos;être détenues par{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          pour la gestion de votre compte, de la gestion de la relation client
-          et à des fins d&apos;analyses et de statistiques.
+          <a href="https://go-find.vercel.app/">GoFind</a> pour la gestion de
+          votre compte, de la gestion de la relation client et à des fins
+          d&apos;analyses et de statistiques.
         </p>
         <p>
           <b>Utilisateur :</b> Internaute se connectant, utilisant le site
@@ -60,9 +60,9 @@ const MentionsLegales = () => {
           En vertu de l&lsquo;article 6 de la loi n° 2004-575 du 21 juin 2004
           pour la confiance dans l&lsquo;économie numérique, il est précisé aux
           utilisateurs du site internet{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          l&lsquo;identité des différents intervenants dans le cadre de sa
-          réalisation et de son suivi:
+          <a href="https://go-find.vercel.app/">GoFind</a> l&lsquo;identité des
+          différents intervenants dans le cadre de sa réalisation et de son
+          suivi:
         </p>
         <p>
           <strong>Forme juridique :</strong> Auto-entrepreneur
@@ -105,31 +105,23 @@ const MentionsLegales = () => {
         </p>
         <p>
           {' '}
-          L&apos;utilisation du site{' '}
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          implique l’acceptation pleine et entière des conditions générales
-          d&apos;utilisation ci-après décrites. Ces conditions
-          d&apos;utilisation sont susceptibles d&apos;être modifiées ou
-          complétées à tout moment, les utilisateurs du site{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>
+          L&apos;utilisation du site GoFind implique l’acceptation pleine et
+          entière des conditions générales d&apos;utilisation ci-après décrites.
+          Ces conditions d&apos;utilisation sont susceptibles d&apos;être
+          modifiées ou complétées à tout moment, les utilisateurs du site GoFind
           sont donc invités à les consulter de manière régulière.
         </p>
         <p>
           Ce site internet est normalement accessible à tout moment
           auxutilisateurs. Une interruption pour raison de maintenance technique
-          peut être toutefois décidée par{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>,
-          qui s&apos;efforcera alors de communiquer préalablement aux
-          utilisateurs les dates et heures de l&apos;intervention. Le site web{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          est mis à jour régulièrement par{' '}
-          <a href="https://go-find.vercel.app/"> https://go-find.vercel.app/</a>{' '}
-          responsable. De la même façon, les mentions légales peuvent être
-          modifiées à tout moment : elles s&apos;imposent néanmoins à
-          l&apos;utilisateur qui est invité à s&apos;y référer le plus souvent
-          possible afin d&apos;en prendre connaissance.
+          peut être toutefois décidée par https://go-find.vercel.app/, qui
+          s&apos;efforcera alors de communiquer préalablement aux utilisateurs
+          les dates et heures de l&apos;intervention. Le site web GoFind est mis
+          à jour régulièrement par GoFind responsable. De la même façon, les
+          mentions légales peuvent être modifiées à tout moment : elles
+          s&apos;imposent néanmoins à l&apos;utilisateur qui est invité à
+          s&apos;y référer le plus souvent possible afin d&apos;en prendre
+          connaissance.
         </p>
         <h2>3️⃣ Description des services fournis.</h2>
         <p>
@@ -146,35 +138,20 @@ const MentionsLegales = () => {
           entre GoFind et les prestataires.
         </p>
         <p>
-          Le site internet{' '}
-          <a href="https://go-find.vercel.app/">
-            {' '}
-            https://go-find.vercel.app/{' '}
-          </a>{' '}
-          a pour objet de fournir une information concernant l&apos;ensemble des
-          activités de la société.
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          s&apos;efforce de fournir sur le site{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          des informations aussi précises que possible. Toutefois, il ne pourra
-          être tenu responsable des oublis, des inexactitudes et des carences
-          dans la mise à jour, qu&apos;elles soient de son fait ou du fait des
-          tiers partenaires qui lui fournissent ces informations.
+          Le site internet <a href="https://go-find.vercel.app/"> GoFind </a> a
+          pour objet de fournir une information concernant l&apos;ensemble des
+          activités de la société. GoFind s&apos;efforce de fournir sur le site{' '}
+          GoFind des informations aussi précises que possible. Toutefois, il ne
+          pourra être tenu responsable des oublis, des inexactitudes et des
+          carences dans la mise à jour, qu&apos;elles soient de son fait ou du
+          fait des tiers partenaires qui lui fournissent ces informations.
         </p>
         <p>
-          Toutes les informations indiquées sur le site
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          sont données à titre indicatif, et sont susceptibles d&apos;évoluer.
-          Par ailleurs, les renseignements figurant sur le site
-          <a href="https://go-find.vercel.app/">
-            https://go-find.vercel.app/
-          </a>{' '}
-          ne sont pas exhaustifs. Ils sont donnés sous réserve de modifications
-          ayant été apportées depuis leur mise en ligne.
+          Toutes les informations indiquées sur le site GoFind sont données à
+          titre indicatif, et sont susceptibles d&apos;évoluer. Par ailleurs,
+          les renseignements figurant sur le site GoFind ne sont pas exhaustifs.
+          Ils sont donnés sous réserve de modifications ayant été apportées
+          depuis leur mise en ligne.
         </p>
         <p>
           L&apos;ensemble du contenu présent sur le site GoFind (textes, images,
@@ -192,10 +169,10 @@ const MentionsLegales = () => {
           du site. De plus, l&apos;utilisateur du site s&apos;engage à accéder
           au site en utilisant un matériel récent, ne contenant pas de virus et
           avec un navigateur de dernière génération mis-à-jour Le site{' '}
-          <a href="https://go-find.vercel.app/">https://go-find.vercel.app/</a>{' '}
-          est hébergé chez un prestataire sur le territoire de l&apos;Union
-          Européenne conformément aux dispositions du Règlement Général sur la
-          Protection des Données (RGPD : n° 2016-679)
+          <a href="https://go-find.vercel.app/">GoFind</a> est hébergé chez un
+          prestataire sur le territoire de l&apos;Union Européenne conformément
+          aux dispositions du Règlement Général sur la Protection des Données
+          (RGPD : n° 2016-679)
         </p>
         <p>
           L&apos;objectif est d&apos;apporter une prestation qui assure le
@@ -488,7 +465,7 @@ const MentionsLegales = () => {
         </p>
         <p>France – Disponible partout 🌍</p>
       </section>
-    </div>
+    </main>
   );
 };
 

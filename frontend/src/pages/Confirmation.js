@@ -42,9 +42,7 @@ const Confirmation = () => {
       setSelectedPrestations(formattedPrestations);
       // console.log('📦 Prestations sélectionnées :', formattedPrestations);
     } else {
-      console.warn(
-        'Aucune prestation sélectionnée ou prestataire inexistant !'
-      );
+      setError('Aucune prestation sélectionnée ou prestataire inexistant !');
     }
   }, [prestataire, prestations, sousPrestations]);
 

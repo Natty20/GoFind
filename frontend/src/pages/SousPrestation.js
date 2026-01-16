@@ -61,6 +61,7 @@ const SousPrestation = () => {
 
         setAutresSousPrestations(autres);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error('Erreur lors du chargement de la sous-prestation :', err);
         setError('Erreur lors du chargement de la sous-prestation.');
       } finally {
@@ -71,6 +72,7 @@ const SousPrestation = () => {
     const fetchPrestataires = async (prestataireIds) => {
       // console.log("Envoi des IDs des prestataires à l'API :", prestataireIds);
       if (!prestataireIds || prestataireIds.length === 0) {
+        // eslint-disable-next-line no-console
         console.log('aucun id de prestataire reçu!');
         return;
       }
@@ -84,6 +86,7 @@ const SousPrestation = () => {
         );
         setPrestataires(response.data.prestataires);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error('Erreur lors du chargement de prestataires', err);
         setPrestataires([]);
       }
@@ -102,6 +105,7 @@ const SousPrestation = () => {
         );
         setAutresSousPrestations(filteredPrestations);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(
           'Erreur lors du chargement des autres sous-prestations',
           err
@@ -127,7 +131,7 @@ const SousPrestation = () => {
     return <p className="error">Sous-prestation non trouvée.</p>;
 
   return (
-    <div className="SousPrestation-page">
+    <main className="SousPrestation-page">
       <Helmet>
         <title>
           {' '}
@@ -212,7 +216,7 @@ const SousPrestation = () => {
           )}
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

@@ -47,7 +47,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-page">
+    <main className="contact-page">
       <Helmet>
         <title>Contact - GoFind</title>
         <meta
@@ -112,7 +112,7 @@ const Contact = () => {
           {notice && <p className="notice">{notice}</p>}
         </form>
       </section>
-    </div>
+    </main>
   );
 };
 

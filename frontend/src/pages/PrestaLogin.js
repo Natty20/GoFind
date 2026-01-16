@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import '../styles/All/Login.css';
 
@@ -37,14 +37,14 @@ function PrestaLogin() {
 
       navigate(`/reservations`);
     } catch (error) {
-      console.error(error);
-      setError('Email ou mot de passe incorrect.');
+      // console.error(error);
+      setError('Email ou mot de passe sont incorrect.');
     }
   };
 
   return (
     <main className="login-page">
-      <div className="login-left-panel">
+      <section className="login-left-panel">
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
@@ -93,9 +93,9 @@ function PrestaLogin() {
             S&#39;inscrire
           </button>
         </div>
-      </div>
+      </section>
 
-      <div className="login-right-panel">
+      <section className="login-right-panel">
         <div>
           <h2>Nous sommes plus qu’une simple entreprise</h2>
           <p>
@@ -105,7 +105,7 @@ function PrestaLogin() {
             accompagnons.
           </p>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -42,7 +42,7 @@ const PaymentPage = () => {
       const stripe = await stripePromise;
       await stripe.redirectToCheckout({ sessionId: data.id });
     } catch (err) {
-      console.error('Erreur paiement complète:', err.response || err);
+      setError('Erreur lors du paiement complète:', err.response || err);
       alert(err.response?.data?.message || 'Erreur lors du paiement');
       setLoading(false);
     }
@@ -50,7 +50,7 @@ const PaymentPage = () => {
 
   return (
     <main className="payment-page">
-      <div className="payment-container">
+      <section className="payment-container">
         <h1 className="note">
           Pour Confirme votre rendez-vous, vous devez payer une acompte qui ne
           sera pas remboursé une fois la réservation annulé
@@ -65,7 +65,7 @@ const PaymentPage = () => {
         >
           {loading ? 'Paiement en cours...' : 'Payer avec Stripe'}
         </button>
-      </div>
+      </section>
     </main>
   );
 };

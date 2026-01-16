@@ -37,7 +37,7 @@ function AdminLogin() {
 
   return (
     <main className="login-page">
-      <div className="login-left-panel">
+      <section className="login-left-panel">
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
@@ -79,9 +79,9 @@ function AdminLogin() {
             compte!
           </p>
         </div>
-      </div>
+      </section>
 
-      <div className="login-right-panel">
+      <section className="login-right-panel">
         <h2>Nous sommes plus qu’une simple entreprise</h2>
         <p>
           Nous construisons des relations durables basées sur la confiance,
@@ -89,7 +89,7 @@ function AdminLogin() {
           service : nous créons de la valeur pour chaque personne que nous
           accompagnons.
         </p>
-      </div>
+      </section>
     </main>
   );
 }

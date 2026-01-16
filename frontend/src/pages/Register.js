@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import PropTypes from 'prop-types';
@@ -42,6 +42,7 @@ const CityInput = ({ value, onChange }) => {
       const data = await res.json();
       setSuggestions(data.features.map((f) => f.properties.city));
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Erreur autocomplete villes', err);
     }
   };
@@ -95,7 +96,7 @@ const CityInput = ({ value, onChange }) => {
   );
 };
 
-// 🔹 Définition des props attendues
+// Définition des props attendues
 CityInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
@@ -166,6 +167,7 @@ function Register() {
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       setError(err.response?.data?.message || "Erreur lors de l'inscription.");
     }
@@ -173,7 +175,7 @@ function Register() {
 
   return (
     <main className="register-page">
-      <div className="register-left-panel">
+      <section className="register-left-panel">
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
@@ -194,6 +196,7 @@ function Register() {
             id="nom"
             type="text"
             name="nom"
+            placeholder="Votre Nom"
             value={formData.nom}
             onChange={handleChange}
             required
@@ -204,6 +207,7 @@ function Register() {
             id="prenom"
             type="text"
             name="prenom"
+            placeholder="Votre Prénom"
             value={formData.prenom}
             onChange={handleChange}
             required
@@ -214,6 +218,7 @@ function Register() {
             id="phone"
             type="tel"
             name="phone"
+            placeholder="Votre Numéro 06XXX - 07xxx"
             pattern="^(06|07)[0-9]{8}$"
             value={formData.phone}
             onChange={handleChange}
@@ -248,6 +253,7 @@ function Register() {
             id="email"
             type="email"
             name="email"
+            placeholder="Votre Email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -258,6 +264,7 @@ function Register() {
             id="mdp"
             type="password"
             name="password"
+            placeholder="Choisissez un mot de passe"
             value={formData.password}
             onChange={handleChange}
             required
@@ -268,6 +275,7 @@ function Register() {
             id="mdp-confirmer"
             type="password"
             name="confirmPassword"
+            placeholder="Confirmer votre mot de passe"
             value={formData.confirmPassword}
             onChange={handleChange}
             required
@@ -277,9 +285,9 @@ function Register() {
             Devenir Client
           </button>
         </form>
-      </div>
+      </section>
 
-      <div className="register-right-panel">
+      <section className="register-right-panel">
         <div className="about">
           <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
@@ -288,7 +296,7 @@ function Register() {
             prestataires de confiance afin de simplifier votre quotidien.
           </p>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 .homepage {
-  margin: 5rem 0 0 0;
+  margin: 2rem 0 0 0;
   font-family: var(--paragraph-font);
 }
 
@@ -25,7 +25,7 @@ h3 {
   display: block;
 }
 
-.gofind-presentation h2 {
+.gofind-presentation h1 {
   font-size: 1.5rem;
   /* color: var(--main-color);
   margin: 0; */
@@ -35,22 +35,6 @@ h3 {
   margin: 1rem auto;
   max-width: 90%;
 }
-
-/* .gofind-presentation .cta-button {
-  background-color: black;
-  color: white;
-  border: 1px solid var(--main-color);
-  border-radius: 30px;
-  padding: 1rem 2rem;
-  cursor: pointer;
-  margin: 1rem;
-}
-
-.cta-button:hover {
-  background-color: var(--secondary-color);
-  color: var(--main-color);
-  border: none;
-} */
 
 .category {
   margin: 1rem auto;
@@ -311,7 +295,7 @@ h3 {
     margin: 0.5rem auto;
   }
 
-  .gofind-presentation h2 {
+  .gofind-presentation h1 {
     font-size: 1.15rem;
     text-transform: uppercase;
   }

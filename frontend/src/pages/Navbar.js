@@ -64,83 +64,85 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        {/* Logo */}
-        <div className="navbar-logo">
-          <Link to="/" onClick={closeMenu}>
-            <img src="/images/GF-logo.png" alt="GoFind" />
-          </Link>
-        </div>
+    <main className="navbar">
+      <nav aria-label="Navigation principale">
+        <section className="navbar-container">
+          {/* Logo */}
+          <div className="navbar-logo">
+            <Link to="/" onClick={closeMenu}>
+              <img src="/images/GF-logo.png" alt="GoFind" />
+            </Link>
+          </div>
 
-        {/* Hamburger */}
-        <div
-          className={`hamburger ${menuOpen ? 'active' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span />
-          <span />
-          <span />
-        </div>
+          {/* Hamburger */}
+          <div
+            className={`hamburger ${menuOpen ? 'active' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span />
+            <span />
+            <span />
+          </div>
 
-        {/* Desktop left */}
-        <div className="navbar-left">{renderRoleLinks()}</div>
+          {/* Desktop left */}
+          <div className="navbar-left">{renderRoleLinks()}</div>
 
-        {/* Desktop right */}
-        <div className="navbar-right">
-          {/* Prestations visible pour TOUS */}
+          {/* Desktop right */}
+          <div className="navbar-right">
+            {/* Prestations visible pour TOUS */}
+            <Link to="/prestation" onClick={closeMenu}>
+              Prestations
+            </Link>
+
+            {user ? (
+              <div className="dropdown">
+                <button
+                  className="dropbtn"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  <Users size={18} /> {user.nom}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="dropdown-content show">
+                    <Link to="/mon-profil" onClick={closeMenu}>
+                      Mon profil
+                    </Link>
+                    <button onClick={handleLogout}>Déconnexion</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/choix_compte" onClick={closeMenu}>
+                Compte
+              </Link>
+            )}
+          </div>
+        </section>
+
+        {/* ✅ MOBILE MENU (toujours rendu) */}
+        <section className={`navbar-mobile-links ${menuOpen ? 'active' : ''}`}>
+          {renderRoleLinks()}
+
           <Link to="/prestation" onClick={closeMenu}>
             Prestations
           </Link>
 
           {user ? (
-            <div className="dropdown">
-              <button
-                className="dropbtn"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <Users size={18} /> {user.nom}
-              </button>
-
-              {dropdownOpen && (
-                <div className="dropdown-content show">
-                  <Link to="/mon-profil" onClick={closeMenu}>
-                    Mon profil
-                  </Link>
-                  <button onClick={handleLogout}>Déconnexion</button>
-                </div>
-              )}
-            </div>
+            <>
+              <Link to="/mon-profil" onClick={closeMenu}>
+                Mon profil
+              </Link>
+              <button onClick={handleLogout}>Déconnexion</button>
+            </>
           ) : (
             <Link to="/choix_compte" onClick={closeMenu}>
               Compte
             </Link>
           )}
-        </div>
-      </div>
-
-      {/* ✅ MOBILE MENU (toujours rendu) */}
-      <div className={`navbar-mobile-links ${menuOpen ? 'active' : ''}`}>
-        {renderRoleLinks()}
-
-        <Link to="/prestation" onClick={closeMenu}>
-          Prestations
-        </Link>
-
-        {user ? (
-          <>
-            <Link to="/mon-profil" onClick={closeMenu}>
-              Mon profil
-            </Link>
-            <button onClick={handleLogout}>Déconnexion</button>
-          </>
-        ) : (
-          <Link to="/choix_compte" onClick={closeMenu}>
-            Compte
-          </Link>
-        )}
-      </div>
-    </nav>
+        </section>
+      </nav>
+    </main>
   );
 };
 

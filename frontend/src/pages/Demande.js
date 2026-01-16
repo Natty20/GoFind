@@ -77,7 +77,7 @@ const ProfilPresta = () => {
       setFile(null);
       alert('✅ Réalisation ajoutée avec succès !');
     } catch (err) {
-      console.error(
+      setError(
         "Erreur lors de l'ajout de la réalisation :",
         err.response?.data || err
       );
@@ -96,10 +96,7 @@ const ProfilPresta = () => {
       setPrestataire(res.data.prestataire);
       alert('✅ Réalisation supprimée !');
     } catch (err) {
-      console.error(
-        'Erreur lors de la suppression :',
-        err.response?.data || err
-      );
+      setError('Erreur lors de la suppression :', err.response?.data || err);
       alert('❌ Impossible de supprimer la réalisation.');
     }
   };

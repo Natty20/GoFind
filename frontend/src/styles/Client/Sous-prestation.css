@@ -1,5 +1,5 @@
 .SousPrestation-page {
-  margin: 5rem 0 0 0;
+  margin: 2rem 0 0 0;
   /* padding: 20px; */
 }
 
@@ -23,11 +23,6 @@
   text-align: center;
   /* margin-top: -10rem; */
 }
-
-/* .text-container h1 {
-  font-size: 1.5rem;
-  color: var(--main-color);
-} */
 
 .text-container p {
   font-family: var(--paragraph-font);

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import '../styles/Client/HomePage.css';
@@ -27,7 +26,7 @@ const HomePage = () => {
         const data = await response.json();
         setPrestations(Array.isArray(data) ? data : data.prestations || []);
       } catch (err) {
-        console.error('❌ Erreur chargement prestations :', err);
+        // console.error('❌ Erreur chargement prestations :', err);
         setError('Erreur lors du chargement des prestations.');
       } finally {
         setLoading(false);
@@ -53,7 +52,7 @@ const HomePage = () => {
   );
 
   return (
-    <div className="homepage">
+    <main className="homepage">
       <Helmet>
         <title>GoFind - Trouvez et Réservez les Meilleurs Prestataires</title>
         <meta
@@ -70,7 +69,7 @@ const HomePage = () => {
           src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
           alt="GoFind - Plateforme de mise en relation entre clients et prestataires"
         />
-        <h2 className="tittles">Simplifiez votre quotidien grâce à GoFind</h2>
+        <h1 className="tittles">Simplifiez votre quotidien grâce à GoFind</h1>
         <p>
           La plateforme qui connecte clients et prestataires qualifiés. Avec
           plus de 20 millions de comptes professionnels sur les réseaux sociaux,
@@ -109,7 +108,7 @@ const HomePage = () => {
       ))}
 
       {/* Artisanat & Photographie en bas avec alternance droite/gauche */}
-      <div className="artisanat-photographie-container">
+      <section className="artisanat-photographie-container">
         {categoriesBottom.map((presta, index) => {
           const isEven = index % 2 === 0;
           return (
@@ -180,7 +179,7 @@ const HomePage = () => {
             </section>
           );
         })}
-      </div>
+      </section>
 
       {/* Section 6: Comment ça marche */}
       <section className="how-it-works">
@@ -242,7 +241,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

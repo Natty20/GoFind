@@ -23,8 +23,8 @@ const Prestation = () => {
           : response.data.prestations || [];
         setPrestations(data);
       } catch (error) {
-        console.error('❌ Erreur chargement prestations :', error);
-        setError('Erreur chargement prestations.');
+        // console.error('❌ Erreur chargement prestations :', error);
+        setError('Erreur lors du chargement des prestations.');
       }
     };
 
@@ -40,8 +40,7 @@ const Prestation = () => {
           : response.data.sousprestations || [];
         setSousPrestations(data);
       } catch (error) {
-        console.error('❌ Erreur chargement sous-prestations :', error);
-        setError('Erreur chargement sous-prestations.');
+        setError('Erreur lors du chargement des sous-prestations');
       } finally {
         setLoading(false);
       }
@@ -96,7 +95,7 @@ const Prestation = () => {
           )}
         </div>
 
-        <section className="event">
+        <div className="event">
           {prestationActive ? (
             <>
               <div className="hero">
@@ -154,7 +153,7 @@ const Prestation = () => {
               Aucune prestation disponible pour cette catégorie.
             </p>
           )}
-        </section>
+        </div>
       </section>
     </main>
   );

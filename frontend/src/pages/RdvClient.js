@@ -24,7 +24,6 @@ const RdvClient = () => {
         );
         setRdvs(res.data || []);
       } catch (err) {
-        console.error(err);
         setError('Erreur lors du chargement des rendez-vous.');
       } finally {
         setLoading(false);
@@ -48,9 +47,9 @@ const RdvClient = () => {
     (r) => new Date(r.date) > now && normalize(r.etat) === 'en attente'
   );
   const rdvAnnules = rdvs.filter((r) => normalize(r.etat) === 'declinee');
-  const rdvTermines = rdvs.filter(
-    (r) => new Date(r.date) <= now && normalize(r.etat) !== 'declinee'
-  );
+  // const rdvTermines = rdvs.filter(
+  //   (r) => new Date(r.date) <= now && normalize(r.etat) !== 'declinee'
+  // );
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -106,17 +105,17 @@ const RdvClient = () => {
     );
 
   return (
-    <div className="rdvclient-container">
-      <h2 className="tittles">Vos Rendez-Vous</h2>
-      <div className="appointments-summary">
+    <main className="rdvclient-container">
+      <h1 className="tittles">Vos Rendez-Vous</h1>
+      <section className="appointments-summary">
         <div className="appointment">
           <span className="number green">{rdvAVenir.length}</span>
           <p>À Venir</p>
         </div>
-        <div className="appointment">
+        {/* <div className="appointment">
           <span className="number blue">{rdvTermines.length}</span>
           <p>Terminés</p>
-        </div>
+        </div> */}
         <div className="appointment">
           <span className="number orange">{rdvPending.length}</span>
           <p>En Attente</p>
@@ -125,13 +124,13 @@ const RdvClient = () => {
           <span className="number red">{rdvAnnules.length}</span>
           <p>Annulés</p>
         </div>
-      </div>
+      </section>
 
       {renderRdvSection('À venir', rdvAVenir, 'avenir')}
-      {renderRdvSection('Terminés', rdvTermines, 'termine')}
+      {/* {renderRdvSection('Terminés', rdvTermines, 'termine')} */}
       {renderRdvSection('En Attente', rdvPending, 'pending')}
       {renderRdvSection('Annulés', rdvAnnules, 'annule')}
-    </div>
+    </main>
   );
 };
 

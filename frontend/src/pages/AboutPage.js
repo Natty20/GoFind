@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 
 const AboutPage = () => {
   return (
-    <div className="aboutPage">
+    <main className="aboutPage">
       <Helmet>
         <title>GoFind - Trouvez et Réservez les Meilleurs Prestataires</title>
         <meta
@@ -48,7 +48,7 @@ const AboutPage = () => {
         </p>
         <span className="short">Ici, la priorité c’est vous. Toujours.</span>
       </section>
-    </div>
+    </main>
   );
 };
 

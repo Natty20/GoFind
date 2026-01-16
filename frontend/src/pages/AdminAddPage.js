@@ -42,7 +42,7 @@ const CityInput = ({ value, onChange }) => {
       const data = await res.json();
       setSuggestions(data.features.map((f) => f.properties.city));
     } catch (err) {
-      console.error('Erreur autocomplete villes', err);
+      setError("Erreur lors d'une autocomplete de villes", err);
       setSuggestions([]);
     }
   };
@@ -178,7 +178,7 @@ const ClientForm = () => {
       alert('Client créé');
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      setError("Erreur lors de la création d'un client", err);
       alert('Erreur création client');
     }
   };
@@ -239,7 +239,6 @@ const ClientForm = () => {
   );
 };
 
-// ==================== AdminForm ====================
 const AdminForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
@@ -260,7 +259,7 @@ const AdminForm = () => {
       alert('Admin créé');
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      setError('Erreur lors de la création admin', err);
       alert('Erreur création admin');
     }
   };
@@ -301,7 +300,6 @@ const AdminForm = () => {
   );
 };
 
-// ==================== PrestataireForm ====================
 const PrestataireForm = () => {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('token');
@@ -322,15 +320,13 @@ const PrestataireForm = () => {
     selectedSousPrestations: [],
   });
 
-  /* Fetch prestations */
   useEffect(() => {
     axios
       .get(`${API}/prestations`, axiosConfig)
       .then((res) => setPrestations(res.data.prestations))
-      .catch(console.error);
+      .catch(error);
   }, []);
 
-  /* Fetch sous-prestations */
   useEffect(() => {
     if (!data.prestationId) return;
 
@@ -340,7 +336,7 @@ const PrestataireForm = () => {
         axiosConfig
       )
       .then((res) => setSousPrestations(res.data.sousPrestations))
-      .catch(console.error);
+      .catch(error);
   }, [data.prestationId]);
 
   const submit = async (e) => {
@@ -370,7 +366,7 @@ const PrestataireForm = () => {
       alert('Prestataire créé');
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      setError("Erreur lors de la création d'un prestataire", err);
       alert('Erreur création prestataire');
     }
   };
@@ -810,12 +806,12 @@ const ReservationForm = () => {
         axiosConfig
       )
       .then((res) => {
-        console.log('Sous-prestation reçue :', res.data);
+        // console.log('Sous-prestation reçue :', res.data);
 
         setPrestataires(res.data?.sousPrestation?.prestataires || []);
       })
       .catch((err) => {
-        console.error('Erreur chargement prestataires', err);
+        setError('Erreur lors du chargement de prestataires', err);
         setPrestataires([]);
       });
   }, [data.sousPrestationId]);

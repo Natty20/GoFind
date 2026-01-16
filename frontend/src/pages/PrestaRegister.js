@@ -47,7 +47,7 @@ const CityInput = ({ value, onChange }) => {
       const data = await res.json();
       setSuggestions(data.features.map((f) => f.properties.city));
     } catch (err) {
-      console.error('Erreur autocomplete villes', err);
+      setError("Erreur lors d'une autocomplete de villes", err);
     }
   };
 
@@ -140,7 +140,7 @@ const PrestataireRegister = () => {
         setSousPrestations(sousPrestationsMap);
       })
       .catch((error) =>
-        console.error('Erreur lors du chargement des prestations', error)
+        setError('Erreur lors du chargement des prestations', error)
       );
   }, []);
 
@@ -227,14 +227,14 @@ const PrestataireRegister = () => {
       setSuccess('Inscription réussie ! Redirection...');
       setTimeout(() => navigate('/'), 2000);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       setError(err.response?.data?.message || "Erreur lors de l'inscription.");
     }
   };
 
   return (
     <main className="register-page">
-      <div className="register-left-panel">
+      <section className="register-left-panel">
         <div className="welcome-text">
           <img
             src={`${process.env.PUBLIC_URL}/images/GF-logo.png`}
@@ -255,6 +255,7 @@ const PrestataireRegister = () => {
             id="nom"
             type="text"
             name="nom"
+            placeholder="Votre Nom"
             value={formData.nom}
             onChange={handleChange}
             required
@@ -265,6 +266,7 @@ const PrestataireRegister = () => {
             id="prenom"
             type="text"
             name="prenom"
+            placeholder="Votre Prénom"
             value={formData.prenom}
             onChange={handleChange}
             required
@@ -276,6 +278,7 @@ const PrestataireRegister = () => {
             type="tel"
             name="phone"
             pattern="^(06|07)[0-9]{8}$"
+            placeholder="Votre Numéro 06XXX - 07xxx"
             value={formData.phone}
             onChange={handleChange}
             required
@@ -314,6 +317,7 @@ const PrestataireRegister = () => {
             id="email"
             type="email"
             name="email"
+            placeholder="Votre Email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -324,6 +328,7 @@ const PrestataireRegister = () => {
             id="mdp"
             type="password"
             name="password"
+            placeholder="Choisissez un mot de passe"
             value={formData.password}
             onChange={handleChange}
             required
@@ -334,6 +339,7 @@ const PrestataireRegister = () => {
             id="mdp-confirmer"
             type="password"
             name="confirmPassword"
+            placeholder="Confirmer votre mot de passe"
             value={formData.confirmPassword}
             onChange={handleChange}
             required
@@ -371,9 +377,9 @@ const PrestataireRegister = () => {
             Devenir Prestataire
           </button>
         </form>
-      </div>
+      </section>
 
-      <div className="register-right-panel">
+      <section className="register-right-panel">
         <div>
           <h2>Découvrez tout ce que GoFind a à offrir</h2>
           <p>
@@ -389,7 +395,7 @@ const PrestataireRegister = () => {
             Connecter Vous
           </button>
         </div>
-      </div>
+      </section>
     </main>
   );
 };

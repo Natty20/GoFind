@@ -16,6 +16,7 @@ const ListeDemandesPrestataire = () => {
         setPrestataireId(storedPresta._id);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Erreur lors de la lecture du prestataire :', err);
     }
   }, []);
@@ -25,6 +26,7 @@ const ListeDemandesPrestataire = () => {
     const token = sessionStorage.getItem('token');
 
     if (!prestataireData || !token) {
+      // eslint-disable-next-line no-console
       console.error('❌ Prestataire ou token manquant');
       setError('Utilisateur non connecté');
       setLoading(false);
@@ -47,6 +49,7 @@ const ListeDemandesPrestataire = () => {
       setReservations(res.data);
       setError('');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(
         'Erreur API Prestataire:',
         err.response?.status,
@@ -61,6 +64,7 @@ const ListeDemandesPrestataire = () => {
   const updateStatut = async (reservationId, action) => {
     const token = sessionStorage.getItem('token');
     if (!token) {
+      // eslint-disable-next-line no-console
       console.error('❌ Token manquant');
       return;
     }
@@ -75,6 +79,7 @@ const ListeDemandesPrestataire = () => {
       );
       fetchReservations(); // rafraîchir la liste
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         'Erreur lors de la mise à jour :',
         error.response?.data || error.message
@@ -82,17 +87,18 @@ const ListeDemandesPrestataire = () => {
     }
   };
 
-  const handleStatusChange = async (reservationId, newStatus) => {
-    try {
-      await axios.put(
-        `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/update-etat`,
-        { etat: newStatus }
-      );
-      fetchReservations();
-    } catch (error) {
-      console.error('Erreur lors du changement de statut :', error);
-    }
-  };
+  // const handleStatusChange = async (reservationId, newStatus) => {
+  //   try {
+  //     await axios.put(
+  //       `https://gofind-v9ee.onrender.com/api/reservations/${reservationId}/update-etat`,
+  //       { etat: newStatus }
+  //     );
+  //     fetchReservations();
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.error('Erreur lors du changement de statut :', error);
+  //   }
+  // };
 
   useEffect(() => {
     if (prestataireId) {
@@ -186,7 +192,7 @@ const ListeDemandesPrestataire = () => {
 
   return (
     <main className="reservation">
-      <h1>Nouvelles Réservations</h1>
+      <h1 className="tittles">Nouvelles Réservations</h1>
 
       {loading && <p>Chargement...</p>}
       {error && !loading && <p style={{ color: 'red' }}>{error}</p>}

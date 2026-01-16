@@ -8,7 +8,7 @@ const AdminDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // 🔒 Champs sensibles à masquer
+  // Champs sensibles
   const hiddenFields = [
     'password',
     '__v',
@@ -54,7 +54,7 @@ const AdminDetailsPage = () => {
 
         setData(dataKey ? result[dataKey] : result);
       } catch (error) {
-        console.error(error);
+        setError('Erreur lors de la récupération de données', error);
         alert('Erreur de récupération');
       } finally {
         setLoading(false);
@@ -121,20 +121,20 @@ const AdminDetailsPage = () => {
   };
 
   return (
-    <div className="details-page">
+    <main className="details-page">
       <h1>
         Détails – {entity} : {id}
       </h1>
 
-      <div className="admin-details-card">
+      <section className="admin-details-card">
         {Object.entries(cleanData).map(([key, value]) => (
           <div key={key} className="details-field">
             <strong>{key} :</strong> {renderValue(value)}
           </div>
         ))}
-      </div>
+      </section>
 
-      <div className="details-buttons">
+      <section className="details-buttons">
         <button
           className="btn-secondary"
           onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}
@@ -144,8 +144,8 @@ const AdminDetailsPage = () => {
         <button className="btn-primary" onClick={() => navigate('/dashboard')}>
           Retour
         </button>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

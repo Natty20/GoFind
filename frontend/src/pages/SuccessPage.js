@@ -16,14 +16,16 @@ const SuccessPage = () => {
       .post('https://gofind-v9ee.onrender.com/api/stripe/confirm', {
         sessionId,
       })
-      .catch((err) => {
-        console.error('Erreur confirmation paiement:', err);
+      .catch(() => {
+        setError(
+          'Une erreur est survenue lors de la confirmation du paiement.'
+        );
       });
   }, [location.search]);
 
   return (
     <main className="success-page">
-      <div className="success-page-container">
+      <section className="success-page-container">
         <div className="icon">
           <div className="circle">
             <span>&#10004;</span>
@@ -44,7 +46,7 @@ const SuccessPage = () => {
             Retour à l&apos;accueil
           </button>
         </div>
-      </div>
+      </section>
     </main>
   );
 };

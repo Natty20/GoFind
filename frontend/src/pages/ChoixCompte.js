@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MDBContainer } from 'mdb-react-ui-kit';
 import '../styles/All/ChoixCompte.css';
 
 const ChoixCompte = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
 
   const handleChoix = (type) => {
     if (type === 'client') {

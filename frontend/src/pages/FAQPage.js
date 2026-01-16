@@ -4,7 +4,7 @@ import '../styles/All/FAQ.css';
 
 const FAQ = () => {
   return (
-    <div className="faq-page">
+    <main className="faq-page">
       <Helmet>
         <title>FAQ - GoFind</title>
         <meta
@@ -67,7 +67,7 @@ const FAQ = () => {
           </p>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 
