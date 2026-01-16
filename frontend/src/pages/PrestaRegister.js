@@ -6,6 +6,7 @@ import { MDBInput } from 'mdb-react-ui-kit';
 import PropTypes from 'prop-types';
 import '../styles/All/Register.css';
 
+const [setError] = useState(null);
 //  uploader une image sur Cloudinary pour l'fficher sur le site
 const uploadImageToBackend = async (file) => {
   const formData = new FormData();
@@ -122,7 +123,7 @@ const PrestataireRegister = () => {
     confirmPassword: '',
   });
 
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null);
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState({});
