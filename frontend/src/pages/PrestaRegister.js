@@ -6,7 +6,6 @@ import { MDBInput } from 'mdb-react-ui-kit';
 import PropTypes from 'prop-types';
 import '../styles/All/Register.css';
 
-const [error, setError] = useState(null);
 //  uploader une image sur Cloudinary pour l'fficher sur le site
 const uploadImageToBackend = async (file) => {
   const formData = new FormData();
@@ -30,6 +29,7 @@ const uploadImageToBackend = async (file) => {
 const CityInput = ({ value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState(value || '');
+  const [setError] = useState(null);
 
   const handleInputChange = async (e) => {
     const val = e.target.value;
@@ -123,7 +123,7 @@ const PrestataireRegister = () => {
     confirmPassword: '',
   });
 
-  // const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [prestations, setPrestations] = useState([]);
   const [sousPrestations, setSousPrestations] = useState({});
@@ -140,9 +140,7 @@ const PrestataireRegister = () => {
         });
         setSousPrestations(sousPrestationsMap);
       })
-      .catch((error) =>
-        setError('Erreur lors du chargement des prestations', error)
-      );
+      .catch(() => setError('Erreur lors du chargement des prestations'));
   }, []);
 
   const handleChange = (e) => {
