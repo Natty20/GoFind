@@ -203,7 +203,7 @@ const ProfilePage = () => {
         </section>
       )}
       {/* sections des avis de prestataire */}
-      {prestataire && isPrestataire && (
+      {!isPrestataire && prestataire && (
         <section className="clients-avis">
           <div className="provider-reviews">
             <h5 className="tittles">Avis des Clients</h5>
@@ -213,7 +213,7 @@ const ProfilePage = () => {
             )}
 
             {avis.map((a) => (
-              <article className="review" key={a._id}>
+              <div className="review" key={a._id}>
                 <span>{new Date(a.createdAt).toLocaleDateString()}</span>
 
                 <div className="review-info">
@@ -229,7 +229,6 @@ const ProfilePage = () => {
                   <div>
                     <p>{a.auteur?.prenom}</p>
 
-                    {/* ⭐ NOTES */}
                     <div className="stars-display">
                       {[1, 2, 3, 4, 5].map((i) => (
                         <span
@@ -244,7 +243,7 @@ const ProfilePage = () => {
                 </div>
 
                 <p>{a.commentaire}</p>
-              </article>
+              </div>
             ))}
 
             {/* BOUTON AJOUT AVIS */}
@@ -257,18 +256,10 @@ const ProfilePage = () => {
                 Laisser un avis
               </button>
             )}
-            {isPrestataire && (
-              <h1
-                className="tittles"
-                style={{ opacity: 0.6, fontStyle: 'italic' }}
-              >
-                Les avis clients ne sont pas visibles depuis un compte
-                prestataire.
-              </h1>
-            )}
           </div>
         </section>
       )}
+
       {showAvisForm && (
         <div className="avis-modal">
           <div className="avis-form">
