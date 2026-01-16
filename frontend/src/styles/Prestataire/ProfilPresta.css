@@ -121,8 +121,7 @@
   padding: 2rem;
   border-radius: 1rem;
 }
-
-.add-realisation {
+.res .add-realisation {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
@@ -153,7 +152,7 @@
   margin: 0 auto;
 }
 
-.provider-reviews h2 {
+.provider-reviews h5 {
   margin-bottom: 40px;
 }
 

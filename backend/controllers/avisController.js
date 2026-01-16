@@ -88,6 +88,12 @@ const deleteMyAvis = async (req, res) => {
 };
 
 const getAllVisibleAvis = async (req, res) => {
+    if (req.user?.role === 'prestataire') {
+        return res.status(403).json({
+            message: "Les prestataires connectés ne peuvent pas consulter les avis publics",
+        });
+    }
+
     const avis = await Avis.find({ visible: true })
         .populate('auteur', 'nom prenom profilePicture')
         .populate('prestataire', 'nom prenom')
@@ -95,6 +101,8 @@ const getAllVisibleAvis = async (req, res) => {
 
     res.json({ avis });
 };
+
+
 
 const getAvisForPrestataire = async (req, res) => {
     const avis = await Avis.find({ prestataire: req.user.id })

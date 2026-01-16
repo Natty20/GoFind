@@ -17,6 +17,8 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = sessionStorage.getItem('token');
+  const role = sessionStorage.getItem('role');
+  const isPrestataire = role === 'prestataire';
 
   // const [activeTab, setActiveTab] = useState('images');
 
@@ -163,7 +165,7 @@ const ProfilePage = () => {
 
       {prestataire?.description?.length > 0 && (
         <section className="provider-description">
-          <h2 className="tittles">À propos</h2>
+          <h3 className="tittles">À propos</h3>
           <p>{prestataire.description}</p>
         </section>
       )}
@@ -171,7 +173,7 @@ const ProfilePage = () => {
       {/* Section Réalisations - uniquement images */}
       {prestataire?.realisations?.length > 0 && (
         <div className="realisation-section">
-          <h3 className="tittles">Réalisations</h3>
+          <h4 className="tittles">Réalisations</h4>
           <div className="images-grid">
             {prestataire.realisations.map((imgUrl, index) => (
               <img
@@ -185,10 +187,10 @@ const ProfilePage = () => {
         </div>
       )}
       {/* sections des avis de prestataire */}
-      {prestataire && (
+      {prestataire && isPrestataire && (
         <section className="clients-avis">
           <main className="provider-reviews">
-            <h2 className="tittles">Avis des Clients</h2>
+            <h5 className="tittles">Avis des Clients</h5>
 
             {avis.length === 0 && (
               <p style={{ color: '#fff' }}>Aucun avis pour le moment.</p>
@@ -209,7 +211,7 @@ const ProfilePage = () => {
                   />
 
                   <div>
-                    <h3>{a.auteur?.prenom}</h3>
+                    <p>{a.auteur?.prenom}</p>
 
                     {/* ⭐ NOTES */}
                     <div className="stars-display">
@@ -230,20 +232,31 @@ const ProfilePage = () => {
             ))}
 
             {/* BOUTON AJOUT AVIS */}
-            <button
-              className="btn-secondary"
-              style={{ marginTop: '30px' }}
-              onClick={() => setShowAvisForm(true)}
-            >
-              Laisser un avis
-            </button>
+            {role === 'client' && (
+              <button
+                className="btn-secondary"
+                style={{ marginTop: '30px' }}
+                onClick={() => setShowAvisForm(true)}
+              >
+                Laisser un avis
+              </button>
+            )}
+            {isPrestataire && (
+              <h1
+                className="tittles"
+                style={{ opacity: 0.6, fontStyle: 'italic' }}
+              >
+                Les avis clients ne sont pas visibles depuis un compte
+                prestataire.
+              </h1>
+            )}
           </main>
         </section>
       )}
       {showAvisForm && (
         <div className="avis-modal">
           <div className="avis-form">
-            <h3>Laisser un avis</h3>
+            <h1>Laisser un avis</h1>
             <div className="stars">
               {[1, 2, 3, 4, 5].map((i) => (
                 <span
@@ -273,7 +286,7 @@ const ProfilePage = () => {
                     await axios.post(
                       `https://gofind-v9ee.onrender.com/api/avis`,
                       {
-                        id,
+                        prestataireId: id,
                         note,
                         commentaire,
                       },

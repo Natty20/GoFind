@@ -28,6 +28,7 @@ function LoginForm() {
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('clientId', client._id);
       sessionStorage.setItem('client', JSON.stringify(client));
+      sessionStorage.setItem('role', 'client');
       setClient(client); // ✅ Met à jour globalement le client
 
       navigate(from, { replace: true });

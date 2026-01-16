@@ -15,6 +15,9 @@ const {
     authorizePrestataire,
     authorizeAdmin,
 } = require("../middlewares/authMiddleware");
+const {
+    optionalAuthenticateUser
+} = require ("../middlewares/optionalAuthenticateUser")
 
 const router = express.Router();
 
@@ -28,7 +31,12 @@ router.put("/:id", authenticateUser, authorizeClient, updateMyAvis);
 router.delete("/:id", authenticateUser, authorizeClient, deleteMyAvis);
 
 //  Avis visibles (public ou client)
-router.get("/public", getAllVisibleAvis);
+router.get(
+    '/public',
+    optionalAuthenticateUser,
+    getAllVisibleAvis
+);
+
 
 //  Prestataire → ses avis
 router.get(
