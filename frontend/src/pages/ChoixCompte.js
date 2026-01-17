@@ -49,12 +49,12 @@ const ChoixCompte = () => {
           accompagnons.
         </p>
 
-        <button
+        {/* <button
           className="btn-secondary"
           onClick={() => navigate('/login_admin')}
         >
           Admin login
-        </button>
+        </button> */}
       </div>
     </main>
   );
