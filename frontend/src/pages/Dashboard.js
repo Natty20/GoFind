@@ -72,9 +72,11 @@ const Dashboard = () => {
       }
 
       const apiUrl =
-        activeTab === 'reservations'
-          ? 'https://gofind-v9ee.onrender.com/api/reservations/all'
-          : `https://gofind-v9ee.onrender.com/api${activeItem.endpoint}`;
+        activeTab === 'avis'
+          ? 'https://gofind-v9ee.onrender.com/api/avis/admin'
+          : activeTab === 'reservations'
+            ? 'https://gofind-v9ee.onrender.com/api/reservations/all'
+            : `https://gofind-v9ee.onrender.com/api${activeItem.endpoint}`;
 
       const token = sessionStorage.getItem('token');
 
@@ -389,6 +391,7 @@ const Dashboard = () => {
                         <>
                           {/* Masquer / Afficher */}
                           <button
+                            type="button"
                             className="edit-button"
                             onClick={() => toggleAvisVisibility(item._id)}
                           >

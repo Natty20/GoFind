@@ -7,7 +7,8 @@ const {
     getAvisForPrestataire,
     toggleAvisVisibility,
     adminDeleteAvis,
-    getAvisById
+    getAvisById,
+    getAllAvisAdmin
 } = require("../controllers/avisController");
 
 const {
@@ -68,6 +69,10 @@ router.get(
     authorizeAdmin,
     getAvisById
 );
+
+// routes/avisRoutes.js
+router.get('/admin', authenticateUser, authorizeAdmin, getAllAvisAdmin);
+
 
 // Admin → suppression définitive
 router.delete(
