@@ -136,7 +136,7 @@ const Prestation = () => {
                           <h2 className="tittles">
                             {sous.nom ? sous.nom.toUpperCase() : 'Nom inconnu'}
                           </h2>
-                          <p>{sous.longDescription || 'Pas de description'}</p>
+                          <p>{sous.shortDescription || 'Pas de description'}</p>
                         </div>
                       </div>
                     </Link>

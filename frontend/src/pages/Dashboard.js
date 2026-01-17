@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Home, Users, Package, Plus, Edit, Trash } from 'lucide-react';
+import {
+  Home,
+  Users,
+  Package,
+  Plus,
+  Edit,
+  Trash,
+  Layers,
+  CalendarCheck,
+  Star,
+} from 'lucide-react';
+
 import { useNavigate } from 'react-router-dom';
 import '../styles/Admin/Dashboard.css';
 
@@ -19,17 +30,17 @@ const menuItems = [
   },
   {
     name: 'sousprestations',
-    icon: <Package size={20} />,
+    icon: <Layers size={20} />,
     endpoint: '/sousprestations',
   },
   {
     name: 'reservations',
-    icon: <Package size={20} />,
+    icon: <CalendarCheck size={20} />,
     endpoint: '/all',
   },
   {
     name: 'avis',
-    icon: <Package size={20} />,
+    icon: <Star size={20} />,
     endpoint: '/public',
   },
 ];
@@ -41,7 +52,7 @@ const entityToEndpoint = {
   sousprestations: 'sousprestations',
   prestataires: 'prestataires',
   reservations: 'reservations',
-  avis: 'public',
+  avis: 'avis',
 };
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -50,6 +61,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -155,6 +167,30 @@ const Dashboard = () => {
       alert('❌ Erreur lors de la suppression.');
     }
   };
+  const toggleAvisVisibility = async (id) => {
+    try {
+      const token = sessionStorage.getItem('token');
+
+      const response = await fetch(
+        `https://gofind-v9ee.onrender.com/api/avis/${id}/visibility`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Erreur visibilité');
+      }
+
+      setRefresh(!refresh);
+    } catch (error) {
+      alert('❌ Impossible de modifier la visibilité');
+    }
+  };
 
   return (
     <main className="dashboard-container">
@@ -179,9 +215,11 @@ const Dashboard = () => {
         <div className="content-card">
           <div className="content-header">
             <h2 className="content-title">{activeTab}</h2>
-            <button className="dashboard btn-primary" onClick={handleAdd}>
-              <Plus size={20} /> Ajouter un {activeTab}
-            </button>
+            {activeTab !== 'avis' && (
+              <button className="dashboard btn-primary" onClick={handleAdd}>
+                <Plus size={20} /> Ajouter un {activeTab}
+              </button>
+            )}
           </div>
 
           {loading ? (
@@ -316,20 +354,31 @@ const Dashboard = () => {
                       ) : activeTab === 'avis' ? (
                         <>
                           <span>
-                            <strong>Nom:</strong> {item.nom}
-                          </span>
-                          <span>
-                            <strong>Prenom :</strong> {item.prenom}
+                            <strong>Auteur :</strong> {item.auteur?.nom}{' '}
+                            {item.auteur?.prenom}
                           </span>
                           <span>
                             <strong>Prestataire :</strong>{' '}
-                            {item.prestataire?.nom}
+                            {item.prestataire?.nom} {item.prestataire?.prenom}
                           </span>
+
+                          <span>
+                            <strong>Note :</strong> ⭐ {item.note}/5
+                          </span>
+
                           <span>
                             <strong>Commentaire :</strong> {item.commentaire}
                           </span>
+
                           <span>
-                            <strong>Etat :</strong> {item.visisble}
+                            <strong>Visibilité :</strong>{' '}
+                            {item.visible ? 'Visible' : 'Masqué'}
+                            <strong>Etat :</strong>{' '}
+                            {item.visible ? 'Visible' : 'Masqué'}
+                          </span>
+                          <span>
+                            <strong>Date :</strong>{' '}
+                            {new Date(item.createdAt).toLocaleDateString()}
                           </span>
                         </>
                       ) : (
@@ -338,28 +387,63 @@ const Dashboard = () => {
                     </div>
 
                     <div className="data-actions">
-                      <button
-                        className="edit-button"
-                        onClick={() => handleEdit(item._id)}
-                        aria-label={`Modifier ${item.nom}`}
-                      >
-                        <Edit size={16} /> Modifier
-                      </button>
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDelete(item._id)}
-                        aria-label={`Supprimer ${item.nom}`}
-                      >
-                        <Trash size={16} /> Supprimer
-                      </button>
-                      <button
-                        className="details-button"
-                        onClick={() =>
-                          navigate(`/admin/${activeTab}/details/${item._id}`)
-                        }
-                      >
-                        Voir
-                      </button>
+                      {activeTab === 'avis' ? (
+                        <>
+                          {/* Masquer / Afficher */}
+                          <button
+                            className="edit-button"
+                            onClick={() => toggleAvisVisibility(item._id)}
+                          >
+                            {item.visible ? 'Masquer' : 'Afficher'}
+                          </button>
+
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDelete(item._id)}
+                          >
+                            <Trash size={16} /> Supprimer
+                          </button>
+
+                          <button
+                            className="details-button"
+                            onClick={() =>
+                              navigate(`/admin/avis/details/${item._id}`)
+                            }
+                          >
+                            Voir
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {/* Modifier */}
+                          <button
+                            className="edit-button"
+                            onClick={() => handleEdit(item._id)}
+                          >
+                            <Edit size={16} /> Modifier
+                          </button>
+
+                          {/* Supprimer */}
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDelete(item._id)}
+                          >
+                            <Trash size={16} /> Supprimer
+                          </button>
+
+                          {/* Voir */}
+                          <button
+                            className="details-button"
+                            onClick={() =>
+                              navigate(
+                                `/admin/${activeTab}/details/${item._id}`
+                              )
+                            }
+                          >
+                            Voir
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))

@@ -129,6 +129,27 @@ const toggleAvisVisibility = async (req, res) => {
     res.json({ avis });
 };
 
+//  un avis par ID (ADMIN uniquement)
+const getAvisById = async (req, res) => {
+    try {
+        const avis = await Avis.findById(req.params.id)
+            .populate('auteur', 'nom prenom email profilePicture')
+            .populate('prestataire', 'nom prenom email profilePicture');
+
+        if (!avis) {
+            return res.status(404).json({ message: 'Avis introuvable' });
+        }
+
+        res.json({ avis });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Erreur lors de la récupération de l’avis',
+            error: error.message,
+        });
+    }
+};
+
+
 // admin delete
 const adminDeleteAvis = async (req, res) => {
     await Avis.findByIdAndDelete(req.params.id);
@@ -143,4 +164,5 @@ module.exports = {
     deleteMyAvis,
     updateMyAvis,
     createAvis,
+    getAvisById,
 };

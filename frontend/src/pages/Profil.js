@@ -203,7 +203,7 @@ const ProfilePage = () => {
         </section>
       )}
       {/* sections des avis de prestataire */}
-      {!isPrestataire && prestataire && (
+      {prestataire && avis?.length > 0 && !isPrestataire && (
         <section className="clients-avis">
           <div className="provider-reviews">
             <h5 className="tittles">Avis des Clients</h5>

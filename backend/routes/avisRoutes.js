@@ -7,6 +7,7 @@ const {
     getAvisForPrestataire,
     toggleAvisVisibility,
     adminDeleteAvis,
+    getAvisById
 } = require("../controllers/avisController");
 
 const {
@@ -60,9 +61,17 @@ router.patch(
     toggleAvisVisibility
 );
 
+// 🧑‍💼 ADMIN → Détails d’un avis
+router.get(
+    '/:id',
+    authenticateUser,
+    authorizeAdmin,
+    getAvisById
+);
+
 // Admin → suppression définitive
 router.delete(
-    "/admin/:id",
+    "/:id",
     authenticateUser,
     authorizeAdmin,
     adminDeleteAvis

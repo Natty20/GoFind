@@ -4,6 +4,8 @@ import { MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import PropTypes from 'prop-types';
+import validateForm from '../utils/ValidateForm';
+
 import '../styles/All/Register.css';
 
 // Upload image sur backend
@@ -21,6 +23,81 @@ const uploadImageToBackend = async (file) => {
 };
 
 // Composant pour lees villes
+// const CityInput = ({ value, onChange }) => {
+//   const [suggestions, setSuggestions] = useState([]);
+//   const [query, setQuery] = useState(value || '');
+
+//   const handleInputChange = async (e) => {
+//     const val = e.target.value;
+//     setQuery(val);
+//     onChange(val);
+
+//     if (val.length < 2) {
+//       setSuggestions([]);
+//       return;
+//     }
+
+//     try {
+//       const res = await fetch(
+//         `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+//       );
+//       const data = await res.json();
+//       setSuggestions(data.features.map((f) => f.properties.city));
+//     } catch (err) {
+//       // eslint-disable-next-line no-console
+//       console.error('Erreur autocomplete villes', err);
+//     }
+//   };
+
+//   const handleSelect = (city) => {
+//     setQuery(city);
+//     onChange(city);
+//     setSuggestions([]);
+//   };
+
+//   return (
+//     <div style={{ position: 'relative' }}>
+//       <input
+//         type="text"
+//         value={query}
+//         onChange={handleInputChange}
+//         placeholder="Choisissez votre ville"
+//         required
+//         style={{ width: '100%', padding: '8px' }}
+//       />
+//       {suggestions.length > 0 && (
+//         <ul
+//           style={{
+//             position: 'absolute',
+//             top: '100%',
+//             left: 0,
+//             right: 0,
+//             background: 'white',
+//             border: '1px solid #ccc',
+//             maxHeight: '150px',
+//             overflowY: 'auto',
+//             zIndex: 10,
+//             margin: 0,
+//             padding: 0,
+//             listStyle: 'none',
+//           }}
+//         >
+//           {suggestions.map((city, i) => (
+//             <li
+//               key={i}
+//               onClick={() => handleSelect(city)}
+//               style={{ padding: '8px', cursor: 'pointer' }}
+//               onMouseDown={(e) => e.preventDefault()}
+//             >
+//               {city}
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   );
+// };
+
 const CityInput = ({ value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState(value || '');
@@ -30,20 +107,36 @@ const CityInput = ({ value, onChange }) => {
     setQuery(val);
     onChange(val);
 
-    if (val.length < 2) {
+    if (!val || val.length < 2) {
       setSuggestions([]);
       return;
     }
 
     try {
       const res = await fetch(
-        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(
+          val
+        )}&type=municipality&limit=6`
       );
+
+      if (!res.ok) {
+        setSuggestions([]);
+        return;
+      }
+
       const data = await res.json();
-      setSuggestions(data.features.map((f) => f.properties.city));
+
+      if (Array.isArray(data.features)) {
+        const cities = data.features
+          .map((f) => f?.properties?.city)
+          .filter(Boolean); // éviter undefined
+        setSuggestions(cities);
+      } else {
+        setSuggestions([]);
+      }
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Erreur autocomplete villes', err);
+      setSuggestions([]);
     }
   };
 
@@ -134,8 +227,10 @@ function Register() {
     setError(null);
     setSuccess(null);
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas!');
+    // ✅ Validation front
+    const errors = validateForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setError(Object.values(errors).join(' | '));
       return;
     }
 
@@ -201,6 +296,9 @@ function Register() {
             onChange={handleChange}
             required
           />
+          {error?.includes('Nom') && (
+            <span style={{ color: 'red' }}>Nom requis</span>
+          )}
 
           <p className="label">Prénom :</p>
           <MDBInput
@@ -212,6 +310,9 @@ function Register() {
             onChange={handleChange}
             required
           />
+          {error?.includes('Prénom') && (
+            <span style={{ color: 'red' }}>Prénom requis</span>
+          )}
 
           <p className="label">Phone :</p>
           <MDBInput
@@ -224,6 +325,9 @@ function Register() {
             onChange={handleChange}
             required
           />
+          {error?.includes('Phone') && (
+            <span style={{ color: 'red' }}>Numéro requis</span>
+          )}
 
           <p className="label">Photo de profil :</p>
           <input
@@ -258,6 +362,9 @@ function Register() {
             onChange={handleChange}
             required
           />
+          {error?.includes('Email') && (
+            <span style={{ color: 'red' }}>Email invalide</span>
+          )}
 
           <p className="label">Mot de passe :</p>
           <MDBInput

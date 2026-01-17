@@ -96,20 +96,39 @@ const ClientProfile = () => {
       setQuery(val);
       onChange(val);
 
-      if (val.length < 2) {
+      // On attend au moins 2 caractères
+      if (!val || val.length < 2) {
         setSuggestions([]);
         return;
       }
 
       try {
         const res = await fetch(
-          `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(val)}&type=municipality&limit=6`
+          `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(
+            val
+          )}&type=municipality&limit=6`
         );
+
+        if (!res.ok) {
+          // Si status !== 200, on vide les suggestions
+          setSuggestions([]);
+          return;
+        }
+
         const data = await res.json();
-        setSuggestions(data.features.map((f) => f.properties.city));
+
+        // On vérifie que data.features existe
+        if (Array.isArray(data.features)) {
+          const cities = data.features
+            .map((f) => f?.properties?.city)
+            .filter(Boolean);
+          setSuggestions(cities);
+        } else {
+          setSuggestions([]);
+        }
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.error('Erreur autocomplete villes', err);
+        setSuggestions([]);
       }
     };
 

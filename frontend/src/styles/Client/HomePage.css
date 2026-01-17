@@ -229,12 +229,6 @@ h3 {
     font-size: 0.8rem;
   }
 
-  /* .reserve button {
-                  margin: 1rem;
-                  font-size: 0.75rem;
-                  width: auto;
-                } */
-
   .artisanat-left,
   .photographie-right,
   .artisanat-photographie-right {
@@ -276,16 +270,9 @@ h3 {
   .photographie-right p {
     font-size: 1rem;
   }
-
-  /* .step-number {
-    font-size: 20px;
-  } */
 }
 
 @media (max-width: 480px) {
-  /* .homepage {
-    margin: 0;
-  } */
   .gofind-presentation img {
     width: 60%;
   }

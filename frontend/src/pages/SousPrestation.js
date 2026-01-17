@@ -151,7 +151,7 @@ const SousPrestation = () => {
       <section className="main-section">
         <div className="image-container">
           <img
-            src={sousPrestation.profileImage || '/images/beza.jpg'}
+            src={sousPrestation.backgroundImage || '/images/beza.jpg'}
             alt={sousPrestation.shortDescription}
             className="main-image"
           />
