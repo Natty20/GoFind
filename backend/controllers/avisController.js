@@ -149,10 +149,7 @@ const getAvisById = async (req, res) => {
     }
 };
 
-// controllers/avisController.js
-
 const getAllAvisAdmin = async (req, res) => {
-    // Vérifie que c’est un admin
     if (req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Accès refusé' });
     }
@@ -164,7 +161,6 @@ const getAllAvisAdmin = async (req, res) => {
 
     res.json({ avis });
 };
-
 
 // admin delete
 const adminDeleteAvis = async (req, res) => {

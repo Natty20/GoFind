@@ -40,7 +40,6 @@ router.get(
     getAllVisibleAvis
 );
 
-
 //  Prestataire → ses avis
 router.get(
     "/prestataire",
@@ -62,19 +61,14 @@ router.patch(
     toggleAvisVisibility
 );
 
-// 🧑‍💼 ADMIN → Détails d’un avis
+//  ADMIN 
+router.get('/admin', authenticateUser, authorizeAdmin, getAllAvisAdmin);
 router.get(
     '/:id',
     authenticateUser,
     authorizeAdmin,
     getAvisById
 );
-
-// routes/avisRoutes.js
-router.get('/admin', authenticateUser, authorizeAdmin, getAllAvisAdmin);
-
-
-// Admin → suppression définitive
 router.delete(
     "/:id",
     authenticateUser,
