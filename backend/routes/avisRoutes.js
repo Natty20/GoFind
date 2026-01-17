@@ -31,7 +31,7 @@ router.post("/", authenticateUser, authorizeClient, createAvis);
 router.put("/:id", authenticateUser, authorizeClient, updateMyAvis);
 
 // Supprimer SON avis
-router.delete("/:id", authenticateUser, authorizeClient, deleteMyAvis);
+router.delete("/client/:id", authenticateUser, authorizeClient, deleteMyAvis);
 
 //  Avis visibles (public ou client)
 router.get(
