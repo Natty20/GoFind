@@ -187,9 +187,6 @@ const ClientProfile = () => {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
   };
-  const handleCityChange = (val) => {
-    setFormData({ ...formData, address: val });
-  };
 
   if (loading) return <p>Chargement des informations...</p>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
@@ -256,7 +253,7 @@ const ClientProfile = () => {
               name="address"
               id="nom"
               value={formData.address || ''}
-              onChange={handleCityChange}
+                onChange={handleChange}
             />
             <p className="label">Photo de profile: </p>
             <input

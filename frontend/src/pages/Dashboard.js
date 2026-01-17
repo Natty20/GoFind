@@ -41,7 +41,7 @@ const menuItems = [
   {
     name: 'avis',
     icon: <Star size={20} />,
-    endpoint: '/public',
+    endpoint: 'avis/public',
   },
 ];
 
@@ -373,8 +373,7 @@ const Dashboard = () => {
                           <span>
                             <strong>Visibilité :</strong>{' '}
                             {item.visible ? 'Visible' : 'Masqué'}
-                            <strong>Etat :</strong>{' '}
-                            {item.visible ? 'Visible' : 'Masqué'}
+                            
                           </span>
                           <span>
                             <strong>Date :</strong>{' '}

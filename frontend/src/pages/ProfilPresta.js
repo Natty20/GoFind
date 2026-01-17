@@ -300,9 +300,6 @@ const ProfilPresta = () => {
     onChange: PropTypes.func.isRequired,
   };
 
-  const handleCityChange = (val) => {
-    setFormData({ ...formData, address: val });
-  };
 
   if (loading) return <p>Chargement des informations...</p>;
   if (error)
@@ -385,7 +382,7 @@ const ProfilPresta = () => {
               <CityInput
                 name="address"
                 value={formData.address}
-                onChange={handleCityChange}
+                  onChange={handleInputChange}
                 placeholder="Adresse"
               />
               <textarea
