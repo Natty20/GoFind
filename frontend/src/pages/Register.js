@@ -135,6 +135,7 @@ const CityInput = ({ value, onChange }) => {
         setSuggestions([]);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Erreur autocomplete villes', err);
       setSuggestions([]);
     }

@@ -31,3 +31,5 @@ const validateForm = (formData) => {
 
   return errors;
 };
+
+export default validateForm;
