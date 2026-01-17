@@ -253,7 +253,7 @@ const ClientProfile = () => {
               name="address"
               id="nom"
               value={formData.address || ''}
-                onChange={handleChange}
+              onChange={handleChange}
             />
             <p className="label">Photo de profile: </p>
             <input

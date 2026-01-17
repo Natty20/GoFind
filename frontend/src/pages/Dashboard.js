@@ -373,7 +373,6 @@ const Dashboard = () => {
                           <span>
                             <strong>Visibilité :</strong>{' '}
                             {item.visible ? 'Visible' : 'Masqué'}
-                            
                           </span>
                           <span>
                             <strong>Date :</strong>{' '}
