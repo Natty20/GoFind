@@ -45,8 +45,8 @@ function Crenaux() {
   // Génère les créneaux horaires toutes les 2h en format HH:mm
   const getAvailableHours = (date) => {
     const hours = [];
-    const start = 8; // 08:00
-    const end = 20; // 20:00
+    const start = 10; // 10:00
+    const end = 22; // 22:00
     const now = new Date();
 
     for (let h = start; h <= end; h += 2) {
@@ -71,9 +71,7 @@ function Crenaux() {
   // Confirmer la réservation
   const handleConfirmHour = () => {
     if (!client) {
-      alert(
-        'Vous devez être connecté avec votre compte client pour prendre un rendez-vous.'
-      );
+      alert('Seul les clients peuvent prendre un rendez-vous.');
       navigate('/login', { state: { from: location.pathname } });
       return;
     }

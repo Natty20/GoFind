@@ -10,12 +10,13 @@
 }
 
 .image-container {
-  flex: 1;
   padding-right: 50px;
 }
 
 .main-image {
-  width: 90%;
+  width: auto;
+  height: 40rem;
+  object-fit: contain;
 }
 
 .text-container {
