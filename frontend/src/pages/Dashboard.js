@@ -41,7 +41,7 @@ const menuItems = [
   {
     name: 'avis',
     icon: <Star size={20} />,
-    endpoint: 'avis/public',
+    endpoint: '/avis/public',
   },
 ];
 
