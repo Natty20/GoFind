@@ -209,39 +209,28 @@ const ProfilePage = () => {
             <h5 className="tittles">Avis des Clients</h5>
 
             {avis.length === 0 && (
-              <p style={{ color: '#fff' }}>Aucun avis pour le moment.</p>
+              <p style={{ color: 'gray' }}>Aucun avis pour le moment.</p>
             )}
 
             {avis.map((a) => (
               <div className="review" key={a._id}>
-                <span>{new Date(a.createdAt).toLocaleDateString()}</span>
+                <span>
+                  {new Date(item.createdAt).toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </span>
 
                 <div className="review-info">
                   <img
-                    src={
-                      a.auteur?.profilePicture ||
-                      'https://www.swendoperio.com/wp-content/uploads/2019/11/person-icon.png'
-                    }
+                    src={a.auteur?.profilePicture}
                     alt="Client"
                     className="client-image"
                   />
-
-                  <div>
-                    <p>{a.auteur?.prenom}</p>
-
-                    <div className="stars-display">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <span
-                          key={i}
-                          className={i <= a.note ? 'star filled' : 'star'}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <p>{a.auteur?.prenom}</p>
                 </div>
-
+                {item.note && <p className="note">⭐ {item.note}/5</p>}
                 <p>{a.commentaire}</p>
               </div>
             ))}

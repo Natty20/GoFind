@@ -118,8 +118,7 @@
 }
 
 /* ===== ÉTOILES ===== */
-.stars,
-.stars-display {
+.stars {
   display: flex;
   gap: 5px;
 }
