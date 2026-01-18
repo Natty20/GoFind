@@ -215,7 +215,7 @@ const ProfilePage = () => {
             {avis.map((a) => (
               <div className="review" key={a._id}>
                 <span>
-                  {new Date(item.createdAt).toLocaleDateString('fr-FR', {
+                  {new Date(a.createdAt).toLocaleDateString('fr-FR', {
                     day: '2-digit',
                     month: 'short',
                     year: 'numeric',
@@ -230,7 +230,7 @@ const ProfilePage = () => {
                   />
                   <p>{a.auteur?.prenom}</p>
                 </div>
-                {item.note && <p className="note">⭐ {item.note}/5</p>}
+                {a.note && <p className="note">⭐ {a.note}/5</p>}
                 <p>{a.commentaire}</p>
               </div>
             ))}
