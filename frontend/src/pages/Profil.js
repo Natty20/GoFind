@@ -203,7 +203,7 @@ const ProfilePage = () => {
         </section>
       )}
       {/* sections des avis de prestataire */}
-      {prestataire && avis?.length > 0 && !isPrestataire && (
+      {prestataire && !isPrestataire && (
         <section className="clients-avis">
           <div className="provider-reviews">
             <h5 className="tittles">Avis des Clients</h5>
@@ -245,19 +245,19 @@ const ProfilePage = () => {
                 <p>{a.commentaire}</p>
               </div>
             ))}
-
-            {/* BOUTON AJOUT AVIS */}
-            {role === 'client' && (
-              <button
-                className="btn-secondary"
-                style={{ marginTop: '30px' }}
-                onClick={() => setShowAvisForm(true)}
-              >
-                Laisser un avis
-              </button>
-            )}
           </div>
         </section>
+      )}
+
+      {/* BOUTON AJOUT AVIS */}
+      {role === 'client' && (
+        <button
+          className="btn-secondary"
+          style={{ marginTop: '30px' }}
+          onClick={() => setShowAvisForm(true)}
+        >
+          Laisser un avis
+        </button>
       )}
 
       {showAvisForm && (
@@ -290,13 +290,17 @@ const ProfilePage = () => {
                 className="btn-secondary"
                 onClick={async () => {
                   try {
+                    const payload = {
+                      prestataireId: id,
+                      commentaire,
+                    };
+
+                    if (note > 0) {
+                      payload.note = note;
+                    }
                     await axios.post(
                       `https://gofind-v9ee.onrender.com/api/avis`,
-                      {
-                        prestataireId: id,
-                        note,
-                        commentaire,
-                      },
+                      payload,
                       {
                         headers: { Authorization: `Bearer ${token}` },
                       }
