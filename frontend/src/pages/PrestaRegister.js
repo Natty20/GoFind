@@ -219,8 +219,9 @@ const PrestataireRegister = () => {
 
       const { token, prestataire } = response.data;
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('prestataireId', prestataire._id);
       sessionStorage.setItem('prestataire', JSON.stringify(prestataire));
+      sessionStorage.setItem('role', 'prestataire');
+      sessionStorage.setItem('prestataireId', prestataire._id);
       setPrestataire(prestataire);
 
       setSuccess('Inscription réussie ! Redirection...');

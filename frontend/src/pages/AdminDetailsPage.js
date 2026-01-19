@@ -136,12 +136,15 @@ const AdminDetailsPage = () => {
       </section>
 
       <section className="details-buttons">
-        <button
-          className="btn-secondary"
-          onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}
-        >
-          Modifier
-        </button>
+        {entity !== 'avis' && (
+          <button
+            className="btn-secondary"
+            onClick={() => navigate(`/admin/${entity}/modifier/${id}`)}
+          >
+            Modifier
+          </button>
+        )}
+
         <button className="btn-primary" onClick={() => navigate('/dashboard')}>
           Retour
         </button>
