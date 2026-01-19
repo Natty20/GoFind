@@ -124,7 +124,7 @@ const AdminAddPage = () => {
   }, [token, admin, navigate]);
 
   return (
-    <main className="ad minaddpage">
+    <main className="adminaddpage">
       <h1 className="tittles">Ajouter : {entity}</h1>
 
       {entity === 'clients' && <ClientForm />}
